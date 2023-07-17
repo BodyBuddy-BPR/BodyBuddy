@@ -1,0 +1,9 @@
+﻿global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Text;
+global using System.Threading.Tasks;
+global using System.Diagnostics;
+global using BodyBuddy.Models;
+global using BodyBuddy.ViewModels;
+global using BodyBuddy.Views;

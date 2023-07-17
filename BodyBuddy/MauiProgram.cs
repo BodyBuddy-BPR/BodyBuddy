@@ -1,0 +1,42 @@
+﻿using Microsoft.Extensions.Logging;
+using CommunityToolkit.Maui;
+using BodyBuddy.Database;
+using Syncfusion.Maui.Core.Hosting;
+
+namespace BodyBuddy;
+
+public static class MauiProgram
+{
+	public static MauiApp CreateMauiApp()
+	{
+		var builder = MauiApp.CreateBuilder();
+		builder
+			.UseMauiApp<App>()
+            .UseMauiCommunityToolkit()
+            .ConfigureSyncfusionCore()
+            .ConfigureFonts(fonts =>
+			{
+				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+			});
+
+#if DEBUG
+		builder.Logging.AddDebug();
+#endif
+
+		// Views
+		builder.Services.AddSingleton<MyExercisesPage>();
+		builder.Services.AddTransient<NewExercisePage>();
+
+		// ViewModels
+		builder.Services.AddSingleton<MyExercisesViewModel>();
+		builder.Services.AddTransient<NewExerciseViewModel>();
+
+		// Repositories
+
+		// Database
+		builder.Services.AddSingleton<LocalDatabase>();
+
+		return builder.Build();
+	}
+}
