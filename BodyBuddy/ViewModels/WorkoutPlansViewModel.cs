@@ -61,14 +61,18 @@ namespace BodyBuddy.ViewModels
         [RelayCommand]
         public async Task SaveWorkoutPlan()
         {
+            if (string.IsNullOrWhiteSpace(WorkoutName)) return;
+         
             WorkoutPlan workoutPlan = new()
             {
                 Name = WorkoutName,
             };
 
+            WorkoutPlans.Add(workoutPlan);
             await _database.SaveWorkoutPlanAsync(workoutPlan);
 
-            await GoBackAsync();
+            WorkoutName = string.Empty;
+
         }
     }
 }

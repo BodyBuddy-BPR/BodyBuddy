@@ -21,7 +21,8 @@ namespace BodyBuddy.Database
                 return;
 
             _context = new SQLiteAsyncConnection(SQLiteConstants.DatabasePath, SQLiteConstants.Flags);
-            var result = await _context.CreateTableAsync<Exercise>();
+            var exerciseTable = await _context.CreateTableAsync<Exercise>();
+            var workoutTable = await _context.CreateTableAsync<WorkoutPlan>();
         }
 
         #region Exercise

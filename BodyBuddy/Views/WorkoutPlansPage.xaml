@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BodyBuddy.Views.WorkoutPlansPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+    xmlns:model="clr-namespace:BodyBuddy.Models"
+    xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels"
+    Title="{Binding Title}"
+    x:DataType="viewModel:WorkoutPlansViewModel">
+
+    <Grid Margin="20,10" RowDefinitions="Auto,*,Auto">
+
+        <Label
+            Grid.Row="0"
+            Style="{StaticResource TitleLabel}"
+            Text="Workouts" />
+
+        <CollectionView
+            Grid.Row="1"
+            BackgroundColor="Transparent"
+            ItemsSource="{Binding WorkoutPlans}">
+
+            <CollectionView.EmptyView>
+                <StackLayout Padding="80" Spacing="20">
+                    <Label
+                        HorizontalOptions="Center"
+                        Style="{StaticResource TitleLabel}"
+                        Text="No workouts" />
+                    <Label
+                        HorizontalOptions="Center"
+                        Style="{StaticResource MediumLabel}"
+                        Text="No workout plans yet" />
+                </StackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:WorkoutPlan">
+                    <Grid Padding="0,5">
+
+                        <Frame HeightRequest="80" Style="{StaticResource CardView}">
+                            <Grid ColumnDefinitions="80,*">
+
+                                <Label
+                                    FontAttributes="Bold"
+                                    Style="{StaticResource MediumLabel}"
+                                    Text="{Binding Name}" />
+
+                            </Grid>
+                        </Frame>
+
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+
+        <inputLayout:SfTextInputLayout
+            Grid.Row="2"
+            Margin="0,5,0,-20"
+            BackgroundColor="{StaticResource LightBackground}"
+            CharMaxLength="30"
+            ContainerBackground="{StaticResource LightBackground}"
+            ContainerType="Outlined"
+            EnableHintAnimation="True"
+            FocusedStrokeThickness="3"
+            Hint="New Workout"
+            OutlineCornerRadius="15"
+            Stroke="{StaticResource Secondary}"
+            TrailingViewPosition="Inside"
+            UnfocusedStrokeThickness="3">
+
+            <Entry
+                x:Name="NewWorkoutEntry"
+                Completed="Workout_Created"
+                FontSize="18"
+                Keyboard="Plain"
+                ReturnCommand="{Binding SaveWorkoutPlanCommand}"
+                ReturnType="Done"
+                Style="{StaticResource BaseEntry}"
+                Text="{Binding WorkoutName}" />
+
+            <inputLayout:SfTextInputLayout.TrailingView>
+                <ImageButton
+                    BackgroundColor="{StaticResource Secondary}"
+                    Clicked="Workout_Created"
+                    Command="{Binding SaveWorkoutPlanCommand}"
+                    CornerRadius="20"
+                    HeightRequest="40"
+                    Source="add_circle"
+                    WidthRequest="40" />
+            </inputLayout:SfTextInputLayout.TrailingView>
+
+        </inputLayout:SfTextInputLayout>
+    </Grid>
+
+
+</ContentPage>
