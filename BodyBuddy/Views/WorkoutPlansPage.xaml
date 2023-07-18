@@ -11,11 +11,13 @@
 
     <Grid Margin="20,10" RowDefinitions="Auto,*,Auto">
 
+        <!--  Title  -->
         <Label
             Grid.Row="0"
             Style="{StaticResource TitleLabel}"
             Text="Workouts" />
 
+        <!--  All Workouts  -->
         <CollectionView
             Grid.Row="1"
             BackgroundColor="Transparent"
@@ -36,17 +38,17 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:WorkoutPlan">
-                    <Grid Padding="0,5">
+                    <Grid Padding="0,8">
 
-                        <Frame HeightRequest="80" Style="{StaticResource CardView}">
-                            <Grid ColumnDefinitions="80,*">
-
-                                <Label
-                                    FontAttributes="Bold"
-                                    Style="{StaticResource MediumLabel}"
-                                    Text="{Binding Name}" />
-
-                            </Grid>
+                        <Frame BackgroundColor="{StaticResource Primary}"
+                            Padding="15"
+                            HeightRequest="60"
+                            Style="{StaticResource CardView}">
+                            <Label TextColor="Black"
+                                FontAttributes="Bold"
+                                Style="{StaticResource MediumLabel}"
+                                Text="{Binding Name}"
+                                VerticalOptions="Center" />
                         </Frame>
 
                     </Grid>
@@ -56,6 +58,7 @@
         </CollectionView>
 
 
+        <!--  New Workout plan entry  -->
         <inputLayout:SfTextInputLayout
             Grid.Row="2"
             Margin="0,5,0,-20"

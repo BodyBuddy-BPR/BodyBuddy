@@ -5,19 +5,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:BodyBuddy"
     xmlns:views="clr-namespace:BodyBuddy.Views"
-    FlyoutBackgroundColor="{StaticResource Primary}"
+    FlyoutBackgroundColor="{StaticResource PrimaryDarker}"
     Shell.FlyoutBehavior="Flyout">
 
     <Shell.Resources>
         <ResourceDictionary>
             <Style x:Key="BaseStyle" TargetType="Element">
-                <Setter Property="Shell.BackgroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="Shell.BackgroundColor" Value="{StaticResource PrimaryDarker}" />
                 <Setter Property="Shell.ForegroundColor" Value="Black" />
                 <Setter Property="Shell.TitleColor" Value="Black" />
                 <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
                 <Setter Property="Shell.UnselectedColor" Value="{AppThemeBinding Dark=#95FFFFFF, Light=#95000000}" />
-                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Primary}" />
-                <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource PrimaryDarker}" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource PrimaryDarker}" />
                 <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Dark=#95FFFFFF, Light=#95000000}" />
                 <Setter Property="Shell.TabBarTitleColor" Value="Black" />
             </Style>
