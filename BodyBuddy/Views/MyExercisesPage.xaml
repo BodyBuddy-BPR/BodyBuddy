@@ -3,7 +3,9 @@
     x:Class="BodyBuddy.Views.MyExercisesPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:model="clr-namespace:BodyBuddy.Models"
+    xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels"
     Title="{Binding Title}"
     x:DataType="viewModel:MyExercisesViewModel">
@@ -35,7 +37,7 @@
                         <Grid Padding="0,5">
 
                             <Frame HeightRequest="80" Style="{StaticResource CardView}">
-                                <Grid ColumnDefinitions="80,*">
+                                <Grid ColumnDefinitions="80,*,50">
                                     <Image
                                         Aspect="AspectFit"
                                         HeightRequest="80"
@@ -52,6 +54,17 @@
                                             Text="{Binding Name}" />
                                         <Label Style="{StaticResource SmallLabel}" Text="{Binding MuscleGroup}" />
                                     </VerticalStackLayout>
+
+                                    <ImageButton
+                                        Grid.Column="2"
+                                        BackgroundColor="{StaticResource Secondary}"
+                                        Clicked="AddToWorkoutPopup_Clicked"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:MyExercisesViewModel}}}"
+                                        CommandParameter="{Binding .}"
+                                        CornerRadius="15"
+                                        HeightRequest="30"
+                                        Source="plus_sign"
+                                        WidthRequest="30" />
                                 </Grid>
                             </Frame>
 
@@ -69,7 +82,61 @@
             Style="{StaticResource AddButton}"
             Text="Add Custom Exercise" />
 
+
+        <syncfusion:SfPopup
+            x:Name="addToWorkoutPopup"
+            AcceptButtonText="Add"
+            AcceptCommand="{Binding AddToWorkoutCommand}"
+            AppearanceMode="TwoButton"
+            AutoSizeMode="Height"
+            DeclineButtonText="Cancel"
+            HeaderTitle="Add to Workouts"
+            ShowFooter="True"
+            WidthRequest="250">
+
+            <syncfusion:SfPopup.ContentTemplate>
+                <DataTemplate>
+                    <CollectionView
+                        ItemsSource="{Binding WorkoutPlans}"
+                        SelectionChanged="CollectionView_SelectionChanged"
+                        SelectionMode="Multiple">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="model:WorkoutPlan">
+                                <Grid Padding="20,15">
+
+                                    <Label
+                                        FontAttributes="Bold"
+                                        HorizontalOptions="StartAndExpand"
+                                        Style="{StaticResource MediumLabel}"
+                                        Text="{Binding Name}"
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
+
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </DataTemplate>
+            </syncfusion:SfPopup.ContentTemplate>
+        </syncfusion:SfPopup>
+
     </Grid>
 
+    <ContentPage.Resources>
+        <Style TargetType="Grid">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="Red" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
 
 </ContentPage>

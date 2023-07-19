@@ -40,14 +40,22 @@
                 <DataTemplate x:DataType="model:WorkoutPlan">
                     <Grid Padding="0,8">
 
-                        <Frame BackgroundColor="{StaticResource Primary}"
+                        <Frame
                             Padding="15"
+                            BackgroundColor="{StaticResource Primary}"
+                            BorderColor="{StaticResource Primary}"
                             HeightRequest="60"
                             Style="{StaticResource CardView}">
-                            <Label TextColor="Black"
+
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutPlansViewModel}}, Path=GoToWorkoutplanDetailsCommand}" CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+
+                            <Label
                                 FontAttributes="Bold"
                                 Style="{StaticResource MediumLabel}"
                                 Text="{Binding Name}"
+                                TextColor="Black"
                                 VerticalOptions="Center" />
                         </Frame>
 
@@ -91,7 +99,7 @@
                     Command="{Binding SaveWorkoutPlanCommand}"
                     CornerRadius="20"
                     HeightRequest="40"
-                    Source="add_circle"
+                    Source="plus_sign"
                     WidthRequest="40" />
             </inputLayout:SfTextInputLayout.TrailingView>
 

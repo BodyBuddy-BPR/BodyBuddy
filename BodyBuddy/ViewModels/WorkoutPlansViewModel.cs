@@ -17,7 +17,7 @@ namespace BodyBuddy.ViewModels
         [ObservableProperty]
         private string _workoutName;
 
-        public ObservableCollection<WorkoutPlan> WorkoutPlans { get; set; } = new ObservableCollection<WorkoutPlan>();
+
 
         public WorkoutPlansViewModel(LocalDatabase localDatabase)
         {
@@ -62,7 +62,7 @@ namespace BodyBuddy.ViewModels
         public async Task SaveWorkoutPlan()
         {
             if (string.IsNullOrWhiteSpace(WorkoutName)) return;
-         
+
             WorkoutPlan workoutPlan = new()
             {
                 Name = WorkoutName,
@@ -74,5 +74,18 @@ namespace BodyBuddy.ViewModels
             WorkoutName = string.Empty;
 
         }
+
+        [RelayCommand]
+        async Task GoToWorkoutplanDetails(WorkoutPlan workoutPlan)
+        {
+            if (workoutPlan == null)
+                return;
+
+            await Shell.Current.GoToAsync(nameof(WorkoutPlanDetailsPage), true, new Dictionary<string, object>
+            {
+            {"WorkoutPlan", workoutPlan }
+        });
+        }
+
     }
 }

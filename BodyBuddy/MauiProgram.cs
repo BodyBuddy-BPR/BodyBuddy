@@ -28,11 +28,13 @@ public static class MauiProgram
 		builder.Services.AddSingleton<WorkoutPlansPage>();
 		builder.Services.AddSingleton<MyExercisesPage>();
 		builder.Services.AddTransient<NewExercisePage>();
+		builder.Services.AddTransient<WorkoutPlanDetailsPage>();
 
 		// ViewModels
 		builder.Services.AddSingleton<WorkoutPlansViewModel>();
         builder.Services.AddSingleton<MyExercisesViewModel>();
 		builder.Services.AddTransient<NewExerciseViewModel>();
+		builder.Services.AddTransient<WorkoutPlanDetailsViewModel>();
 
 		// Repositories
 
