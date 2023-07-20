@@ -7,3 +7,5 @@ global using System.Diagnostics;
 global using BodyBuddy.Models;
 global using BodyBuddy.ViewModels;
 global using BodyBuddy.Views;
+global using BodyBuddy.Repositories;
+global using BodyBuddy.Repositories.Implementations;

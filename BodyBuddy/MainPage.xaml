@@ -2,7 +2,12 @@
 <ContentPage
     x:Class="BodyBuddy.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui">
+
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource PrimaryDarker}" />
+    </ContentPage.Behaviors>
 
     <ScrollView>
         <VerticalStackLayout

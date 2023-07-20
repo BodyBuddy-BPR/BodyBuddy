@@ -13,18 +13,20 @@ namespace BodyBuddy.ViewModels
     public partial class MyExercisesViewModel : BaseViewModel
     {
         private LocalDatabase _database;
+        private readonly IExerciseRepository _exerciseRepository;
 
         [ObservableProperty]
         private bool _isRefreshing;
 
         public ObservableCollection<Exercise> ExercisesList { get; set; } = new ObservableCollection<Exercise>();
 
-        public MyExercisesViewModel(LocalDatabase localDatabase)
+        public MyExercisesViewModel(LocalDatabase localDatabase, IExerciseRepository exerciseRepository)
         {
             Title = string.Empty;
 
             _database = localDatabase;
-            InitializeExerciseData();
+            _exerciseRepository = exerciseRepository;
+            //InitializeExerciseData();
         }
 
         [RelayCommand]
@@ -36,7 +38,8 @@ namespace BodyBuddy.ViewModels
             {
                 IsBusy = true;
 
-                var exercises = await _database.GetItemsAsync();
+                //var exercises = await _database.GetItemsAsync();    
+                var exercises = await _exerciseRepository.GetExercisesAsync();
 
                 if (ExercisesList.Count != 0)
                 {

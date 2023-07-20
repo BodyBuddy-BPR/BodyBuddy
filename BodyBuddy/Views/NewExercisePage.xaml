@@ -23,7 +23,7 @@
             <dataForm:SfDataForm.Items>
                 <dataForm:DataFormTextItem FieldName="Name" />
                 <dataForm:DataFormTextItem FieldName="Description" RowSpan="2" />
-                <dataForm:DataFormComboBoxItem FieldName="Musclegroup" ItemsSource="{Binding Musclegroups}" />
+                <dataForm:DataFormComboBoxItem FieldName="MuscleGroup" ItemsSource="{Binding Musclegroups}" />
 
             </dataForm:SfDataForm.Items>
         </dataForm:SfDataForm>

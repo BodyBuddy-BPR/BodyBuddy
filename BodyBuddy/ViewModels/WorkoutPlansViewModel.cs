@@ -12,18 +12,18 @@ namespace BodyBuddy.ViewModels
 {
     public partial class WorkoutPlansViewModel : BaseViewModel
     {
-        private LocalDatabase _database;
+        private readonly IWorkoutPlanRepository _workoutPlanRepository;
 
         [ObservableProperty]
         private string _workoutName;
 
         public ObservableCollection<WorkoutPlan> WorkoutPlans { get; set; } = new ObservableCollection<WorkoutPlan>();
 
-        public WorkoutPlansViewModel(LocalDatabase localDatabase)
+        public WorkoutPlansViewModel(IWorkoutPlanRepository workoutPlanRepository)
         {
             Title = string.Empty;
 
-            _database = localDatabase;
+            _workoutPlanRepository = workoutPlanRepository;
         }
 
         [RelayCommand]
@@ -35,7 +35,7 @@ namespace BodyBuddy.ViewModels
             {
                 IsBusy = true;
 
-                var workoutPlans = await _database.GetWorkoutPlansAsync();
+                var workoutPlans = await _workoutPlanRepository.GetWorkoutPlansAsync();
 
                 if (WorkoutPlans.Count != 0)
                 {
@@ -69,7 +69,7 @@ namespace BodyBuddy.ViewModels
             };
 
             WorkoutPlans.Add(workoutPlan);
-            await _database.SaveWorkoutPlanAsync(workoutPlan);
+            await _workoutPlanRepository.SaveWorkoutPlanAsync(workoutPlan);
 
             WorkoutName = string.Empty;
 

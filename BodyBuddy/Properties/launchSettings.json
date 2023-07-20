@@ -3,6 +3,22 @@
     "Windows Machine": {
       "commandName": "MsixPackage",
       "nativeDebugging": false
+    },
+
+    "App (Android)": {
+      "commandName": "Program",
+      "environmentVariables": {
+        "SUPABASE_URL": "https://txmjfvyjbapxastqdcjy.supabase.co",
+        "SUPABASE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR4bWpmdnlqYmFweGFzdHFkY2p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODk3OTM2NjMsImV4cCI6MjAwNTM2OTY2M30.-eaHbmLfehQUyVoDRGKe_c-XuOSYGZOn3EwE8FDtOfc"
+      }
+    },
+    "App (iOS)": {
+      "commandName": "Program",
+      "environmentVariables": {
+        "SUPABASE_URL": "https://txmjfvyjbapxastqdcjy.supabase.co",
+        "SUPABASE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR4bWpmdnlqYmFweGFzdHFkY2p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODk3OTM2NjMsImV4cCI6MjAwNTM2OTY2M30.-eaHbmLfehQUyVoDRGKe_c-XuOSYGZOn3EwE8FDtOfc"
+      }
     }
+
   }
 }

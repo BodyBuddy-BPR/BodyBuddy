@@ -1,23 +1,22 @@
-﻿using SQLite;
-using SQLiteNetExtensions.Attributes;
-using System.ComponentModel.DataAnnotations;
+﻿using Postgrest.Attributes;
+using Postgrest.Models;
+
 
 namespace BodyBuddy.Models
 {
-    public class Exercise
+    [Table("Exercise")]
+    public class Exercise : BaseModel
     {
-        [PrimaryKey]
+        [PrimaryKey("id", false)]
         public int Id { get; set; }
 
+        [Column("name")]
         public string Name { get; set; }
 
-        //[DataType(DataType.MultilineText)]
+        [Column("description")]
         public string Description { get; set; }
 
+        [Column("muscle_group")]
         public string MuscleGroup { get; set; }
-
-
-        [ForeignKey(typeof(WorkoutPlan))]
-        public int WorkoutPlanId { get; set; }
     }
 }

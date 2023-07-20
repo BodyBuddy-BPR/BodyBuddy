@@ -10,21 +10,29 @@ namespace BodyBuddy.ViewModels
 {
     public partial class NewExerciseViewModel : BaseViewModel
     {
-        private LocalDatabase _database;
+        private readonly IExerciseRepository _exerciseRepository;
 
         public Exercise NewExercise { get; set; }
-        public NewExerciseViewModel(LocalDatabase localDatabase)
+
+        public NewExerciseViewModel(IExerciseRepository exerciseRepository)
         {
             Title = "New Exercise";
 
-            _database = localDatabase;
             this.NewExercise = new Exercise();
+            _exerciseRepository = exerciseRepository;
         }
 
         [RelayCommand]
         public async Task SaveExercise()
         {
-            await _database.SaveItemAsync(this.NewExercise);
+            var newExercise = new Exercise
+            {
+                Name = NewExercise.Name,
+                Description = NewExercise.Description,
+                MuscleGroup = NewExercise.MuscleGroup,
+            };
+
+            await _exerciseRepository.SaveNewExerciseAsync(newExercise);
 
             await GoBackAsync();
         }

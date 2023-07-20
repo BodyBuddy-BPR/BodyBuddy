@@ -1,24 +1,15 @@
-﻿using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using SQLiteNetExtensions.Attributes;
+﻿using Postgrest.Attributes;
+using Postgrest.Models;
 
 namespace BodyBuddy.Models
 {
-    public class WorkoutPlan
+    [Table("WorkoutPlan")]
+    public class WorkoutPlan : BaseModel
     {
-        [PrimaryKey]
+        [PrimaryKey("id", false)]
         public int Id { get; set; }
 
+        [Column("name")]
         public string Name { get; set; }
-
-
-        [OneToMany(CascadeOperations = CascadeOperation.All)]
-        public List<Exercise> Exercises { get; set; }
     }
 }

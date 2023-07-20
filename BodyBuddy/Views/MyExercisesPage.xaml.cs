@@ -15,6 +15,6 @@ public partial class MyExercisesPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        //await _viewModel.GetMyExercises();
+        await _viewModel.GetMyExercises();
     }
 }
