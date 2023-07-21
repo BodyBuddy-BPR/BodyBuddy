@@ -42,6 +42,31 @@
 
     <ShellContent
         Title="Exercises"
-        ContentTemplate="{DataTemplate views:MyExercisesPage}"
-        Route="MyExercisesPage" />
+        ContentTemplate="{DataTemplate views:ExercisesPage}"
+        Route="ExercisesPage" />
+
+    <ShellContent
+        Title="Custom Exercises"
+        ContentTemplate="{DataTemplate views:CustomExercisesPage}"
+        Route="CustomExercisesPage" />
+
+    <!--<ShellContent
+        Title="Exercises"
+        ContentTemplate="{DataTemplate views:ExercisesPage}"
+        Route="ExercisesPage">
+        <TabBar>
+            <ShellContent
+                Title="Exercises"
+                ContentTemplate="{DataTemplate views:ExercisesPage}"
+                Route="ExercisesPage" />
+
+            <ShellContent
+                Title="Exercises"
+                ContentTemplate="{DataTemplate views:CustomExercisesPage}"
+                Route="CustomExercisesPage" />
+        </TabBar>
+    </ShellContent>-->
+
+
+
 </Shell>

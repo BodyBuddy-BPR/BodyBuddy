@@ -32,9 +32,9 @@
             x:Name="saveButton"
             Grid.Row="1"
             Margin="0,10"
-            HorizontalOptions="Center"
-            Style="{StaticResource AddButton}" 
             Command="{Binding SaveExerciseCommand}"
+            HorizontalOptions="Center"
+            Style="{StaticResource AddButton}"
             Text="Save"
             VerticalOptions="Center" />
 

@@ -4,10 +4,10 @@ using System.Collections.ObjectModel;
 
 namespace BodyBuddy.Views;
 
-public partial class MyExercisesPage : ContentPage
+public partial class CustomExercisesPage : ContentPage
 {
-    private MyExercisesViewModel _viewModel;
-    public MyExercisesPage(MyExercisesViewModel myExercisesViewModel)
+    private CustomExercisesViewModel _viewModel;
+    public CustomExercisesPage(CustomExercisesViewModel myExercisesViewModel)
     {
         InitializeComponent();
 
@@ -22,15 +22,15 @@ public partial class MyExercisesPage : ContentPage
         await _viewModel.GetWorkoutplans();
     }
 
-    private void AddToWorkoutPopup_Clicked(object sender, EventArgs e)
-    {
-        var exercise = (sender as ImageButton)?.CommandParameter as Exercise;
-        if (exercise != null)
-        {
-            addToWorkoutPopup.Show();
-            _viewModel.SelectedExercise = exercise;
-        }
-    }
+    //private void AddToWorkoutPopup_Clicked(object sender, EventArgs e)
+    //{
+    //    var exercise = (sender as ImageButton)?.CommandParameter as Exercise;
+    //    if (exercise != null)
+    //    {
+    //        addToWorkoutPopup.Show();
+    //        _viewModel.SelectedExercise = exercise;
+    //    }
+    //}
 
     private  void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {

@@ -16,16 +16,47 @@ namespace BodyBuddy.Repositories.Implementations
             _supabaseClient = supabaseClient;
         }
 
-        public async Task<List<Exercise>> GetExercisesAsync()
+        
+        #region Exercises
+
+        public async Task<List<Exercise>> GetExercisesAsync(string musclegroup)
         {
-            var response = await _supabaseClient.From<Exercise>().Get();
+            var response = await _supabaseClient.From<Exercise>().Select(x => new object[] {x.Name, x.PrimaryMuscles}).Where(x => x.PrimaryMuscles == musclegroup ).Get();
             var exercises = response.Models;
             return exercises;
         }
 
-        public async Task SaveNewExerciseAsync(Exercise exercise)
+        public async Task<List<string>> GetPrimaryMusclesAsync()
         {
-            await _supabaseClient.From<Exercise>().Insert(exercise);
+            var response = await _supabaseClient.From<Exercise>().Select("primaryMuscles").Get();
+            var exercises = response.Models;
+
+            // Use LINQ to extract unique primary muscles
+            var primaryMusclesList = exercises
+                .Select(exercise => exercise.PrimaryMuscles)
+                .Where(primaryMuscle => !string.IsNullOrEmpty(primaryMuscle))
+                .Distinct()
+                .ToList();
+
+            return primaryMusclesList;
         }
+
+        #endregion
+
+        #region Custom Exercises
+
+        public async Task<List<CustomExercise>> GetCustomExercisesAsync()
+        {
+            var response = await _supabaseClient.From<CustomExercise>().Get();
+            var exercises = response.Models;
+            return exercises;
+        }
+
+        public async Task SaveCustomExerciseAsync(CustomExercise exercise)
+        {
+            await _supabaseClient.From<CustomExercise>().Insert(exercise);
+        }
+
+        #endregion
     }
 }

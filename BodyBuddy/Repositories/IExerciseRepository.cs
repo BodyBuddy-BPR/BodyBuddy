@@ -8,8 +8,15 @@ namespace BodyBuddy.Repositories
 {
     public interface IExerciseRepository
     {
-        Task<List<Exercise>> GetExercisesAsync();
+        #region Exercises
+        Task<List<Exercise>> GetExercisesAsync(string musclegroup);
+        Task<List<string>> GetPrimaryMusclesAsync();
 
-        Task SaveNewExerciseAsync(Exercise exercise);
+        #endregion
+
+        #region Custom Exercises
+        Task<List<CustomExercise>> GetCustomExercisesAsync();
+        Task SaveCustomExerciseAsync(CustomExercise exercise);
+        #endregion
     }
 }

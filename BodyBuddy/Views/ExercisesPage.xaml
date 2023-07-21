@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BodyBuddy.Views.ExercisesPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:chip="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+    xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+    xmlns:model="clr-namespace:BodyBuddy.Models"
+    xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels"
+    Title="{Binding Title}"
+    x:DataType="viewModel:ExercisesViewModel">
+
+    <Grid Margin="20,10" RowDefinitions="Auto,*">
+
+        <Grid Grid.Row="0">
+            <ScrollView HorizontalScrollBarVisibility="Never" Orientation="Horizontal">
+                <chip:SfChipGroup
+                    x:Name="FilterChips"
+                    ChipClicked="SfChipGroup_ChipClicked"
+                    SelectionChanged="FilterChips_SelectionChanged"
+                    
+                    ChipType="Choice"
+                    ChoiceMode="Single"
+                    ItemsSource="{Binding FilterChips}">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="ChipBackground" Value="{StaticResource Secondary}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="ChipBackground" Value="{StaticResource Primary}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </chip:SfChipGroup>
+            </ScrollView>
+        </Grid>
+
+        <CollectionView
+            Grid.Row="1"
+            BackgroundColor="Transparent"
+            ItemsSource="{Binding ExercisesList}"
+            VerticalOptions="FillAndExpand">
+
+            <CollectionView.EmptyView>
+                <StackLayout Padding="80" Spacing="20">
+                    <Label
+                        HorizontalOptions="Center"
+                        Style="{StaticResource TitleLabel}"
+                        Text="No Exercises" />
+                    <Label
+                        HorizontalOptions="Center"
+                        Style="{StaticResource MediumLabel}"
+                        Text="No exercises yet" />
+                </StackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Exercise">
+                    <Grid Padding="0,5">
+
+                        <Frame HeightRequest="80" Style="{StaticResource CardView}">
+                            <Grid ColumnDefinitions="80,*,50">
+                                <Image
+                                    Aspect="AspectFit"
+                                    HeightRequest="80"
+                                    Source="no_image.png"
+                                    WidthRequest="80" />
+
+                                <VerticalStackLayout
+                                    Grid.Column="1"
+                                    Padding="10,0"
+                                    VerticalOptions="CenterAndExpand">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        Style="{StaticResource MediumLabel}"
+                                        Text="{Binding Name}" />
+                                    <Label Style="{StaticResource SmallLabel}" Text="{Binding PrimaryMuscles}" />
+                                </VerticalStackLayout>
+
+                                <!--<ImageButton
+                                    Grid.Column="2"
+                                    BackgroundColor="{StaticResource Secondary}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:CustomExercisesViewModel}}}"
+                                    CommandParameter="{Binding .}"
+                                    CornerRadius="15"
+                                    HeightRequest="30"
+                                    Source="plus_sign"
+                                    WidthRequest="30" />-->
+                            </Grid>
+                        </Frame>
+
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+
+    </Grid>
+
+
+</ContentPage>

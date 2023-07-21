@@ -12,27 +12,27 @@ namespace BodyBuddy.ViewModels
     {
         private readonly IExerciseRepository _exerciseRepository;
 
-        public Exercise NewExercise { get; set; }
+        public CustomExercise NewExercise { get; set; }
 
         public NewExerciseViewModel(IExerciseRepository exerciseRepository)
         {
             Title = "New Exercise";
 
-            this.NewExercise = new Exercise();
+            this.NewExercise = new CustomExercise();
             _exerciseRepository = exerciseRepository;
         }
 
         [RelayCommand]
         public async Task SaveExercise()
         {
-            var newExercise = new Exercise
+            var newExercise = new CustomExercise
             {
                 Name = NewExercise.Name,
-                Description = NewExercise.Description,
+                Instructions = NewExercise.Instructions,
                 MuscleGroup = NewExercise.MuscleGroup,
             };
 
-            await _exerciseRepository.SaveNewExerciseAsync(newExercise);
+            await _exerciseRepository.SaveCustomExerciseAsync(newExercise);
 
             await GoBackAsync();
         }

@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace BodyBuddy.ViewModels
 {
-    public partial class MyExercisesViewModel : BaseViewModel
+    public partial class CustomExercisesViewModel : BaseViewModel
     {
         private readonly IExerciseRepository _exerciseRepository;
         private readonly IWorkoutPlanRepository _workoutPlanRepository;
@@ -25,15 +25,15 @@ namespace BodyBuddy.ViewModels
         [ObservableProperty]
         private WorkoutPlan _selectedWorkoutPlan;
 
-        public ObservableCollection<Exercise> ExercisesList { get; set; } = new ObservableCollection<Exercise>();
+        public ObservableCollection<CustomExercise> ExercisesList { get; set; } = new ObservableCollection<CustomExercise>();
 
-        public MyExercisesViewModel(IExerciseRepository exerciseRepository, IWorkoutPlanRepository workoutPlanRepository)
+        public CustomExercisesViewModel(IExerciseRepository exerciseRepository, IWorkoutPlanRepository workoutPlanRepository)
         {
             Title = string.Empty;
 
             _exerciseRepository = exerciseRepository;
             _workoutPlanRepository = workoutPlanRepository;
-            //InitializeExerciseData();
+
         }
 
         [RelayCommand]
@@ -46,7 +46,7 @@ namespace BodyBuddy.ViewModels
                 IsBusy = true;
 
                 //var exercises = await _database.GetItemsAsync();    
-                var exercises = await _exerciseRepository.GetExercisesAsync();
+                var exercises = await _exerciseRepository.GetCustomExercisesAsync();
 
                 if (ExercisesList.Count != 0)
                 {
@@ -141,42 +141,6 @@ namespace BodyBuddy.ViewModels
             await Shell.Current.GoToAsync($"{nameof(NewExercisePage)}");
         }
 
-        #region Generate dummy data for testing
-        // Populates the ObservableCollection Exercises with exercises
-        private void InitializeExerciseData()
-        {
-            List<Exercise> exerciseData = new List<Exercise>
-            {
-                // Chest
-                new Exercise { Name = "Bench Press", MuscleGroup = "Chest" },
-                new Exercise { Name = "Dumbbell Chest Press", MuscleGroup = "Chest" },
-
-                // Shoulders
-                new Exercise { Name = "Overhead Press", MuscleGroup = "Shoulders" },
-                new Exercise { Name = "Barbell Front Raise", MuscleGroup = "Shoulders" },
-
-                // Biceps
-                new Exercise { Name = "Barbell Curl", MuscleGroup = "Biceps" },
-                new Exercise { Name = "Dumbbell Curl", MuscleGroup = "Biceps" },
-
-                // Triceps
-                new Exercise { Name = "Barbell Lying Triceps Extension", MuscleGroup = "Triceps" },
-                new Exercise { Name = "Tricep Pushdown With Bar", MuscleGroup = "Triceps" },
-
-                // Legs
-                new Exercise { Name = "Squats", MuscleGroup = "Legs" },
-                new Exercise { Name = "Leg Press", MuscleGroup = "Legs" },
-
-                // Back
-                new Exercise { Name = "Deadlift", MuscleGroup = "Back" },
-                new Exercise { Name = "Pull-Up", MuscleGroup = "Back" },
-            };
-
-            foreach (Exercise exercise in exerciseData)
-            {
-                ExercisesList.Add(exercise);
-            }
-        }
-        #endregion
+     
     }
 }

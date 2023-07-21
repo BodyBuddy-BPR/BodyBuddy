@@ -32,19 +32,21 @@ public static class MauiProgram
         var options = new SupabaseOptions
         {
             AutoRefreshToken = true,
-            AutoConnectRealtime = true,
+            AutoConnectRealtime = false,
             // SessionHandler = new SupabaseSessionHandler() <-- This must be implemented by the developer
         };
 
         // Views
         builder.Services.AddSingleton<WorkoutPlansPage>();
-		builder.Services.AddSingleton<MyExercisesPage>();
+        builder.Services.AddSingleton<ExercisesPage>();
+		builder.Services.AddSingleton<CustomExercisesPage>();
 		builder.Services.AddTransient<NewExercisePage>();
 		builder.Services.AddTransient<WorkoutPlanDetailsPage>();
 
 		// ViewModels
 		builder.Services.AddSingleton<WorkoutPlansViewModel>();
-        builder.Services.AddSingleton<MyExercisesViewModel>();
+		builder.Services.AddSingleton<ExercisesViewModel>();
+        builder.Services.AddSingleton<CustomExercisesViewModel>();
 		builder.Services.AddTransient<NewExerciseViewModel>();
 		builder.Services.AddTransient<WorkoutPlanDetailsViewModel>();
 

@@ -67,7 +67,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\MyExercisesPage.xaml">
+	  <MauiXaml Update="Views\CustomExercisesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ExercisesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\NewExercisePage.xaml">
@@ -83,6 +86,12 @@
 
 	<ItemGroup>
 	  <Folder Include="Controls\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Views\CustomExercisesPage.xaml.cs">
+	    <DependentUpon>CustomExercisesPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadUnhandledDeviceExceptionBodyBuddyHideInfoBar="True" /></VisualStudio></ProjectExtensions>
