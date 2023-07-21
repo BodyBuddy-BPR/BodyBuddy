@@ -37,4 +37,9 @@ public partial class MyExercisesPage : ContentPage
         var current = (e.CurrentSelection)[0];
         _viewModel.SelectedItemsChanged(current);
     }
+
+    private void SfComboBox_SelectionChanged(object sender, Syncfusion.Maui.Inputs.SelectionChangedEventArgs e)
+    {
+        
+    }
 }

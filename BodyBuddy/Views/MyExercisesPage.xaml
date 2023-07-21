@@ -10,6 +10,22 @@
     Title="{Binding Title}"
     x:DataType="viewModel:MyExercisesViewModel">
 
+    <Shell.TitleView>
+        <editors:SfComboBox
+            BackgroundColor="Transparent"
+            DisplayMemberPath="Name"
+            HorizontalOptions="End"
+            ItemsSource="{Binding WorkoutPlans}"
+            Placeholder="Add to a workout"
+            PlaceholderColor="Black"
+            SelectedItem="{Binding SelectedWorkoutPlan}"
+            SelectedValuePath="Id"
+            Stroke="Transparent"
+            SelectionChanged="SfComboBox_SelectionChanged"
+            TextMemberPath="Name"
+            WidthRequest="180" />
+    </Shell.TitleView>
+
     <Grid Margin="20,10" RowDefinitions="Auto,*,Auto">
 
         <RefreshView
@@ -58,7 +74,6 @@
                                     <ImageButton
                                         Grid.Column="2"
                                         BackgroundColor="{StaticResource Secondary}"
-                                        Clicked="AddToWorkoutPopup_Clicked"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:MyExercisesViewModel}}}"
                                         CommandParameter="{Binding .}"
                                         CornerRadius="15"

@@ -13,8 +13,8 @@ namespace BodyBuddy.ViewModels
 {
     public partial class MyExercisesViewModel : BaseViewModel
     {
-        private LocalDatabase _database;
         private readonly IExerciseRepository _exerciseRepository;
+        private readonly IWorkoutPlanRepository _workoutPlanRepository;
 
         [ObservableProperty]
         private bool _isRefreshing;
@@ -22,14 +22,17 @@ namespace BodyBuddy.ViewModels
         [ObservableProperty]
         private Exercise _selectedExercise;
 
+        [ObservableProperty]
+        private WorkoutPlan _selectedWorkoutPlan;
+
         public ObservableCollection<Exercise> ExercisesList { get; set; } = new ObservableCollection<Exercise>();
 
-        public MyExercisesViewModel(LocalDatabase localDatabase, IExerciseRepository exerciseRepository)
+        public MyExercisesViewModel(IExerciseRepository exerciseRepository, IWorkoutPlanRepository workoutPlanRepository)
         {
             Title = string.Empty;
 
-            _database = localDatabase;
             _exerciseRepository = exerciseRepository;
+            _workoutPlanRepository = workoutPlanRepository;
             //InitializeExerciseData();
         }
 
@@ -75,7 +78,7 @@ namespace BodyBuddy.ViewModels
             {
                 IsBusy = true;
 
-                var workoutPlans = await _database.GetWorkoutPlansAsync();
+                var workoutPlans = await _workoutPlanRepository.GetWorkoutPlansAsync();
 
                 if (WorkoutPlans.Count != 0)
                 {
@@ -98,9 +101,10 @@ namespace BodyBuddy.ViewModels
             }
         }
 
+
+
         public ObservableCollection<WorkoutPlan> SelectedWorkoutPlans { get; set; } = new ObservableCollection<WorkoutPlan>();
 
-     
         public void SelectedItemsChanged(object plan)
         {
             SelectedWorkoutPlans.Add((WorkoutPlan)plan);
