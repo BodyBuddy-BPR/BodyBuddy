@@ -16,14 +16,9 @@ public partial class ExercisesPage : ContentPage
         //await _viewModel.GetExercises();
     }
 
-    private void SfChipGroup_ChipClicked(object sender, EventArgs e)
-    {
-        //_viewModel.SelectedChip = FilterChips;
-    }
-
     private async void FilterChips_SelectionChanged(object sender, Syncfusion.Maui.Core.Chips.SelectionChangedEventArgs e)
     {
-        //_viewModel.SelectedChip = e.AddedItem.ToString();
+        //e.AddedItem is the musclegroup chip selected
         await _viewModel.GetExercises(e.AddedItem.ToString());
     }
 }

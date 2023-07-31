@@ -49,6 +49,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Controls\**" />
+	  <Compile Remove="Controls\**" />
+	  <EmbeddedResource Remove="Controls\**" />
+	  <MauiCss Remove="Controls\**" />
+	  <MauiXaml Remove="Controls\**" />
+	  <None Remove="Controls\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\Images\add_circle.svg" />
 	  <None Remove="Resources\Images\no_image.svg" />
 	  <None Remove="Resources\Images\plus_sign.svg" />
@@ -82,10 +91,6 @@
 	  <MauiXaml Update="Views\WorkoutPlansPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Controls\" />
 	</ItemGroup>
 
 	<ItemGroup>

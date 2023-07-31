@@ -10,8 +10,6 @@ namespace BodyBuddy.ViewModels
 
         public ObservableCollection<Exercise> ExercisesList { get; set; } = new ObservableCollection<Exercise>();
 
-        [ObservableProperty]
-        public string selectedChip;
         public ObservableCollection<string> FilterChips { get; set; } = new();
 
         public ExercisesViewModel(IExerciseRepository exerciseRepository)
@@ -25,7 +23,7 @@ namespace BodyBuddy.ViewModels
         [RelayCommand]
         public async Task GetExercises(string muscleGroup)
         {
-            //var selectedMusleGroup = SelectedChip;
+
             if (IsBusy) return;
 
             try
