@@ -9,6 +9,9 @@ namespace BodyBuddy.Database
 {
     public class LocalDatabase
     {
+        // Should not be in use right now. This is used to store things locally on the device
+
+
         SQLiteAsyncConnection _context;
 
         public LocalDatabase()

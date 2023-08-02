@@ -10,10 +10,9 @@ public partial class ExercisesPage : ContentPage
         BindingContext = exercisesViewModel;
     }
 
-    protected override async void OnAppearing()
+    protected override void OnAppearing()
     {
         base.OnAppearing();
-        //await _viewModel.GetExercises();
     }
 
     private async void FilterChips_SelectionChanged(object sender, Syncfusion.Maui.Core.Chips.SelectionChangedEventArgs e)

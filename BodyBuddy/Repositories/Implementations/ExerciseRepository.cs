@@ -21,7 +21,7 @@ namespace BodyBuddy.Repositories.Implementations
 
         public async Task<List<Exercise>> GetExercisesAsync(string musclegroup)
         {
-            var response = await _supabaseClient.From<Exercise>().Select(x => new object[] {x.Name, x.Images}).Where(x => x.PrimaryMuscles == musclegroup ).Get();
+            var response = await _supabaseClient.From<Exercise>().Select(x => new object[] {x.Name, x.Images, x.Level}).Where(x => x.PrimaryMuscles == musclegroup).Get();
             var exercises = response.Models;
             return exercises;
         }

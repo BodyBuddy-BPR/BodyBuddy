@@ -72,6 +72,7 @@
                 <Setter Property="FontSize" Value="20" />
                 <Setter Property="FontAttributes" Value="Bold" />
             </Style>
+
             <Style
                 x:Key="TitleLabel"
                 BasedOn="{StaticResource BaseLabel}"
