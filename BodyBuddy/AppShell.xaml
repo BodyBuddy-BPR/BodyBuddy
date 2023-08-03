@@ -40,33 +40,16 @@
         ContentTemplate="{DataTemplate views:WorkoutPlansPage}"
         Route="WorkoutPlansPage" />
 
-    <ShellContent
-        Title="Exercises"
-        ContentTemplate="{DataTemplate views:ExercisesPage}"
-        Route="ExercisesPage" />
+    <FlyoutItem Title="Exercises">
+        <ShellContent
+            Title="Exercises"
+            ContentTemplate="{DataTemplate views:ExercisesPage}"
+            Route="ExercisesPage" />
 
-    <ShellContent
-        Title="Custom Exercises"
-        ContentTemplate="{DataTemplate views:CustomExercisesPage}"
-        Route="CustomExercisesPage" />
-
-    <!--<ShellContent
-        Title="Exercises"
-        ContentTemplate="{DataTemplate views:ExercisesPage}"
-        Route="ExercisesPage">
-        <TabBar>
-            <ShellContent
-                Title="Exercises"
-                ContentTemplate="{DataTemplate views:ExercisesPage}"
-                Route="ExercisesPage" />
-
-            <ShellContent
-                Title="Exercises"
-                ContentTemplate="{DataTemplate views:CustomExercisesPage}"
-                Route="CustomExercisesPage" />
-        </TabBar>
-    </ShellContent>-->
-
-
+        <ShellContent
+            Title="Custom Exercises"
+            ContentTemplate="{DataTemplate views:CustomExercisesPage}"
+            Route="CustomExercisesPage" />
+    </FlyoutItem>
 
 </Shell>
