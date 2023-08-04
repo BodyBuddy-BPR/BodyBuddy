@@ -104,6 +104,11 @@
                                     Source="plus_sign"
                                     WidthRequest="30" />-->
                             </Grid>
+
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:ExercisesViewModel}}, Path=GoToExerciseDetailsCommand}" CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+
                         </Frame>
 
                     </Grid>

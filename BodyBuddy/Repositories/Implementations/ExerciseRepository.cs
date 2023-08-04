@@ -21,11 +21,19 @@ namespace BodyBuddy.Repositories.Implementations
 
         public async Task<List<Exercise>> GetExercisesAsync(string musclegroup)
         {
-            var response = await _supabaseClient.From<Exercise>().Select(x => new object[] {x.Name, x.Images, x.Level}).Where(x => x.PrimaryMuscles == musclegroup).Get();
+            var response = await _supabaseClient.From<Exercise>().Select(x => new object[] {x.Id, x.Name, x.Images, x.Level}).Where(x => x.PrimaryMuscles == musclegroup).Get();
             var exercises = response.Models;
             return exercises;
         }
 
+        public async Task<Exercise> GetExerciseDetailsAsync(int id)
+        {
+            var response = await _supabaseClient.From<Exercise>().Where(x => x.Id == id).Get();
+            var exerciseDetails = response.Model;
+            return exerciseDetails;
+        }
+
+        // Not in use anymore
         public async Task<List<string>> GetPrimaryMusclesAsync()
         {
             var response = await _supabaseClient.From<Exercise>().Select("primaryMuscles").Get();
@@ -56,6 +64,8 @@ namespace BodyBuddy.Repositories.Implementations
         {
             await _supabaseClient.From<CustomExercise>().Insert(exercise);
         }
+
+       
 
         #endregion
     }

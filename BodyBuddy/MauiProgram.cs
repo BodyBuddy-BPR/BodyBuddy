@@ -41,6 +41,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<ExercisesPage>();
 		builder.Services.AddSingleton<CustomExercisesPage>();
 		builder.Services.AddTransient<NewExercisePage>();
+		builder.Services.AddTransient<ExerciseDetailsPage>();
 		builder.Services.AddTransient<WorkoutPlanDetailsPage>();
 
 		// ViewModels
@@ -48,6 +49,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<ExercisesViewModel>();
         builder.Services.AddSingleton<CustomExercisesViewModel>();
 		builder.Services.AddTransient<NewExerciseViewModel>();
+		builder.Services.AddTransient<ExerciseDetailsViewModel>();
 		builder.Services.AddTransient<WorkoutPlanDetailsViewModel>();
 
         // Repositories
@@ -57,6 +59,9 @@ public static class MauiProgram
         // Database
         builder.Services.AddSingleton<LocalDatabase>();
         builder.Services.AddSingleton(provider => new Supabase.Client(url, key, options));
+
+        // Services
+        builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
 
         return builder.Build();
 	}

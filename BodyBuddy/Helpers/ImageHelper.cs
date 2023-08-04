@@ -14,8 +14,7 @@ namespace BodyBuddy.Helpers
         // TODO: FIGURE OUT HOW TO HIDE THESE KEYS
         private const string PrivateApiKey = "private_YWs786SoD61eD9kxM/Q2sktOfs0=";
         private const string PublicApiKey = "public_tIwRm05NHB+Qaaw9+2yv1Ku2Oq0=";
-        private const string ImagekitId = "puguoz8sl";
-        private const string ImagekitEndpoint = "https://ik.imagekit.io"; // The Imagekit endpoint URL
+        private const string ImagekitEndpoint = "https://ik.imagekit.io/puguoz8sl"; // The Imagekit endpoint URL
 
         private const string BaseImageUrl = "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/";
 
@@ -43,16 +42,16 @@ namespace BodyBuddy.Helpers
         }
 
         // Using ImageKit to provide optimized and resized images for faster loading
-        // Not working now as the images needs to be hosted on ImageKit first
+        // 
         private string GenerateImagekitURL(string imagePath)
         {
             // Initialize the Imagekit client
-            ImagekitClient imagekit = new ImagekitClient(PublicApiKey, PrivateApiKey, "https://ik.imagekit.io/puguoz8sl");
+            ImagekitClient imagekit = new ImagekitClient(PublicApiKey, PrivateApiKey, ImagekitEndpoint);
 
             // Sample transformation settings
             Transformation transformation = new Transformation()
-                .Height(80)
-                .Width(80)
+                //.Height(80)
+                //.Width(80)
                 .Quality(100);
 
             // Generate the Imagekit URL with transformations

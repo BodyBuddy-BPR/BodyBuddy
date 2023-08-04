@@ -12,6 +12,9 @@ namespace BodyBuddy.Repositories
 
         Task<List<Exercise>> GetExercisesAsync(string musclegroup);
 
+        Task<Exercise> GetExerciseDetailsAsync(int id);
+
+        // Not in use anymore
         Task<List<string>> GetPrimaryMusclesAsync();
 
         #endregion

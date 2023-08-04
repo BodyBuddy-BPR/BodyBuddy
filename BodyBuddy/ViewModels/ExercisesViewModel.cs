@@ -7,17 +7,20 @@ namespace BodyBuddy.ViewModels
     public partial class ExercisesViewModel : BaseViewModel
     {
         private readonly IExerciseRepository _exerciseRepository;
+        private IConnectivity _connectivity;
 
         public ObservableCollection<Exercise> ExercisesList { get; set; } = new ObservableCollection<Exercise>();
 
         public ObservableCollection<string> FilterChips { get; set; } = new();
 
-        public ExercisesViewModel(IExerciseRepository exerciseRepository)
+        public ExercisesViewModel(IExerciseRepository exerciseRepository, IConnectivity connectivity)
         {
             Title = string.Empty;
 
             _exerciseRepository = exerciseRepository;
+            _connectivity = connectivity; 
             GenerateFilterChips();
+
         }
 
         [RelayCommand]
@@ -54,7 +57,18 @@ namespace BodyBuddy.ViewModels
             }
         }
 
-        
+        [RelayCommand]
+        async Task GoToExerciseDetails(Exercise exercise)
+        {
+            if (exercise is null) 
+                return;
+
+            await Shell.Current.GoToAsync(nameof(ExerciseDetailsPage), true, new Dictionary<string, object>
+            {
+                {"Exercise", exercise }
+            });
+        }
+
         private void GenerateFilterChips()
         {
             FilterChips.Add("abdominals");
@@ -77,7 +91,7 @@ namespace BodyBuddy.ViewModels
 
             //List<Exercise> muscleGroups = new List<Exercise>
             //{
-               
+
             //    new Exercise { PrimaryMuscles = "abdominals"},
             //    new Exercise { PrimaryMuscles = "hamstrings"},
             //    new Exercise { PrimaryMuscles = "adductors"},
