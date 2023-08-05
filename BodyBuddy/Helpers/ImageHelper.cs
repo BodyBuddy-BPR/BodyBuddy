@@ -29,9 +29,9 @@ namespace BodyBuddy.Helpers
                     var imagePath = BaseImageUrl + imagePaths[0];
 
                     // Use Imagekit to generate the URL with transformations
-                    var imageUrl = GenerateImagekitURL(imagePath);
+                    //var imageUrl = GenerateImagekitURL(imagePath);
 
-                    //var imageUrl = BaseImageUrl + imagePaths[0];
+                    var imageUrl = BaseImageUrl + imagePaths[0];
 
                     return new UriImageSource { Uri = new Uri(imageUrl) };
                 }
@@ -42,7 +42,6 @@ namespace BodyBuddy.Helpers
         }
 
         // Using ImageKit to provide optimized and resized images for faster loading
-        // 
         private string GenerateImagekitURL(string imagePath)
         {
             // Initialize the Imagekit client
@@ -50,9 +49,10 @@ namespace BodyBuddy.Helpers
 
             // Sample transformation settings
             Transformation transformation = new Transformation()
-                //.Height(80)
-                //.Width(80)
-                .Quality(100);
+                //.Height(160)
+                //.Width(160)
+                .Progressive(true)
+                .Quality(10);
 
             // Generate the Imagekit URL with transformations
             string imageURL = imagekit.Url(transformation).Path(imagePath).Generate();

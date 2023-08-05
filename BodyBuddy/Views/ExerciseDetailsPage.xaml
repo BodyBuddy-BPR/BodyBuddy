@@ -22,10 +22,20 @@
                 BackgroundColor="{StaticResource Primary}"
                 HorizontalOptions="Fill"
                 VerticalOptions="Fill" />
-            <Image
+            <!--<Image
                 Aspect="AspectFill"
                 HeightRequest="260"
-                Source="{Binding ExerciseDetails.Images, Converter={StaticResource ImageHelper}}" />
+                Source="{Binding ExerciseDetails.Images, Converter={StaticResource ImageHelper}}" />-->
+            <CarouselView HeightRequest="260" ItemsSource="{Binding ExerciseImages}">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Image
+                            Aspect="AspectFill"
+                            HeightRequest="260"
+                            Source="{Binding ., StringFormat='https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/{0}'}" />
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
 
             <HorizontalStackLayout
                 Grid.Row="1"
@@ -55,31 +65,69 @@
                     FontAttributes="Bold"
                     Style="{StaticResource MediumLabel}"
                     Text="{Binding ExerciseDetails.PrimaryMuscles, StringFormat='Primary: {0}'}" />
-                <Label
-                    Margin="0,0,0,10"
-                    Style="{StaticResource MediumLabel}"
-                    Text="{Binding ExerciseDetails.SecondaryMuscles, StringFormat='Secondary: {0}'}" />
+                <Label Style="{StaticResource MediumLabel}" Text="{Binding ExerciseDetails.SecondaryMuscles, StringFormat='Secondary: {0}'}">
+                    <Label.Triggers>
+                        <DataTrigger
+                            Binding="{Binding ExerciseDetails.SecondaryMuscles}"
+                            TargetType="Label"
+                            Value="">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
 
                 <!--  Info  -->
-                <Label Style="{StaticResource LargeLabel}" Text="Info" />
+                <Label
+                    Margin="0,10,0,0"
+                    Style="{StaticResource LargeLabel}"
+                    Text="Info" />
                 <BoxView BackgroundColor="{StaticResource Primary}" HeightRequest="1" />
                 <Label
                     FontAttributes="Bold"
                     Style="{StaticResource MediumLabel}"
-                    Text="{Binding ExerciseDetails.Equipment, StringFormat='Equipment: {0}'}" />
+                    Text="{Binding ExerciseDetails.Equipment, StringFormat='Equipment: {0}'}">
+                    <Label.Triggers>
+                        <DataTrigger
+                            Binding="{Binding ExerciseDetails.Equipment}"
+                            TargetType="Label"
+                            Value="">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
                 <Label
                     FontAttributes="Bold"
                     Style="{StaticResource MediumLabel}"
-                    Text="{Binding ExerciseDetails.Force, StringFormat='Force: {0}'}" />
+                    Text="{Binding ExerciseDetails.Force, StringFormat='Force: {0}'}">
+                    <Label.Triggers>
+                        <DataTrigger
+                            Binding="{Binding ExerciseDetails.Force}"
+                            TargetType="Label"
+                            Value="">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
                 <Label
-                    Margin="0,0,0,10"
                     FontAttributes="Bold"
                     Style="{StaticResource MediumLabel}"
-                    Text="{Binding ExerciseDetails.Mechanic, StringFormat='Mechanic: {0}'}" />
+                    Text="{Binding ExerciseDetails.Mechanic, StringFormat='Mechanic: {0}'}">
+                    <Label.Triggers>
+                        <DataTrigger
+                            Binding="{Binding ExerciseDetails.Mechanic}"
+                            TargetType="Label"
+                            Value="">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
 
 
                 <!--  Instructions  -->
-                <Label Style="{StaticResource LargeLabel}" Text="Instructions" />
+                <Label
+                    Margin="0,10,0,0"
+                    Style="{StaticResource LargeLabel}"
+                    Text="Instructions" />
                 <BoxView BackgroundColor="{StaticResource Primary}" HeightRequest="1" />
                 <Label Style="{StaticResource MediumLabel}" Text="{Binding ExerciseDetails.Instructions}" />
 

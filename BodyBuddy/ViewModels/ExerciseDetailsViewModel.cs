@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,9 @@ namespace BodyBuddy.ViewModels
 
         [ObservableProperty]
         private Exercise _exerciseDetails;
+        public ObservableCollection<string> ExerciseImages { get; set; } = new ObservableCollection<string>();
+
+
         public ExerciseDetailsViewModel(IExerciseRepository exerciseRepository, IConnectivity connectivity)
         {
             _exerciseRepository = exerciseRepository;
@@ -34,7 +38,12 @@ namespace BodyBuddy.ViewModels
                 }
                 IsBusy = true;
 
-                ExerciseDetails = await _exerciseRepository.GetExerciseDetailsAsync(ExerciseDetails.Id);
+                var exercise = await _exerciseRepository.GetExerciseDetailsAsync(ExerciseDetails.Id);
+                ProcessExerciseDetails(exercise);
+                ExerciseDetails = exercise;
+
+                // Populate ExerciseImages
+                PopulateExerciseImagesList(exercise.Images);
             }
             catch (Exception ex)
             {
@@ -46,5 +55,42 @@ namespace BodyBuddy.ViewModels
                 IsBusy = false;
             }
         }
+
+
+        #region Helper methods
+
+        // Method to populate ExerciseImages list from the images string
+        private void PopulateExerciseImagesList(string images)
+        {
+            ExerciseImages.Clear();
+            if (!string.IsNullOrEmpty(images))
+            {
+                string[] imagePaths = images.Split(',');
+                foreach (string path in imagePaths)
+                {
+                    ExerciseImages.Add(path.Trim()); // Trim to remove any leading/trailing whitespace
+                }
+            }
+        }
+
+        // If any values in the exercise details response from the repo is null, it converts these to empty string instead
+        private void ProcessExerciseDetails(Exercise exercise)
+        {
+            if (exercise == null)
+                return;
+
+            // Check and convert any null properties to empty strings
+            exercise.Name ??= string.Empty;
+            exercise.Level ??= string.Empty;
+            exercise.Category ??= string.Empty;
+            exercise.PrimaryMuscles ??= string.Empty;
+            exercise.SecondaryMuscles ??= string.Empty;
+            exercise.Equipment ??= string.Empty;
+            exercise.Force ??= string.Empty;
+            exercise.Mechanic ??= string.Empty;
+            exercise.Instructions ??= string.Empty;
+        }
+
+        #endregion
     }
 }
