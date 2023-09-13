@@ -16,13 +16,5 @@ namespace BodyBuddy.Repositories
 
         // Not in use anymore
         Task<List<string>> GetPrimaryMusclesAsync();
-
-
-        #region Custom Exercises
-
-        Task<List<CustomExercise>> GetCustomExercisesAsync();
-        Task SaveCustomExerciseAsync(CustomExercise exercise);
-
-        #endregion
     }
 }

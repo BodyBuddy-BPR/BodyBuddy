@@ -2,6 +2,7 @@
 using BodyBuddy.Models;
 using BodyBuddy.Repositories;
 using BodyBuddy.Views;
+using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -20,7 +21,7 @@ namespace BodyBuddy.ViewModels
         [ObservableProperty]
         private string _workoutName;
 
-
+        public ObservableCollection<WorkoutPlan> WorkoutPlans { get; set; } = new ObservableCollection<WorkoutPlan>();
 
         public WorkoutPlansViewModel(IWorkoutPlanRepository workoutPlanRepository)
         {

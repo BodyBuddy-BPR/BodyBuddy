@@ -23,7 +23,7 @@
 
             <Style ApplyToDerivedTypes="True" TargetType="Page">
                 <!--<Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}" />-->
-                <Setter Property="BackgroundColor" Value="{StaticResource LightBackground}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource Background}" />
             </Style>
 
             <Style ApplyToDerivedTypes="True" TargetType="NavigationPage">

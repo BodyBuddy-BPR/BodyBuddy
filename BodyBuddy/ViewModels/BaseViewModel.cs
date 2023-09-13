@@ -19,9 +19,6 @@ namespace BodyBuddy.ViewModels
 
         public bool IsNotBusy => !IsBusy;
 
-
-        public ObservableCollection<WorkoutPlan> WorkoutPlans { get; set; } = new ObservableCollection<WorkoutPlan>();
-
         public BaseViewModel()
         {
 
