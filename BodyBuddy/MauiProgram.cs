@@ -3,7 +3,12 @@ using CommunityToolkit.Maui;
 using BodyBuddy.Database;
 using Syncfusion.Maui.Core.Hosting;
 using Supabase;
-
+using BodyBuddy.Repositories;
+using BodyBuddy.Repositories.Implementations;
+using BodyBuddy.ViewModels;
+using BodyBuddy.Views;
+using BodyBuddy.Views.ExerciseViews;
+using BodyBuddy.ViewModels.ExerciseViewModels;
 
 namespace BodyBuddy;
 
@@ -38,17 +43,21 @@ public static class MauiProgram
 
         // Views
         builder.Services.AddSingleton<WorkoutPlansPage>();
-        builder.Services.AddSingleton<ExercisesPage>();
-		builder.Services.AddSingleton<CustomExercisesPage>();
-		builder.Services.AddTransient<NewExercisePage>();
+        builder.Services.AddTransient<WorkoutPlanDetailsPage>();
+
+        builder.Services.AddSingleton<CategoryPage>();
+        builder.Services.AddSingleton<MuscleGroupPage>();
+        builder.Services.AddTransient<ExercisesPage>();
 		builder.Services.AddTransient<ExerciseDetailsPage>();
 		builder.Services.AddTransient<WorkoutPlanDetailsPage>();
 
 		// ViewModels
 		builder.Services.AddSingleton<WorkoutPlansViewModel>();
-		builder.Services.AddSingleton<ExercisesViewModel>();
-        builder.Services.AddSingleton<CustomExercisesViewModel>();
-		builder.Services.AddTransient<NewExerciseViewModel>();
+        builder.Services.AddTransient<WorkoutPlanDetailsViewModel>();
+
+        builder.Services.AddSingleton<CategoryViewModel>();
+        builder.Services.AddSingleton<MuscleGroupViewModel>();
+        builder.Services.AddSingleton<ExercisesViewModel>();
 		builder.Services.AddTransient<ExerciseDetailsViewModel>();
 		builder.Services.AddTransient<WorkoutPlanDetailsViewModel>();
 

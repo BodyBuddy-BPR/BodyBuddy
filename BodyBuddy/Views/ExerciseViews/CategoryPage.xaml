@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BodyBuddy.Views.ExerciseViews.CategoryPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:BodyBuddy.Models"
+    xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.ExerciseViewModels"
+    Title="{Binding Title}"
+    x:DataType="viewModel:CategoryViewModel">
+
+
+    <Grid
+        Margin="20,10"
+        RowDefinitions="Auto, *, Auto"
+        RowSpacing="15">
+
+        <!--  Title  -->
+        <Label
+            Grid.Row="0"
+            Style="{StaticResource TitleLabel}"
+            Text="Categories" />
+
+        <!--  Collection of Categories  -->
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Categories}">
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout
+                    HorizontalItemSpacing="15"
+                    Orientation="Vertical"
+                    Span="2"
+                    VerticalItemSpacing="15" />
+
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Exercise">
+
+                    <Frame
+                        HeightRequest="130"
+                        Style="{StaticResource CardView}"
+                        WidthRequest="160">
+                        <StackLayout>
+                            <Image
+                                Aspect="AspectFit"
+                                HeightRequest="80"
+                                Source="no_image.png"
+                                WidthRequest="90" />
+
+                            <Label
+                                HorizontalOptions="CenterAndExpand"
+                                LineBreakMode="TailTruncation"
+                                Style="{StaticResource LargeLabel}"
+                                Text="{Binding Category}" />
+                        </StackLayout>
+
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:CategoryViewModel}}, Path=GoToPrimaryMusclesPageCommand}" CommandParameter="{Binding .}" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+
+                </DataTemplate>
+
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        
+    </Grid>
+
+
+
+</ContentPage>

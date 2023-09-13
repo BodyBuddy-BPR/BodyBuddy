@@ -8,17 +8,17 @@
         <ResourceDictionary>
 
             <Color x:Key="Secondary">#21AB74</Color>
-            <Color x:Key="Primary">#2B8DA1</Color>
+            <Color x:Key="Primary">#7BC1DE</Color>
 
-            <Color x:Key="PrimaryDarker">#277F91</Color>
+            <Color x:Key="PrimaryDarker">#096389</Color>
 
-            <Color x:Key="LightBackground">#F4F4F8</Color>
+            <Color x:Key="Background">#096389</Color>
             <Color x:Key="DarkBackground">#161616</Color>
 
             <Color x:Key="LabelText">black</Color>
             <Color x:Key="LabelTextDark">White</Color>
 
-            <Color x:Key="CardBackground">White</Color>
+            <Color x:Key="CardBackground">#84AEB7</Color>
             <Color x:Key="CardBackgroundDark">#1C1C1E</Color>
 
             <Style ApplyToDerivedTypes="True" TargetType="Page">
@@ -79,6 +79,7 @@
                 TargetType="Label">
                 <Setter Property="FontSize" Value="24" />
                 <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="White" />
             </Style>
 
             <Style ApplyToDerivedTypes="True" TargetType="RefreshView">
@@ -97,7 +98,7 @@
             </Style>
 
             <Style x:Key="CardView" TargetType="Frame">
-                <Setter Property="BorderColor" Value="#DDDDDD" />
+                <!--<Setter Property="BorderColor" Value="#DDDDDD" />-->
                 <Setter Property="HasShadow" Value="{OnPlatform iOS=false, MacCatalyst=false, Default=true}" />
                 <Setter Property="Padding" Value="0" />
                 <Setter Property="Background" Value="{StaticResource CardBackground}" />

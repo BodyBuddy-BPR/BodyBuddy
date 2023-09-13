@@ -42,5 +42,9 @@ namespace BodyBuddy.Models
 
         [Column("name_id")]
         public string NameId { get; set; }
+
+
+        //Used for MusclegroupViewModel, not to be used in database
+        public string TargetArea { get; set; }
     }
 }

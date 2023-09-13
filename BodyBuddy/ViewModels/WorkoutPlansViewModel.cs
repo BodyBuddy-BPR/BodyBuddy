@@ -1,4 +1,7 @@
 ﻿using BodyBuddy.Database;
+using BodyBuddy.Models;
+using BodyBuddy.Repositories;
+using BodyBuddy.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;

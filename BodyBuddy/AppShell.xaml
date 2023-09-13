@@ -3,23 +3,24 @@
     x:Class="BodyBuddy.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:exerciseViews="clr-namespace:BodyBuddy.Views.ExerciseViews"
     xmlns:local="clr-namespace:BodyBuddy"
     xmlns:views="clr-namespace:BodyBuddy.Views"
     FlyoutBackgroundColor="{StaticResource PrimaryDarker}"
-    Shell.FlyoutBehavior="Flyout">
+    Shell.FlyoutBehavior="Disabled">
 
     <Shell.Resources>
         <ResourceDictionary>
             <Style x:Key="BaseStyle" TargetType="Element">
                 <Setter Property="Shell.BackgroundColor" Value="{StaticResource PrimaryDarker}" />
                 <Setter Property="Shell.ForegroundColor" Value="Black" />
-                <Setter Property="Shell.TitleColor" Value="Black" />
+                <Setter Property="Shell.TitleColor" Value="White" />
                 <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
                 <Setter Property="Shell.UnselectedColor" Value="{AppThemeBinding Dark=#95FFFFFF, Light=#95000000}" />
                 <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource PrimaryDarker}" />
-                <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource PrimaryDarker}" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource Primary}" />
                 <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Dark=#95FFFFFF, Light=#95000000}" />
-                <Setter Property="Shell.TabBarTitleColor" Value="Black" />
+                <Setter Property="Shell.TabBarTitleColor" Value="White" />
             </Style>
 
             <Style
@@ -30,26 +31,21 @@
         </ResourceDictionary>
     </Shell.Resources>
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <TabBar>
+        <ShellContent
+            Title="Home"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage" />
 
-    <ShellContent
-        Title="Workouts"
-        ContentTemplate="{DataTemplate views:WorkoutPlansPage}"
-        Route="WorkoutPlansPage" />
+        <ShellContent
+            Title="Workouts"
+            ContentTemplate="{DataTemplate views:WorkoutPlansPage}"
+            Route="WorkoutPlansPage" />
 
-    <FlyoutItem Title="Exercises">
         <ShellContent
             Title="Exercises"
-            ContentTemplate="{DataTemplate views:ExercisesPage}"
-            Route="ExercisesPage" />
-
-        <ShellContent
-            Title="Custom Exercises"
-            ContentTemplate="{DataTemplate views:CustomExercisesPage}"
-            Route="CustomExercisesPage" />
-    </FlyoutItem>
+            ContentTemplate="{DataTemplate exerciseViews:CategoryPage}"
+            Route="CategoryPage" />
+    </TabBar>
 
 </Shell>

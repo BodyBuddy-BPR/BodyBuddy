@@ -1,3 +1,5 @@
+using BodyBuddy.ViewModels;
+
 namespace BodyBuddy.Views;
 
 public partial class WorkoutPlansPage : ContentPage

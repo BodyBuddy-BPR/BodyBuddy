@@ -4,8 +4,4 @@ global using System.Linq;
 global using System.Text;
 global using System.Threading.Tasks;
 global using System.Diagnostics;
-global using BodyBuddy.Models;
-global using BodyBuddy.ViewModels;
-global using BodyBuddy.Views;
-global using BodyBuddy.Repositories;
-global using BodyBuddy.Repositories.Implementations;
+

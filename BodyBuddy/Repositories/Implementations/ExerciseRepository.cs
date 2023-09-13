@@ -1,9 +1,11 @@
-﻿using Supabase;
+﻿using BodyBuddy.Models;
+using Supabase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Postgrest.Constants;
 
 namespace BodyBuddy.Repositories.Implementations
 {
@@ -16,12 +18,19 @@ namespace BodyBuddy.Repositories.Implementations
             _supabaseClient = supabaseClient;
         }
 
-        
+
         #region Exercises
 
-        public async Task<List<Exercise>> GetExercisesAsync(string musclegroup)
+        public async Task<List<Exercise>> GetExercisesAsync(string category, string musclegroup)
         {
-            var response = await _supabaseClient.From<Exercise>().Select(x => new object[] {x.Id, x.Name, x.Images, x.Level}).Where(x => x.PrimaryMuscles == musclegroup).Get();
+            //var response = await _supabaseClient.From<Exercise>().Select(x => new object[] { x.Id, x.Name, x.Images, x.Level }).Where(x => x.Category == category && x.PrimaryMuscles == musclegroup).Get();
+            //var response = await _supabaseClient.From<Exercise>().Select(x => new object[] { x.Id, x.Name, x.Images, x.Level })
+            //    .Where(x => x.Category.Equals(category, StringComparison.OrdinalIgnoreCase)
+            //        && x.PrimaryMuscles.Equals(musclegroup, StringComparison.OrdinalIgnoreCase)).Get();
+
+            var response = await _supabaseClient.From<Exercise>().Select(x => new object[] { x.Id, x.Name, x.Images, x.Level })
+                .Filter(x => x.Category, Operator.ILike, category).Filter(x => x.PrimaryMuscles, Operator.ILike, musclegroup).Get();
+
             var exercises = response.Models;
             return exercises;
         }
