@@ -3,6 +3,7 @@ using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,102 +11,57 @@ namespace BodyBuddy.Database
 {
     public class LocalDatabase
     {
-        // Should not be in use right now. This is used to store things locally on the device
 
-
-        SQLiteAsyncConnection _context;
+        private SQLiteAsyncConnection _context;
 
         public LocalDatabase()
         {
         }
 
-        async Task Init()
+        private async Task Init()
         {
             if (_context is not null)
                 return;
 
-            _context = new SQLiteAsyncConnection(SQLiteConstants.DatabasePath, SQLiteConstants.Flags);
-            var exerciseTable = await _context.CreateTableAsync<Exercise>();
-            var workoutTable = await _context.CreateTableAsync<WorkoutPlan>();
+            // Ensure that the connection is initialized asynchronously
+            _context = await GetAsyncConnection();
         }
 
-        #region Exercise
-        public async Task<List<Exercise>> GetItemsAsync()
+        public async Task<SQLiteAsyncConnection> GetAsyncConnection()
         {
-            await Init();
-            return await _context.Table<Exercise>().ToListAsync();
-        }
-
-        public async Task<int> SaveItemAsync(Exercise item)
-        {
-            await Init();
-
-            if (item.Id != 0)
-                return await _context.UpdateAsync(item);
-            else
+            if (_context == null)
             {
-                item.Id = await GetNextItemId(); // Generate a unique Id
-                return await _context.InsertAsync(item);
+                // Get the path to the local database file
+                string databasePath = SQLiteConstants.DatabasePath;
+                System.Diagnostics.Debug.WriteLine($"Database path: {databasePath}");
+
+                // Check if the database file exists in local storage
+                if (!File.Exists(databasePath))
+                {
+                    // If it doesn't exist, copy it from the embedded resource
+                    var assembly = Assembly.GetExecutingAssembly();
+                    using (var stream = assembly.GetManifestResourceStream("BodyBuddy.Database.BodyBoddyDb.db"))
+                    {
+                        using (var fileStream = File.Create(databasePath))
+                        {
+                            await stream.CopyToAsync(fileStream);
+                        }
+                    }
+                    // Add a debug statement to confirm the file copy
+                    System.Diagnostics.Debug.WriteLine("Database file copied successfully.");
+                }
+
+                // Initialize the SQLite connection
+                _context = new SQLiteAsyncConnection(databasePath, SQLiteConstants.Flags);
+                // Add a debug statement to confirm the connection creation
+                System.Diagnostics.Debug.WriteLine("SQLite connection created successfully.");
+
+                // Add debug statements to confirm actions
+                System.Diagnostics.Debug.WriteLine("Database file copied or found.");
+                System.Diagnostics.Debug.WriteLine("SQLite connection created successfully.");
             }
+            return _context;
         }
-
-        private async Task<int> GetNextItemId()
-        {
-            var lastItem = await _context.Table<Exercise>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
-            return lastItem?.Id + 1 ?? 1;
-        }
-
-        public async Task<int> UpdateItemAsync(Exercise item)
-        {
-            await Init();
-            return await _context.UpdateAsync(item);
-        }
-
-        public async Task<int> DeleteItemAsync(Exercise item)
-        {
-            await Init();
-            return await _context.DeleteAsync(item);
-        }
-        #endregion
-
-
-        #region WorkoutPlan
-        public async Task<List<WorkoutPlan>> GetWorkoutPlansAsync()
-        {
-            await Init();
-            return await _context.Table<WorkoutPlan>().ToListAsync();
-        }
-
-        public async Task<int> SaveWorkoutPlanAsync(WorkoutPlan item)
-        {
-            await Init();
-
-            if (item.Id != 0)
-                return await _context.UpdateAsync(item);
-            else
-            {
-                item.Id = await GetNextWorkoutPlanId(); // Generate a unique Id
-                return await _context.InsertAsync(item);
-            }
-        }
-
-        private async Task<int> GetNextWorkoutPlanId()
-        {
-            var lastItem = await _context.Table<WorkoutPlan>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
-            return lastItem?.Id + 1 ?? 1;
-        }
-
-        public async Task<int> UpdateWorkoutPlanAsync(WorkoutPlan item)
-        {
-            await Init();
-            return await _context.UpdateAsync(item);
-        }
-
-        public async Task<int> DeleteWorkoutPlanAsync(WorkoutPlan item)
-        {
-            await Init();
-            return await _context.DeleteAsync(item);
-        }
-        #endregion
     }
+
 }

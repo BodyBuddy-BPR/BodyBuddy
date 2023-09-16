@@ -1,13 +1,12 @@
-﻿using Postgrest.Attributes;
-using Postgrest.Models;
-
+﻿//using Postgrest.Attributes;
+//using Postgrest.Models;
+using SQLite;
 
 namespace BodyBuddy.Models
 {
-    [Table("Exercise")]
-    public class Exercise : BaseModel
+    public class Exercise
     {
-        [PrimaryKey("id", false)]
+        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 
         [Column("name")]
@@ -43,8 +42,52 @@ namespace BodyBuddy.Models
         [Column("name_id")]
         public string NameId { get; set; }
 
-
-        //Used for MusclegroupViewModel, not to be used in database
+        // Used for MuscleGroupViewModel, not to be used in the database
+        [Ignore]
         public string TargetArea { get; set; }
     }
+
+    //[Table("Exercise")]
+    //public class Exercise : BaseModel
+    //{
+    //    [PrimaryKey("id", false)]
+    //    public int Id { get; set; }
+
+    //    [Column("name")]
+    //    public string Name { get; set; }
+
+    //    [Column("force")]
+    //    public string Force { get; set; }
+
+    //    [Column("level")]
+    //    public string Level { get; set; }
+
+    //    [Column("mechanic")]
+    //    public string Mechanic { get; set; }
+
+    //    [Column("equipment")]
+    //    public string Equipment { get; set; }
+
+    //    [Column("primaryMuscles")]
+    //    public string PrimaryMuscles { get; set; }
+
+    //    [Column("secondaryMuscles")]
+    //    public string SecondaryMuscles { get; set; }
+
+    //    [Column("instructions")]
+    //    public string Instructions { get; set; }
+
+    //    [Column("category")]
+    //    public string Category { get; set; }
+
+    //    [Column("images")]
+    //    public string Images { get; set; }
+
+    //    [Column("name_id")]
+    //    public string NameId { get; set; }
+
+
+    //    //Used for MusclegroupViewModel, not to be used in database
+    //    public string TargetArea { get; set; }
+    //}
 }

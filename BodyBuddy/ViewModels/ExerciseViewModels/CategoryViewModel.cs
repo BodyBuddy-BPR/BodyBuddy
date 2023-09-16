@@ -8,6 +8,7 @@ using BodyBuddy.Views;
 using System.Text;
 using System.Threading.Tasks;
 using BodyBuddy.Views.ExerciseViews;
+using BodyBuddy.Database;
 
 namespace BodyBuddy.ViewModels.ExerciseViewModels
 {
@@ -19,6 +20,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
         {
             Title = string.Empty;
             GenerateCategories();
+
         }
 
         [RelayCommand]

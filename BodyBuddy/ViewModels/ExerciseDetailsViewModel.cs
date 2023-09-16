@@ -41,12 +41,12 @@ namespace BodyBuddy.ViewModels
                 }
                 IsBusy = true;
 
-                var exercise = await _exerciseRepository.GetExerciseDetailsAsync(ExerciseDetails.Id);
-                ProcessExerciseDetails(exercise);
-                ExerciseDetails = exercise;
+                ////var exercise = await _exerciseRepository.GetExerciseDetailsAsync(ExerciseDetails.Id);
+                //ProcessExerciseDetails(exercise);
+                //ExerciseDetails = exercise;
 
-                // Populate ExerciseImages
-                PopulateExerciseImagesList(exercise.Images);
+                //// Populate ExerciseImages
+                //PopulateExerciseImagesList(exercise.Images);
             }
             catch (Exception ex)
             {

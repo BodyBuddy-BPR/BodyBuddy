@@ -65,8 +65,20 @@ public static class MauiProgram
         builder.Services.AddSingleton<IExerciseRepository, ExerciseRepository>();
         builder.Services.AddSingleton<IWorkoutPlanRepository, WorkoutPlanRepository>();
 
-        // Database
+        // Local Database
         builder.Services.AddSingleton<LocalDatabase>();
+        builder.Services.AddTransient(async provider =>
+        {
+            var localDatabase = provider.GetRequiredService<LocalDatabase>();
+            return await localDatabase.GetAsyncConnection();
+        });
+        builder.Services.AddSingleton(provider =>
+        {
+            var localDatabase = provider.GetRequiredService<LocalDatabase>();
+            return localDatabase.GetAsyncConnection().Result; // Use .Result to block and get the connection synchronously.
+        });
+
+        // Supabase Database
         builder.Services.AddSingleton(provider => new Supabase.Client(url, key, options));
 
         // Services

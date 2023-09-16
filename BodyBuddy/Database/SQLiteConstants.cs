@@ -8,7 +8,7 @@ namespace BodyBuddy.Database
 {
     public class SQLiteConstants
     {
-        public const string DatabaseFilename = "BodyBuddy.db3";
+        public const string DatabaseFilename = "BodyBuddyDb.db";
 
         public const SQLite.SQLiteOpenFlags Flags =
 

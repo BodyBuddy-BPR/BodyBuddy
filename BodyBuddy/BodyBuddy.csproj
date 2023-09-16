@@ -58,9 +58,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Database\BodyBoddyDb.db" />
 	  <None Remove="Resources\Images\add_circle.svg" />
 	  <None Remove="Resources\Images\no_image.svg" />
 	  <None Remove="Resources\Images\plus_sign.svg" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Database\BodyBoddyDb.db">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>
