@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Postgrest.Constants;
 
 namespace BodyBuddy.Repositories.Implementations
 {
@@ -21,11 +20,13 @@ namespace BodyBuddy.Repositories.Implementations
             _supabaseClient = supabaseClient;
         }
 
-        public async Task<List<Exercise>> GetExercisesAsync()
+        public async Task<List<Exercise>> GetExercisesAsync(string category, string musclegroup)
         {
             try
             {
-                var exercises = await _context.Table<Exercise>().ToListAsync();
+                var exercises = await _context.Table<Exercise>()
+                    .Where(x => x.Category.Equals(category, StringComparison.OrdinalIgnoreCase) &&
+                    x.PrimaryMuscles.Equals(musclegroup, StringComparison.OrdinalIgnoreCase)).ToListAsync();
 
                 return exercises;
             }
@@ -35,6 +36,31 @@ namespace BodyBuddy.Repositories.Implementations
                 Console.WriteLine($"Error in GetExercisesAsync: {ex}");
                 return new List<Exercise>(); // Return an empty list or handle the error gracefully.
             }
+        }
+
+        public async Task<List<string>> GetMuscleGroupsForCategory(string category)
+        {
+            try
+            {
+                string lowerCategory = category.ToLower();
+
+                var sql = $"SELECT DISTINCT primaryMuscles FROM Exercise WHERE category = '{lowerCategory}'";
+
+                var distinctMuscleGroupsObjects = await _context.QueryAsync<Exercise>(sql);
+
+                // Convert the objects to strings
+                var distinctMuscleGroups = distinctMuscleGroupsObjects.Select(x => x.PrimaryMuscles).ToList();
+
+                return distinctMuscleGroups;
+            }
+            catch (Exception ex)
+            {
+                // Handle or log the exception
+                Console.WriteLine($"Error in GetMuscleGroupsForCategory: {ex}");
+                return new List<string>(); // Return an empty list or handle the error gracefully.
+            }
+
+
         }
 
         #region Supabase methods

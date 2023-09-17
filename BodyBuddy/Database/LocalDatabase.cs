@@ -53,12 +53,13 @@ namespace BodyBuddy.Database
 
                 // Initialize the SQLite connection
                 _context = new SQLiteAsyncConnection(databasePath, SQLiteConstants.Flags);
-                // Add a debug statement to confirm the connection creation
-                System.Diagnostics.Debug.WriteLine("SQLite connection created successfully.");
 
-                // Add debug statements to confirm actions
-                System.Diagnostics.Debug.WriteLine("Database file copied or found.");
-                System.Diagnostics.Debug.WriteLine("SQLite connection created successfully.");
+                //// Add a debug statement to confirm the connection creation
+                //System.Diagnostics.Debug.WriteLine("SQLite connection created successfully.");
+
+                //// Add debug statements to confirm actions
+                //System.Diagnostics.Debug.WriteLine("Database file copied or found.");
+                //System.Diagnostics.Debug.WriteLine("SQLite connection created successfully.");
             }
             return _context;
         }

@@ -40,8 +40,7 @@ namespace BodyBuddy.ViewModels
             {
                 IsBusy = true;
 
-                //var exercises = await _exerciseRepository.GetExercisesAsync(Exercise.Category, Exercise.PrimaryMuscles);
-                var exercises = await _exerciseRepository.GetExercisesAsync();
+                var exercises = await _exerciseRepository.GetExercisesAsync(Exercise.Category, Exercise.PrimaryMuscles);
 
                 if (ExercisesList.Count != 0)
                 {

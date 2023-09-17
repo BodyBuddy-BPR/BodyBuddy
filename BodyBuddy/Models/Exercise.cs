@@ -47,6 +47,7 @@ namespace BodyBuddy.Models
         public string TargetArea { get; set; }
     }
 
+    //Supabase
     //[Table("Exercise")]
     //public class Exercise : BaseModel
     //{

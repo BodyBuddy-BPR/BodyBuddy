@@ -17,7 +17,8 @@ namespace BodyBuddy.Repositories
         //// Not in use anymore
         //Task<List<string>> GetPrimaryMusclesAsync();
 
+        Task<List<string>> GetMuscleGroupsForCategory(string category);
 
-        Task<List<Exercise>> GetExercisesAsync();
+        Task<List<Exercise>> GetExercisesAsync(string category, string musclegroup);
     }
 }
