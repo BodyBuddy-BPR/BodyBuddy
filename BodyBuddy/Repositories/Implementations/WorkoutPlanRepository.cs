@@ -1,4 +1,5 @@
 ﻿using BodyBuddy.Models;
+using SQLite;
 using Supabase;
 using System;
 using System.Collections.Generic;
@@ -11,27 +12,36 @@ namespace BodyBuddy.Repositories.Implementations
     public class WorkoutPlanRepository : IWorkoutPlanRepository
     {
 
-        //Uses Supabase as database, needs to change to use SQlite instead
+        //private readonly Client _supabaseClient;
+		private readonly SQLiteAsyncConnection _context;
 
-
-        private readonly Client _supabaseClient;
-
-        public WorkoutPlanRepository(Client supabaseClient)
+		public WorkoutPlanRepository(SQLiteAsyncConnection context, Client supabaseClient)
         {
-            _supabaseClient = supabaseClient;
+			_context = context ?? throw new ArgumentNullException(nameof(context));
+			//_supabaseClient = supabaseClient;
         }
 
-        public async Task<List<WorkoutPlan>> GetWorkoutPlansAsync()
+        public async Task<List<Workout>> GetWorkoutPlansAsync()
         {
-            var response = await _supabaseClient.From<WorkoutPlan>().Get();
-            var workoutPlans = response.Models;
-            return workoutPlans;
-        }
+			try
+			{
+				var workouts = await _context.Table<Workout>().ToListAsync();
 
-        public async Task SaveWorkoutPlanAsync(WorkoutPlan workoutPlan)
-        {
-            await _supabaseClient.From<WorkoutPlan>().Insert(workoutPlan);
+				return workouts;
+			}
+			catch (Exception ex)
+			{
+				// Handle or log the exception
+				Console.WriteLine($"Error in GetExercisesAsync: {ex}");
+				return new List<Workout>(); // Return an empty list or handle the error gracefully.
+			}
+		}
 
-        }
+		//Need to remake this method to use SQLite instead of supabase
+        //public async Task SaveWorkoutPlanAsync(Workout workoutPlan)
+        //{
+        //    await _context.Table<Workout>().Insert(workoutPlan);
+
+        //}
     }
 }

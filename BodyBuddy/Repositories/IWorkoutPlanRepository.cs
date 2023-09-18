@@ -9,9 +9,10 @@ namespace BodyBuddy.Repositories
 {
     public interface IWorkoutPlanRepository
     {
-        Task<List<WorkoutPlan>> GetWorkoutPlansAsync();
+        Task<List<Workout>> GetWorkoutPlansAsync();
 
-        Task SaveWorkoutPlanAsync(WorkoutPlan workoutPlan);
+        //Need to change implementation of this method to use SQLite instead of Supabase
+        //Task SaveWorkoutPlanAsync(WorkoutPlan workoutPlan);
 
 
     }

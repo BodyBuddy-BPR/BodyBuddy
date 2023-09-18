@@ -37,7 +37,7 @@
             </CollectionView.EmptyView>
 
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:WorkoutPlan">
+                <DataTemplate x:DataType="model:Workout">
                     <Grid Padding="0,8">
 
                         <Frame
@@ -82,7 +82,7 @@
             TrailingViewPosition="Inside"
             UnfocusedStrokeThickness="3">
 
-            <Entry
+            <!--<Entry
                 x:Name="NewWorkoutEntry"
                 Completed="Workout_Created"
                 FontSize="18"
@@ -90,9 +90,9 @@
                 ReturnCommand="{Binding SaveWorkoutPlanCommand}"
                 ReturnType="Done"
                 Style="{StaticResource BaseEntry}"
-                Text="{Binding WorkoutName}" />
+                Text="{Binding WorkoutName}" />-->
 
-            <inputLayout:SfTextInputLayout.TrailingView>
+            <!--<inputLayout:SfTextInputLayout.TrailingView>
                 <ImageButton
                     BackgroundColor="{StaticResource Secondary}"
                     Clicked="Workout_Created"
@@ -101,7 +101,7 @@
                     HeightRequest="40"
                     Source="plus_sign"
                     WidthRequest="40" />
-            </inputLayout:SfTextInputLayout.TrailingView>
+            </inputLayout:SfTextInputLayout.TrailingView>-->
 
         </inputLayout:SfTextInputLayout>
     </Grid>

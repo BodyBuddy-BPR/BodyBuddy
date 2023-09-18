@@ -11,13 +11,13 @@ namespace BodyBuddy.Repositories.Implementations
 {
     public class ExerciseRepository : IExerciseRepository
     {
-        private readonly Client _supabaseClient;
+        //private readonly Client _supabaseClient;
         private readonly SQLiteAsyncConnection _context;
 
         public ExerciseRepository(SQLiteAsyncConnection context, Client supabaseClient)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
-            _supabaseClient = supabaseClient;
+            //_supabaseClient = supabaseClient;
         }
 
         public async Task<List<Exercise>> GetExercisesAsync(string category, string musclegroup)

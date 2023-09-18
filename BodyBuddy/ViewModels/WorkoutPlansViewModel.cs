@@ -21,7 +21,7 @@ namespace BodyBuddy.ViewModels
         [ObservableProperty]
         private string _workoutName;
 
-        public ObservableCollection<WorkoutPlan> WorkoutPlans { get; set; } = new ObservableCollection<WorkoutPlan>();
+        public ObservableCollection<Workout> WorkoutPlans { get; set; } = new ObservableCollection<Workout>();
 
         public WorkoutPlansViewModel(IWorkoutPlanRepository workoutPlanRepository)
         {
@@ -62,22 +62,22 @@ namespace BodyBuddy.ViewModels
             }
         }
 
-        [RelayCommand]
-        public async Task SaveWorkoutPlan()
-        {
-            if (string.IsNullOrWhiteSpace(WorkoutName)) return;
+        //[RelayCommand]
+        //public async Task SaveWorkoutPlan()
+        //{
+        //    if (string.IsNullOrWhiteSpace(WorkoutName)) return;
 
-            WorkoutPlan workoutPlan = new()
-            {
-                Name = WorkoutName,
-            };
+        //    WorkoutPlan workoutPlan = new()
+        //    {
+        //        Name = WorkoutName,
+        //    };
 
-            WorkoutPlans.Add(workoutPlan);
-            await _workoutPlanRepository.SaveWorkoutPlanAsync(workoutPlan);
+        //    WorkoutPlans.Add(workoutPlan);
+        //    await _workoutPlanRepository.SaveWorkoutPlanAsync(workoutPlan);
 
-            WorkoutName = string.Empty;
+        //    WorkoutName = string.Empty;
 
-        }
+        //}
 
         [RelayCommand]
         async Task GoToWorkoutplanDetails(WorkoutPlan workoutPlan)
