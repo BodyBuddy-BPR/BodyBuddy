@@ -10,6 +10,10 @@ namespace BodyBuddy.Repositories.Implementations
 {
     public class WorkoutPlanRepository : IWorkoutPlanRepository
     {
+
+        //Uses Supabase as database, needs to change to use SQlite instead
+
+
         private readonly Client _supabaseClient;
 
         public WorkoutPlanRepository(Client supabaseClient)

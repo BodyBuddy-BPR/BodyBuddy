@@ -19,8 +19,6 @@ namespace BodyBuddy.ViewModels
 
         public ObservableCollection<Exercise> ExercisesList { get; set; } = new ObservableCollection<Exercise>();
 
-        //public ObservableCollection<string> FilterChips { get; set; } = new();
-
         public ExercisesViewModel(IExerciseRepository exerciseRepository, IConnectivity connectivity)
         {
             Title = string.Empty;
@@ -75,27 +73,5 @@ namespace BodyBuddy.ViewModels
                 {"Exercise", exercise }
             });
         }
-
-        //Should probably be moved, as this is pretty dum
-        //private void GenerateFilterChips()
-        //{
-        //    FilterChips.Add("abdominals");
-        //    FilterChips.Add("hamstrings");
-        //    FilterChips.Add("adductors");
-        //    FilterChips.Add("quadriceps");
-        //    FilterChips.Add("biceps");
-        //    FilterChips.Add("glutes");
-        //    FilterChips.Add("calves");
-        //    FilterChips.Add("shoulders");
-        //    FilterChips.Add("chest");
-        //    FilterChips.Add("middle back");
-        //    FilterChips.Add("lower back");
-        //    FilterChips.Add("lats");
-        //    FilterChips.Add("triceps");
-        //    FilterChips.Add("traps");
-        //    FilterChips.Add("forearms");
-        //    FilterChips.Add("neck");
-        //    FilterChips.Add("abductors");
-        //}
     }
 }

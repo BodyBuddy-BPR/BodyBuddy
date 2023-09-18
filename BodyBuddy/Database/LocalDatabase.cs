@@ -33,7 +33,6 @@ namespace BodyBuddy.Database
             {
                 // Get the path to the local database file
                 string databasePath = SQLiteConstants.DatabasePath;
-                System.Diagnostics.Debug.WriteLine($"Database path: {databasePath}");
 
                 // Check if the database file exists in local storage
                 if (!File.Exists(databasePath))
@@ -47,19 +46,11 @@ namespace BodyBuddy.Database
                             await stream.CopyToAsync(fileStream);
                         }
                     }
-                    // Add a debug statement to confirm the file copy
-                    System.Diagnostics.Debug.WriteLine("Database file copied successfully.");
                 }
 
                 // Initialize the SQLite connection
                 _context = new SQLiteAsyncConnection(databasePath, SQLiteConstants.Flags);
 
-                //// Add a debug statement to confirm the connection creation
-                //System.Diagnostics.Debug.WriteLine("SQLite connection created successfully.");
-
-                //// Add debug statements to confirm actions
-                //System.Diagnostics.Debug.WriteLine("Database file copied or found.");
-                //System.Diagnostics.Debug.WriteLine("SQLite connection created successfully.");
             }
             return _context;
         }

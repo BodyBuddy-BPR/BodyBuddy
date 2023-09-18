@@ -56,7 +56,7 @@ public static class MauiProgram
         builder.Services.AddTransient<WorkoutPlanDetailsViewModel>();
 
         builder.Services.AddSingleton<CategoryViewModel>();
-        builder.Services.AddSingleton<MuscleGroupViewModel>();
+        builder.Services.AddTransient<MuscleGroupViewModel>();
         builder.Services.AddSingleton<ExercisesViewModel>();
 		builder.Services.AddTransient<ExerciseDetailsViewModel>();
 		builder.Services.AddTransient<WorkoutPlanDetailsViewModel>();
