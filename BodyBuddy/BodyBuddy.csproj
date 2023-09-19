@@ -104,6 +104,16 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiImage Include="Resources\Images\Categories\cardio.svg" />
+	  <MauiImage Include="Resources\Images\Categories\olympic_weightlifting.svg" />
+	  <MauiImage Include="Resources\Images\Categories\plyometrics.svg" />
+	  <MauiImage Include="Resources\Images\Categories\powerlifting.svg" />
+	  <MauiImage Include="Resources\Images\Categories\strength.svg" />
+	  <MauiImage Include="Resources\Images\Categories\stretching.svg" />
+	  <MauiImage Include="Resources\Images\Categories\strongman.svg" />
+	</ItemGroup>
+
 	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadUnhandledDeviceExceptionBodyBuddyHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 
 </Project>
