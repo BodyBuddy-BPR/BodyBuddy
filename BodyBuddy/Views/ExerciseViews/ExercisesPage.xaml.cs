@@ -16,11 +16,14 @@ public partial class ExercisesPage : ContentPage
     {
         base.OnAppearing();
         await _viewModel.GetExercises();
+        await _viewModel.GetWorkouts();
+
+        // Set SelectedWorkout based on _workoutPlan
+        if (_viewModel.WorkoutsList.Any(x => x.Id == _viewModel.WorkoutPlan.Id))
+        {
+            _viewModel.SelectedWorkout = _viewModel.WorkoutPlan;
+        }
     }
 
-    //private async void FilterChips_SelectionChanged(object sender, Syncfusion.Maui.Core.Chips.SelectionChangedEventArgs e)
-    //{
-    //    //e.AddedItem is the musclegroup chip selected
-    //    await _viewModel.GetExercises(e.AddedItem.ToString());
-    //}
+
 }

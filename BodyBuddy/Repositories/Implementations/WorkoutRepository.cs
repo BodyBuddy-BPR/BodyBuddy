@@ -45,13 +45,13 @@ namespace BodyBuddy.Repositories.Implementations
 
 		public async Task<List<Exercise>> GetExercisesFromWorkoutId(int workoutId)
 		{
-			var exercises = new List<Exercise>();
+			List<Exercise> exercises = new();
 			try
 			{
 				var workoutIds = await _context.Table<WorkoutExercises>().Where(x => x.WorkoutId == workoutId).ToListAsync();
 				foreach(var workout in workoutIds)
 				{
-					var exercise = await _context.Table<Exercise>().FirstOrDefaultAsync(x => x.Id == workout.Id);
+					var exercise = await _context.Table<Exercise>().FirstOrDefaultAsync(x => x.Id == workout.ExerciseId);
 					exercises.Add(exercise);
 				}
 				return exercises;

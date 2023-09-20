@@ -19,34 +19,26 @@
     </ContentPage.Resources>
 
 
-    <Grid Margin="20,6" RowDefinitions="Auto,*">
+    <Grid
+        Margin="20,0"
+        RowDefinitions="Auto,*"
+        RowSpacing="5">
 
-        <!--  Musclegroup chips  -->
-        <!--<Grid Grid.Row="0" Margin="-6,0,0,5">
-            <ScrollView HorizontalScrollBarVisibility="Never" Orientation="Horizontal">
-                <chip:SfChipGroup
-                    x:Name="FilterChips"
-                    ChipType="Choice"
-                    ChoiceMode="Single"
-                    ItemsSource="{Binding FilterChips}"
-                    SelectionChanged="FilterChips_SelectionChanged">
-                    <VisualStateManager.VisualStateGroups>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal">
-                                <VisualState.Setters>
-                                    <Setter Property="ChipBackground" Value="{StaticResource Secondary}" />
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="Selected">
-                                <VisualState.Setters>
-                                    <Setter Property="ChipBackground" Value="{StaticResource Primary}" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateManager.VisualStateGroups>
-                </chip:SfChipGroup>
-            </ScrollView>
-        </Grid>-->
+        <Border
+            Grid.Row="0"
+            Padding="40,0"
+            BackgroundColor="Transparent">
+            <Picker
+                x:Name="Picker"
+                Title="Select a workout"
+                FontSize="16"
+                HorizontalTextAlignment="Center"
+                ItemDisplayBinding="{Binding Name}"
+                ItemsSource="{Binding WorkoutsList}"
+                SelectedItem="{Binding SelectedWorkout}"
+                TextColor="White" />
+
+        </Border>
 
         <!--  List of exercises  -->
         <CollectionView
