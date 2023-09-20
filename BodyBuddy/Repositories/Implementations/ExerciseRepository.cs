@@ -1,6 +1,5 @@
 ﻿using BodyBuddy.Models;
 using SQLite;
-using Supabase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,31 +13,32 @@ namespace BodyBuddy.Repositories.Implementations
         //private readonly Client _supabaseClient;
         private readonly SQLiteAsyncConnection _context;
 
-        public ExerciseRepository(SQLiteAsyncConnection context, Client supabaseClient)
+        public ExerciseRepository(SQLiteAsyncConnection context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             //_supabaseClient = supabaseClient;
         }
 
-        public async Task<List<Exercise>> GetExercisesAsync(string category, string musclegroup)
-        {
-            try
-            {
-                var exercises = await _context.Table<Exercise>()
-                    .Where(x => x.Category.Equals(category, StringComparison.OrdinalIgnoreCase) &&
-                    x.PrimaryMuscles.Equals(musclegroup, StringComparison.OrdinalIgnoreCase)).ToListAsync();
+		public async Task<List<Exercise>> GetExercisesAsync(string category, string musclegroup)
+		{
+			try
+			{
+				var exercises = await _context.Table<Exercise>()
+					.Where(x => x.Category.ToUpper() == category.ToUpper() &&
+								x.PrimaryMuscles.ToUpper() == musclegroup.ToUpper())
+					.ToListAsync();
 
-                return exercises;
-            }
-            catch (Exception ex)
-            {
-                // Handle or log the exception
-                Console.WriteLine($"Error in GetExercisesAsync: {ex}");
-                return new List<Exercise>(); // Return an empty list or handle the error gracefully.
-            }
-        }
+				return exercises;
+			}
+			catch (Exception ex)
+			{
+				// Handle or log the exception
+				Console.WriteLine($"Error in GetExercisesAsync: {ex}");
+				return new List<Exercise>(); // Return an empty list or handle the error gracefully.
+			}
+		}
 
-        public async Task<List<string>> GetMuscleGroupsForCategory(string category)
+		public async Task<List<string>> GetMuscleGroupsForCategory(string category)
         {
             try
             {
