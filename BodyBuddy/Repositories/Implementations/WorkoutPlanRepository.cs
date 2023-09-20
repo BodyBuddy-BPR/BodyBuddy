@@ -1,24 +1,16 @@
 ﻿using BodyBuddy.Models;
 using SQLite;
-using Supabase;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BodyBuddy.Repositories.Implementations
 {
     public class WorkoutPlanRepository : IWorkoutPlanRepository
     {
 
-        //private readonly Client _supabaseClient;
 		private readonly SQLiteAsyncConnection _context;
 
-		public WorkoutPlanRepository(SQLiteAsyncConnection context, Client supabaseClient)
+		public WorkoutPlanRepository(SQLiteAsyncConnection context)
         {
 			_context = context ?? throw new ArgumentNullException(nameof(context));
-			//_supabaseClient = supabaseClient;
         }
 
         public async Task<List<Workout>> GetWorkoutPlansAsync()
@@ -37,11 +29,18 @@ namespace BodyBuddy.Repositories.Implementations
 			}
 		}
 
-		//Need to remake this method to use SQLite instead of supabase
-        //public async Task SaveWorkoutPlanAsync(Workout workoutPlan)
-        //{
-        //    await _context.Table<Workout>().Insert(workoutPlan);
-
-        //}
-    }
+		public async Task SaveWorkoutPlanAsync(Workout workoutPlan)
+		{
+			try
+			{
+				await _context.InsertAsync(workoutPlan);
+			}
+			catch (Exception ex)
+			{
+				// Handle or log the exception
+				Console.WriteLine($"Error in SaveWorkoutPlanAsync: {ex}");
+				throw; // Rethrow the exception or handle it gracefully as needed.
+			}
+		}
+	}
 }

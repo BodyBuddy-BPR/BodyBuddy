@@ -25,7 +25,7 @@ namespace BodyBuddy.Repositories.Implementations
 			{
 				var exercises = await _context.Table<Exercise>()
 					.Where(x => x.Category.ToUpper() == category.ToUpper() &&
-								x.PrimaryMuscles.ToUpper() == musclegroup.ToUpper())
+                           x.PrimaryMuscles.ToUpper() == musclegroup.ToUpper())
 					.ToListAsync();
 
 				return exercises;

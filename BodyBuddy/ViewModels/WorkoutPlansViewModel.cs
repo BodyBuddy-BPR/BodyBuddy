@@ -62,22 +62,21 @@ namespace BodyBuddy.ViewModels
             }
         }
 
-        //[RelayCommand]
-        //public async Task SaveWorkoutPlan()
-        //{
-        //    if (string.IsNullOrWhiteSpace(WorkoutName)) return;
+        [RelayCommand]
+        public async Task SaveWorkoutPlan()
+        {
+            if (string.IsNullOrWhiteSpace(WorkoutName)) return;
 
-        //    WorkoutPlan workoutPlan = new()
-        //    {
-        //        Name = WorkoutName,
-        //    };
+            Workout workoutPlan = new()
+            {
+                Name = WorkoutName
+            };
 
-        //    WorkoutPlans.Add(workoutPlan);
-        //    await _workoutPlanRepository.SaveWorkoutPlanAsync(workoutPlan);
+            WorkoutPlans.Add(workoutPlan);
+            await _workoutPlanRepository.SaveWorkoutPlanAsync(workoutPlan);
 
-        //    WorkoutName = string.Empty;
-
-        //}
+            WorkoutName = string.Empty;
+        }
 
         [RelayCommand]
         async Task GoToWorkoutplanDetails(WorkoutPlan workoutPlan)

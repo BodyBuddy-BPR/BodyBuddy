@@ -11,9 +11,6 @@ namespace BodyBuddy.Repositories
     {
         Task<List<Workout>> GetWorkoutPlansAsync();
 
-        //Need to change implementation of this method to use SQLite instead of Supabase
-        //Task SaveWorkoutPlanAsync(WorkoutPlan workoutPlan);
-
-
+        Task SaveWorkoutPlanAsync(Workout workoutPlan);
     }
 }

@@ -19,10 +19,10 @@ public partial class WorkoutPlansPage : ContentPage
         await _viewModel.GetMyWorkoutPlans();
     }
 
-    //private void Workout_Created(object sender, EventArgs e)
-    //{
-    //    NewWorkoutEntry.IsEnabled = false;
-    //    NewWorkoutEntry.IsEnabled = true;
-    //}
+    private void Workout_Created(object sender, EventArgs e)
+    {
+        NewWorkoutEntry.IsEnabled = false;
+        NewWorkoutEntry.IsEnabled = true;
+    }
 
 }
