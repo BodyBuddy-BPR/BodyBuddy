@@ -1,9 +1,10 @@
-﻿
+﻿using Postgrest.Models;
 using SQLite;
 
 namespace BodyBuddy.Models
 {
-	public class Workout
+	[Table("Workout")]
+	public class Workout : BaseModel
 	{
 		[PrimaryKey]
 		public int Id { get; set; }
