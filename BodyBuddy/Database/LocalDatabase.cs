@@ -39,7 +39,7 @@ namespace BodyBuddy.Database
                 {
                     // If it doesn't exist, copy it from the embedded resource
                     var assembly = Assembly.GetExecutingAssembly();
-                    using (var stream = assembly.GetManifestResourceStream("BodyBuddy.Database.BodyBoddyDb.db"))
+                    using (var stream = assembly.GetManifestResourceStream("BodyBuddy.Database.BodyBuddyDb.db"))
                     {
                         using (var fileStream = File.Create(databasePath))
                         {

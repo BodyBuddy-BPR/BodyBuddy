@@ -1,5 +1,6 @@
 ﻿using BodyBuddy.Views;
 using BodyBuddy.Views.ExerciseViews;
+using BodyBuddy.Views.WorkoutViews;
 
 namespace BodyBuddy;
 
@@ -15,6 +16,6 @@ public partial class AppShell : Shell
 		Routing.RegisterRoute(nameof(ExerciseDetailsPage), typeof(ExerciseDetailsPage));
 
 		//Workout Pages
-		Routing.RegisterRoute(nameof(WorkoutPlanDetailsPage), typeof(WorkoutPlanDetailsPage));
+		Routing.RegisterRoute(nameof(WorkoutDetailsPage), typeof(WorkoutDetailsPage));
 	}
 }

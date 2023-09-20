@@ -58,14 +58,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Database\BodyBoddyDb.db" />
+	  <None Remove="Database\BodyBuddyDb.db" />
 	  <None Remove="Resources\Images\add_circle.svg" />
 	  <None Remove="Resources\Images\no_image.svg" />
 	  <None Remove="Resources\Images\plus_sign.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Include="Database\BodyBoddyDb.db">
+	  <EmbeddedResource Include="Database\BodyBuddyDb.db">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </EmbeddedResource>
 	</ItemGroup>
@@ -96,10 +96,10 @@
 	  <MauiXaml Update="Views\ExerciseViews\MuscleGroupPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\WorkoutPlanDetailsPage.xaml">
+	  <MauiXaml Update="Views\WorkoutViews\WorkoutDetailsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\WorkoutPlansPage.xaml">
+	  <MauiXaml Update="Views\WorkoutViews\WorkoutsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

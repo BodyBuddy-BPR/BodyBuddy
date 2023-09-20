@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace BodyBuddy.Repositories
 {
-    public interface IWorkoutPlanRepository
+    public interface IWorkoutRepository
     {
         Task<List<Workout>> GetWorkoutPlansAsync();
 
-        Task SaveWorkoutPlanAsync(Workout workoutPlan);
+		Task<List<Exercise>> GetExercisesFromWorkoutId(int workoutId);
+		Task SaveWorkoutPlanAsync(Workout workoutPlan);
     }
 }

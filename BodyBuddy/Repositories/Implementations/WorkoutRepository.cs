@@ -3,12 +3,12 @@ using SQLite;
 
 namespace BodyBuddy.Repositories.Implementations
 {
-    public class WorkoutPlanRepository : IWorkoutPlanRepository
+    public class WorkoutRepository : IWorkoutRepository
     {
 
 		private readonly SQLiteAsyncConnection _context;
 
-		public WorkoutPlanRepository(SQLiteAsyncConnection context)
+		public WorkoutRepository(SQLiteAsyncConnection context)
         {
 			_context = context ?? throw new ArgumentNullException(nameof(context));
         }
@@ -40,6 +40,27 @@ namespace BodyBuddy.Repositories.Implementations
 				// Handle or log the exception
 				Console.WriteLine($"Error in SaveWorkoutPlanAsync: {ex}");
 				throw; // Rethrow the exception or handle it gracefully as needed.
+			}
+		}
+
+		public async Task<List<Exercise>> GetExercisesFromWorkoutId(int workoutId)
+		{
+			var exercises = new List<Exercise>();
+			try
+			{
+				var workoutIds = await _context.Table<WorkoutExercises>().Where(x => x.WorkoutId == workoutId).ToListAsync();
+				foreach(var workout in workoutIds)
+				{
+					var exercise = await _context.Table<Exercise>().FirstOrDefaultAsync(x => x.Id == workout.Id);
+					exercises.Add(exercise);
+				}
+				return exercises;
+			}
+			catch (Exception ex)
+			{
+				// Handle or log the exception
+				Console.WriteLine($"Error in GetExercisesAsync: {ex}");
+				return new List<Exercise>(); // Return an empty list or handle the error gracefully.
 			}
 		}
 	}

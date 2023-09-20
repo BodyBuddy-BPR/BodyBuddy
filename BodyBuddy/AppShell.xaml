@@ -6,6 +6,7 @@
     xmlns:exerciseViews="clr-namespace:BodyBuddy.Views.ExerciseViews"
     xmlns:local="clr-namespace:BodyBuddy"
     xmlns:views="clr-namespace:BodyBuddy.Views"
+    xmlns:workoutViews="clr-namespace:BodyBuddy.Views.WorkoutViews"
     FlyoutBackgroundColor="{StaticResource PrimaryDarker}"
     Shell.FlyoutBehavior="Disabled">
 
@@ -39,8 +40,8 @@
 
         <ShellContent
             Title="Workouts"
-            ContentTemplate="{DataTemplate views:WorkoutPlansPage}"
-            Route="WorkoutPlansPage" />
+            ContentTemplate="{DataTemplate workoutViews:WorkoutsPage}"
+            Route="WorkoutsPage" />
 
         <ShellContent
             Title="Exercises"
