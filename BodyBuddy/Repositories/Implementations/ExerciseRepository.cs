@@ -19,15 +19,6 @@ namespace BodyBuddy.Repositories.Implementations
             //_supabaseClient = supabaseClient;
         }
 
-        //public async Task<List<Exercise>> GetExercisesAsync(string category, string musclegroup)
-        //{
-
-        //    var exercises = await _context.Table<Exercise>()
-        //        .Where(x => x.Category.ToUpper() == category.ToUpper() &&
-        //               x.PrimaryMuscles.ToUpper() == musclegroup.ToUpper())
-        //        .ToListAsync();
-
-        //}
         public async Task<List<Exercise>> GetExercisesAsync(string category, string musclegroup)
         {
             string lowerCategory = category.ToLower();
@@ -35,10 +26,6 @@ namespace BodyBuddy.Repositories.Implementations
 
             try
             {
-                //var exercises = await _context.Table<Exercise>()
-                //    .Where(x => x.Category.Equals(category, StringComparison.OrdinalIgnoreCase) &&
-                //    x.PrimaryMuscles.Equals(musclegroup, StringComparison.OrdinalIgnoreCase)).ToListAsync();
-
                 var exercises = await _context.Table<Exercise>()
                     .Where(x => x.Category == lowerCategory && x.PrimaryMuscles == lowerMusclegroup).ToListAsync();
 
