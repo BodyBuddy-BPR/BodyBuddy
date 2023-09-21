@@ -2,25 +2,30 @@
 using BodyBuddy.Repositories;
 using BodyBuddy.Views.WorkoutViews;
 using CommunityToolkit.Mvvm.Input;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BodyBuddy.ViewModels.WorkoutViewModels
 {
-    public partial class WorkoutViewModel : BaseViewModel
+    public partial class PreMadeWorkoutsViewModel : BaseViewModel
     {
         private readonly IWorkoutRepository _workoutRepository;
 
         public ObservableCollection<Workout> Workouts { get; set; } = new ObservableCollection<Workout>();
 
-        public WorkoutViewModel(IWorkoutRepository workoutRepository)
+        public PreMadeWorkoutsViewModel(IWorkoutRepository workoutRepository)
         {
             Title = string.Empty;
 
             _workoutRepository = workoutRepository;
         }
 
-        public async Task GetWorkoutPlans()
+        public async Task GetPreMadeWorkoutPlans()
         {
             if (IsBusy) return;
 
@@ -28,7 +33,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 IsBusy = true;
 
-                var workoutPlans = await _workoutRepository.GetWorkoutPlansAsync(0); // 0 for user made workouts
+                var workoutPlans = await _workoutRepository.GetWorkoutPlansAsync(1); // 1 for premade workouts
 
                 if (Workouts.Count != 0)
                 {
@@ -52,14 +57,14 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         }
 
         [RelayCommand]
-        public async Task GoToWorkoutDetails(Workout workout)
+        public async Task GoToPreMadeWorkoutDetails(Workout workout)
         {
             if (workout == null)
             {
                 return;
             }
 
-            await Shell.Current.GoToAsync(nameof(WorkoutDetailsPage), true, new Dictionary<string, object>
+            await Shell.Current.GoToAsync(nameof(PreMadeWorkoutDetailsPage), true, new Dictionary<string, object>
             {
                 { "Workout", workout }
             });

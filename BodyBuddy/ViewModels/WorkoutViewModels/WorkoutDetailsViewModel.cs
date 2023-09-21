@@ -34,7 +34,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 			{
 				IsBusy = true;
 
-				var workoutPlan = await _workoutRepository.GetExercisesFromWorkoutId(WorkoutDetails.Id);
+				var workoutPlan = await _workoutRepository.GetExercisesInWorkout(WorkoutDetails.Id, false); // False for user made workouts
 
 				if (Exercises.Count != 0)
 				{

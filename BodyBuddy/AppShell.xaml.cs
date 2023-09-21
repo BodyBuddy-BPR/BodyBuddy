@@ -18,5 +18,6 @@ public partial class AppShell : Shell
 
 		//Workout Pages
 		Routing.RegisterRoute(nameof(WorkoutDetailsPage), typeof(WorkoutDetailsPage));
+		Routing.RegisterRoute(nameof(PreMadeWorkoutDetailsPage), typeof(PreMadeWorkoutDetailsPage));
 	}
 }

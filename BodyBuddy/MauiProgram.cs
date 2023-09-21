@@ -45,7 +45,9 @@ public static class MauiProgram
 
         // Views
         builder.Services.AddSingleton<WorkoutsPage>();
+        builder.Services.AddSingleton<PreMadeWorkoutsPage>();
 		builder.Services.AddTransient<WorkoutDetailsPage>();
+		builder.Services.AddTransient<PreMadeWorkoutDetailsPage>();
 
 		builder.Services.AddSingleton<CategoryPage>();
         builder.Services.AddTransient<MuscleGroupPage>();
@@ -54,7 +56,9 @@ public static class MauiProgram
 
 		// ViewModels
 		builder.Services.AddSingleton<WorkoutViewModel>();
+		builder.Services.AddSingleton<PreMadeWorkoutsViewModel>();
 		builder.Services.AddTransient<WorkoutDetailsViewModel>();
+		builder.Services.AddTransient<PreMadeWorkoutDetailsViewModel>();
 
 		builder.Services.AddSingleton<CategoryViewModel>();
         builder.Services.AddTransient<MuscleGroupViewModel>();

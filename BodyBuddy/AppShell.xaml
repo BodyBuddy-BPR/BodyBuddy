@@ -38,10 +38,17 @@
             ContentTemplate="{DataTemplate local:MainPage}"
             Route="MainPage" />
 
-        <ShellContent
-            Title="Workouts"
-            ContentTemplate="{DataTemplate workoutViews:WorkoutsPage}"
-            Route="WorkoutsPage" />
+        <Tab Title="Workouts">
+            <ShellContent
+                Title="Workouts"
+                ContentTemplate="{DataTemplate workoutViews:PreMadeWorkoutsPage}"
+                Route="PreMadeWorkoutsPage" />
+
+            <ShellContent
+                Title="My Workouts"
+                ContentTemplate="{DataTemplate workoutViews:WorkoutsPage}"
+                Route="WorkoutsPage" />
+        </Tab>
 
         <ShellContent
             Title="Exercises"

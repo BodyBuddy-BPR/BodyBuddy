@@ -15,7 +15,7 @@ public partial class WorkoutsPage : ContentPage
 	protected override async void OnAppearing()
 	{
 		base.OnAppearing();
-		await _viewModel.GetDefaultWorkoutPlans();
+		await _viewModel.GetWorkoutPlans();
 	}
 
 }

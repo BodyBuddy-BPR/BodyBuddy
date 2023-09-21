@@ -74,7 +74,7 @@ namespace BodyBuddy.ViewModels
             {
                 IsBusy = true;
 
-                var workouts = await _workoutRepository.GetWorkoutPlansAsync();
+                var workouts = await _workoutRepository.GetWorkoutPlansAsync(0);
 
                 if (WorkoutsList.Count != 0)
                 {
