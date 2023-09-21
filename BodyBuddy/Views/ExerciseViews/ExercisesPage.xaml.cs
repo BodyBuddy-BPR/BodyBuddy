@@ -1,3 +1,4 @@
+using BodyBuddy.Models;
 using BodyBuddy.ViewModels;
 
 namespace BodyBuddy.Views.ExerciseViews;
@@ -17,13 +18,6 @@ public partial class ExercisesPage : ContentPage
         base.OnAppearing();
         await _viewModel.GetExercises();
         await _viewModel.GetWorkouts();
-
-        // Set SelectedWorkout based on _workoutPlan
-        if (_viewModel.WorkoutsList.Any(x => x.Id == _viewModel.WorkoutPlan.Id))
-        {
-            _viewModel.SelectedWorkout = _viewModel.WorkoutPlan;
-        }
     }
-
 
 }

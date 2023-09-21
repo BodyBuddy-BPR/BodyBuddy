@@ -10,5 +10,5 @@ namespace BodyBuddy.Models
 
 		[Column("name")]
 		public string Name { get; set; }
-	}
+    }
 }

@@ -11,28 +11,16 @@ namespace BodyBuddy.ViewModels
     [QueryProperty(nameof(QueryDetails), "Exercise")]
     public partial class ExercisesViewModel : BaseViewModel
     {
+        #region Injections
         private readonly IExerciseRepository _exerciseRepository;
         private readonly IWorkoutRepository _workoutRepository;
+        #endregion
 
         [ObservableProperty]
         private Exercise _queryDetails; //Category and Musclegroup selected in the previous pages
 
         [ObservableProperty]
-        private Workout _workoutPlan; //If navigated to from a workout, this is that workout
-
         private Workout _selectedWorkout;
-        public Workout SelectedWorkout
-        {
-            get { return _selectedWorkout; }
-            set
-            {
-                if (_selectedWorkout != value)
-                {
-                    _selectedWorkout = value;
-                    OnPropertyChanged(); // Notify that the property has changed
-                }
-            }
-        }
 
         public ObservableCollection<Exercise> ExercisesList { get; set; } = new ObservableCollection<Exercise>();
         public ObservableCollection<Workout> WorkoutsList { get; set; } = new ObservableCollection<Workout>();
@@ -43,9 +31,6 @@ namespace BodyBuddy.ViewModels
 
             _exerciseRepository = exerciseRepository;
             _workoutRepository = workoutRepository;
-
-            // Access the cached data
-            WorkoutPlan = CachedData.SharedWorkout;
         }
 
         [RelayCommand]
@@ -68,7 +53,6 @@ namespace BodyBuddy.ViewModels
                 {
                     ExercisesList.Add(exercise);
                 }
-
             }
             catch (Exception ex)
             {
@@ -102,6 +86,8 @@ namespace BodyBuddy.ViewModels
                     WorkoutsList.Add(workout);
                 }
 
+                SetSelectedWorkout();
+                
             }
             catch (Exception ex)
             {
@@ -113,6 +99,19 @@ namespace BodyBuddy.ViewModels
                 IsBusy = false;
             }
         }
+
+        private void SetSelectedWorkout()
+        {
+            if (CachedData.SharedWorkout != null && WorkoutsList.Any(x => x.Id == CachedData.SharedWorkout.Id))
+            {
+                SelectedWorkout = CachedData.SharedWorkout;
+            }
+            else
+            {
+                SelectedWorkout = null;
+            }
+        }
+
 
         // Navigation to exercise details
         [RelayCommand]
