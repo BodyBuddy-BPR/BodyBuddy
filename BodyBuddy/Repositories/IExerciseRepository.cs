@@ -12,13 +12,13 @@ namespace BodyBuddy.Repositories
         //Supabase methods
         //Task<List<Exercise>> GetExercisesAsync(string category, string musclegroup);
 
-        //Task<Exercise> GetExerciseDetailsAsync(int id);
-
         //// Not in use anymore
         //Task<List<string>> GetPrimaryMusclesAsync();
 
         Task<List<string>> GetMuscleGroupsForCategory(string category);
 
         Task<List<Exercise>> GetExercisesAsync(string category, string musclegroup);
+
+        Task<Exercise> GetExerciseDetails(int id);
     }
 }

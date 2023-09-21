@@ -3,11 +3,17 @@
     x:Class="BodyBuddy.Views.ExerciseViews.CategoryPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:imageHelper="clr-namespace:BodyBuddy.Helpers"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.ExerciseViewModels"
     Title="{Binding Title}"
     x:DataType="viewModel:CategoryViewModel">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <imageHelper:CategoryImageHelper x:Key="CategoryImageHelper" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Grid
         Margin="20,10"
@@ -36,6 +42,7 @@
                 <DataTemplate x:DataType="model:Exercise">
 
                     <Frame
+                        Padding="10"
                         HeightRequest="130"
                         Style="{StaticResource CardView}"
                         WidthRequest="160">
@@ -43,8 +50,8 @@
                             <Image
                                 Aspect="AspectFit"
                                 HeightRequest="80"
-                                Source="no_image.png"
-                                WidthRequest="90" />
+                                Source="{Binding Category, Converter={StaticResource CategoryImageHelper}}"
+                                WidthRequest="70" />
 
                             <Label
                                 HorizontalOptions="CenterAndExpand"
@@ -62,7 +69,7 @@
 
             </CollectionView.ItemTemplate>
         </CollectionView>
-        
+
     </Grid>
 
 

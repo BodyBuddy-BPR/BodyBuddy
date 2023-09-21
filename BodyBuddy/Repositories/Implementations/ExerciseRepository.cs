@@ -19,26 +19,40 @@ namespace BodyBuddy.Repositories.Implementations
             //_supabaseClient = supabaseClient;
         }
 
-		public async Task<List<Exercise>> GetExercisesAsync(string category, string musclegroup)
-		{
-			try
-			{
-				var exercises = await _context.Table<Exercise>()
-					.Where(x => x.Category.ToUpper() == category.ToUpper() &&
-                           x.PrimaryMuscles.ToUpper() == musclegroup.ToUpper())
-					.ToListAsync();
+        //public async Task<List<Exercise>> GetExercisesAsync(string category, string musclegroup)
+        //{
 
-				return exercises;
-			}
-			catch (Exception ex)
-			{
-				// Handle or log the exception
-				Console.WriteLine($"Error in GetExercisesAsync: {ex}");
-				return new List<Exercise>(); // Return an empty list or handle the error gracefully.
-			}
-		}
+        //    var exercises = await _context.Table<Exercise>()
+        //        .Where(x => x.Category.ToUpper() == category.ToUpper() &&
+        //               x.PrimaryMuscles.ToUpper() == musclegroup.ToUpper())
+        //        .ToListAsync();
 
-		public async Task<List<string>> GetMuscleGroupsForCategory(string category)
+        //}
+        public async Task<List<Exercise>> GetExercisesAsync(string category, string musclegroup)
+        {
+            string lowerCategory = category.ToLower();
+            string lowerMusclegroup = musclegroup.ToLower();
+
+            try
+            {
+                //var exercises = await _context.Table<Exercise>()
+                //    .Where(x => x.Category.Equals(category, StringComparison.OrdinalIgnoreCase) &&
+                //    x.PrimaryMuscles.Equals(musclegroup, StringComparison.OrdinalIgnoreCase)).ToListAsync();
+
+                var exercises = await _context.Table<Exercise>()
+                    .Where(x => x.Category == lowerCategory && x.PrimaryMuscles == lowerMusclegroup).ToListAsync();
+
+                return exercises;
+            }
+            catch (Exception ex)
+            {
+                // Handle or log the exception
+                Console.WriteLine($"Error in GetExercisesAsync: {ex}");
+                return new List<Exercise>(); // Return an empty list or handle the error gracefully.
+            }
+        }
+
+        public async Task<List<string>> GetMuscleGroupsForCategory(string category)
         {
             try
             {
@@ -59,8 +73,13 @@ namespace BodyBuddy.Repositories.Implementations
                 Console.WriteLine($"Error in GetMuscleGroupsForCategory: {ex}");
                 return new List<string>(); // Return an empty list or handle the error gracefully.
             }
+        }
 
 
+        public async Task<Exercise> GetExerciseDetails(int id)
+        {
+            var exercise = await _context.Table<Exercise>().FirstOrDefaultAsync(x => x.Id == id);
+            return exercise;
         }
 
         #region Supabase methods
