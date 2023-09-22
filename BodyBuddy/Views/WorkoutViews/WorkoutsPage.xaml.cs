@@ -18,4 +18,8 @@ public partial class WorkoutsPage : ContentPage
 		await _viewModel.GetWorkoutPlans();
 	}
 
+    private void ClickToShowPopup_Clicked(object sender, EventArgs e)
+    {
+        popup.Show();
+    }
 }

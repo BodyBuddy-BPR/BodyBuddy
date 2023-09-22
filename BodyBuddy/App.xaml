@@ -13,13 +13,11 @@
             <Color x:Key="PrimaryDarker">#096389</Color>
 
             <Color x:Key="Background">#096389</Color>
-            <Color x:Key="DarkBackground">#161616</Color>
 
             <Color x:Key="LabelText">black</Color>
             <Color x:Key="LabelTextDark">White</Color>
 
-            <Color x:Key="CardBackground">#84AEB7</Color>
-            <Color x:Key="CardBackgroundDark">#1C1C1E</Color>
+            <Color x:Key="CardBackground">#7BC1DE</Color>
 
             <Style ApplyToDerivedTypes="True" TargetType="Page">
                 <!--<Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}" />-->

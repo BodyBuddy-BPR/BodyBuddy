@@ -4,14 +4,17 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:model="clr-namespace:BodyBuddy.Models"
+    xmlns:sfInput="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+    xmlns:sfPopup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.WorkoutViewModels"
     Title="{Binding Title}"
     x:DataType="viewModel:WorkoutViewModel">
 
     <Grid
         Margin="20,10"
-        RowDefinitions="Auto, *"
+        RowDefinitions="Auto, *, Auto"
         RowSpacing="15">
+
         <!--  Title  -->
         <Label
             Grid.Row="0"
@@ -45,6 +48,37 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
+        <Button
+            Grid.Row="2"
+            Clicked="ClickToShowPopup_Clicked"
+            Style="{StaticResource AddButton}"
+            Text="Create Workout" />
+
+
+        <sfPopup:SfPopup
+            x:Name="popup"
+            AcceptButtonText="CREATE"
+            AcceptCommand="{Binding CreateWorkoutCommand}"
+            AppearanceMode="TwoButton"
+            DeclineButtonText="CANCEL"
+            HeaderTitle="New Workout"
+            ShowCloseButton="True"
+            ShowFooter="True">
+            <sfPopup:SfPopup.PopupStyle>
+                <sfPopup:PopupStyle
+                    AcceptButtonTextColor="{StaticResource PrimaryDarker}"
+                    DeclineButtonTextColor="red"
+                    HasShadow="True" />
+            </sfPopup:SfPopup.PopupStyle>
+            <sfPopup:SfPopup.ContentTemplate>
+                <DataTemplate>
+                    <sfInput:SfTextInputLayout>
+                        <Entry />
+                    </sfInput:SfTextInputLayout>
+                </DataTemplate>
+            </sfPopup:SfPopup.ContentTemplate>
+        </sfPopup:SfPopup>
+
         <ActivityIndicator
             Grid.RowSpan="2"
             Grid.ColumnSpan="2"
@@ -54,5 +88,7 @@
             VerticalOptions="Center"
             Color="{StaticResource Primary}" />
     </Grid>
+
+
 
 </ContentPage>

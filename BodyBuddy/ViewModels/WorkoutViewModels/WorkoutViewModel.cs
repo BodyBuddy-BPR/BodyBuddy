@@ -52,6 +52,12 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         }
 
         [RelayCommand]
+        public async Task CreateWorkout()
+        {
+
+        }
+
+        [RelayCommand]
         public async Task GoToWorkoutDetails(Workout workout)
         {
             if (workout == null)
