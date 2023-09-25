@@ -13,6 +13,8 @@ namespace BodyBuddy.Repositories
 
 		Task<List<Exercise>> GetExercisesInWorkout(int workoutId, bool isPreMade);
 
-		Task SaveWorkoutPlanAsync(Workout workoutPlan);
-    }
+		Task<int> PostWorkoutPlanAsync(Workout workout);
+
+		Task DeleteWorkout(Workout workout);
+	}
 }

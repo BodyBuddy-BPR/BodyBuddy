@@ -30,20 +30,33 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Workout">
-                    <Frame
-                        BackgroundColor="{StaticResource Primary}"
-                        HeightRequest="80"
-                        Style="{StaticResource CardView}">
-                        <Label
-                            Margin="20"
-                            Style="{StaticResource LargeLabel}"
-                            Text="{Binding Name}"
-                            VerticalOptions="Center" />
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems Mode="Execute">
+                                <SwipeItem
+                                    BackgroundColor="IndianRed"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutViewModel}}, Path=DeleteWorkoutCommand}"
+                                    CommandParameter="{Binding .}"
+                                    IconImageSource="trashcan.png"
+                                    Text="Delete" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Frame
+                            BackgroundColor="{StaticResource Primary}"
+                            HeightRequest="80"
+                            Style="{StaticResource CardView}">
+                            <Label
+                                Margin="20"
+                                Style="{StaticResource LargeLabel}"
+                                Text="{Binding Name}"
+                                VerticalOptions="Center" />
 
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutViewModel}}, Path=GoToWorkoutDetailsCommand}" CommandParameter="{Binding .}" />
-                        </Frame.GestureRecognizers>
-                    </Frame>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutViewModel}}, Path=GoToWorkoutDetailsCommand}" CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                    </SwipeView>
+
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
@@ -73,7 +86,11 @@
             <sfPopup:SfPopup.ContentTemplate>
                 <DataTemplate>
                     <sfInput:SfTextInputLayout>
-                        <Entry />
+                        <Entry
+                            Placeholder="Workout name"
+                            PlaceholderColor="DarkGrey"
+                            Text="{Binding WorkoutName}"
+                            TextColor="Black" />
                     </sfInput:SfTextInputLayout>
                 </DataTemplate>
             </sfPopup:SfPopup.ContentTemplate>

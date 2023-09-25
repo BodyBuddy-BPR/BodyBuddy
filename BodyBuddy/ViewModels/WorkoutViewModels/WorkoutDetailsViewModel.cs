@@ -65,5 +65,18 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             await Shell.Current.GoToAsync($"{nameof(CategoryPage)}");
 		}
 
-    }
+		[RelayCommand]
+		async Task DeleteWorkout(Workout workout)
+		{
+			bool result = await Shell.Current.DisplayAlert("Delete", $"Are you sure you want to delete {workout.Name}?", "OK", "Cancel");
+
+			if (result)
+			{
+				if (workout == null) return;
+				await _workoutRepository.DeleteWorkout(workout);
+				await GoBackAsync();
+			}
+		}
+
+	}
 }

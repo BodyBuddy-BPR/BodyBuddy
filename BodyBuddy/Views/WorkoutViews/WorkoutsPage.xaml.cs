@@ -5,6 +5,7 @@ namespace BodyBuddy.Views.WorkoutViews;
 public partial class WorkoutsPage : ContentPage
 {
 	private WorkoutViewModel _viewModel;
+
 	public WorkoutsPage(WorkoutViewModel workoutsViewModel)
 	{
 		InitializeComponent();

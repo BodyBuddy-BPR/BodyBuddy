@@ -68,6 +68,7 @@
 	  <None Remove="Resources\Images\add_circle.svg" />
 	  <None Remove="Resources\Images\no_image.svg" />
 	  <None Remove="Resources\Images\plus_sign.svg" />
+	  <None Remove="Resources\Images\trashcan.svg" />
 	</ItemGroup>
 
 	<ItemGroup>

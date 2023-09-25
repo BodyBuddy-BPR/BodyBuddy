@@ -16,6 +16,13 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding DeleteWorkoutCommand}"
+            CommandParameter="{Binding WorkoutDetails}"
+            IconImageSource="trashcan.png" />
+    </ContentPage.ToolbarItems>
+
     <Grid
         Margin="20,10"
         RowDefinitions="*, Auto"

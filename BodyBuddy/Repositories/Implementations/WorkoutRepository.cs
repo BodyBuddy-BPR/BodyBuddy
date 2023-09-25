@@ -29,19 +29,6 @@ namespace BodyBuddy.Repositories.Implementations
             }
         }
 
-        public async Task SaveWorkoutPlanAsync(Workout workoutPlan)
-        {
-            try
-            {
-                await _context.InsertAsync(workoutPlan);
-            }
-            catch (Exception ex)
-            {
-                // Handle or log the exception
-                Console.WriteLine($"Error in SaveWorkoutPlanAsync: {ex}");
-                throw; // Rethrow the exception or handle it gracefully as needed.
-            }
-        }
 
         public async Task<List<Exercise>> GetExercisesInWorkout(int workoutId, bool isPreMade)
         {
@@ -86,5 +73,27 @@ namespace BodyBuddy.Repositories.Implementations
                 }
             }
         }
-    }
+
+		public async Task<int> PostWorkoutPlanAsync(Workout workout)
+		{
+			if (workout.Id != 0)
+				return await _context.UpdateAsync(workout);
+			else
+			{
+				workout.Id = await GetNextItemId(); // Generate a unique Id
+				return await _context.InsertAsync(workout);
+			}
+		}
+
+		private async Task<int> GetNextItemId()
+		{
+			var lastItem = await _context.Table<Workout>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
+			return lastItem?.Id + 1 ?? 1;
+		}
+
+        public async Task DeleteWorkout(Workout workout)
+        {
+            await _context.DeleteAsync(workout);
+        }
+	}
 }
