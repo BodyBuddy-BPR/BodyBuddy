@@ -95,5 +95,17 @@ namespace BodyBuddy.Repositories.Implementations
         {
             await _context.DeleteAsync(workout);
         }
+
+		public async Task<bool> DoesWorkoutAlreadyExist(string name)
+		{
+			if (await _context.Table<Workout>().FirstOrDefaultAsync(x => x.Name == name) == null)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
 	}
 }
