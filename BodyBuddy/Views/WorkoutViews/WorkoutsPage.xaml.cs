@@ -20,7 +20,6 @@ public partial class WorkoutsPage : ContentPage
 	}
 
 
-
     private void ClickToShowPopup_Clicked(object sender, EventArgs e)
     {
         popup.Show();

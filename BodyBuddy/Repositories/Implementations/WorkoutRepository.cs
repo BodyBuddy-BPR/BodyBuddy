@@ -107,12 +107,9 @@ namespace BodyBuddy.Repositories.Implementations
             await _context.InsertAsync(workoutExercise);
         }
 
-        public async Task DeleteWorkout(Workout workout)
-        {
-            await _context.DeleteAsync(workout);
-        }
+        #endregion
 
-		public async Task<bool> DoesWorkoutAlreadyExist(string name)
+        public async Task<bool> DoesWorkoutAlreadyExist(string name)
 		{
 			if (await _context.Table<Workout>().FirstOrDefaultAsync(x => x.Name == name) == null)
 			{

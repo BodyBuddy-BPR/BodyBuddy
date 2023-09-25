@@ -87,7 +87,6 @@
 		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.5" />
 		<PackageReference Include="supabase-csharp" Version="0.12.1" />
 		<PackageReference Include="Syncfusion.Licensing" Version="23.1.36" />
-		<PackageReference Include="Syncfusion.Maui.DataForm" Version="23.1.36" />
 		<PackageReference Include="Syncfusion.Maui.Inputs" Version="23.1.36" />
 		<PackageReference Include="Syncfusion.Maui.Popup" Version="23.1.36" />
 	</ItemGroup>

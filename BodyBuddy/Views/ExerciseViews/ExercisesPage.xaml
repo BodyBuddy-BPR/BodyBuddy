@@ -23,15 +23,25 @@
     <Grid
         Margin="20,0"
         RowDefinitions="Auto,*"
-        RowSpacing="5">
+        RowSpacing="10">
 
-        <editors:SfComboBox
-            x:Name="comboBox"
+        <Border
             Grid.Row="0"
-            DisplayMemberPath="Name"
-            ItemsSource="{Binding WorkoutsList}"
-            SelectedItem="{Binding SelectedWorkout}"
-            TextMemberPath="Name" />
+            Stroke="{StaticResource Secondary}"
+            StrokeShape="RoundRectangle 10,10,10,10"
+            WidthRequest="250">
+            <editors:SfComboBox
+                x:Name="comboBox"
+                Padding="5,0"
+                BackgroundColor="{StaticResource Secondary}"
+                ClearButtonIconColor="Black"
+                DisplayMemberPath="Name"
+                FontSize="16"
+                ItemsSource="{Binding WorkoutsList}"
+                SelectedItem="{Binding SelectedWorkout}"
+                Stroke="Transparent"
+                TextMemberPath="Name" />
+        </Border>
 
         <!--  List of exercises  -->
         <CollectionView

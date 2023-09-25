@@ -27,13 +27,18 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 		[ObservableProperty]
 		public bool isErrorVisible = false;
 
-		public WorkoutViewModel(IWorkoutRepository workoutRepository)
+        [ObservableProperty]
+        bool isRefreshing;
+
+        public WorkoutViewModel(IWorkoutRepository workoutRepository)
         {
             Title = string.Empty;
 
             _workoutRepository = workoutRepository;
+            GetWorkoutPlans();
         }
 
+        [RelayCommand]
         public async Task GetWorkoutPlans()
         {
             if (IsBusy) return;
@@ -62,6 +67,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             finally
             {
                 IsBusy = false;
+                IsRefreshing = false;
             }
         }
 
