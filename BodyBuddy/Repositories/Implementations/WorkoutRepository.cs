@@ -25,10 +25,35 @@ namespace BodyBuddy.Repositories.Implementations
             {
                 // Handle or log the exception
                 Console.WriteLine($"Error in GetExercisesAsync: {ex}");
-                return new List<Workout>(); // Return an empty list or handle the error gracefully.
+                return new List<Workout>(); // Return an empty list
             }
         }
 
+
+        public async Task<int> PostWorkoutPlanAsync(Workout workout)
+        {
+            if (workout.Id != 0)
+                return await _context.UpdateAsync(workout);
+            else
+            {
+                workout.Id = await GetNextIWorkoutd(); // Generate a unique Id
+                return await _context.InsertAsync(workout);
+            }
+        }
+        private async Task<int> GetNextIWorkoutd()
+        {
+            var lastItem = await _context.Table<Workout>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
+            return lastItem?.Id + 1 ?? 1;
+        }
+
+
+        public async Task DeleteWorkout(Workout workout)
+        {
+            await _context.DeleteAsync(workout);
+        }
+
+
+        #region WorkoutExercises
 
         public async Task<List<Exercise>> GetExercisesInWorkout(int workoutId, bool isPreMade)
         {
@@ -73,27 +98,15 @@ namespace BodyBuddy.Repositories.Implementations
                 }
             }
         }
-
-		public async Task<int> PostWorkoutPlanAsync(Workout workout)
-		{
-			if (workout.Id != 0)
-				return await _context.UpdateAsync(workout);
-			else
-			{
-				workout.Id = await GetNextItemId(); // Generate a unique Id
-				return await _context.InsertAsync(workout);
-			}
-		}
-
-		private async Task<int> GetNextItemId()
-		{
-			var lastItem = await _context.Table<Workout>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
-			return lastItem?.Id + 1 ?? 1;
-		}
-
-        public async Task DeleteWorkout(Workout workout)
+        public async Task AddExerciseToWorkout(int workoutId, int exerciseId)
         {
-            await _context.DeleteAsync(workout);
+            var lastItem = await _context.Table<WorkoutExercises>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
+            var newId = lastItem?.Id + 1 ?? 1;
+
+            WorkoutExercises workoutExercise = new() { Id = newId, WorkoutId = workoutId, ExerciseId = exerciseId };
+            await _context.InsertAsync(workoutExercise);
         }
-	}
+
+        #endregion
+    }
 }

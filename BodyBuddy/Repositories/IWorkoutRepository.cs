@@ -16,5 +16,7 @@ namespace BodyBuddy.Repositories
 		Task<int> PostWorkoutPlanAsync(Workout workout);
 
 		Task DeleteWorkout(Workout workout);
-	}
+
+        Task AddExerciseToWorkout(int workoutId, int exerciseId);
+    }
 }

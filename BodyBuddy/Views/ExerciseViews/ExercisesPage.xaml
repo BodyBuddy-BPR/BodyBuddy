@@ -79,6 +79,16 @@
                                         Text="{Binding Level}" />
                                 </VerticalStackLayout>
 
+                                <ImageButton
+                                    Grid.Column="2"
+                                    BackgroundColor="{StaticResource Secondary}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:ExercisesViewModel}}, Path=AddExerciseToWorkoutCommand}"
+                                    CommandParameter="{Binding .}"
+                                    CornerRadius="15"
+                                    HeightRequest="30"
+                                    Source="plus_sign.png"
+                                    WidthRequest="30" />
+
                             </Grid>
 
                             <Frame.GestureRecognizers>

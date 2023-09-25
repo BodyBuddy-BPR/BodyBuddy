@@ -112,6 +112,21 @@ namespace BodyBuddy.ViewModels
             }
         }
 
+        [RelayCommand]
+        async Task AddExerciseToWorkout(Exercise exercise)
+        {
+            if(SelectedWorkout != null)
+            {
+                await _workoutRepository.AddExerciseToWorkout(SelectedWorkout.Id, exercise.Id);
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert("Error!", "Select a workout", "OK");
+                return;
+            }
+
+
+        }
 
         // Navigation to exercise details
         [RelayCommand]
