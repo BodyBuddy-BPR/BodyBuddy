@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Security.Policy;
 
 namespace BodyBuddy.ViewModels.WorkoutViewModels
 {
@@ -17,7 +18,16 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         [ObservableProperty]
         public string workoutName;
 
-        public WorkoutViewModel(IWorkoutRepository workoutRepository)
+        [ObservableProperty]
+        public string errorMessage;
+
+		[ObservableProperty]
+		public bool isPopupOpen;
+
+		[ObservableProperty]
+		public bool isErrorVisible = false;
+
+		public WorkoutViewModel(IWorkoutRepository workoutRepository)
         {
             Title = string.Empty;
 
@@ -71,14 +81,33 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         [RelayCommand]
         async Task CreateWorkout()
         {
-            if (string.IsNullOrWhiteSpace(WorkoutName)) return;
-            Workout workout = new Workout {  Name = WorkoutName, PreMade = 0 };
-            await _workoutRepository.PostWorkoutPlanAsync(workout);
-            Workouts.Add(workout);
-            WorkoutName = string.Empty;
-        }
+			if (string.IsNullOrWhiteSpace(WorkoutName))
+			{
+				ErrorMessage = "Workout name cannot be empty.";
+				IsErrorVisible = true;
+				IsPopupOpen = true;
+			}
+            else
+            {
+				if (!(await _workoutRepository.DoesWorkoutAlreadyExist(WorkoutName)))
+				{
+					Workout workout = new Workout { Name = WorkoutName, PreMade = 0 };
+					await _workoutRepository.PostWorkoutPlanAsync(workout);
+					Workouts.Add(workout);
+					WorkoutName = string.Empty;
+					IsErrorVisible = false;
+					IsPopupOpen = false;
+				}
+				else
+				{
+					ErrorMessage = $"A workoutplan with the name \"{WorkoutName}\" already exists.";
+					IsErrorVisible = true;
+					IsPopupOpen = true;
+				}
+			}
+		}
 
-        [RelayCommand]
+		[RelayCommand]
         public async Task GoToWorkoutDetails(Workout workout)
         {
             if (workout == null)

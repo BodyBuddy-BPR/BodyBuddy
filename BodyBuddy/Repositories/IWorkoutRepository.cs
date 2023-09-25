@@ -17,6 +17,9 @@ namespace BodyBuddy.Repositories
 
 		Task DeleteWorkout(Workout workout);
 
+		Task<bool> DoesWorkoutAlreadyExist(string name);
+	}
+
         Task AddExerciseToWorkout(int workoutId, int exerciseId);
     }
 }
