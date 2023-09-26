@@ -7,17 +7,17 @@
     <Application.Resources>
         <ResourceDictionary>
 
-            <Color x:Key="Secondary">#21AB74</Color>
-            <Color x:Key="Primary">#7BC1DE</Color>
+            <Color x:Key="Secondary">#278F65</Color>
+            <Color x:Key="Primary">#5297B7</Color>
 
-            <Color x:Key="PrimaryDarker">#096389</Color>
+            <Color x:Key="PrimaryDarker">#065A82</Color>
 
-            <Color x:Key="Background">#096389</Color>
+            <Color x:Key="Background">#065A82</Color>
 
             <Color x:Key="LabelText">black</Color>
             <Color x:Key="LabelTextDark">White</Color>
 
-            <Color x:Key="CardBackground">#7BC1DE</Color>
+            <Color x:Key="CardBackground">#92B7C9</Color>
 
             <Style ApplyToDerivedTypes="True" TargetType="Page">
                 <!--<Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}" />-->

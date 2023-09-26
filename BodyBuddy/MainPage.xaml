@@ -6,7 +6,7 @@
     xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui">
 
     <ContentPage.Behaviors>
-        <mct:StatusBarBehavior StatusBarColor="{StaticResource PrimaryDarker}" />
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource Background}" />
     </ContentPage.Behaviors>
 
     <ScrollView>
