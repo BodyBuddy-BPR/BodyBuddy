@@ -36,9 +36,10 @@
         <ShellContent
             Title="Home"
             ContentTemplate="{DataTemplate local:MainPage}"
+            Icon="home.png"
             Route="MainPage" />
 
-        <Tab Title="Workouts">
+        <Tab Title="Workouts" Icon="list.png">
             <ShellContent
                 Title="Workouts"
                 ContentTemplate="{DataTemplate workoutViews:PreMadeWorkoutsPage}"
@@ -51,7 +52,7 @@
         </Tab>
 
         <ShellContent
-            Title="Exercises"
+            Title="Exercises" Icon="dumbbell.png"
             ContentTemplate="{DataTemplate exerciseViews:CategoryPage}"
             Route="CategoryPage" />
     </TabBar>

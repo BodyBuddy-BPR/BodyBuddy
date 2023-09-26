@@ -50,9 +50,18 @@ namespace BodyBuddy.ViewModels
                     ExercisesList.Clear();
                 }
 
-                foreach (var exercise in exercises)
+                if (exercises != null)
                 {
-                    ExercisesList.Add(exercise);
+                    foreach (var exercise in exercises)
+                    {
+                        ExercisesList.Add(exercise);
+                    }
+                }
+                else
+                {
+                    // Log or handle the case where exercises is null
+                    await Shell.Current.DisplayAlert("Error!", $"Exercises is null", "OK");
+
                 }
             }
             catch (Exception ex)

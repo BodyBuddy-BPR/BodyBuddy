@@ -28,8 +28,7 @@
         <Border
             Grid.Row="0"
             Stroke="{StaticResource Secondary}"
-            StrokeShape="RoundRectangle 10,10,10,10"
-            WidthRequest="250">
+            StrokeShape="RoundRectangle 10,10,10,10">
             <editors:SfComboBox
                 x:Name="comboBox"
                 Padding="5,0"
@@ -113,14 +112,14 @@
 
         </CollectionView>
 
-        <ActivityIndicator
+        <!--<ActivityIndicator
             Grid.RowSpan="2"
             Grid.ColumnSpan="2"
             HorizontalOptions="Fill"
             IsRunning="{Binding IsBusy}"
             IsVisible="{Binding IsBusy}"
             VerticalOptions="Center"
-            Color="{StaticResource Primary}" />
+            Color="{StaticResource Primary}" />-->
 
     </Grid>
 </ContentPage>
