@@ -15,7 +15,6 @@
             <Color x:Key="Background">#065A82</Color>
 
             <Color x:Key="LabelText">black</Color>
-            <Color x:Key="LabelTextDark">White</Color>
 
             <Color x:Key="CardBackground">#D7E4EA</Color>
 

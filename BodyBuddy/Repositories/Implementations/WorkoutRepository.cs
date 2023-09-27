@@ -49,6 +49,8 @@ namespace BodyBuddy.Repositories.Implementations
 
         public async Task DeleteWorkout(Workout workout)
         {
+            await _context.Table<WorkoutExercises>().DeleteAsync(x => x.WorkoutId == workout.Id);
+
             await _context.DeleteAsync(workout);
         }
 
