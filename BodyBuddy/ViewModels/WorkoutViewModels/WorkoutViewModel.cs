@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Security.Policy;
+using System.Windows.Input;
 
 namespace BodyBuddy.ViewModels.WorkoutViewModels
 {
@@ -22,19 +23,16 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         public string errorMessage;
 
 		[ObservableProperty]
-		public bool isPopupOpen;
-
-		[ObservableProperty]
 		public bool isErrorVisible = false;
 
 		public WorkoutViewModel(IWorkoutRepository workoutRepository)
         {
-            Title = string.Empty;
+			Title = string.Empty;
 
             _workoutRepository = workoutRepository;
         }
 
-        public async Task GetWorkoutPlans()
+		public async Task GetWorkoutPlans()
         {
             if (IsBusy) return;
 
@@ -83,28 +81,37 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         {
 			if (string.IsNullOrWhiteSpace(WorkoutName))
 			{
-				ErrorMessage = "Workout name cannot be empty.";
 				IsErrorVisible = true;
-				IsPopupOpen = true;
+
+				ErrorMessage = "Workout name cannot be empty.";
+                return;
 			}
-            else
-            {
-				if (!(await _workoutRepository.DoesWorkoutAlreadyExist(WorkoutName)))
-				{
-					Workout workout = new Workout { Name = WorkoutName, PreMade = 0 };
-					await _workoutRepository.PostWorkoutPlanAsync(workout);
-					Workouts.Add(workout);
-					WorkoutName = string.Empty;
-					IsErrorVisible = false;
-					IsPopupOpen = false;
-				}
-				else
-				{
-					ErrorMessage = $"A workoutplan with the name \"{WorkoutName}\" already exists.";
-					IsErrorVisible = true;
-					IsPopupOpen = true;
-				}
+
+			if (!(await _workoutRepository.DoesWorkoutAlreadyExist(WorkoutName)))
+			{
+				IsErrorVisible = true;
+
+				Workout workout = new Workout { Name = WorkoutName, PreMade = 0 };
+				await _workoutRepository.PostWorkoutPlanAsync(workout);
+				Workouts.Add(workout);
+				WorkoutName = string.Empty;
+
+				IsErrorVisible = false;
 			}
+			else
+			{
+				IsErrorVisible = true;
+
+				ErrorMessage = $"A workoutplan with the name \"{WorkoutName}\" already exists.";
+			}
+		}
+
+		[RelayCommand]
+		public void DeclineCreateWorkout()
+		{
+            WorkoutName = string.Empty;
+            ErrorMessage = string.Empty;
+            IsErrorVisible = false;
 		}
 
 		[RelayCommand]

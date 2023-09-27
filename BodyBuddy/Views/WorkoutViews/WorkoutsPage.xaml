@@ -73,9 +73,10 @@
             AcceptButtonText="CREATE"
             AcceptCommand="{Binding CreateWorkoutCommand}"
             AppearanceMode="TwoButton"
+            Closing="PopupLayout_Closing"
             DeclineButtonText="CANCEL"
+            DeclineCommand="{Binding DeclineCreateWorkoutCommand}"
             HeaderTitle="New Workout"
-            IsOpen="{Binding IsPopupOpen}"
             ShowCloseButton="True"
             ShowFooter="True">
             <sfPopup:SfPopup.PopupStyle>
@@ -86,15 +87,13 @@
             </sfPopup:SfPopup.PopupStyle>
             <sfPopup:SfPopup.ContentTemplate>
                 <DataTemplate>
-                    <StackLayout>
-                        <sfInput:SfTextInputLayout ErrorText="{Binding ErrorMessage}" HasError="{Binding IsErrorVisible}">
-                            <Entry
-                                Placeholder="Workout name"
-                                PlaceholderColor="DarkGrey"
-                                Text="{Binding WorkoutName}"
-                                TextColor="Black" />
-                        </sfInput:SfTextInputLayout>
-                    </StackLayout>
+                    <sfInput:SfTextInputLayout ErrorText="{Binding ErrorMessage}" HasError="{Binding IsErrorVisible}">
+                        <Entry
+                            Placeholder="Workout name"
+                            PlaceholderColor="DarkGrey"
+                            Text="{Binding WorkoutName}"
+                            TextColor="Black" />
+                    </sfInput:SfTextInputLayout>
                 </DataTemplate>
             </sfPopup:SfPopup.ContentTemplate>
         </sfPopup:SfPopup>

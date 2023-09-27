@@ -23,4 +23,13 @@ public partial class WorkoutsPage : ContentPage
     {
         popup.Show();
     }
+
+	//This method only gets called the first time the popup is attempted closed, and I dont know why :-(
+	private void PopupLayout_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+	{
+		if (_viewModel.ErrorMessage != string.Empty)
+		{
+			e.Cancel = true;
+		}
+	}
 }
