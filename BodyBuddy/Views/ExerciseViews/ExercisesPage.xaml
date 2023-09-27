@@ -15,7 +15,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <!--  Other resources  -->
-            <helpers:ImageHelper x:Key="ImageHelper" />
+            <helpers:ExerciseImageHelper x:Key="ExerciseImageHelper" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -71,8 +71,14 @@
                                 <Image
                                     Aspect="AspectFill"
                                     HeightRequest="80"
-                                    Source="{Binding Images, Converter={StaticResource ImageHelper}}"
-                                    WidthRequest="80" />
+                                    WidthRequest="80">
+                                    <Image.Source>
+                                        <UriImageSource
+                                            CacheValidity="2"
+                                            CachingEnabled="True"
+                                            Uri="{Binding Images, Converter={StaticResource ExerciseImageHelper}}" />
+                                    </Image.Source>
+                                </Image>
 
                                 <VerticalStackLayout
                                     Grid.Column="1"

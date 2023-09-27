@@ -52,8 +52,9 @@
         </Tab>
 
         <ShellContent
-            Title="Exercises" Icon="dumbbell.png"
+            Title="Exercises"
             ContentTemplate="{DataTemplate exerciseViews:CategoryPage}"
+            Icon="dumbbell.png"
             Route="CategoryPage" />
     </TabBar>
 
