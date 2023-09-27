@@ -20,8 +20,10 @@
             Grid.Row="0"
             Style="{StaticResource TitleLabel}"
             Text="Workout Plans" />
-        <RefreshView Grid.Row="1" Command="{Binding GetWorkoutPlansCommand}"
-            IsRefreshing="{Binding IsRefreshing}"> 
+        <RefreshView
+            Grid.Row="1"
+            Command="{Binding GetWorkoutPlansCommand}"
+            IsRefreshing="{Binding IsRefreshing}">
             <!--  Workouts to show  -->
             <CollectionView Grid.Row="1" ItemsSource="{Binding Workouts}">
 
@@ -69,13 +71,11 @@
             Style="{StaticResource AddButton}"
             Text="Create Workout" />
 
-
         <sfPopup:SfPopup
             x:Name="popup"
             AcceptButtonText="CREATE"
             AcceptCommand="{Binding CreateWorkoutCommand}"
             AppearanceMode="TwoButton"
-            Closing="PopupLayout_Closing"
             DeclineButtonText="CANCEL"
             DeclineCommand="{Binding DeclineCreateWorkoutCommand}"
             HeaderTitle="New Workout"

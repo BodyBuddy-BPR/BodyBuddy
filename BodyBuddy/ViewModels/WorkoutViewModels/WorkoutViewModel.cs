@@ -20,17 +20,20 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         public string workoutName;
 
         [ObservableProperty]
-        public string errorMessage;
+        bool isRefreshing;
 
-		[ObservableProperty]
-		public bool isErrorVisible = false;
 
         [ObservableProperty]
-        bool isRefreshing;
+        public string errorMessage;
+        [ObservableProperty]
+        public bool isErrorVisible = false;
+
+        [ObservableProperty]
+        public bool canClose;
 
         public WorkoutViewModel(IWorkoutRepository workoutRepository)
         {
-			Title = string.Empty;
+            Title = string.Empty;
 
             _workoutRepository = workoutRepository;
             GetWorkoutPlans();
@@ -70,57 +73,65 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         }
 
         [RelayCommand]
-		async Task DeleteWorkout(Workout workout)
-		{
-			bool result = await Shell.Current.DisplayAlert("Delete", $"Are you sure you want to delete {workout.Name}?", "OK", "Cancel");
+        async Task DeleteWorkout(Workout workout)
+        {
+            bool result = await Shell.Current.DisplayAlert("Delete", $"Are you sure you want to delete {workout.Name}?", "OK", "Cancel");
 
-            if(result)
+            if (result)
             {
-				if (workout == null) return;
-				await _workoutRepository.DeleteWorkout(workout);
-				Workouts.Remove(workout);
-			}
-		}
+                if (workout == null) return;
+                await _workoutRepository.DeleteWorkout(workout);
+                Workouts.Remove(workout);
+            }
+        }
+
+
 
         [RelayCommand]
         async Task CreateWorkout()
         {
-			if (string.IsNullOrWhiteSpace(WorkoutName))
-			{
-				IsErrorVisible = true;
+            var exists = await _workoutRepository.DoesWorkoutAlreadyExist(WorkoutName);
 
-				ErrorMessage = "Workout name cannot be empty.";
-                return;
-			}
+            if (string.IsNullOrWhiteSpace(WorkoutName))
+            {
+                CanClose = false;
+                IsErrorVisible = true;
 
-			if (!(await _workoutRepository.DoesWorkoutAlreadyExist(WorkoutName)))
-			{
-				IsErrorVisible = true;
+                ErrorMessage = "Workout name cannot be empty.";
+            }
+            else if (exists)
+            {
+                CanClose = false;
 
-				Workout workout = new Workout { Name = WorkoutName, PreMade = 0 };
-				await _workoutRepository.PostWorkoutPlanAsync(workout);
-				Workouts.Add(workout);
-				WorkoutName = string.Empty;
+                IsErrorVisible = true;
+                ErrorMessage = $"A workoutplan with the name \"{WorkoutName}\" already exists.";
 
-				IsErrorVisible = false;
-			}
-			else
-			{
-				IsErrorVisible = true;
+            }
+            else
+            {
+                Workout workout = new() { Name = WorkoutName, PreMade = 0 };
+                await _workoutRepository.PostWorkoutPlanAsync(workout);
+                Workouts.Add(workout);
 
-				ErrorMessage = $"A workoutplan with the name \"{WorkoutName}\" already exists.";
-			}
-		}
+                WorkoutName = string.Empty;
+                IsErrorVisible = false;
 
-		[RelayCommand]
-		public void DeclineCreateWorkout()
-		{
+                CanClose = true;
+
+            }
+        }
+
+        [RelayCommand]
+        public void DeclineCreateWorkout()
+        {
             WorkoutName = string.Empty;
             ErrorMessage = string.Empty;
             IsErrorVisible = false;
-		}
+            CanClose = true;
 
-		[RelayCommand]
+        }
+
+        [RelayCommand]
         public async Task GoToWorkoutDetails(Workout workout)
         {
             if (workout == null)
