@@ -15,7 +15,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <!--  Other resources  -->
-            <helpers:ImageHelper x:Key="ImageHelper" />
+            <helpers:ExerciseImageHelper x:Key="ExerciseImageHelper" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -23,15 +23,24 @@
     <Grid
         Margin="20,0"
         RowDefinitions="Auto,*"
-        RowSpacing="5">
+        RowSpacing="10">
 
-        <editors:SfComboBox
-            x:Name="comboBox"
+        <Border
             Grid.Row="0"
-            DisplayMemberPath="Name"
-            ItemsSource="{Binding WorkoutsList}"
-            SelectedItem="{Binding SelectedWorkout}"
-            TextMemberPath="Name" />
+            Stroke="{StaticResource Secondary}"
+            StrokeShape="RoundRectangle 10,10,10,10">
+            <editors:SfComboBox
+                x:Name="comboBox"
+                Padding="5,0"
+                BackgroundColor="{StaticResource Secondary}"
+                ClearButtonIconColor="Black"
+                DisplayMemberPath="Name"
+                FontSize="16"
+                ItemsSource="{Binding WorkoutsList}"
+                SelectedItem="{Binding SelectedWorkout}"
+                Stroke="Transparent"
+                TextMemberPath="Name" />
+        </Border>
 
         <!--  List of exercises  -->
         <CollectionView
@@ -62,8 +71,14 @@
                                 <Image
                                     Aspect="AspectFill"
                                     HeightRequest="80"
-                                    Source="{Binding Images, Converter={StaticResource ImageHelper}}"
-                                    WidthRequest="80" />
+                                    WidthRequest="80">
+                                    <Image.Source>
+                                        <UriImageSource
+                                            CacheValidity="2"
+                                            CachingEnabled="True"
+                                            Uri="{Binding Images, Converter={StaticResource ExerciseImageHelper}}" />
+                                    </Image.Source>
+                                </Image>
 
                                 <VerticalStackLayout
                                     Grid.Column="1"
@@ -79,6 +94,16 @@
                                         Text="{Binding Level}" />
                                 </VerticalStackLayout>
 
+                                <ImageButton
+                                    Grid.Column="2"
+                                    BackgroundColor="{StaticResource Secondary}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:ExercisesViewModel}}, Path=AddExerciseToWorkoutCommand}"
+                                    CommandParameter="{Binding .}"
+                                    CornerRadius="15"
+                                    HeightRequest="30"
+                                    Source="plus_sign.png"
+                                    WidthRequest="30" />
+
                             </Grid>
 
                             <Frame.GestureRecognizers>
@@ -93,14 +118,14 @@
 
         </CollectionView>
 
-        <ActivityIndicator
+        <!--<ActivityIndicator
             Grid.RowSpan="2"
             Grid.ColumnSpan="2"
             HorizontalOptions="Fill"
             IsRunning="{Binding IsBusy}"
             IsVisible="{Binding IsBusy}"
             VerticalOptions="Center"
-            Color="{StaticResource Primary}" />
+            Color="{StaticResource Primary}" />-->
 
     </Grid>
 </ContentPage>

@@ -20,46 +20,48 @@
             Grid.Row="0"
             Style="{StaticResource TitleLabel}"
             Text="Workout Plans" />
+        <RefreshView Grid.Row="1" Command="{Binding GetWorkoutPlansCommand}"
+            IsRefreshing="{Binding IsRefreshing}"> 
+            <!--  Workouts to show  -->
+            <CollectionView Grid.Row="1" ItemsSource="{Binding Workouts}">
 
-        <!--  Workouts to show  -->
-        <CollectionView Grid.Row="1" ItemsSource="{Binding Workouts}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
 
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
-            </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Workout">
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems Mode="Execute">
+                                    <SwipeItem
+                                        BackgroundColor="IndianRed"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutViewModel}}, Path=DeleteWorkoutCommand}"
+                                        CommandParameter="{Binding .}"
+                                        IconImageSource="trashcan.png"
+                                        Text="Delete" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Frame
+                                BackgroundColor="{StaticResource Primary}"
+                                HeightRequest="80"
+                                Style="{StaticResource CardView}">
+                                <Label
+                                    Margin="20"
+                                    Style="{StaticResource LargeLabel}"
+                                    Text="{Binding Name}"
+                                    VerticalOptions="Center" />
 
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:Workout">
-                    <SwipeView>
-                        <SwipeView.RightItems>
-                            <SwipeItems Mode="Execute">
-                                <SwipeItem
-                                    BackgroundColor="IndianRed"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutViewModel}}, Path=DeleteWorkoutCommand}"
-                                    CommandParameter="{Binding .}"
-                                    IconImageSource="trashcan.png"
-                                    Text="Delete" />
-                            </SwipeItems>
-                        </SwipeView.RightItems>
-                        <Frame
-                            BackgroundColor="{StaticResource Primary}"
-                            HeightRequest="80"
-                            Style="{StaticResource CardView}">
-                            <Label
-                                Margin="20"
-                                Style="{StaticResource LargeLabel}"
-                                Text="{Binding Name}"
-                                VerticalOptions="Center" />
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutViewModel}}, Path=GoToWorkoutDetailsCommand}" CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>
+                            </Frame>
+                        </SwipeView>
 
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutViewModel}}, Path=GoToWorkoutDetailsCommand}" CommandParameter="{Binding .}" />
-                            </Frame.GestureRecognizers>
-                        </Frame>
-                    </SwipeView>
-
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
 
         <Button
             Grid.Row="2"

@@ -1,6 +1,7 @@
 ﻿using BodyBuddy.Models;
 using BodyBuddy.Repositories;
 using BodyBuddy.Views;
+using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
@@ -49,9 +50,18 @@ namespace BodyBuddy.ViewModels
                     ExercisesList.Clear();
                 }
 
-                foreach (var exercise in exercises)
+                if (exercises != null)
                 {
-                    ExercisesList.Add(exercise);
+                    foreach (var exercise in exercises)
+                    {
+                        ExercisesList.Add(exercise);
+                    }
+                }
+                else
+                {
+                    // Log or handle the case where exercises is null
+                    await Shell.Current.DisplayAlert("Error!", $"Exercises is null", "OK");
+
                 }
             }
             catch (Exception ex)
@@ -108,10 +118,28 @@ namespace BodyBuddy.ViewModels
             }
             else
             {
-                SelectedWorkout = null;
+                //SelectedWorkout = null;
+                SelectedWorkout = new Workout { Name = "Select a workout" };
+                //return;
             }
         }
 
+        [RelayCommand]
+        async Task AddExerciseToWorkout(Exercise exercise)
+        {
+            if(SelectedWorkout.Id != 0)
+            {
+                await _workoutRepository.AddExerciseToWorkout(SelectedWorkout.Id, exercise.Id);
+                await Shell.Current.DisplaySnackbar($"{exercise.Name} added to {SelectedWorkout.Name}");
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert("Error!", "Select a workout", "OK");
+                return;
+            }
+
+
+        }
 
         // Navigation to exercise details
         [RelayCommand]

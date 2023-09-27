@@ -37,24 +37,27 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Exercise">
 
-                    <Frame HeightRequest="70" Style="{StaticResource CardView}">
-                        <Grid ColumnDefinitions="auto,*">
-                            <Image
+                    <Frame
+                        Padding="15,0"
+                        HeightRequest="70"
+                        Style="{StaticResource CardView}">
+                        <!--<Grid ColumnDefinitions="auto,*">-->
+                        <!--<Image
                                 Margin="5,0"
                                 Aspect="AspectFill"
                                 HeightRequest="70"
                                 Source="no_image.jpg"
-                                WidthRequest="70" />
+                                WidthRequest="70" />-->
 
-                            <Label
-                                Grid.Column="1"
-                                FontAttributes="Bold"
-                                HorizontalOptions="StartAndExpand"
-                                Style="{StaticResource MediumLabel}"
-                                Text="{Binding PrimaryMuscles}"
-                                VerticalOptions="Center" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource MediumLabel}"
+                            Text="{Binding PrimaryMuscles}"
+                            VerticalOptions="Center" />
 
-                        </Grid>
+                        <!--</Grid>-->
 
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:MuscleGroupViewModel}}, Path=GoToExercisesPageCommand}" CommandParameter="{Binding .}" />
