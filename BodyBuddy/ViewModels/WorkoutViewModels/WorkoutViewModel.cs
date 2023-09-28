@@ -25,11 +25,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         [ObservableProperty]
         public string errorMessage;
-        [ObservableProperty]
-        public bool isErrorVisible = false;
-
-        [ObservableProperty]
-        public bool canClose;
 
         public WorkoutViewModel(IWorkoutRepository workoutRepository)
         {
@@ -87,25 +82,21 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
 
 
-        [RelayCommand]
-        async Task CreateWorkout()
+        
+        public async Task<bool> CreateWorkout()
         {
             var exists = await _workoutRepository.DoesWorkoutAlreadyExist(WorkoutName);
 
             if (string.IsNullOrWhiteSpace(WorkoutName))
             {
-                CanClose = false;
-                IsErrorVisible = true;
 
                 ErrorMessage = "Workout name cannot be empty.";
+                return false;
             }
             else if (exists)
             {
-                CanClose = false;
-
-                IsErrorVisible = true;
                 ErrorMessage = $"A workoutplan with the name \"{WorkoutName}\" already exists.";
-
+                return false;
             }
             else
             {
@@ -114,10 +105,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 Workouts.Add(workout);
 
                 WorkoutName = string.Empty;
-                IsErrorVisible = false;
-
-                CanClose = true;
-
+                return true;
             }
         }
 
@@ -126,9 +114,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         {
             WorkoutName = string.Empty;
             ErrorMessage = string.Empty;
-            IsErrorVisible = false;
-            CanClose = true;
-
         }
 
         [RelayCommand]

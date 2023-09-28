@@ -7,15 +7,15 @@
     <Application.Resources>
         <ResourceDictionary>
 
-            <Color x:Key="Secondary">#278F65</Color>
             <Color x:Key="Primary">#5297B7</Color>
-
             <Color x:Key="PrimaryDarker">#065A82</Color>
 
-            <Color x:Key="Background">#065A82</Color>
+            <Color x:Key="Secondary">#278F65</Color>
 
             <Color x:Key="LabelText">black</Color>
+            <Color x:Key="LightText">#D7E4EA</Color>
 
+            <Color x:Key="Background">#065A82</Color>
             <Color x:Key="CardBackground">#D7E4EA</Color>
 
             <Style ApplyToDerivedTypes="True" TargetType="Page">
@@ -85,7 +85,7 @@
 
             <Style x:Key="AddButton" TargetType="Button">
                 <Setter Property="Background" Value="{StaticResource Secondary}" />
-                <Setter Property="TextColor" Value="{StaticResource LabelText}" />
+                <Setter Property="TextColor" Value="{StaticResource LightText}" />
                 <Setter Property="HeightRequest" Value="40" />
                 <Setter Property="WidthRequest" Value="300" />
                 <Setter Property="CornerRadius" Value="10" />

@@ -1,4 +1,5 @@
 using BodyBuddy.ViewModels.WorkoutViewModels;
+using Mopups.Services;
 
 namespace BodyBuddy.Views.WorkoutViews;
 
@@ -12,7 +13,6 @@ public partial class WorkoutsPage : ContentPage
         _viewModel = workoutsViewModel;
         BindingContext = workoutsViewModel;
 
-        popup.Closing += Popup_Closing;
     }
 
     protected override async void OnAppearing()
@@ -24,25 +24,8 @@ public partial class WorkoutsPage : ContentPage
 
     private void ClickToShowPopup_Clicked(object sender, EventArgs e)
     {
-        popup.Show();
+        //popup.Show();
+        MopupService.Instance.PushAsync(new CreateWorkoutPage(_viewModel));
     }
 
-    private void Popup_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-    {
-        if (!_viewModel.CanClose)
-        {
-            e.Cancel = true;
-            return;
-        }
-        e.Cancel = false;
-    }
-
-    //This method only gets called the first time the popup is attempted closed, and I dont know why :-(
-    //private void PopupLayout_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-    //{
-    //	if (_viewModel.ErrorMessage != string.Empty)
-    //	{
-    //		e.Cancel = true;
-    //	}
-    //}
 }
