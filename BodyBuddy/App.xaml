@@ -30,14 +30,14 @@
             </Style>
 
             <Style x:Key="BaseEntry" TargetType="Entry">
-                <Setter Property="FontFamily" Value="OpenSansRegular" />
+                <Setter Property="FontFamily" Value="Montserrat" />
                 <Setter Property="PlaceholderColor" Value="{StaticResource LabelText}" />
                 <Setter Property="TextColor" Value="{StaticResource LabelText}" />
                 <Setter Property="FontSize" Value="16" />
             </Style>
 
             <Style x:Key="BaseLabel" TargetType="Label">
-                <Setter Property="FontFamily" Value="OpenSansRegular" />
+                <Setter Property="FontFamily" Value="Montserrat" />
                 <Setter Property="TextColor" Value="{StaticResource LabelText}" />
             </Style>
 
@@ -91,7 +91,7 @@
                 <Setter Property="CornerRadius" Value="10" />
                 <Setter Property="FontSize" Value="16" />
                 <Setter Property="FontAttributes" Value="Bold" />
-                <Setter Property="FontFamily" Value="OpenSansRegular" />
+                <Setter Property="FontFamily" Value="Montserrat" />
             </Style>
 
             <Style x:Key="CardView" TargetType="Frame">
