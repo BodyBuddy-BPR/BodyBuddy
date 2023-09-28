@@ -1,13 +1,13 @@
 ﻿using BodyBuddy.Models;
 using BodyBuddy.Repositories;
-using BodyBuddy.Views;
+using BodyBuddy.Views.ExerciseViews;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
-namespace BodyBuddy.ViewModels
+namespace BodyBuddy.ViewModels.ExerciseViewModels
 {
     [QueryProperty(nameof(QueryDetails), "Exercise")]
     public partial class ExercisesViewModel : BaseViewModel

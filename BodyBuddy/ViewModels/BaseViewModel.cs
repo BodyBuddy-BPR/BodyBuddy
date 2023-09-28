@@ -27,7 +27,9 @@ namespace BodyBuddy.ViewModels
 
         public static async Task GoBackAsync()
         {
-            await Shell.Current.GoToAsync("..");
+            //await Shell.Current.GoToAsync("..");
+            await Shell.Current.Navigation.PopAsync();
+
         }
     }
 }

@@ -17,23 +17,23 @@ namespace BodyBuddy;
 
 public static class MauiProgram
 {
-	public static MauiApp CreateMauiApp()
-	{
-		var builder = MauiApp.CreateBuilder();
-		builder
-			.UseMauiApp<App>()
+    public static MauiApp CreateMauiApp()
+    {
+        var builder = MauiApp.CreateBuilder();
+        builder
+            .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
             .ConfigureSyncfusionCore()
             .ConfigureMopups()
             .ConfigureFonts(fonts =>
-			{
-				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-				fonts.AddFont("Montserrat-Regular-400.ttf", "Montserrat");
-			});
+            {
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                fonts.AddFont("Montserrat-Regular-400.ttf", "Montserrat");
+            });
 
 #if DEBUG
-		builder.Logging.AddDebug();
+        builder.Logging.AddDebug();
 #endif
 
         // Supabase
@@ -46,32 +46,46 @@ public static class MauiProgram
             // SessionHandler = new SupabaseSessionHandler() <-- This must be implemented by the developer
         };
 
-        // Views
-        builder.Services.AddSingleton<WorkoutsPage>();
-        builder.Services.AddSingleton<PreMadeWorkoutsPage>();
-		builder.Services.AddTransient<WorkoutDetailsPage>();
-		builder.Services.AddTransient<PreMadeWorkoutDetailsPage>();
+        #region Dependency Registration
 
-		builder.Services.AddSingleton<CategoryPage>();
+        #region Views
+
+        // Workout
+        builder.Services.AddSingleton<WorkoutsPage>();
+        builder.Services.AddTransient<WorkoutDetailsPage>();
+
+        builder.Services.AddSingleton<PreMadeWorkoutsPage>();
+        builder.Services.AddTransient<PreMadeWorkoutDetailsPage>();
+
+        // Exercise
+        builder.Services.AddTransient<CategoryPage>();
         builder.Services.AddTransient<MuscleGroupPage>();
         builder.Services.AddTransient<ExercisesPage>();
-		builder.Services.AddTransient<ExerciseDetailsPage>();
+        builder.Services.AddTransient<ExerciseDetailsPage>();
+        #endregion
 
-		// ViewModels
-		builder.Services.AddSingleton<WorkoutViewModel>();
-		builder.Services.AddSingleton<PreMadeWorkoutsViewModel>();
-		builder.Services.AddTransient<WorkoutDetailsViewModel>();
-		builder.Services.AddTransient<PreMadeWorkoutDetailsViewModel>();
+        #region ViewModels
 
-		builder.Services.AddSingleton<CategoryViewModel>();
+        // Workout
+        builder.Services.AddSingleton<WorkoutViewModel>();
+        builder.Services.AddTransient<WorkoutDetailsViewModel>();
+
+        builder.Services.AddSingleton<PreMadeWorkoutsViewModel>();
+        builder.Services.AddTransient<PreMadeWorkoutDetailsViewModel>();
+
+        // Exercise
+        builder.Services.AddTransient<CategoryViewModel>();
         builder.Services.AddTransient<MuscleGroupViewModel>();
         builder.Services.AddTransient<ExercisesViewModel>();
-		builder.Services.AddTransient<ExerciseDetailsViewModel>();
+        builder.Services.AddTransient<ExerciseDetailsViewModel>();
+        #endregion
 
-		// Repositories
-		builder.Services.AddSingleton<IExerciseRepository, ExerciseRepository>();
+        #region Repositories
+        builder.Services.AddSingleton<IExerciseRepository, ExerciseRepository>();
         builder.Services.AddSingleton<IWorkoutRepository, WorkoutRepository>();
+        #endregion
 
+        #region Database
         // Local Database
         builder.Services.AddSingleton<LocalDatabase>();
         builder.Services.AddTransient(async provider =>
@@ -87,10 +101,14 @@ public static class MauiProgram
 
         // Supabase Database
         builder.Services.AddSingleton(provider => new Supabase.Client(url, key, options));
+        #endregion
 
-        // Services
+        #region Services
         builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
+        #endregion
+
+        #endregion
 
         return builder.Build();
-	}
+    }
 }

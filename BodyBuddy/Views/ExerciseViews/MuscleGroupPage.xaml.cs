@@ -17,5 +17,4 @@ public partial class MuscleGroupPage : ContentPage
 		base.OnAppearing();
 		await _viewModel.GetMusclegroups();
 	}
-
 }

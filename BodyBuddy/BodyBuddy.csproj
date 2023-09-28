@@ -96,7 +96,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\ExerciseDetailsPage.xaml">
+	  <MauiXaml Update="Views\ExerciseViews\ExerciseDetailsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ExerciseViews\ExercisesPage.xaml">
@@ -133,10 +133,6 @@
 	  <MauiImage Include="Resources\Images\Categories\strength.svg" />
 	  <MauiImage Include="Resources\Images\Categories\stretching.svg" />
 	  <MauiImage Include="Resources\Images\Categories\strongman.svg" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Views\Popups\" />
 	</ItemGroup>
 
 	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadUnhandledDeviceExceptionBodyBuddyHideInfoBar="True" /></VisualStudio></ProjectExtensions>

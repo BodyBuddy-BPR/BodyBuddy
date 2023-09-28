@@ -1,6 +1,6 @@
-using BodyBuddy.ViewModels;
+using BodyBuddy.ViewModels.ExerciseViewModels;
 
-namespace BodyBuddy.Views;
+namespace BodyBuddy.Views.ExerciseViews;
 
 public partial class ExerciseDetailsPage : ContentPage
 {

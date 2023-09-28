@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BodyBuddy.ViewModels
+namespace BodyBuddy.ViewModels.ExerciseViewModels
 {
     [QueryProperty(nameof(ExerciseDetails), "Exercise")]
     public partial class ExerciseDetailsViewModel : BaseViewModel

@@ -1,5 +1,4 @@
-using BodyBuddy.Models;
-using BodyBuddy.ViewModels;
+using BodyBuddy.ViewModels.ExerciseViewModels;
 
 namespace BodyBuddy.Views.ExerciseViews;
 
@@ -19,5 +18,4 @@ public partial class ExercisesPage : ContentPage
         await _viewModel.GetExercises();
         await _viewModel.GetWorkouts();
     }
-
 }
