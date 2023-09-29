@@ -37,6 +37,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
         [RelayCommand]
         public async Task GetExercises()
         {
+
             if (IsBusy) return;
 
             try
@@ -54,6 +55,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
                 {
                     foreach (var exercise in exercises)
                     {
+                        //await Task.Delay(50);
                         ExercisesList.Add(exercise);
                     }
                 }

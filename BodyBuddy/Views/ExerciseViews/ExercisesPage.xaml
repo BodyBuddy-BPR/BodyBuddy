@@ -49,7 +49,7 @@
             ItemsSource="{Binding ExercisesList}"
             VerticalOptions="FillAndExpand">
 
-            <CollectionView.EmptyView>
+            <!--<CollectionView.EmptyView>
                 <StackLayout Margin="10,80" Spacing="20">
                     <Label
                         HorizontalOptions="CenterAndExpand"
@@ -60,7 +60,7 @@
                         Style="{StaticResource MediumLabel}"
                         Text="Pick a musclegroup or search for an exercise" />
                 </StackLayout>
-            </CollectionView.EmptyView>
+            </CollectionView.EmptyView>-->
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Exercise">
