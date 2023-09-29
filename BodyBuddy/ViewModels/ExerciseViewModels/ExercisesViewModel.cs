@@ -155,5 +155,6 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
                 {"Exercise", exercise }
             });
         }
+
     }
 }
