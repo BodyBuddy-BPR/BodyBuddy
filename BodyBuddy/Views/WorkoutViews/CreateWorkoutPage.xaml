@@ -8,8 +8,9 @@
     xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.WorkoutViewModels"
     x:DataType="viewModel:WorkoutViewModel"
+    BackgroundClickedCommand="{Binding DeclineCreateWorkoutCommand}"
     BackgroundColor="#80000000"
-    CloseWhenBackgroundIsClicked="True" BackgroundClickedCommand="{Binding DeclineCreateWorkoutCommand}">
+    CloseWhenBackgroundIsClicked="True">
 
     <Border
         BackgroundColor="{StaticResource CardBackground}"
@@ -30,6 +31,7 @@
                 x:Name="nameEntry"
                 BackgroundColor="Transparent"
                 FontSize="20"
+                MaxLength="32"
                 Placeholder="Workout name"
                 PlaceholderColor="DarkGrey"
                 Style="{StaticResource BaseEntry}"

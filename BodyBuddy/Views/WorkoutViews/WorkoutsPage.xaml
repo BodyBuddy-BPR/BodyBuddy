@@ -4,8 +4,6 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:model="clr-namespace:BodyBuddy.Models"
-    xmlns:sfInput="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
-    xmlns:sfPopup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.WorkoutViewModels"
     Title="{Binding Title}"
@@ -72,36 +70,6 @@
             Style="{StaticResource AddButton}"
             Text="Create Workout"
             TextColor="{StaticResource LightText}" />
-
-        <!--<sfPopup:SfPopup
-            x:Name="popup"
-            AcceptButtonText="CREATE"
-            AcceptCommand="{Binding CreateWorkoutCommand}"
-            AppearanceMode="OneButton"
-            HeaderTitle="New Workout"
-            ShowCloseButton="True"
-            ShowFooter="True">
-            <sfPopup:SfPopup.PopupStyle>
-                <sfPopup:PopupStyle
-                    AcceptButtonTextColor="{StaticResource Primary}"
-                    FooterBackground="{StaticResource Primary}"
-                    HeaderBackground="{StaticResource Primary}"
-                    MessageBackground="{StaticResource Primary}" />
-            </sfPopup:SfPopup.PopupStyle>
-            <sfPopup:SfPopup.ContentTemplate>
-                <DataTemplate>
-                    <StackLayout BackgroundColor="{StaticResource Primary}">
-                        <sfInput:SfTextInputLayout ErrorText="{Binding ErrorMessage}" HasError="{Binding IsErrorVisible}">
-                            <Entry
-                            Margin="20,10"
-                            Placeholder="Workout name"
-                            Style="{StaticResource BaseEntry}"
-                            Text="{Binding WorkoutName}" />
-                        </sfInput:SfTextInputLayout>
-                    </StackLayout>
-                </DataTemplate>
-            </sfPopup:SfPopup.ContentTemplate>
-        </sfPopup:SfPopup>-->
 
         <ActivityIndicator
             Grid.RowSpan="2"
