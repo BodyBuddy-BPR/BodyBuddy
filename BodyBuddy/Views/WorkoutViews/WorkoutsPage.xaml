@@ -26,6 +26,26 @@
             <!--  Workouts to show  -->
             <CollectionView Grid.Row="1" ItemsSource="{Binding Workouts}">
 
+                <CollectionView.EmptyView>
+                    <ContentView>
+                        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                            <Label
+                            Margin="10,25,10,10"
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            HorizontalOptions="Fill"
+                            HorizontalTextAlignment="Center"
+                            Text="No workouts have been added yet" />
+                            <Label
+                            FontAttributes="Italic"
+                            FontSize="16"
+                            HorizontalOptions="Fill"
+                            HorizontalTextAlignment="Center"
+                            Text="Add one by pressing 'Create Workout'" />
+                        </StackLayout>
+                    </ContentView>
+                </CollectionView.EmptyView>
+
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
                 </CollectionView.ItemsLayout>

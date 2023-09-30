@@ -31,12 +31,34 @@
         <!--  Title  -->
         <Label
             Grid.Row="0"
-            Style="{StaticResource MediumLabel}" FontAttributes="Bold"
+            Margin="0,0,0,5"
+            FontAttributes="Bold"
+            Style="{StaticResource MediumLabel}"
             Text="{Binding WorkoutDetails.Description}"
             TextColor="{StaticResource LightText}" />
 
         <!--  Exercises to show  -->
         <CollectionView Grid.Row="1" ItemsSource="{Binding Exercises}">
+
+            <CollectionView.EmptyView>
+                <ContentView>
+                    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                        <Label
+                            Margin="10,25,10,10"
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            HorizontalOptions="Fill"
+                            HorizontalTextAlignment="Center"
+                            Text="No exercises have been added yet" />
+                        <Label
+                            FontAttributes="Italic"
+                            FontSize="16"
+                            HorizontalOptions="Fill"
+                            HorizontalTextAlignment="Center"
+                            Text="Try adding some" />
+                    </StackLayout>
+                </ContentView>
+            </CollectionView.EmptyView>
 
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
