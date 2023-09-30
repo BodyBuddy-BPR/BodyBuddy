@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:customControls="clr-namespace:BodyBuddy.CustomControls"
     xmlns:model="clr-namespace:BodyBuddy.Models"
+    xmlns:mopupAnimation="clr-namespace:Mopups.Animations;assembly=Mopups"
     xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.WorkoutViewModels"
     x:DataType="viewModel:WorkoutViewModel"
@@ -12,19 +13,30 @@
     BackgroundColor="#80000000"
     CloseWhenBackgroundIsClicked="True">
 
+
+    <mopups:PopupPage.Animation>
+        <mopupAnimation:ScaleAnimation
+            DurationIn="1000"
+            EasingIn="BounceOut"
+            PositionIn="Bottom"
+            PositionOut="Center"
+            ScaleIn="1"
+            ScaleOut="0.7" />
+    </mopups:PopupPage.Animation>
+
     <Border
         BackgroundColor="{StaticResource CardBackground}"
-        HeightRequest="200"
+        HeightRequest="230"
         HorizontalOptions="Center"
         WidthRequest="330">
         <Border.StrokeShape>
             <RoundRectangle CornerRadius="20" />
         </Border.StrokeShape>
 
-        <VerticalStackLayout Padding="15,15" Spacing="20">
+        <VerticalStackLayout Padding="15,15" Spacing="10">
             <Label
                 Style="{StaticResource TitleLabel}"
-                Text="New Workout"
+                Text="Create a new Workout"
                 TextColor="Black" />
 
             <customControls:CustomEntry
@@ -36,6 +48,17 @@
                 PlaceholderColor="DarkGrey"
                 Style="{StaticResource BaseEntry}"
                 Text="{Binding WorkoutName}"
+                TextColor="Black" />
+
+            <customControls:CustomEntry
+                x:Name="descriptionEntry"
+                BackgroundColor="Transparent"
+                FontSize="16"
+                MaxLength="82"
+                Placeholder="Describe the workout"
+                PlaceholderColor="DarkGrey"
+                Style="{StaticResource BaseEntry}"
+                Text="{Binding WorkoutDescription}"
                 TextColor="Black" />
 
             <Button

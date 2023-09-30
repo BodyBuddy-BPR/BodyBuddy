@@ -25,16 +25,18 @@
 
     <Grid
         Margin="20,10"
-        RowDefinitions="*, Auto"
+        RowDefinitions="Auto, *, Auto"
         RowSpacing="10">
+
         <!--  Title  -->
-        <!--<Label
+        <Label
             Grid.Row="0"
-            Style="{StaticResource TitleLabel}"
-            Text="Workout Plans" />-->
+            Style="{StaticResource MediumLabel}" FontAttributes="Bold"
+            Text="{Binding WorkoutDetails.Description}"
+            TextColor="{StaticResource LightText}" />
 
         <!--  Exercises to show  -->
-        <CollectionView Grid.Row="0" ItemsSource="{Binding Exercises}">
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Exercises}">
 
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
@@ -83,7 +85,7 @@
         </CollectionView>
 
         <Button
-            Grid.Row="1"
+            Grid.Row="2"
             Command="{Binding AddExercisesCommand}"
             Style="{StaticResource AddButton}"
             Text="Add Exercises" />

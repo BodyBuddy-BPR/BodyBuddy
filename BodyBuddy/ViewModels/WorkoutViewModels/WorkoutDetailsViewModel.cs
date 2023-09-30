@@ -1,5 +1,6 @@
 ﻿using BodyBuddy.Models;
 using BodyBuddy.Repositories;
+using BodyBuddy.ViewModels.ExerciseViewModels;
 using BodyBuddy.Views.ExerciseViews;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -63,7 +64,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             await Task.Delay(100); // Add a short delay
 			CachedData.SharedWorkout = WorkoutDetails;
             await Shell.Current.GoToAsync($"{nameof(CategoryPage)}");
-		}
+        }
 
 		[RelayCommand]
 		async Task DeleteWorkout(Workout workout)

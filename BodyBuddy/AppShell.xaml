@@ -54,7 +54,7 @@
             Title="Exercises"
             ContentTemplate="{DataTemplate exerciseViews:CategoryPage}"
             Icon="dumbbell.png"
-            Route="CategoryPage" />
+             />
     </TabBar>
 
 </Shell>

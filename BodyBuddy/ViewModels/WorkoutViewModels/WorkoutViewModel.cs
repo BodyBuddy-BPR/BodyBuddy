@@ -17,7 +17,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         public ObservableCollection<Workout> Workouts { get; set; } = new ObservableCollection<Workout>();
 
         [ObservableProperty]
-        public string workoutName;
+        public string workoutName, workoutDescription;
 
         [ObservableProperty]
         bool isRefreshing;
@@ -100,7 +100,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             }
             else
             {
-                Workout workout = new() { Name = WorkoutName, PreMade = 0 };
+                Workout workout = new() { Name = WorkoutName, Description = WorkoutDescription ,PreMade = 0 };
                 await _workoutRepository.PostWorkoutPlanAsync(workout);
                 Workouts.Add(workout);
 
