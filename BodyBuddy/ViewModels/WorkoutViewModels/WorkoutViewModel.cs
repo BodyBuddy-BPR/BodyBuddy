@@ -20,11 +20,10 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         public string workoutName, workoutDescription;
 
         [ObservableProperty]
-        bool isRefreshing;
-
+        public string errorMessage;
 
         [ObservableProperty]
-        public string errorMessage;
+        bool isRefreshing;
 
         public WorkoutViewModel(IWorkoutRepository workoutRepository)
         {
@@ -81,8 +80,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         }
 
 
-
-        
         public async Task<bool> CreateWorkout()
         {
             var exists = await _workoutRepository.DoesWorkoutAlreadyExist(WorkoutName);
@@ -105,6 +102,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 Workouts.Add(workout);
 
                 WorkoutName = string.Empty;
+                WorkoutDescription = string.Empty;
                 return true;
             }
         }
@@ -113,6 +111,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         public void DeclineCreateWorkout()
         {
             WorkoutName = string.Empty;
+            WorkoutDescription = string.Empty;
             ErrorMessage = string.Empty;
         }
 
@@ -124,6 +123,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 return;
             }
 
+            await Task.Delay(100);
             await Shell.Current.GoToAsync(nameof(WorkoutDetailsPage), true, new Dictionary<string, object>
             {
                 { "Workout", workout }

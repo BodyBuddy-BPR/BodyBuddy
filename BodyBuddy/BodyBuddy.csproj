@@ -70,6 +70,7 @@
 	  <None Remove="Resources\Images\home.svg" />
 	  <None Remove="Resources\Images\list.svg" />
 	  <None Remove="Resources\Images\no_image.svg" />
+	  <None Remove="Resources\Images\pencil.svg" />
 	  <None Remove="Resources\Images\plus_sign.svg" />
 	  <None Remove="Resources\Images\trashcan.svg" />
 	</ItemGroup>
@@ -106,6 +107,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ExerciseViews\MuscleGroupPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Popups\EditWorkoutPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\WorkoutViews\CreateWorkoutPage.xaml">

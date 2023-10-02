@@ -12,6 +12,8 @@ using BodyBuddy.ViewModels.ExerciseViewModels;
 using BodyBuddy.Views.WorkoutViews;
 using BodyBuddy.ViewModels.WorkoutViewModels;
 using Mopups.Hosting;
+using Mopups.Interfaces;
+using Mopups.Services;
 
 namespace BodyBuddy;
 
@@ -104,7 +106,10 @@ public static class MauiProgram
         #endregion
 
         #region Services
+
         builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
+        builder.Services.AddSingleton<IPopupNavigation>(MopupService.Instance);
+
         #endregion
 
         #endregion

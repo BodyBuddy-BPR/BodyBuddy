@@ -6,7 +6,7 @@
     xmlns:helpers="clr-namespace:BodyBuddy.Helpers"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.WorkoutViewModels"
-    Title="{Binding WorkoutDetails.Name}"
+    Title="{Binding WorkoutName}"
     x:DataType="viewModel:WorkoutDetailsViewModel">
 
     <ContentPage.Resources>
@@ -17,6 +17,10 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Clicked="EditBtn_Clicked"
+            CommandParameter="{Binding WorkoutDetails}"
+            IconImageSource="pencil.png" />
         <ToolbarItem
             Command="{Binding DeleteWorkoutCommand}"
             CommandParameter="{Binding WorkoutDetails}"
@@ -34,7 +38,7 @@
             Margin="0,0,0,5"
             FontAttributes="Bold"
             Style="{StaticResource MediumLabel}"
-            Text="{Binding WorkoutDetails.Description}"
+            Text="{Binding WorkoutDescription}"
             TextColor="{StaticResource LightText}" />
 
         <!--  Exercises to show  -->

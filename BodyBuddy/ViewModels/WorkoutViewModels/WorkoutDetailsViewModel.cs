@@ -5,6 +5,7 @@ using BodyBuddy.Views.ExerciseViews;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Imagekit.Constant;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,10 +18,19 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 	{
 		private readonly IWorkoutRepository _workoutRepository;
 
+		// Query field
 		[ObservableProperty]
 		private Workout _workoutDetails;
 
-		public ObservableCollection<Exercise> Exercises { get; set; } = new ObservableCollection<Exercise>();
+		// Displayed Fields
+        [ObservableProperty]
+        public string workoutName, workoutDescription;
+
+		// Popup fields
+		[ObservableProperty]
+		public string popupName, popupDescription, errorMessage;
+
+        public ObservableCollection<Exercise> Exercises { get; set; } = new ObservableCollection<Exercise>();
 
 		public WorkoutDetailsViewModel(IWorkoutRepository workoutRepository)
         {
@@ -29,13 +39,16 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
 		public async Task GetExercisesFromWorkout()
 		{
-			if (IsBusy) return;
+            if (IsBusy) return;
 
 			try
 			{
 				IsBusy = true;
 
-				var workoutPlan = await _workoutRepository.GetExercisesInWorkout(WorkoutDetails.Id, false); // False for user made workouts
+                WorkoutName = WorkoutDetails.Name;
+                WorkoutDescription = WorkoutDetails.Description;
+
+                var workoutPlan = await _workoutRepository.GetExercisesInWorkout(WorkoutDetails.Id, false); // False for user made workouts
 
 				if (Exercises.Count != 0)
 				{
@@ -66,7 +79,40 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             await Shell.Current.GoToAsync($"{nameof(CategoryPage)}");
         }
 
-		[RelayCommand]
+        public async Task<bool> SaveWorkout()
+        {
+            var exists = await _workoutRepository.DoesWorkoutAlreadyExist(PopupName);
+
+            if (string.IsNullOrWhiteSpace(PopupName))
+            {
+
+                ErrorMessage = "Workout name cannot be empty.";
+                return false;
+            }
+            else if (exists && PopupName != WorkoutName)
+            {
+                ErrorMessage = $"A workoutplan with the name \"{PopupName}\" already exists.";
+                return false;
+            }
+            else
+            {
+                Workout workout = new() { Id = WorkoutDetails.Id , Name = PopupName, Description = PopupDescription, PreMade = 0 };
+                await _workoutRepository.PostWorkoutPlanAsync(workout);
+
+                WorkoutName = PopupName;
+				WorkoutDescription = PopupDescription;
+
+                return true;
+            }
+        }
+
+        [RelayCommand]
+        public void DeclineEditWorkout()
+        {
+            ErrorMessage = string.Empty;
+        }
+
+        [RelayCommand]
 		async Task DeleteWorkout(Workout workout)
 		{
 			bool result = await Shell.Current.DisplayAlert("Delete", $"Are you sure you want to delete {workout.Name}?", "OK", "Cancel");
