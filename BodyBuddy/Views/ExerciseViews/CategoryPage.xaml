@@ -15,8 +15,8 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    
-    
+
+
     <Grid
         Margin="20,10"
         RowDefinitions="Auto, *, Auto"

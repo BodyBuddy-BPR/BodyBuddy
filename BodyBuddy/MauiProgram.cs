@@ -12,6 +12,8 @@ using BodyBuddy.ViewModels.ExerciseViewModels;
 using BodyBuddy.Views.WorkoutViews;
 using BodyBuddy.ViewModels.WorkoutViewModels;
 using Mopups.Hosting;
+using BodyBuddy.Views.StartupTest;
+using BodyBuddy.ViewModels.StartupTest;
 
 namespace BodyBuddy;
 
@@ -51,6 +53,8 @@ public static class MauiProgram
         #region Views
 
         // Workout
+        builder.Services.AddSingleton<StartupTestPage>();
+
         builder.Services.AddSingleton<WorkoutsPage>();
         builder.Services.AddTransient<WorkoutDetailsPage>();
 
@@ -67,6 +71,8 @@ public static class MauiProgram
         #region ViewModels
 
         // Workout
+        builder.Services.AddSingleton<StartupTestViewModel>();
+
         builder.Services.AddSingleton<WorkoutViewModel>();
         builder.Services.AddTransient<WorkoutDetailsViewModel>();
 

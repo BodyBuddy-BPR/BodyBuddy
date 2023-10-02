@@ -108,6 +108,9 @@
 	  <MauiXaml Update="Views\ExerciseViews\MuscleGroupPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\StartupTest\StartupTestPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\WorkoutViews\CreateWorkoutPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -133,6 +136,12 @@
 	  <MauiImage Include="Resources\Images\Categories\strength.svg" />
 	  <MauiImage Include="Resources\Images\Categories\stretching.svg" />
 	  <MauiImage Include="Resources\Images\Categories\strongman.svg" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Views\StartupTest\StartupTestPage.xaml.cs">
+	    <DependentUpon>StartupTestPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadUnhandledDeviceExceptionBodyBuddyHideInfoBar="True" /></VisualStudio></ProjectExtensions>
