@@ -14,7 +14,8 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
     {
         private readonly IWorkoutRepository _workoutRepository;
 
-        public ObservableCollection<Workout> Workouts { get; set; } = new ObservableCollection<Workout>();
+        public ObservableCollection<Workout> MyWorkouts { get; set; } = new ObservableCollection<Workout>();
+        public ObservableCollection<Workout> PreMadeWorkouts { get; set; } = new ObservableCollection<Workout>();
 
         [ObservableProperty]
         public string workoutName, workoutDescription;
@@ -22,16 +23,13 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         [ObservableProperty]
         public string errorMessage;
 
-        [ObservableProperty]
-        bool isRefreshing;
-
         public WorkoutViewModel(IWorkoutRepository workoutRepository)
         {
             Title = string.Empty;
 
             _workoutRepository = workoutRepository;
-            GetWorkoutPlans();
         }
+
 
         [RelayCommand]
         public async Task GetWorkoutPlans()
@@ -42,17 +40,30 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 IsBusy = true;
 
+                // Getting Premade Workouts
+                var preMadeWorkoutPlans = await _workoutRepository.GetWorkoutPlansAsync(1); // 1 for premade workouts
+
+                if (PreMadeWorkouts.Count != 0)
+                {
+                    PreMadeWorkouts.Clear();
+                }
+                foreach (var workoutPlan in preMadeWorkoutPlans)
+                {
+                    PreMadeWorkouts.Add(workoutPlan);
+                }
+
+                // Getting User Workouts
                 var workoutPlans = await _workoutRepository.GetWorkoutPlansAsync(0); // 0 for user made workouts
 
-                if (Workouts.Count != 0)
+                if (MyWorkouts.Count != 0)
                 {
-                    Workouts.Clear();
+                    MyWorkouts.Clear();
                 }
-
                 foreach (var workoutPlan in workoutPlans)
                 {
-                    Workouts.Add(workoutPlan);
+                    MyWorkouts.Add(workoutPlan);
                 }
+
             }
             catch (Exception ex)
             {
@@ -62,7 +73,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             finally
             {
                 IsBusy = false;
-                IsRefreshing = false;
             }
         }
 
@@ -75,10 +85,11 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 if (workout == null) return;
                 await _workoutRepository.DeleteWorkout(workout);
-                Workouts.Remove(workout);
+                MyWorkouts.Remove(workout);
             }
         }
 
+        #region Create Workout Popup
 
         public async Task<bool> CreateWorkout()
         {
@@ -97,9 +108,9 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             }
             else
             {
-                Workout workout = new() { Name = WorkoutName, Description = WorkoutDescription ,PreMade = 0 };
+                Workout workout = new() { Name = WorkoutName, Description = WorkoutDescription, PreMade = 0 };
                 await _workoutRepository.PostWorkoutPlanAsync(workout);
-                Workouts.Add(workout);
+                MyWorkouts.Add(workout);
 
                 WorkoutName = string.Empty;
                 WorkoutDescription = string.Empty;
@@ -115,6 +126,10 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             ErrorMessage = string.Empty;
         }
 
+        #endregion 
+
+        #region Navigation
+
         [RelayCommand]
         public async Task GoToWorkoutDetails(Workout workout)
         {
@@ -129,5 +144,22 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 { "Workout", workout }
             });
         }
+
+        [RelayCommand]
+        public async Task GoToPreMadeWorkoutDetails(Workout workout)
+        {
+            if (workout == null)
+            {
+                return;
+            }
+
+            await Task.Delay(100);
+            await Shell.Current.GoToAsync(nameof(PreMadeWorkoutDetailsPage), true, new Dictionary<string, object>
+            {
+                { "Workout", workout }
+            });
+        }
+
+        #endregion
     }
 }

@@ -23,16 +23,11 @@ public partial class WorkoutsPage : ContentPage
         await _viewModel.GetWorkoutPlans();
     }
 
-    protected override async void OnNavigatedTo(NavigatedToEventArgs args)
-    {
-        base.OnNavigatedTo(args);
-        await _viewModel.GetWorkoutPlans();
-    }
-
     private void ClickToShowPopup_Clicked(object sender, EventArgs e)
     {
         //popup.Show();
         _popupNavigation.PushAsync(new CreateWorkoutPage(_viewModel));
     }
+
 
 }

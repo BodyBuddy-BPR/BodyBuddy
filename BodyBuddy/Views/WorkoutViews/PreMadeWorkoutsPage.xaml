@@ -6,7 +6,7 @@
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.WorkoutViewModels"
     Title="{Binding Title}"
-    x:DataType="viewModel:PreMadeWorkoutsViewModel">
+    x:DataType="viewModel:WorkoutViewModel">
 
     <Grid
         Margin="20,10"
@@ -19,7 +19,7 @@
             Text="Workout Plans" />
 
         <!--  Workouts to show  -->
-        <CollectionView Grid.Row="1" ItemsSource="{Binding Workouts}">
+        <CollectionView Grid.Row="1" ItemsSource="{Binding PreMadeWorkouts}">
 
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
@@ -38,7 +38,7 @@
                             VerticalOptions="Center" />
 
                         <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:PreMadeWorkoutsViewModel}}, Path=GoToPreMadeWorkoutDetailsCommand}" CommandParameter="{Binding .}" />
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutViewModel}}, Path=GoToPreMadeWorkoutDetailsCommand}" CommandParameter="{Binding .}" />
                         </Frame.GestureRecognizers>
                     </Frame>
                 </DataTemplate>
