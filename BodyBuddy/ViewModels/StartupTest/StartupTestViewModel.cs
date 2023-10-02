@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using BodyBuddy.Helpers;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,19 +13,81 @@ namespace BodyBuddy.ViewModels.StartupTest
 {
     public partial class StartupTestViewModel : BaseViewModel
     {
+        [ObservableProperty]
+        private string _questionaireText;
+
         public StartupTestViewModel()
         {
-            DisableAllText();
+            IsNameVisible = true;
+            QuestionaireText = "What is your GG";
         }
 
+        [RelayCommand]
         public void ButtonTest()
         {
-            DisableAllText();
+            var properties = new Dictionary<string, Func<bool>>
+        {
+            { "IsNameVisible", () => IsNameVisible },
+            { "IsGenderVisible", () => IsGenderVisible },
+            { "IsWeightVisible", () => IsWeightVisible },
+            { "IsHeightVisible", () => IsHeightVisible },
+            { "IsAgeVisible", () => IsAgeVisible },
+            { "IsActiveVisible", () => IsActiveVisible },
+            { "IsPassiveCalorieBurnVisible", () => IsPassiveCalorieBurnVisible },
+            { "IsGoalVisible", () => IsGoalVisible },
+        };
+            var activeProperty = properties.FirstOrDefault(kvp => kvp.Value()).Key;
+
+            switch (activeProperty)
+            {
+                case "IsNameVisible":
+                    IsNameVisible = !IsNameVisible;
+                    IsGenderVisible = !IsGenderVisible;
+                    QuestionaireText = "What is your gender ?";
+                    break;
+                case
+                    "IsGenderVisible":
+                    IsGenderVisible = !IsGenderVisible;
+                    IsWeightVisible = !IsWeightVisible;
+                    QuestionaireText = "What is your weight?";
+                    break;
+                case
+                    "IsWeightVisible":
+                    IsWeightVisible = !IsWeightVisible;
+                    IsHeightVisible = !IsHeightVisible;
+                    QuestionaireText = "What is your height?";
+                    break;
+                case "IsHeightVisible":
+                    IsHeightVisible = !IsHeightVisible;
+                    IsAgeVisible = !IsAgeVisible;
+                    QuestionaireText = "What is your age?";
+                    break;
+                case "IsAgeVisible":
+                    IsAgeVisible = !IsAgeVisible;
+                    IsActiveVisible = !IsActiveVisible;
+                    QuestionaireText = "How active are you?";
+                    break;
+                case "IsActiveVisible":
+                    IsActiveVisible = !IsActiveVisible;
+                    IsPassiveCalorieBurnVisible = !IsPassiveCalorieBurnVisible;
+                    QuestionaireText = "What is your passive calorie burn?";
+                    break;
+                case "IsPassiveCalorieBurnVisible":
+                    IsPassiveCalorieBurnVisible = !IsPassiveCalorieBurnVisible;
+                    IsGoalVisible = !IsGoalVisible;
+                    QuestionaireText = "What is your goals?";
+                    break;
+                case "IsGoalVisible":
+                    break;
+                default:
+                    break;
+
+            }
         }
 
         private void DisableAllText()
         {
-            IsNameVisible = true;
+            IsNameVisible = false;
             IsGenderVisible = false;
             IsWeightVisible = false;
             IsHeightVisible = false;
@@ -34,101 +98,21 @@ namespace BodyBuddy.ViewModels.StartupTest
         }
 
 
-        #region VisionTrigger
+        [ObservableProperty]
         private bool _isNameVisible;
+        [ObservableProperty]
         private bool _isGenderVisible;
+        [ObservableProperty]
         private bool _isWeightVisible;
+        [ObservableProperty]
         private bool _isHeightVisible;
+        [ObservableProperty]
         private bool _isAgeVisible;
+        [ObservableProperty]
         private bool _isActiveVisible;
+        [ObservableProperty]
         private bool _isPassiveCalorieBurnVisible;
+        [ObservableProperty]
         private bool _isGoalVisible;
-
-        public bool IsNameVisible
-        {
-            get { return _isNameVisible; }
-            set
-            {
-                _isNameVisible = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool IsGenderVisible
-        {
-            get { return _isGenderVisible; }
-            set
-            {
-                _isGenderVisible = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool IsWeightVisible
-        {
-            get { return _isWeightVisible; }
-            set
-            {
-                _isWeightVisible = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool IsHeightVisible
-        {
-            get { return _isHeightVisible; }
-            set
-            {
-                _isHeightVisible = value;
-                OnPropertyChanged();
-            }
-        }
-        public bool IsAgeVisible
-        {
-            get { return _isAgeVisible; }
-            set
-            {
-                _isAgeVisible = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool IsActiveVisible
-        {
-            get { return _isActiveVisible; }
-            set
-            {
-                _isActiveVisible = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool IsPassiveCalorieBurnVisible
-        {
-            get { return _isPassiveCalorieBurnVisible; }
-            set
-            {
-                _isPassiveCalorieBurnVisible = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool IsGoalVisible
-        {
-            get { return _isGoalVisible; }
-            set
-            {
-                _isGoalVisible = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
     }
 }

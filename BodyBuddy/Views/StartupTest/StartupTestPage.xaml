@@ -3,6 +3,7 @@
     x:Class="BodyBuddy.Views.StartupTest.StartupTestPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControls="clr-namespace:BodyBuddy.CustomControls"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.StartupTest"
     Title="StartupTest"
@@ -15,7 +16,7 @@
         <Label
             Grid.Row="0"
             Style="{StaticResource TitleLabel}"
-            Text="Test" />
+            Text="{Binding QuestionaireText}" />
 
         <VerticalStackLayout
             Grid.Row="1"
@@ -23,14 +24,13 @@
             VerticalOptions="Center">
 
             <!--  Name  -->
-            <Label
-                HorizontalOptions="Center"
+            <customControls:CustomEntry
                 IsVisible="{Binding IsNameVisible}"
-                Style="{StaticResource TitleLabel}"
-                Text="Name"
-                VerticalOptions="Center" />
+                Placeholder="Enter Name"
+                Style="{StaticResource StartupInputField}" />
 
             <!--  Gender  -->
+            <!--  TODO SEBT Multiple Choice Picker  -->
             <Label
                 HorizontalOptions="Center"
                 IsVisible="{Binding IsGenderVisible}"
@@ -38,23 +38,21 @@
                 Text="Gender"
                 VerticalOptions="Center" />
 
+            <!--  TODO - SEBT Numeric Values Only  -->
             <!--  Weight  -->
-            <Label
-                HorizontalOptions="Center"
+            <customControls:CustomEntry
                 IsVisible="{Binding IsWeightVisible}"
-                Style="{StaticResource TitleLabel}"
-                Text="Weight"
-                VerticalOptions="Center" />
+                Placeholder="Enter Weight"
+                Style="{StaticResource StartupInputField}" />
 
             <!--  Height  -->
-            <Label
-                HorizontalOptions="Center"
+            <customControls:CustomEntry
                 IsVisible="{Binding IsHeightVisible}"
-                Style="{StaticResource TitleLabel}"
-                Text="Height"
-                VerticalOptions="Center" />
+                Placeholder="Enter Height"
+                Style="{StaticResource StartupInputField}" />
 
             <!--  Age  -->
+            <!--  TODO SEBT -> Date Picker here  -->
             <Label
                 HorizontalOptions="Center"
                 IsVisible="{Binding IsAgeVisible}"
@@ -63,6 +61,7 @@
                 VerticalOptions="Center" />
 
             <!--  Active  -->
+            <!--  TODO SEBT Multiple Choice Picker  -->
             <Label
                 HorizontalOptions="Center"
                 IsVisible="{Binding IsActiveVisible}"
@@ -90,6 +89,7 @@
 
         <Button
             Grid.Row="2"
+            Command="{Binding ButtonTestCommand}"
             Style="{StaticResource AddButton}"
             Text="NEXT! -WEUHUEUE" />
 
