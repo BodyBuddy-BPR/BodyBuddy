@@ -14,8 +14,10 @@ namespace BodyBuddy.Models
 		[Column("workout_id")]
 		public int WorkoutId { get; set; }
 
-		public Workout workout { get; set; }
+        [Column("sets")]
+        public int Sets { get; set; }
 
-		public Exercise exercise { get; set; }
-	}
+        [Column("reps")]
+        public int Reps { get; set; }
+    }
 }

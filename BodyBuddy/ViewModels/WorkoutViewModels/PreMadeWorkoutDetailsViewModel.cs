@@ -19,11 +19,26 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         [ObservableProperty]
         private Workout _workoutDetails;
 
+        // Displayed Fields
+        [ObservableProperty]
+        public string workoutDescription;
+
         public ObservableCollection<Exercise> Exercises { get; set; } = new ObservableCollection<Exercise>();
 
         public PreMadeWorkoutDetailsViewModel(IWorkoutRepository workoutRepository)
         {
             _workoutRepository = workoutRepository;
+        }
+
+        public async Task Initialize()
+        {
+            if (string.IsNullOrWhiteSpace(WorkoutDetails.Description))
+            {
+                WorkoutDetails.Description = "Try giving this workout a description";
+            }
+            WorkoutDescription = WorkoutDetails.Description;
+
+            await GetExercisesFromWorkout();
         }
 
         public async Task GetExercisesFromWorkout()

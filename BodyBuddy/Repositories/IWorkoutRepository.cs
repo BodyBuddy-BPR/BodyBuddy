@@ -11,14 +11,18 @@ namespace BodyBuddy.Repositories
     {
         Task<List<Workout>> GetWorkoutPlansAsync(int isPreMade);
 
-		Task<List<Exercise>> GetExercisesInWorkout(int workoutId, bool isPreMade);
-
 		Task<int> PostWorkoutPlanAsync(Workout workout);
 
 		Task DeleteWorkout(Workout workout);
 
 		Task<bool> DoesWorkoutAlreadyExist(string name);
+
+        // WorkoutExercises ---- These should maybe be moved to its own repo
+        Task<List<Exercise>> GetExercisesInWorkout(int workoutId, bool isPreMade);
+
         Task AddExerciseToWorkout(int workoutId, int exerciseId);
+
+        Task EditExerciseInWorkout(int workoutId, Exercise changedExercise);
     }
 
 

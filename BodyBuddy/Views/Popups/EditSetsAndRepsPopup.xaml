@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage
+    x:Class="BodyBuddy.Views.Popups.EditSetsAndRepsPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControls="clr-namespace:BodyBuddy.CustomControls"
+    xmlns:model="clr-namespace:BodyBuddy.Models"
+    xmlns:mopupAnimation="clr-namespace:Mopups.Animations;assembly=Mopups"
+    xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+    xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.WorkoutViewModels"
+    x:DataType="viewModel:WorkoutDetailsViewModel"
+    BackgroundClickedCommand="{Binding DeclineEditWorkoutCommand}"
+    BackgroundColor="#80000000"
+    CloseWhenBackgroundIsClicked="True">
+
+    <mopups:PopupPage.Animation>
+        <mopupAnimation:ScaleAnimation
+            DurationIn="1000"
+            EasingIn="BounceOut"
+            PositionIn="Bottom"
+            PositionOut="Center"
+            ScaleIn="1"
+            ScaleOut="0.7" />
+    </mopups:PopupPage.Animation>
+
+    <Border
+        BackgroundColor="{StaticResource CardBackground}"
+        HeightRequest="225"
+        HorizontalOptions="Center"
+        WidthRequest="330">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="20" />
+        </Border.StrokeShape>
+
+        <VerticalStackLayout
+            Padding="15,15"
+            HorizontalOptions="CenterAndExpand"
+            Spacing="15"
+            VerticalOptions="CenterAndExpand">
+            
+            <Label
+                Style="{StaticResource TitleLabel}"
+                Text="Change Sets and Reps"
+                TextColor="Black" />
+
+            <!--  Sets  -->
+            <HorizontalStackLayout
+                Margin="0,0,10,0"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+                <ImageButton
+                    Clicked="MinusSetsBtn_Clicked"
+                    HeightRequest="40"
+                    Source="minus_sign.png"
+                    WidthRequest="40" />
+                <Label
+                    x:Name="SetsLabel"
+                    Margin="20,0"
+                    HorizontalOptions="Center"
+                    Style="{StaticResource TitleLabel}"
+                    Text="{Binding ExerciseToEdit.Sets}"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+                <ImageButton
+                    Clicked="PlusSetsBtn_Clicked"
+                    HeightRequest="40"
+                    Source="plus_sign.png"
+                    WidthRequest="40" />
+            </HorizontalStackLayout>
+
+            <!--  Reps  -->
+            <HorizontalStackLayout
+                Margin="0,0,10,0"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+                <ImageButton
+                    Clicked="MinusRepsBtn_Clicked"
+                    HeightRequest="40"
+                    Source="minus_sign.png"
+                    WidthRequest="40" />
+                <Label
+                    x:Name="RepsLabel"
+                    Margin="20,0"
+                    HorizontalOptions="Center"
+                    Style="{StaticResource TitleLabel}"
+                    Text="{Binding ExerciseToEdit.Reps}"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+                <ImageButton
+                    Clicked="PlusRepsBtn_Clicked"
+                    HeightRequest="40"
+                    Source="plus_sign.png"
+                    WidthRequest="40" />
+            </HorizontalStackLayout>
+
+            <!--  Save Button  -->
+            <Button
+                Command="{Binding SaveSetsAndRepsCommand}"
+                Style="{StaticResource AddButton}"
+                Text="Save"
+                TextColor="{StaticResource LightText}"
+                VerticalOptions="End" />
+        </VerticalStackLayout>
+    </Border>
+
+</mopups:PopupPage>

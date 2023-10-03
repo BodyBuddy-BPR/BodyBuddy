@@ -29,7 +29,6 @@ namespace BodyBuddy.Repositories.Implementations
             }
         }
 
-
         public async Task<int> PostWorkoutPlanAsync(Workout workout)
         {
             if (workout.Id != 0)
@@ -46,16 +45,30 @@ namespace BodyBuddy.Repositories.Implementations
             return lastItem?.Id + 1 ?? 1;
         }
 
-
         public async Task DeleteWorkout(Workout workout)
         {
+            // First deleting all exercises with the workout id from the joint table
             await _context.Table<WorkoutExercises>().DeleteAsync(x => x.WorkoutId == workout.Id);
 
+            // Then deleting the workout from workout table
             await _context.DeleteAsync(workout);
+        }
+
+        public async Task<bool> DoesWorkoutAlreadyExist(string name)
+        {
+            if (await _context.Table<Workout>().FirstOrDefaultAsync(x => x.Name == name) == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
 
         #region WorkoutExercises
+        // ------------------------ Maybe this should be moved to its own repo??  -----------------
 
         public async Task<List<Exercise>> GetExercisesInWorkout(int workoutId, bool isPreMade)
         {
@@ -68,7 +81,20 @@ namespace BodyBuddy.Repositories.Implementations
                     foreach (var workout in workoutIds)
                     {
                         var exercise = await _context.Table<Exercise>().FirstOrDefaultAsync(x => x.Id == workout.ExerciseId);
-                        exercises.Add(exercise);
+
+                        if (workout.Sets != 0)
+                        {
+                            // Update the Sets and Reps properties
+                            exercise.Sets = workout.Sets;
+                            exercise.Reps = workout.Reps;
+                            exercises.Add(exercise);
+                        }
+                        else
+                        {
+                            exercise.Sets = 3;
+                            exercise.Reps = 12;
+                            exercises.Add(exercise);
+                        }
                     }
                     return exercises;
                 }
@@ -88,7 +114,21 @@ namespace BodyBuddy.Repositories.Implementations
                     foreach (var workout in workoutIds)
                     {
                         var exercise = await _context.Table<Exercise>().FirstOrDefaultAsync(x => x.Id == workout.ExerciseId);
-                        exercises.Add(exercise);
+
+                        // Check if the exercise is not null
+                        if (workout.Sets != 0)
+                        {
+                            // Update the Sets and Reps properties
+                            exercise.Sets = workout.Sets;
+                            exercise.Reps = workout.Reps;
+                            exercises.Add(exercise);
+                        }
+                        else
+                        {
+                            exercise.Sets = 3;
+                            exercise.Reps = 12;
+                            exercises.Add(exercise);
+                        }
                     }
                     return exercises;
                 }
@@ -100,6 +140,7 @@ namespace BodyBuddy.Repositories.Implementations
                 }
             }
         }
+
         public async Task AddExerciseToWorkout(int workoutId, int exerciseId)
         {
             var lastItem = await _context.Table<WorkoutExercises>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
@@ -109,18 +150,32 @@ namespace BodyBuddy.Repositories.Implementations
             await _context.InsertAsync(workoutExercise);
         }
 
+        public async Task EditExerciseInWorkout(int workoutId, Exercise changedExercise)
+        {
+            try
+            {
+                WorkoutExercises workoutExerciseToChange = await _context.Table<WorkoutExercises>()
+                    .FirstOrDefaultAsync(x => x.WorkoutId == workoutId && x.ExerciseId == changedExercise.Id);
+
+                if (workoutExerciseToChange != null)
+                {
+                    // Only updating the Sets and Reps values
+                    workoutExerciseToChange.Sets = changedExercise.Sets;
+                    workoutExerciseToChange.Reps = changedExercise.Reps;
+
+                    await _context.UpdateAsync(workoutExerciseToChange);
+                }
+                else return;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in EditExerciseInWorkout: {ex}");
+            }
+
+        }
+
         #endregion
 
-        public async Task<bool> DoesWorkoutAlreadyExist(string name)
-		{
-			if (await _context.Table<Workout>().FirstOrDefaultAsync(x => x.Name == name) == null)
-			{
-				return false;
-			}
-			else
-			{
-				return true;
-			}
-		}
-	}
+
+    }
 }

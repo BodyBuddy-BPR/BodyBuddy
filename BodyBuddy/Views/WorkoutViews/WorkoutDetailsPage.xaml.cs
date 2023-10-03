@@ -1,3 +1,4 @@
+using BodyBuddy.Models;
 using BodyBuddy.ViewModels.WorkoutViewModels;
 using BodyBuddy.Views.Popups;
 using Mopups.Interfaces;
@@ -23,7 +24,7 @@ public partial class WorkoutDetailsPage : ContentPage
 	protected override async void OnAppearing()
 	{
 		base.OnAppearing();
-		await _viewModel.GetExercisesFromWorkout();
+		await _viewModel.Initialize();
 	}
 
     private void EditBtn_Clicked(object sender, EventArgs e)
@@ -33,5 +34,17 @@ public partial class WorkoutDetailsPage : ContentPage
 
         //popup.Show();
         _popupNavigation.PushAsync(new EditWorkoutPopup(_viewModel));
+    }
+
+    private void SetsAndRepsBtn_Clicked(object sender, EventArgs e)
+    {
+        if (sender is ImageButton button && button.CommandParameter is Exercise exercise)
+        {
+            _viewModel.ExerciseToEdit = exercise;
+            _popupNavigation.PushAsync(new EditSetsAndRepsPopup(_viewModel));
+            // Now 'exercise' holds the Exercise object associated with the clicked button.
+            // You can use it as needed.
+            // For example, you can pass it to another page, show a popup, etc.
+        }
     }
 }

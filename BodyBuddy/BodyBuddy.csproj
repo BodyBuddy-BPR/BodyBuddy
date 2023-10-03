@@ -65,10 +65,10 @@
 
 	<ItemGroup>
 	  <None Remove="Database\BodyBuddyDb.db" />
-	  <None Remove="Resources\Images\add_circle.svg" />
 	  <None Remove="Resources\Images\dumbbell.svg" />
 	  <None Remove="Resources\Images\home.svg" />
 	  <None Remove="Resources\Images\list.svg" />
+	  <None Remove="Resources\Images\minus_sign.svg" />
 	  <None Remove="Resources\Images\no_image.svg" />
 	  <None Remove="Resources\Images\pencil.svg" />
 	  <None Remove="Resources\Images\plus_sign.svg" />
@@ -107,6 +107,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ExerciseViews\MuscleGroupPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Popups\EditSetsAndRepsPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Popups\EditWorkoutPopup.xaml">

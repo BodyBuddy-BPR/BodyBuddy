@@ -18,16 +18,23 @@
 
     <Grid
         Margin="20,10"
-        RowDefinitions="*, Auto"
+        RowDefinitions="Auto, *"
         RowSpacing="10">
-        <!--  Title  -->
-        <!--<Label
+
+        <VerticalStackLayout
             Grid.Row="0"
-            Style="{StaticResource TitleLabel}"
-            Text="Workout Plans" />-->
+            Margin="0,0,0,2"
+            Spacing="5">
+            <Label
+                FontAttributes="Bold"
+                Style="{StaticResource MediumLabel}"
+                Text="{Binding WorkoutDescription}"
+                TextColor="{StaticResource LightText}" />
+            <BoxView BackgroundColor="{StaticResource Primary}" HeightRequest="2" />
+        </VerticalStackLayout>
 
         <!--  Exercises to show  -->
-        <CollectionView Grid.Row="0" ItemsSource="{Binding Exercises}">
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Exercises}">
 
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />

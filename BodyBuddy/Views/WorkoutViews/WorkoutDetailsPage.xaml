@@ -3,6 +3,7 @@
     x:Class="BodyBuddy.Views.WorkoutViews.WorkoutDetailsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControls="clr-namespace:BodyBuddy.CustomControls"
     xmlns:helpers="clr-namespace:BodyBuddy.Helpers"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.WorkoutViewModels"
@@ -32,18 +33,24 @@
         RowDefinitions="Auto, *, Auto"
         RowSpacing="10">
 
-        <!--  Title  -->
-        <Label
+        <!--  Description  -->
+        <VerticalStackLayout
             Grid.Row="0"
-            Margin="0,0,0,5"
-            FontAttributes="Bold"
-            Style="{StaticResource MediumLabel}"
-            Text="{Binding WorkoutDescription}"
-            TextColor="{StaticResource LightText}" />
+            Margin="0,0,0,2"
+            Spacing="5">
+            <Label
+                FontAttributes="Bold"
+                Style="{StaticResource MediumLabel}"
+                Text="{Binding WorkoutDescription}"
+                TextColor="{StaticResource LightText}" />
+            <BoxView BackgroundColor="{StaticResource Primary}" HeightRequest="2" />
+        </VerticalStackLayout>
+
 
         <!--  Exercises to show  -->
         <CollectionView Grid.Row="1" ItemsSource="{Binding Exercises}">
 
+            <!--  View to show when there are no exercises in a workout  -->
             <CollectionView.EmptyView>
                 <ContentView>
                     <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
@@ -71,12 +78,14 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Exercise">
 
-                    <Frame HeightRequest="100" Style="{StaticResource CardView}">
+                    <Frame HeightRequest="120" Style="{StaticResource CardView}">
                         <Grid ColumnDefinitions="100,*">
+
+                            <!--  Left Column - Image  -->
                             <Image
                                 Aspect="AspectFill"
-                                HeightRequest="100"
-                                WidthRequest="100">
+                                HeightRequest="120"
+                                WidthRequest="110">
                                 <Image.Source>
                                     <UriImageSource
                                         CacheValidity="2"
@@ -85,23 +94,37 @@
                                 </Image.Source>
                             </Image>
 
+                            <!--  Right Column - Name, Sets and Reps  -->
                             <VerticalStackLayout
                                 Grid.Column="1"
-                                Padding="10,0"
+                                Padding="12,0"
+                                Spacing="10"
                                 VerticalOptions="CenterAndExpand">
-                                <Label
-                                    FontAttributes="Bold"
-                                    FontSize="18"
-                                    Style="{StaticResource MediumLabel}"
-                                    Text="{Binding Name}" />
-                                <Label
-                                    MaxLines="1"
-                                    Style="{StaticResource SmallLabel}"
-                                    Text="{Binding Level}" />
-                                <Label
-                                    MaxLines="1"
-                                    Style="{StaticResource MediumLabel}"
-                                    Text="3 x 12" />
+
+                                <!--  Name  -->
+                                <Label Style="{StaticResource LargeLabel}" Text="{Binding Name}" />
+
+                                <!--  Sets and edit icon  -->
+                                <HorizontalStackLayout>
+                                    <Label
+                                        FontAttributes="Bold"
+                                        Style="{StaticResource MediumLabel}"
+                                        Text="{Binding Sets, StringFormat='{0} x'}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        FontAttributes="Bold"
+                                        Style="{StaticResource MediumLabel}"
+                                        Text="{Binding Reps, StringFormat=' {0}'}"
+                                        VerticalOptions="Center" />
+                                    <ImageButton
+                                        Margin="10,0"
+                                        Clicked="SetsAndRepsBtn_Clicked"
+                                        CommandParameter="{Binding .}"
+                                        HeightRequest="25"
+                                        Source="pencil.png"
+                                        WidthRequest="25" />
+                                </HorizontalStackLayout>
+
                             </VerticalStackLayout>
                         </Grid>
                     </Frame>
@@ -110,6 +133,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
+        <!--  Buttom Row - Add Exercises Btn  -->
         <Button
             Grid.Row="2"
             Command="{Binding AddExercisesCommand}"

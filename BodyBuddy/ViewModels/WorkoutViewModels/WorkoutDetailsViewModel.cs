@@ -1,13 +1,9 @@
 ﻿using BodyBuddy.Models;
 using BodyBuddy.Repositories;
-using BodyBuddy.ViewModels.ExerciseViewModels;
 using BodyBuddy.Views.ExerciseViews;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using Imagekit.Constant;
-using System;
-using System.Collections.Generic;
+using Mopups.Services;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
@@ -18,17 +14,28 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 	{
 		private readonly IWorkoutRepository _workoutRepository;
 
-		// Query field
-		[ObservableProperty]
+        #region ObservableProperties
+
+        // Query field
+        [ObservableProperty]
 		private Workout _workoutDetails;
 
 		// Displayed Fields
         [ObservableProperty]
         public string workoutName, workoutDescription;
 
-		// Popup fields
+		// Workout Popup fields
 		[ObservableProperty]
 		public string popupName, popupDescription, errorMessage;
+
+        // Exercise Popup fields
+        [ObservableProperty]
+        public int sets, reps;
+
+        [ObservableProperty]
+        public Exercise exerciseToEdit;
+
+        #endregion
 
         public ObservableCollection<Exercise> Exercises { get; set; } = new ObservableCollection<Exercise>();
 
@@ -36,6 +43,18 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         {
 			_workoutRepository = workoutRepository;
 		}
+
+        public async Task Initialize()
+        {
+            WorkoutName = WorkoutDetails.Name;
+            if (string.IsNullOrWhiteSpace(WorkoutDetails.Description))
+            {
+                WorkoutDetails.Description = "Try giving this workout a description";
+            }
+            WorkoutDescription = WorkoutDetails.Description;
+
+            await GetExercisesFromWorkout();
+        }
 
 		public async Task GetExercisesFromWorkout()
 		{
@@ -45,8 +64,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 			{
 				IsBusy = true;
 
-                WorkoutName = WorkoutDetails.Name;
-                WorkoutDescription = WorkoutDetails.Description;
 
                 var workoutPlan = await _workoutRepository.GetExercisesInWorkout(WorkoutDetails.Id, false); // False for user made workouts
 
@@ -71,13 +88,8 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 			}
 		}
 
-		[RelayCommand]
-		public async Task AddExercises()
-		{
-            await Task.Delay(100); // Add a short delay
-			CachedData.SharedWorkout = WorkoutDetails;
-            await Shell.Current.GoToAsync($"{nameof(CategoryPage)}");
-        }
+
+        #region Workout Popup
 
         public async Task<bool> SaveWorkout()
         {
@@ -125,5 +137,58 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 			}
 		}
 
-	}
+        #endregion
+
+
+        #region SetsAndReps Popup
+
+        [RelayCommand]
+        public async Task SaveSetsAndReps()
+        {
+            if (IsBusy) return;
+
+            await MopupService.Instance.PopAsync();
+
+            try
+            {
+                IsBusy = true;
+
+                // Edit the exercise in the repository
+                await _workoutRepository.EditExerciseInWorkout(WorkoutDetails.Id, ExerciseToEdit);
+
+                //// Get the updated list of exercises from the repository
+                //var updatedExercises = await _workoutRepository.GetExercisesInWorkout(WorkoutDetails.Id, false);
+                //Exercises.Clear();
+                //foreach (var exercise in updatedExercises)
+                //{
+                //    Exercises.Add(exercise);
+                //}
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error!", $"Unable to edit the exercise {ex.Message}", "OK");
+                throw;
+            }
+            finally
+            {
+                IsBusy = false;
+                await GetExercisesFromWorkout();
+            }
+        }
+
+        #endregion
+
+
+        #region Navigation
+
+        [RelayCommand]
+        public async Task AddExercises()
+        {
+            await Task.Delay(100); // Add a short delay
+            CachedData.SharedWorkout = WorkoutDetails;
+            await Shell.Current.GoToAsync($"{nameof(CategoryPage)}");
+        }
+
+        #endregion
+    }
 }

@@ -18,7 +18,7 @@
         <Label
             Grid.Row="0"
             Style="{StaticResource TitleLabel}"
-            Text="Workout Plans" />
+            Text="My Workouts" />
 
         <!--  Workouts to show  -->
         <CollectionView Grid.Row="1" ItemsSource="{Binding MyWorkouts}">
