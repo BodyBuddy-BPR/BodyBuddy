@@ -140,6 +140,13 @@
 	  <MauiImage Include="Resources\Images\Categories\strength.svg" />
 	  <MauiImage Include="Resources\Images\Categories\stretching.svg" />
 	  <MauiImage Include="Resources\Images\Categories\strongman.svg" />
+	  <MauiImage Include="Resources\Images\Icons\dumbbell.svg" />
+	  <MauiImage Include="Resources\Images\Icons\home.svg" />
+	  <MauiImage Include="Resources\Images\Icons\list.svg" />
+	  <MauiImage Include="Resources\Images\Icons\minus_sign.svg" />
+	  <MauiImage Include="Resources\Images\Icons\pencil.svg" />
+	  <MauiImage Include="Resources\Images\Icons\plus_sign.svg" />
+	  <MauiImage Include="Resources\Images\Icons\trashcan.svg" />
 	</ItemGroup>
 
 	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadUnhandledDeviceExceptionBodyBuddyHideInfoBar="True" /></VisualStudio></ProjectExtensions>

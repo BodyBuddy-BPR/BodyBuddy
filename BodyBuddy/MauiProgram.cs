@@ -66,6 +66,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ExerciseDetailsPage>();
         #endregion
 
+
         #region ViewModels
 
         // Workout
@@ -81,12 +82,18 @@ public static class MauiProgram
         builder.Services.AddTransient<ExerciseDetailsViewModel>();
         #endregion
 
+
         #region Repositories
+
         builder.Services.AddSingleton<IExerciseRepository, ExerciseRepository>();
         builder.Services.AddSingleton<IWorkoutRepository, WorkoutRepository>();
+        builder.Services.AddSingleton<IWorkoutExercisesRepository, WorkoutExercisesRepository>();
+
         #endregion
 
+
         #region Database
+
         // Local Database
         builder.Services.AddSingleton<LocalDatabase>();
         builder.Services.AddTransient(async provider =>
@@ -102,7 +109,9 @@ public static class MauiProgram
 
         // Supabase Database
         builder.Services.AddSingleton(provider => new Supabase.Client(url, key, options));
+
         #endregion
+
 
         #region Services
 

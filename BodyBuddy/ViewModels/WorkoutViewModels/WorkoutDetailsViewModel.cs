@@ -13,6 +13,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 	public partial class WorkoutDetailsViewModel : BaseViewModel
 	{
 		private readonly IWorkoutRepository _workoutRepository;
+		private readonly IWorkoutExercisesRepository _workoutExercisesRepository;
 
         #region ObservableProperties
 
@@ -39,9 +40,10 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         public ObservableCollection<Exercise> Exercises { get; set; } = new ObservableCollection<Exercise>();
 
-		public WorkoutDetailsViewModel(IWorkoutRepository workoutRepository)
+		public WorkoutDetailsViewModel(IWorkoutRepository workoutRepository, IWorkoutExercisesRepository workoutExercisesRepository)
         {
 			_workoutRepository = workoutRepository;
+            _workoutExercisesRepository = workoutExercisesRepository;
 		}
 
         public async Task Initialize()
@@ -56,6 +58,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             await GetExercisesFromWorkout();
         }
 
+
 		public async Task GetExercisesFromWorkout()
 		{
             if (IsBusy) return;
@@ -65,7 +68,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 				IsBusy = true;
 
 
-                var workoutPlan = await _workoutRepository.GetExercisesInWorkout(WorkoutDetails.Id, false); // False for user made workouts
+                var workoutPlan = await _workoutExercisesRepository.GetExercisesInWorkout(WorkoutDetails.Id, false); // False for user made workouts
 
 				if (Exercises.Count != 0)
 				{
@@ -87,6 +90,20 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 				IsBusy = false;
 			}
 		}
+
+
+        [RelayCommand]
+        async Task DeleteFromWorkout(Exercise exercise)
+        {
+            bool result = await Shell.Current.DisplayAlert("Delete", $"Are you sure you want to remove {exercise.Name} from this workout?", "OK", "Cancel");
+
+            if (result)
+            {
+                if (exercise == null) return;
+                await _workoutExercisesRepository.DeleteExerciseFromWorkout(WorkoutDetails.Id, exercise.Id);
+                Exercises.Remove(exercise);
+            }
+        }
 
 
         #region Workout Popup
@@ -154,7 +171,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 IsBusy = true;
 
                 // Edit the exercise in the repository
-                await _workoutRepository.EditExerciseInWorkout(WorkoutDetails.Id, ExerciseToEdit);
+                await _workoutExercisesRepository.EditExerciseInWorkout(WorkoutDetails.Id, ExerciseToEdit);
 
                 //// Get the updated list of exercises from the repository
                 //var updatedExercises = await _workoutRepository.GetExercisesInWorkout(WorkoutDetails.Id, false);

@@ -16,13 +16,6 @@ namespace BodyBuddy.Repositories
 		Task DeleteWorkout(Workout workout);
 
 		Task<bool> DoesWorkoutAlreadyExist(string name);
-
-        // WorkoutExercises ---- These should maybe be moved to its own repo
-        Task<List<Exercise>> GetExercisesInWorkout(int workoutId, bool isPreMade);
-
-        Task AddExerciseToWorkout(int workoutId, int exerciseId);
-
-        Task EditExerciseInWorkout(int workoutId, Exercise changedExercise);
     }
 
 

@@ -14,7 +14,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
     [QueryProperty(nameof(WorkoutDetails), "Workout")]
     public partial class PreMadeWorkoutDetailsViewModel : BaseViewModel
     {
-        private readonly IWorkoutRepository _workoutRepository;
+        private readonly IWorkoutExercisesRepository _workoutExercisesRepository;
 
         [ObservableProperty]
         private Workout _workoutDetails;
@@ -25,9 +25,9 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         public ObservableCollection<Exercise> Exercises { get; set; } = new ObservableCollection<Exercise>();
 
-        public PreMadeWorkoutDetailsViewModel(IWorkoutRepository workoutRepository)
+        public PreMadeWorkoutDetailsViewModel(IWorkoutExercisesRepository workoutExercisesRepository)
         {
-            _workoutRepository = workoutRepository;
+            _workoutExercisesRepository = workoutExercisesRepository;
         }
 
         public async Task Initialize()
@@ -49,7 +49,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 IsBusy = true;
 
-                var workoutPlan = await _workoutRepository.GetExercisesInWorkout(WorkoutDetails.Id, true); // True for premade workouts
+                var workoutPlan = await _workoutExercisesRepository.GetExercisesInWorkout(WorkoutDetails.Id, true); // True for premade workouts
 
                 if (Exercises.Count != 0)
                 {

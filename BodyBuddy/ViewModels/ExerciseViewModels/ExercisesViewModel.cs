@@ -13,9 +13,14 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
     public partial class ExercisesViewModel : BaseViewModel
     {
         #region Injections
+
         private readonly IExerciseRepository _exerciseRepository;
         private readonly IWorkoutRepository _workoutRepository;
+        private readonly IWorkoutExercisesRepository _workoutExercisesRepository;
+
         #endregion
+
+        #region ObservableProperties
 
         [ObservableProperty]
         private Exercise _queryDetails; //Category and Musclegroup selected in the previous pages
@@ -23,15 +28,18 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
         [ObservableProperty]
         private Workout _selectedWorkout;
 
+        #endregion
+
         public ObservableCollection<Exercise> ExercisesList { get; set; } = new ObservableCollection<Exercise>();
         public ObservableCollection<Workout> WorkoutsList { get; set; } = new ObservableCollection<Workout>();
 
-        public ExercisesViewModel(IExerciseRepository exerciseRepository, IWorkoutRepository workoutRepository)
+        public ExercisesViewModel(IExerciseRepository exerciseRepository, IWorkoutRepository workoutRepository, IWorkoutExercisesRepository workoutExercisesRepository)
         {
             Title = string.Empty;
 
             _exerciseRepository = exerciseRepository;
             _workoutRepository = workoutRepository;
+            _workoutExercisesRepository = workoutExercisesRepository;
         }
 
         [RelayCommand]
@@ -131,7 +139,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
         {
             if(SelectedWorkout.Id != 0)
             {
-                await _workoutRepository.AddExerciseToWorkout(SelectedWorkout.Id, exercise.Id);
+                await _workoutExercisesRepository.AddExerciseToWorkout(SelectedWorkout.Id, exercise.Id);
                 await Shell.Current.DisplaySnackbar($"{exercise.Name} added to {SelectedWorkout.Name}");
             }
             else
