@@ -11,23 +11,23 @@
 
     <Grid
         Margin="20,10"
-        RowDefinitions="340, Auto, *"
-        RowSpacing="15">
+        RowDefinitions="Auto, Auto, *"
+        RowSpacing="20">
 
         <!--  The Exercise to do  -->
         <Frame
             Grid.Row="0"
-            Padding="10,15"
-            HeightRequest="300"
+            Padding="20,15"
             Style="{StaticResource CardView}">
-            <VerticalStackLayout HorizontalOptions="CenterAndExpand" Spacing="10">
+            <VerticalStackLayout HorizontalOptions="CenterAndExpand" Spacing="5">
                 <Label
+                    FontSize="22"
                     HorizontalOptions="Center"
-                    Style="{StaticResource TitleLabel}"
-                    Text="Exercise Name"
+                    Style="{StaticResource LargeLabel}"
+                    Text="{Binding DisplayedExercise.Name}"
                     TextColor="Black" />
 
-                <Image HeightRequest="160" Source="no_image.png" />
+                <Image HeightRequest="140" Source="no_image.png" />
 
                 <Label
                     HorizontalOptions="Center"
@@ -56,6 +56,7 @@
             HorizontalOptions="CenterAndExpand"
             Spacing="45">
             <ImageButton
+                Command="{Binding NextExerciseCommand}"
                 HeightRequest="60"
                 Source="previous_circle.png"
                 WidthRequest="60">
@@ -64,6 +65,7 @@
                 </ImageButton.Behaviors>
             </ImageButton>
             <ImageButton
+                Command="{Binding PreviousExerciseCommand}"
                 HeightRequest="60"
                 Source="next_circle.png"
                 WidthRequest="60">
