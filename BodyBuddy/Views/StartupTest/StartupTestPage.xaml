@@ -27,7 +27,8 @@
             <customControls:CustomEntry
                 IsVisible="{Binding IsNameVisible}"
                 Placeholder="Enter Name"
-                Style="{StaticResource StartupInputField}" />
+                Style="{StaticResource StartupInputField}"
+                Text="{Binding Name}" />
 
             <!--  Gender  -->
             <!--  TODO SEBT Multiple Choice Picker  -->
@@ -42,12 +43,14 @@
             <!--  Weight  -->
             <customControls:CustomEntry
                 IsVisible="{Binding IsWeightVisible}"
+                Keyboard="Numeric"
                 Placeholder="Enter Weight"
                 Style="{StaticResource StartupInputField}" />
 
             <!--  Height  -->
             <customControls:CustomEntry
                 IsVisible="{Binding IsHeightVisible}"
+                Keyboard="Numeric"
                 Placeholder="Enter Height"
                 Style="{StaticResource StartupInputField}" />
 
@@ -91,7 +94,7 @@
             Grid.Row="2"
             Command="{Binding ButtonTestCommand}"
             Style="{StaticResource AddButton}"
-            Text="NEXT! -WEUHUEUE" />
+            Text="{Binding ForwardButtonText}" />
 
     </Grid>
 </ContentPage>
