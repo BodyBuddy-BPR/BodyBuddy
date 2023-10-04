@@ -67,6 +67,8 @@
 	  <None Remove="Database\BodyBuddyDb.db" />
 	  <None Remove="Resources\Images\dumbbell.svg" />
 	  <None Remove="Resources\Images\home.svg" />
+	  <None Remove="Resources\Images\Icons\next_circle.svg" />
+	  <None Remove="Resources\Images\Icons\previous_circle.svg" />
 	  <None Remove="Resources\Images\list.svg" />
 	  <None Remove="Resources\Images\minus_sign.svg" />
 	  <None Remove="Resources\Images\no_image.svg" />
@@ -124,6 +126,9 @@
 	  <MauiXaml Update="Views\WorkoutViews\PreMadeWorkoutsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\WorkoutViews\StartedWorkoutPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\WorkoutViews\WorkoutDetailsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -144,8 +149,10 @@
 	  <MauiImage Include="Resources\Images\Icons\home.svg" />
 	  <MauiImage Include="Resources\Images\Icons\list.svg" />
 	  <MauiImage Include="Resources\Images\Icons\minus_sign.svg" />
+	  <MauiImage Include="Resources\Images\Icons\next_circle.svg" />
 	  <MauiImage Include="Resources\Images\Icons\pencil.svg" />
 	  <MauiImage Include="Resources\Images\Icons\plus_sign.svg" />
+	  <MauiImage Include="Resources\Images\Icons\previous_circle.svg" />
 	  <MauiImage Include="Resources\Images\Icons\trashcan.svg" />
 	</ItemGroup>
 
