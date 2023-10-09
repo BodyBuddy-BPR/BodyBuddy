@@ -39,8 +39,8 @@ public static class MauiProgram
 #endif
 
         // Supabase
-        var url = SupabaseConfig.SUPABASE_URL;
-        var key = SupabaseConfig.SUPABASE_KEY;
+        var url = AppSettingKeys.SUPABASE_URL;
+        var key = AppSettingKeys.SUPABASE_KEY;
         var options = new SupabaseOptions
         {
             AutoRefreshToken = true,
