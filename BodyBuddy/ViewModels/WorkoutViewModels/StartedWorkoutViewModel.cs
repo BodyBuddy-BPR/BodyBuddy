@@ -25,6 +25,8 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         private Exercise _displayedExercise;
         public ObservableCollection<Exercise> Exercises { get; set; } = new ObservableCollection<Exercise>();
 
+        // Keep track of the index of the currently displayed exercise
+        private int _currentExerciseIndex = 0;
 
         public StartedWorkoutViewModel(IWorkoutExercisesRepository workoutExercisesRepository)
         {
@@ -71,14 +73,45 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         }
 
         [RelayCommand]
-        public async Task NextExercise()
+        public void NextExercise()
         {
+            if (Exercises.Count == 0)
+            {
+                return; // No exercises available
+            }
 
+            // Move to the next exercise
+            _currentExerciseIndex++;
+
+            // If we reached the end, loop back to the first exercise
+            if (_currentExerciseIndex >= Exercises.Count)
+            {
+                _currentExerciseIndex = 0;
+            }
+
+            // Update the displayed exercise
+            DisplayedExercise = Exercises[_currentExerciseIndex];
         }
-        [RelayCommand]
-        public async Task PreviousExercise()
-        {
 
+        [RelayCommand]
+        public void PreviousExercise()
+        {
+            if (Exercises.Count == 0)
+            {
+                return; // No exercises available
+            }
+
+            // Move to the previous exercise
+            _currentExerciseIndex--;
+
+            // If we reached the beginning, loop to the last exercise
+            if (_currentExerciseIndex < 0)
+            {
+                _currentExerciseIndex = Exercises.Count - 1;
+            }
+
+            // Update the displayed exercise
+            DisplayedExercise = Exercises[_currentExerciseIndex];
         }
     }
 }

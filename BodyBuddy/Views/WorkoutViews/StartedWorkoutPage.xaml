@@ -3,11 +3,19 @@
     x:Class="BodyBuddy.Views.WorkoutViews.StartedWorkoutPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:helpers="clr-namespace:BodyBuddy.Helpers"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewModels="clr-namespace:BodyBuddy.ViewModels.WorkoutViewModels"
     Title="{Binding WorkoutDetails.Name}"
     x:DataType="viewModels:StartedWorkoutViewModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!--  Other resources  -->
+            <helpers:ExerciseImageHelper x:Key="ExerciseImageHelper" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Grid
         Margin="20,10"
@@ -19,21 +27,42 @@
             Grid.Row="0"
             Padding="20,15"
             Style="{StaticResource CardView}">
-            <VerticalStackLayout HorizontalOptions="CenterAndExpand" Spacing="5">
+            <VerticalStackLayout HorizontalOptions="CenterAndExpand" Spacing="10">
                 <Label
-                    FontSize="22"
+                    FontSize="24"
                     HorizontalOptions="Center"
-                    Style="{StaticResource LargeLabel}"
+                    Style="{StaticResource TitleLabel}"
                     Text="{Binding DisplayedExercise.Name}"
                     TextColor="Black" />
-
-                <Image HeightRequest="140" Source="no_image.png" />
-
-                <Label
+                <Border
+                    
+                    HeightRequest="160"
                     HorizontalOptions="Center"
-                    Style="{StaticResource LargeLabel}"
-                    Text="3 Sets of 12 Reps"
-                    TextColor="Black" />
+                    WidthRequest="240">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="20" />
+                    </Border.StrokeShape>
+                    <Image HeightRequest="160" WidthRequest="240">
+                        <Image.Source>
+                            <UriImageSource
+                                CacheValidity="2"
+                                CachingEnabled="True"
+                                Uri="{Binding DisplayedExercise.Images, Converter={StaticResource ExerciseImageHelper}}" />
+                        </Image.Source>
+                    </Image>
+                </Border>
+                <HorizontalStackLayout HorizontalOptions="Center">
+                    <Label
+                        Style="{StaticResource LargeLabel}"
+                        Text="{Binding DisplayedExercise.Sets, StringFormat='{0} Sets of'}"
+                        TextColor="Black"
+                        VerticalOptions="Center" />
+                    <Label
+                        Style="{StaticResource LargeLabel}"
+                        Text="{Binding DisplayedExercise.Reps, StringFormat=' {0} Reps'}"
+                        TextColor="Black"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
 
                 <Label
                     FontAttributes="Italic"
@@ -42,11 +71,11 @@
                     Text="You can do it!"
                     TextColor="Black" />
 
-                <Label
+                <!--<Label
                     HorizontalOptions="Center"
                     Style="{StaticResource TitleLabel}"
                     Text="Personal Record: 100 kg"
-                    TextColor="Black" />
+                    TextColor="Black" />-->
             </VerticalStackLayout>
         </Frame>
 
