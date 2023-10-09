@@ -23,7 +23,9 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         [ObservableProperty]
         private Exercise _displayedExercise;
+        public ObservableCollection<ExerciseRecords> ExerciseRecords { get; set; } = new ObservableCollection<ExerciseRecords>();
         public ObservableCollection<Exercise> Exercises { get; set; } = new ObservableCollection<Exercise>();
+              
 
         // Keep track of the index of the currently displayed exercise
         private int _currentExerciseIndex = 0;
@@ -77,9 +79,40 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 IsBusy = false;
 
                 DisplayedExercise = Exercises.FirstOrDefault();
+                await MakeSets();
             }
         }
 
+        public async Task MakeSets()
+        {
+            if (DisplayedExercise == null || DisplayedExercise.Sets <= 0)
+            {
+                return; // No exercise selected or no sets defined
+            }
+
+            // Clear existing records
+            ExerciseRecords.Clear();
+
+
+            // Generate sets
+            for (int i = 1; i <= DisplayedExercise.Sets; i++)
+            {
+                var exerciseRecord = new ExerciseRecords
+                {
+                    ExerciseId = DisplayedExercise.Id,
+                    Set = i,
+                    Weight = 0,
+                    Reps = 0
+                };
+                ExerciseRecords.Add(exerciseRecord);
+            }
+        }
+
+        [RelayCommand]
+        public async Task FinishWorkout()
+        {
+
+        }
 
         #region Cycle Exercises Buttons
 
@@ -127,6 +160,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             // Update the displayed exercise
             DisplayedExercise = Exercises[_currentExerciseIndex];
             FinishWorkoutButtonIsEnabled = false;
+            NextButtonIsEnabled = true;
 
             // Check if there is a previous exercise and update IsEnabled accordingly
             if (_currentExerciseIndex > 0)

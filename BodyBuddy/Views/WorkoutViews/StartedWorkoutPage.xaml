@@ -100,29 +100,71 @@
                 IsVisible="{Binding NextButtonIsEnabled}"
                 Source="next_circle.png"
                 WidthRequest="60">
-                <!--<ImageButton.Triggers>
-                    <DataTrigger TargetType="ImageButton">
-                        <Setter Property="Is"/>
-                    </DataTrigger>
-                </ImageButton.Triggers>-->
                 <ImageButton.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="{StaticResource LightText}" />
                 </ImageButton.Behaviors>
             </ImageButton>
         </HorizontalStackLayout>
 
-        <VerticalStackLayout Grid.Row="2">
+        <!--  Tract Kg and Reps for each Set inputs  -->
+        <!--<VerticalStackLayout Grid.Row="2">-->
 
-            <Label FontSize="Title" Text="This is were the sets and reps will go" />
+        <Grid Grid.Row="2" RowDefinitions="*, Auto">
+            <CollectionView Grid.Row="0" ItemsSource="{Binding ExerciseRecords}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:ExerciseRecords">
+
+                        <Grid
+                            Margin="20,0"
+                            HorizontalOptions="StartAndExpand"
+                            RowDefinitions="Auto, Auto"
+                            RowSpacing="5">
+
+                            <Label
+                                Grid.Row="0"
+                                HorizontalOptions="StartAndExpand"
+                                Style="{StaticResource LargeLabel}"
+                                Text="{Binding Set, StringFormat='Set {0}'}" />
+
+                            <HorizontalStackLayout
+                                Grid.Row="1"
+                                Margin="0,0,0,10"
+                                HorizontalOptions="Center"
+                                Spacing="15"
+                                VerticalOptions="Center">
+                                <Entry
+                                    BackgroundColor="{StaticResource LightText}"
+                                    Placeholder="Kilo"
+                                    PlaceholderColor="Black"
+                                    TextColor="Black"
+                                    WidthRequest="80" />
+                                <Label
+                                    Style="{StaticResource LargeLabel}"
+                                    Text="x"
+                                    VerticalOptions="Center" />
+                                <Entry
+                                    BackgroundColor="{StaticResource LightText}"
+                                    Placeholder="Reps"
+                                    PlaceholderColor="Black"
+                                    TextColor="Black"
+                                    WidthRequest="80" />
+                            </HorizontalStackLayout>
+                        </Grid>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
             <Button
+                Grid.Row="1" Command="{Binding FinishWorkoutCommand}"
                 IsEnabled="{Binding FinishWorkoutButtonIsEnabled}"
                 IsVisible="{Binding FinishWorkoutButtonIsEnabled}"
                 Style="{StaticResource AddButton}"
                 Text="Finish Workout"
-                TextColor="{StaticResource LightText}" />
-
-        </VerticalStackLayout>
+                TextColor="{StaticResource LightText}"
+                VerticalOptions="EndAndExpand" />
+        </Grid>
+        <!--</VerticalStackLayout>-->
 
         <ActivityIndicator
             Grid.RowSpan="2"
