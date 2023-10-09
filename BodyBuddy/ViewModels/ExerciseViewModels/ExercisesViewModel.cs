@@ -147,8 +147,6 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
                 await Shell.Current.DisplayAlert("Error!", "Select a workout", "OK");
                 return;
             }
-
-
         }
 
         // Navigation to exercise details
