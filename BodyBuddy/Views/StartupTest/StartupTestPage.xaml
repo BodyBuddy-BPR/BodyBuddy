@@ -56,12 +56,19 @@
 
             <!--  Age  -->
             <!--  TODO SEBT -> Date Picker here  -->
-            <Label
+            <DatePicker
+                Date="{Binding SelectedDate}"
+                HorizontalOptions="Center"
+                IsVisible="{Binding IsAgeVisible}"
+                MaximumDate="{Binding MaxDate}"
+                MinimumDate="{Binding MinDate}"
+                VerticalOptions="Center" />
+            <!--<Label
                 HorizontalOptions="Center"
                 IsVisible="{Binding IsAgeVisible}"
                 Style="{StaticResource TitleLabel}"
                 Text="Age"
-                VerticalOptions="Center" />
+                VerticalOptions="Center" />-->
 
             <!--  Active  -->
             <!--  TODO SEBT Multiple Choice Picker  -->

@@ -23,14 +23,13 @@ namespace BodyBuddy.ViewModels.StartupTest
         private string _questionaireText, _forwardButtonText;
 
         //Saved Properties
-        [ObservableProperty]
-        private string name;
-        
-        [ObservableProperty]
-        private double weight;
-        
-        [ObservableProperty]
-        private int height;
+        [ObservableProperty] private string name, gender, active, goal;
+        [ObservableProperty] private double weight, height, passiveCalorieBurn;
+        [ObservableProperty] private DateTime selectedDate = new DateTime(2005, 1, 1);
+
+
+        [ObservableProperty] private DateTime minDate = new DateTime(1914, 7, 28);
+        [ObservableProperty] private DateTime maxDate = DateTime.Now;
 
         #endregion
 
@@ -79,6 +78,11 @@ namespace BodyBuddy.ViewModels.StartupTest
                     return;
                 }
             }
+        }
+
+        [RelayCommand]
+        public void SubmitData()
+        {
 
         }
 
