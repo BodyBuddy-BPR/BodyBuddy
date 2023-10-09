@@ -147,11 +147,16 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <HorizontalStackLayout Grid.Row="2" Spacing="10">
+        <HorizontalStackLayout
+            Grid.Row="2"
+            HorizontalOptions="CenterAndExpand"
+            Spacing="10">
             <!--  Buttom Row - Add Exercises Btn  -->
             <Button
                 Command="{Binding AddExercisesCommand}"
                 HeightRequest="40"
+                IsEnabled="{Binding SmallButtonsIsEnabled}"
+                IsVisible="{Binding SmallButtonsIsEnabled}"
                 Style="{StaticResource BaseButton}"
                 Text="Add Exercises"
                 WidthRequest="180" />
@@ -159,9 +164,19 @@
             <Button
                 Command="{Binding StartWorkoutCommand}"
                 HeightRequest="40"
+                IsEnabled="{Binding SmallButtonsIsEnabled}"
+                IsVisible="{Binding SmallButtonsIsEnabled}"
                 Style="{StaticResource BaseButton}"
                 Text="Start Workout"
                 WidthRequest="180" />
+
+            <Button
+                Command="{Binding AddExercisesCommand}"
+                HorizontalOptions="CenterAndExpand"
+                IsEnabled="{Binding LargeButtonIsEnabled}"
+                IsVisible="{Binding LargeButtonIsEnabled}"
+                Style="{StaticResource AddButton}"
+                Text="Add Exercises" />
         </HorizontalStackLayout>
 
         <ActivityIndicator

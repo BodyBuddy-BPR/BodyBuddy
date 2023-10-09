@@ -10,25 +10,25 @@ using System.Diagnostics;
 
 namespace BodyBuddy.ViewModels.WorkoutViewModels
 {
-	[QueryProperty(nameof(WorkoutDetails), "Workout")]
-	public partial class WorkoutDetailsViewModel : BaseViewModel
-	{
-		private readonly IWorkoutRepository _workoutRepository;
-		private readonly IWorkoutExercisesRepository _workoutExercisesRepository;
+    [QueryProperty(nameof(WorkoutDetails), "Workout")]
+    public partial class WorkoutDetailsViewModel : BaseViewModel
+    {
+        private readonly IWorkoutRepository _workoutRepository;
+        private readonly IWorkoutExercisesRepository _workoutExercisesRepository;
 
         #region ObservableProperties
 
         // Query field
         [ObservableProperty]
-		private Workout _workoutDetails;
+        private Workout _workoutDetails;
 
-		// Displayed Fields
+        // Displayed Fields
         [ObservableProperty]
         public string workoutName, workoutDescription;
 
-		// Workout Popup fields
-		[ObservableProperty]
-		public string popupName, popupDescription, errorMessage;
+        // Workout Popup fields
+        [ObservableProperty]
+        public string popupName, popupDescription, errorMessage;
 
         // Exercise Popup fields
         [ObservableProperty]
@@ -37,15 +37,20 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         [ObservableProperty]
         public Exercise exerciseToEdit;
 
+        [ObservableProperty]
+        public bool smallButtonsIsEnabled = false; 
+        [ObservableProperty]
+        public bool largeButtonIsEnabled = true;
+
         #endregion
 
         public ObservableCollection<Exercise> Exercises { get; set; } = new ObservableCollection<Exercise>();
 
-		public WorkoutDetailsViewModel(IWorkoutRepository workoutRepository, IWorkoutExercisesRepository workoutExercisesRepository)
+        public WorkoutDetailsViewModel(IWorkoutRepository workoutRepository, IWorkoutExercisesRepository workoutExercisesRepository)
         {
-			_workoutRepository = workoutRepository;
+            _workoutRepository = workoutRepository;
             _workoutExercisesRepository = workoutExercisesRepository;
-		}
+        }
 
         public async Task Initialize()
         {
@@ -57,40 +62,46 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             WorkoutDescription = WorkoutDetails.Description;
 
             await GetExercisesFromWorkout();
+
+            if(Exercises.Count > 0)
+            {
+                LargeButtonIsEnabled = false;
+                SmallButtonsIsEnabled = true;
+            }
         }
 
 
-		public async Task GetExercisesFromWorkout()
-		{
+        public async Task GetExercisesFromWorkout()
+        {
             if (IsBusy) return;
 
-			try
-			{
-				IsBusy = true;
+            try
+            {
+                IsBusy = true;
 
 
                 var workoutPlan = await _workoutExercisesRepository.GetExercisesInWorkout(WorkoutDetails.Id, false); // False for user made workouts
 
-				if (Exercises.Count != 0)
-				{
-					Exercises.Clear();
-				}
+                if (Exercises.Count != 0)
+                {
+                    Exercises.Clear();
+                }
 
-				foreach (var exercise in workoutPlan)
-				{
-					Exercises.Add(exercise);
-				}
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex);
-				await Shell.Current.DisplayAlert("Error!", $"Unable to get workout plans {ex.Message}", "OK");
-			}
-			finally
-			{
-				IsBusy = false;
-			}
-		}
+                foreach (var exercise in workoutPlan)
+                {
+                    Exercises.Add(exercise);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("Error!", $"Unable to get workout plans {ex.Message}", "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
 
 
         [RelayCommand]
@@ -103,6 +114,12 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 if (exercise == null) return;
                 await _workoutExercisesRepository.DeleteExerciseFromWorkout(WorkoutDetails.Id, exercise.Id);
                 Exercises.Remove(exercise);
+
+                if (Exercises.Count == 0)
+                {
+                    SmallButtonsIsEnabled = false;
+                    LargeButtonIsEnabled = true;
+                }
             }
         }
 
@@ -126,11 +143,11 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             }
             else
             {
-                Workout workout = new() { Id = WorkoutDetails.Id , Name = PopupName, Description = PopupDescription, PreMade = 0 };
+                Workout workout = new() { Id = WorkoutDetails.Id, Name = PopupName, Description = PopupDescription, PreMade = 0 };
                 await _workoutRepository.PostWorkoutPlanAsync(workout);
 
                 WorkoutName = PopupName;
-				WorkoutDescription = PopupDescription;
+                WorkoutDescription = PopupDescription;
 
                 return true;
             }
@@ -143,17 +160,17 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         }
 
         [RelayCommand]
-		async Task DeleteWorkout(Workout workout)
-		{
-			bool result = await Shell.Current.DisplayAlert("Delete", $"Are you sure you want to delete {workout.Name}?", "OK", "Cancel");
+        async Task DeleteWorkout(Workout workout)
+        {
+            bool result = await Shell.Current.DisplayAlert("Delete", $"Are you sure you want to delete {workout.Name}?", "OK", "Cancel");
 
-			if (result)
-			{
-				if (workout == null) return;
-				await _workoutRepository.DeleteWorkout(workout);
-				await GoBackAsync();
-			}
-		}
+            if (result)
+            {
+                if (workout == null) return;
+                await _workoutRepository.DeleteWorkout(workout);
+                await GoBackAsync();
+            }
+        }
 
         #endregion
 
@@ -210,7 +227,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         [RelayCommand]
         async Task StartWorkout()
         {
-            if(WorkoutDetails == null) return;
+            if (WorkoutDetails == null) return;
 
             await Task.Delay(100); // Add a short delay
             await Shell.Current.GoToAsync(nameof(StartedWorkoutPage), true, new Dictionary<string, object>
