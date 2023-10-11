@@ -21,7 +21,7 @@
     </ContentPage.Resources>
 
     <Grid
-        Margin="20,10"
+        Margin="20,5"
         RowDefinitions="*"
         RowSpacing="20">
 
@@ -31,7 +31,7 @@
             Padding="20,15"
             Style="{StaticResource CardView}">
 
-            <Grid RowDefinitions="Auto, Auto, *" RowSpacing="15">
+            <Grid RowDefinitions="Auto, Auto, *" RowSpacing="10">
 
                 <VerticalStackLayout HorizontalOptions="CenterAndExpand" Spacing="10">
                     <Label
@@ -113,7 +113,7 @@
                             <DataTemplate x:DataType="model:ExerciseRecords">
 
                                 <Grid
-                                    Margin="0,0"
+                                    Margin="0,0,0,-8"
                                     HorizontalOptions="CenterAndExpand"
                                     RowDefinitions="Auto, Auto"
                                     RowSpacing="5">

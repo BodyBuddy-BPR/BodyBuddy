@@ -43,12 +43,14 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Exercise">
 
-                    <Frame HeightRequest="100" Style="{StaticResource CardView}">
+                    <Frame HeightRequest="120" Style="{StaticResource CardView}">
                         <Grid ColumnDefinitions="100,*">
+
+                            <!--  Left Column - Image  -->
                             <Image
                                 Aspect="AspectFill"
-                                HeightRequest="100"
-                                WidthRequest="100">
+                                HeightRequest="120"
+                                WidthRequest="110">
                                 <Image.Source>
                                     <UriImageSource
                                         CacheValidity="2"
@@ -57,27 +59,33 @@
                                 </Image.Source>
                             </Image>
 
+                            <!--  Right Column - Name, Sets and Reps  -->
                             <VerticalStackLayout
                                 Grid.Column="1"
-                                Padding="10,0"
+                                Padding="12,0"
+                                Spacing="10"
                                 VerticalOptions="CenterAndExpand">
-                                <Label
-                                    FontAttributes="Bold"
-                                    FontSize="18"
-                                    Style="{StaticResource MediumLabel}"
-                                    Text="{Binding Name}" />
-                                <Label
-                                    MaxLines="1"
-                                    Style="{StaticResource SmallLabel}"
-                                    Text="{Binding Level}" />
-                                <Label
-                                    MaxLines="1"
-                                    Style="{StaticResource MediumLabel}"
-                                    Text="3 x 12" />
+
+                                <!--  Name  -->
+                                <Label Style="{StaticResource LargeLabel}" Text="{Binding Name}" />
+
+                                <!--  Sets and edit icon  -->
+                                <HorizontalStackLayout>
+                                    <Label
+                                        FontAttributes="Bold"
+                                        Style="{StaticResource MediumLabel}"
+                                        Text="{Binding Sets, StringFormat='{0} x'}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        FontAttributes="Bold"
+                                        Style="{StaticResource MediumLabel}"
+                                        Text="{Binding Reps, StringFormat=' {0}'}"
+                                        VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+
                             </VerticalStackLayout>
                         </Grid>
                     </Frame>
-
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
