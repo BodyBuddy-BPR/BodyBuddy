@@ -1,5 +1,4 @@
-﻿using Android.Content;
-using BodyBuddy.Models;
+﻿using BodyBuddy.Models;
 using SQLite;
 using System;
 using System.Collections.Generic;

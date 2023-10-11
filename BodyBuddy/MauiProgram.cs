@@ -39,8 +39,13 @@ public static class MauiProgram
 #endif
 
         // Supabase
-        var url = SupabaseConfig.SUPABASE_URL;
-        var key = SupabaseConfig.SUPABASE_KEY;
+#if GITHUB_BUILD
+    string url = Environment.GetEnvironmentVariable("SUPABASE_URL");
+    string key = Environment.GetEnvironmentVariable("SUPABASE_KEY");
+#else
+        string url = AppSettingKeys.SUPABASE_URL;
+        string key = AppSettingKeys.SUPABASE_KEY;
+#endif
         var options = new SupabaseOptions
         {
             AutoRefreshToken = true,
