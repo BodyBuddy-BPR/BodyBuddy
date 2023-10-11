@@ -75,7 +75,7 @@ namespace BodyBuddy.ViewModels.IntakeViewmodels
 		}
 
 		[RelayCommand]
-		async Task AddWaterClicked()
+		public async Task AddWaterClicked()
 		{
 			WaterCurrent += 250;
 			IntakeDetails.WaterCurrent = WaterCurrent;
@@ -83,7 +83,7 @@ namespace BodyBuddy.ViewModels.IntakeViewmodels
 		}
 
 		[RelayCommand]
-		async Task AddKcalClicked(int calories)
+		public async Task AddKcalClicked(int calories)
 		{
 			CaloriesCurrent += calories;
 			IntakeDetails.CalorieCurrent = CaloriesCurrent;
@@ -115,7 +115,7 @@ namespace BodyBuddy.ViewModels.IntakeViewmodels
 				await _intakeRepository.SaveChangesAsync(IntakeDetails);
 
 				NewIntakeGoal = 0;
-				ErrorMessage = "";
+				ErrorMessage = string.Empty;
 
 				return true;
 			}
