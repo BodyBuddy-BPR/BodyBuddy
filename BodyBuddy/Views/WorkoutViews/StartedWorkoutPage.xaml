@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BodyBuddy.Views.WorkoutViews.StartedWorkoutPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:BodyBuddy.Models"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewModels="clr-namespace:BodyBuddy.ViewModels.WorkoutViewModels"
+    Title="{Binding WorkoutDetails.Name}"
+    x:DataType="viewModels:StartedWorkoutViewModel">
+
+    <Grid
+        Margin="20,10"
+        RowDefinitions="Auto, Auto, *"
+        RowSpacing="20">
+
+        <!--  The Exercise to do  -->
+        <Frame
+            Grid.Row="0"
+            Padding="20,15"
+            Style="{StaticResource CardView}">
+            <VerticalStackLayout HorizontalOptions="CenterAndExpand" Spacing="5">
+                <Label
+                    FontSize="22"
+                    HorizontalOptions="Center"
+                    Style="{StaticResource LargeLabel}"
+                    Text="{Binding DisplayedExercise.Name}"
+                    TextColor="Black" />
+
+                <Image HeightRequest="140" Source="no_image.png" />
+
+                <Label
+                    HorizontalOptions="Center"
+                    Style="{StaticResource LargeLabel}"
+                    Text="3 Sets of 12 Reps"
+                    TextColor="Black" />
+
+                <Label
+                    FontAttributes="Italic"
+                    HorizontalOptions="Center"
+                    Style="{StaticResource MediumLabel}"
+                    Text="You can do it!"
+                    TextColor="Black" />
+
+                <Label
+                    HorizontalOptions="Center"
+                    Style="{StaticResource TitleLabel}"
+                    Text="Personal Record: 100 kg"
+                    TextColor="Black" />
+            </VerticalStackLayout>
+        </Frame>
+
+        <!--  Next and back buttons  -->
+        <HorizontalStackLayout
+            Grid.Row="1"
+            HorizontalOptions="CenterAndExpand"
+            Spacing="45">
+            <ImageButton
+                Command="{Binding NextExerciseCommand}"
+                HeightRequest="60"
+                Source="previous_circle.png"
+                WidthRequest="60">
+                <ImageButton.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="{StaticResource LightText}" />
+                </ImageButton.Behaviors>
+            </ImageButton>
+            <ImageButton
+                Command="{Binding PreviousExerciseCommand}"
+                HeightRequest="60"
+                Source="next_circle.png"
+                WidthRequest="60">
+                <ImageButton.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="{StaticResource LightText}" />
+                </ImageButton.Behaviors>
+            </ImageButton>
+        </HorizontalStackLayout>
+
+        <Label
+            Grid.Row="2"
+            FontSize="Title"
+            Text="This is were the sets and reps will go" />
+
+        <ActivityIndicator
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"
+            HorizontalOptions="Fill"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            Color="{StaticResource Primary}" />
+    </Grid>
+
+</ContentPage>

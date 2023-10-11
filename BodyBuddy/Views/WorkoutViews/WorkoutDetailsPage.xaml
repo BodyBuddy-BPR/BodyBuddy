@@ -147,13 +147,22 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <!--  Buttom Row - Add Exercises Btn  -->
-        <Button
-            Grid.Row="2"
-            Command="{Binding AddExercisesCommand}"
-            Style="{StaticResource AddButton}"
-            Text="Add Exercises" />
+        <HorizontalStackLayout Grid.Row="2" Spacing="10">
+            <!--  Buttom Row - Add Exercises Btn  -->
+            <Button
+                Command="{Binding AddExercisesCommand}"
+                HeightRequest="40"
+                Style="{StaticResource BaseButton}"
+                Text="Add Exercises"
+                WidthRequest="180" />
 
+            <Button
+                Command="{Binding StartWorkoutCommand}"
+                HeightRequest="40"
+                Style="{StaticResource BaseButton}"
+                Text="Start Workout"
+                WidthRequest="180" />
+        </HorizontalStackLayout>
 
         <ActivityIndicator
             Grid.RowSpan="2"

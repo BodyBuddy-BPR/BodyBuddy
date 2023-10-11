@@ -9,7 +9,9 @@ using BodyBuddy.ViewModels;
 using BodyBuddy.Views;
 using BodyBuddy.Views.ExerciseViews;
 using BodyBuddy.ViewModels.ExerciseViewModels;
+using BodyBuddy.ViewModels.IntakeViewmodels;
 using BodyBuddy.Views.WorkoutViews;
+using BodyBuddy.Views.StatisticsViews;
 using BodyBuddy.ViewModels.WorkoutViewModels;
 using Mopups.Hosting;
 using Mopups.Interfaces;
@@ -64,11 +66,16 @@ public static class MauiProgram
         builder.Services.AddSingleton<PreMadeWorkoutsPage>();
         builder.Services.AddTransient<PreMadeWorkoutDetailsPage>();
 
+        builder.Services.AddSingleton<StartedWorkoutPage>();
+
         // Exercise
         builder.Services.AddTransient<CategoryPage>();
         builder.Services.AddTransient<MuscleGroupPage>();
         builder.Services.AddTransient<ExercisesPage>();
         builder.Services.AddTransient<ExerciseDetailsPage>();
+
+        // Statistics
+        builder.Services.AddSingleton<IntakePage>();
         #endregion
 
 
@@ -80,11 +87,16 @@ public static class MauiProgram
 
         builder.Services.AddTransient<PreMadeWorkoutDetailsViewModel>();
 
+        builder.Services.AddSingleton<StartedWorkoutViewModel>();
+
         // Exercise
         builder.Services.AddTransient<CategoryViewModel>();
         builder.Services.AddTransient<MuscleGroupViewModel>();
         builder.Services.AddTransient<ExercisesViewModel>();
         builder.Services.AddTransient<ExerciseDetailsViewModel>();
+
+        // Statistics
+        builder.Services.AddSingleton<IntakeViewModel>();
         #endregion
 
 
@@ -93,6 +105,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IExerciseRepository, ExerciseRepository>();
         builder.Services.AddSingleton<IWorkoutRepository, WorkoutRepository>();
         builder.Services.AddSingleton<IWorkoutExercisesRepository, WorkoutExercisesRepository>();
+        builder.Services.AddSingleton<IIntakeRepository, IntakeRepository>();
 
         #endregion
 
