@@ -1,4 +1,5 @@
 ﻿using BodyBuddy.CustomControls;
+using BodyBuddy.Database;
 using Syncfusion.Licensing;
 
 namespace BodyBuddy;
@@ -8,7 +9,12 @@ public partial class App : Application
     public App()
     {
         //Register Syncfusion license
-        SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NHaF5cXmVCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdgWXZcdXRSRmVcVkNzV0s=");
+#if GITHUB_BUILD
+    string syncfusionKey = Environment.GetEnvironmentVariable("SYNCFUNCTION_KEY");
+#else
+        string syncfusionKey = AppSettingKeys.SYNCFUNCTION_KEY;
+#endif
+        SyncfusionLicenseProvider.RegisterLicense(syncfusionKey);
 
         InitializeComponent();
 

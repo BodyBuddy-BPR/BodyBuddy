@@ -1,0 +1,37 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Install MAUI Workloads
+      run: dotnet workload install maui-android --skip-manifest-update
+      #run: |
+        #dotnet workload install maui --skip-manifest-update
+        #dotnet workload install maui-android --skip-manifest-update
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build BodyBuddy.sln --no-restore -p:DefineConstants=GITHUB_BUILD
+      env:
+        SYNCFUNCTION_KEY: ${{ secrets.SYNCFUNCTION_KEY }}
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
