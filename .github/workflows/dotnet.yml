@@ -12,7 +12,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v3
@@ -21,10 +21,10 @@ jobs:
       with:
         dotnet-version: 7.0.x
     - name: Install MAUI Workloads
-      run: dotnet workload install maui-android --skip-manifest-update
+      run: dotnet workload install maui-android maui-ios --skip-manifest-update
       #run: |
         #dotnet workload install maui --skip-manifest-update
-        #dotnet workload install maui-android --skip-manifest-update
+        #dotnet workload install maui-android maui-ios --skip-manifest-update
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
