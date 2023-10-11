@@ -52,5 +52,7 @@ namespace BodyBuddy.Models
         public int Sets { get; set; }
         [Ignore]
         public int Reps { get; set; }
+
+        public List<ExerciseRecords> Records { get; set; } = new List<ExerciseRecords>();
     }
 }

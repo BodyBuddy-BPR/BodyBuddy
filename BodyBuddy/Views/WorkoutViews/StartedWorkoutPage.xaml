@@ -3,7 +3,10 @@
     x:Class="BodyBuddy.Views.WorkoutViews.StartedWorkoutPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControls="clr-namespace:BodyBuddy.CustomControls"
+    xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:helpers="clr-namespace:BodyBuddy.Helpers"
+    xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewModels="clr-namespace:BodyBuddy.ViewModels.WorkoutViewModels"
@@ -71,11 +74,6 @@
                     Text="You can do it!"
                     TextColor="Black" />
 
-                <!--<Label
-                    HorizontalOptions="Center"
-                    Style="{StaticResource TitleLabel}"
-                    Text="Personal Record: 100 kg"
-                    TextColor="Black" />-->
             </VerticalStackLayout>
         </Frame>
 
@@ -107,16 +105,14 @@
         </HorizontalStackLayout>
 
         <!--  Tract Kg and Reps for each Set inputs  -->
-        <!--<VerticalStackLayout Grid.Row="2">-->
-
         <Grid Grid.Row="2" RowDefinitions="*, Auto">
             <CollectionView Grid.Row="0" ItemsSource="{Binding ExerciseRecords}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:ExerciseRecords">
 
                         <Grid
-                            Margin="20,0"
-                            HorizontalOptions="StartAndExpand"
+                            Margin="0,0"
+                            HorizontalOptions="CenterAndExpand"
                             RowDefinitions="Auto, Auto"
                             RowSpacing="5">
 
@@ -130,24 +126,47 @@
                                 Grid.Row="1"
                                 Margin="0,0,0,10"
                                 HorizontalOptions="Center"
-                                Spacing="15"
+                                Spacing="10"
                                 VerticalOptions="Center">
-                                <Entry
-                                    BackgroundColor="{StaticResource LightText}"
-                                    Placeholder="Kilo"
-                                    PlaceholderColor="Black"
-                                    TextColor="Black"
-                                    WidthRequest="80" />
+
+                                <inputLayout:SfTextInputLayout
+                                    ContainerBackground="{StaticResource LightText}"
+                                    ContainerType="Outlined"
+                                    HorizontalOptions="Center"
+                                    Stroke="{StaticResource LightText}"
+                                    VerticalOptions="CenterAndExpand"
+                                    WidthRequest="120">
+                                    <editors:SfNumericEntry
+                                        CustomFormat="0 kg"
+                                        FontFamily="Montserrat"
+                                        FontSize="16"
+                                        Placeholder="Kg"
+                                        PlaceholderColor="Black"
+                                        Value="{Binding Weight}" />
+                                </inputLayout:SfTextInputLayout>
+
                                 <Label
+                                    HorizontalOptions="Center"
                                     Style="{StaticResource LargeLabel}"
-                                    Text="x"
-                                    VerticalOptions="Center" />
-                                <Entry
-                                    BackgroundColor="{StaticResource LightText}"
-                                    Placeholder="Reps"
-                                    PlaceholderColor="Black"
-                                    TextColor="Black"
-                                    WidthRequest="80" />
+                                    Text="X"
+                                    VerticalOptions="CenterAndExpand" />
+
+                                <inputLayout:SfTextInputLayout
+                                    ContainerBackground="{StaticResource LightText}"
+                                    ContainerType="Outlined"
+                                    HorizontalOptions="Center"
+                                    Stroke="{StaticResource LightText}"
+                                    WidthRequest="160">
+                                    <editors:SfNumericEntry
+                                        CustomFormat="0 Reps"
+                                        FontFamily="Montserrat"
+                                        FontSize="16"
+                                        Placeholder="Reps"
+                                        PlaceholderColor="Black"
+                                        ShowClearButton="False"
+                                        UpDownPlacementMode="Inline"
+                                        Value="{Binding Reps}" />
+                                </inputLayout:SfTextInputLayout>
                             </HorizontalStackLayout>
                         </Grid>
 
@@ -156,7 +175,8 @@
             </CollectionView>
 
             <Button
-                Grid.Row="1" Command="{Binding FinishWorkoutCommand}"
+                Grid.Row="1"
+                Command="{Binding FinishWorkoutCommand}"
                 IsEnabled="{Binding FinishWorkoutButtonIsEnabled}"
                 IsVisible="{Binding FinishWorkoutButtonIsEnabled}"
                 Style="{StaticResource AddButton}"

@@ -16,6 +16,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
     public partial class StartedWorkoutViewModel : BaseViewModel
     {
         private readonly IWorkoutExercisesRepository _workoutExercisesRepository;
+        private readonly IExerciseRecordsRepository _exerciseRecordsRepository;
 
         // Query field for the started workout
         [ObservableProperty]
@@ -38,9 +39,10 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         public bool finishWorkoutButtonIsEnabled = false;
 
 
-        public StartedWorkoutViewModel(IWorkoutExercisesRepository workoutExercisesRepository)
+        public StartedWorkoutViewModel(IWorkoutExercisesRepository workoutExercisesRepository, IExerciseRecordsRepository exerciseRecordsRepository)
         {
             _workoutExercisesRepository = workoutExercisesRepository;
+            _exerciseRecordsRepository = exerciseRecordsRepository;
         }
 
         public async Task Initialize()
@@ -90,34 +92,57 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 return; // No exercise selected or no sets defined
             }
 
-            // Clear existing records
-            ExerciseRecords.Clear();
-
-
-            // Generate sets
-            for (int i = 1; i <= DisplayedExercise.Sets; i++)
+            // Check if the exercise already has records
+            if (DisplayedExercise.Records == null || DisplayedExercise.Records.Count == 0)
             {
-                var exerciseRecord = new ExerciseRecords
+                // Generate sets only if records are not already present
+                DisplayedExercise.Records = new List<ExerciseRecords>();
+
+                // Generate sets
+                for (int i = 1; i <= DisplayedExercise.Sets; i++)
                 {
-                    ExerciseId = DisplayedExercise.Id,
-                    Set = i,
-                    Weight = 0,
-                    Reps = 0
-                };
-                ExerciseRecords.Add(exerciseRecord);
+                    var exerciseRecord = new ExerciseRecords
+                    {
+                        ExerciseId = DisplayedExercise.Id,
+                        Set = i,
+                        Reps = DisplayedExercise.Reps
+                    };
+                    DisplayedExercise.Records.Add(exerciseRecord);
+                }
+            }
+
+            // Update ExerciseRecords with the records for the current exercise
+            ExerciseRecords.Clear();
+            foreach (var record in DisplayedExercise.Records)
+            {
+                ExerciseRecords.Add(record);
             }
         }
 
         [RelayCommand]
         public async Task FinishWorkout()
         {
+            await SaveRecords();
+            await GoBackAsync();
+        }
+
+        public async Task SaveRecords()
+        {
+            // Save the exercise records
+            foreach (var exercise in Exercises)
+            {
+                foreach (var record in exercise.Records)
+                {
+                    await _exerciseRecordsRepository.SaveExerciseRecords(record);
+                }
+            }
 
         }
 
         #region Cycle Exercises Buttons
 
         [RelayCommand]
-        public void NextExercise()
+        public async Task NextExercise()
         {
             if (Exercises.Count == 0 || _currentExerciseIndex >= Exercises.Count - 1)
             {
@@ -143,10 +168,12 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 FinishWorkoutButtonIsEnabled = false;
             }
+
+            await MakeSets();
         }
 
         [RelayCommand]
-        public void PreviousExercise()
+        public async Task PreviousExercise()
         {
             if (Exercises.Count == 0 || _currentExerciseIndex == 0)
             {
@@ -159,6 +186,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
             // Update the displayed exercise
             DisplayedExercise = Exercises[_currentExerciseIndex];
+
             FinishWorkoutButtonIsEnabled = false;
             NextButtonIsEnabled = true;
 
@@ -171,6 +199,8 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 PreviousButtonIsEnabled = false; // Disable the "Previous" button when on the first exercise
             }
+
+            await MakeSets();
         }
 
         #endregion

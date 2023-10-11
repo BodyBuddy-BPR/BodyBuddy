@@ -92,6 +92,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IExerciseRepository, ExerciseRepository>();
         builder.Services.AddSingleton<IWorkoutRepository, WorkoutRepository>();
         builder.Services.AddSingleton<IWorkoutExercisesRepository, WorkoutExercisesRepository>();
+        builder.Services.AddSingleton<IExerciseRecordsRepository, ExerciseRecordsRepository>();
 
         #endregion
 

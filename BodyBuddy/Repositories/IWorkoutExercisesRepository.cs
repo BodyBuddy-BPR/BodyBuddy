@@ -16,5 +16,6 @@ namespace BodyBuddy.Repositories
         Task EditExerciseInWorkout(int workoutId, Exercise changedExercise);
 
         Task DeleteExerciseFromWorkout(int workoutId, int exerciseId);
+
     }
 }
