@@ -9,7 +9,12 @@ public partial class App : Application
     public App()
     {
         //Register Syncfusion license
-        SyncfusionLicenseProvider.RegisterLicense(AppSettingKeys.SYNCFUNCTION_KEY);
+#if GITHUB_BUILD
+    string syncfusionKey = Environment.GetEnvironmentVariable("SYNCFUNCTION_KEY");
+#else
+        string syncfusionKey = AppSettingKeys.SYNCFUNCTION_KEY;
+#endif
+        SyncfusionLicenseProvider.RegisterLicense(syncfusionKey);
 
         InitializeComponent();
 

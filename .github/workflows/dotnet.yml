@@ -28,6 +28,10 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build BodyBuddy.sln --no-restore
+      run: dotnet build BodyBuddy.sln --no-restore -p:DefineConstants=GITHUB_BUILD
+      env:
+        SYNCFUNCTION_KEY: ${{ secrets.SYNCFUNCTION_KEY }}
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
     - name: Test
       run: dotnet test --no-build --verbosity normal
