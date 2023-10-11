@@ -22,7 +22,7 @@
 
     <Grid
         Margin="20,10"
-        RowDefinitions="Auto, Auto, *"
+        RowDefinitions="*"
         RowSpacing="20">
 
         <!--  The Exercise to do  -->
@@ -30,161 +30,163 @@
             Grid.Row="0"
             Padding="20,15"
             Style="{StaticResource CardView}">
-            <VerticalStackLayout HorizontalOptions="CenterAndExpand" Spacing="10">
-                <Label
-                    FontSize="24"
-                    HorizontalOptions="Center"
-                    Style="{StaticResource TitleLabel}"
-                    Text="{Binding DisplayedExercise.Name}"
-                    TextColor="Black" />
-                <Border
-                    BackgroundColor="Transparent"
-                    HeightRequest="160"
-                    HorizontalOptions="Center"
-                    WidthRequest="240">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="20" />
-                    </Border.StrokeShape>
-                    <Image HeightRequest="160" WidthRequest="240">
-                        <Image.Source>
-                            <UriImageSource
-                                CacheValidity="2"
-                                CachingEnabled="True"
-                                Uri="{Binding DisplayedExercise.Images, Converter={StaticResource ExerciseImageHelper}}" />
-                        </Image.Source>
-                    </Image>
-                </Border>
-                <HorizontalStackLayout HorizontalOptions="Center">
+
+            <Grid RowDefinitions="Auto, Auto, *" RowSpacing="15">
+
+                <VerticalStackLayout HorizontalOptions="CenterAndExpand" Spacing="10">
                     <Label
-                        Style="{StaticResource LargeLabel}"
-                        Text="{Binding DisplayedExercise.Sets, StringFormat='{0} Sets of'}"
-                        TextColor="Black"
-                        VerticalOptions="Center" />
+                        FontSize="24"
+                        HorizontalOptions="Center"
+                        Style="{StaticResource TitleLabel}"
+                        Text="{Binding DisplayedExercise.Name}"
+                        TextColor="Black" />
+                    <Border
+                        BackgroundColor="Transparent"
+                        HeightRequest="160"
+                        HorizontalOptions="Center"
+                        WidthRequest="240">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20" />
+                        </Border.StrokeShape>
+                        <Image HeightRequest="160" WidthRequest="240">
+                            <Image.Source>
+                                <UriImageSource
+                                    CacheValidity="2"
+                                    CachingEnabled="True"
+                                    Uri="{Binding DisplayedExercise.Images, Converter={StaticResource ExerciseImageHelper}}" />
+                            </Image.Source>
+                        </Image>
+                    </Border>
+                    <HorizontalStackLayout HorizontalOptions="Center">
+                        <Label
+                            Style="{StaticResource LargeLabel}"
+                            Text="{Binding DisplayedExercise.Sets, StringFormat='{0} Sets of'}"
+                            TextColor="Black"
+                            VerticalOptions="Center" />
+                        <Label
+                            Style="{StaticResource LargeLabel}"
+                            Text="{Binding DisplayedExercise.Reps, StringFormat=' {0} Reps'}"
+                            TextColor="Black"
+                            VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
                     <Label
-                        Style="{StaticResource LargeLabel}"
-                        Text="{Binding DisplayedExercise.Reps, StringFormat=' {0} Reps'}"
-                        TextColor="Black"
-                        VerticalOptions="Center" />
+                        FontAttributes="Italic"
+                        HorizontalOptions="Center"
+                        Style="{StaticResource MediumLabel}"
+                        Text="You can do it!"
+                        TextColor="Black" />
+                </VerticalStackLayout>
+
+
+                <!--  Next and back buttons  -->
+                <HorizontalStackLayout
+                    Grid.Row="1"
+                    HorizontalOptions="CenterAndExpand"
+                    Spacing="20">
+                    <ImageButton
+                        Command="{Binding PreviousExerciseCommand}"
+                        HeightRequest="60"
+                        IsVisible="{Binding PreviousButtonIsEnabled}"
+                        Source="previous_circle.png"
+                        WidthRequest="60">
+                        <ImageButton.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="{StaticResource PrimaryDarker}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
+                    <ImageButton
+                        Command="{Binding NextExerciseCommand}"
+                        HeightRequest="60"
+                        IsVisible="{Binding NextButtonIsEnabled}"
+                        Source="next_circle.png"
+                        WidthRequest="60">
+                        <ImageButton.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="{StaticResource PrimaryDarker}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
                 </HorizontalStackLayout>
 
-                <Label
-                    FontAttributes="Italic"
-                    HorizontalOptions="Center"
-                    Style="{StaticResource MediumLabel}"
-                    Text="You can do it!"
-                    TextColor="Black" />
+                <!--  Tract Kg and Reps for each Set inputs  -->
+                <Grid Grid.Row="2" RowDefinitions="*, Auto">
+                    <CollectionView Grid.Row="0" ItemsSource="{Binding ExerciseRecords}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="model:ExerciseRecords">
 
-            </VerticalStackLayout>
+                                <Grid
+                                    Margin="0,0"
+                                    HorizontalOptions="CenterAndExpand"
+                                    RowDefinitions="Auto, Auto"
+                                    RowSpacing="5">
+
+                                    <Label
+                                        Grid.Row="0"
+                                        HorizontalOptions="StartAndExpand"
+                                        Style="{StaticResource LargeLabel}"
+                                        Text="{Binding Set, StringFormat='Set {0}'}" />
+
+                                    <HorizontalStackLayout
+                                        Grid.Row="1"
+                                        HorizontalOptions="Center"
+                                        Spacing="5"
+                                        VerticalOptions="Center">
+
+                                        <inputLayout:SfTextInputLayout
+                                            ContainerBackground="{StaticResource Primary}"
+                                            ContainerType="Outlined"
+                                            HorizontalOptions="Center"
+                                            Stroke="{StaticResource Primary}"
+                                            VerticalOptions="CenterAndExpand"
+                                            WidthRequest="120">
+                                            <editors:SfNumericEntry
+                                                CustomFormat="0 kg"
+                                                FontFamily="Montserrat"
+                                                FontSize="16"
+                                                Placeholder="Kg"
+                                                PlaceholderColor="Black"
+                                                Value="{Binding Weight}" />
+                                        </inputLayout:SfTextInputLayout>
+
+                                        <Label
+                                            HorizontalOptions="Center"
+                                            Style="{StaticResource LargeLabel}"
+                                            Text="X"
+                                            VerticalOptions="CenterAndExpand" />
+
+                                        <inputLayout:SfTextInputLayout
+                                            ContainerBackground="{StaticResource Primary}"
+                                            ContainerType="Outlined"
+                                            HorizontalOptions="Center"
+                                            Stroke="{StaticResource Primary}"
+                                            WidthRequest="160">
+                                            <editors:SfNumericEntry
+                                                CustomFormat="0 Reps"
+                                                FontFamily="Montserrat"
+                                                FontSize="16"
+                                                Placeholder="Reps"
+                                                PlaceholderColor="Black"
+                                                ShowClearButton="False"
+                                                UpDownPlacementMode="Inline"
+                                                Value="{Binding Reps}" />
+                                        </inputLayout:SfTextInputLayout>
+                                    </HorizontalStackLayout>
+                                </Grid>
+
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <Button
+                        Grid.Row="1"
+                        Command="{Binding FinishWorkoutCommand}"
+                        IsEnabled="{Binding FinishWorkoutButtonIsEnabled}"
+                        IsVisible="{Binding FinishWorkoutButtonIsEnabled}"
+                        Style="{StaticResource AddButton}"
+                        Text="Finish Workout"
+                        TextColor="{StaticResource LightText}"
+                        VerticalOptions="EndAndExpand" />
+                </Grid>
+            </Grid>
         </Frame>
-
-        <!--  Next and back buttons  -->
-        <HorizontalStackLayout
-            Grid.Row="1"
-            HorizontalOptions="CenterAndExpand"
-            Spacing="45">
-            <ImageButton
-                Command="{Binding PreviousExerciseCommand}"
-                HeightRequest="60"
-                IsVisible="{Binding PreviousButtonIsEnabled}"
-                Source="previous_circle.png"
-                WidthRequest="60">
-                <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{StaticResource LightText}" />
-                </ImageButton.Behaviors>
-            </ImageButton>
-            <ImageButton
-                Command="{Binding NextExerciseCommand}"
-                HeightRequest="60"
-                IsVisible="{Binding NextButtonIsEnabled}"
-                Source="next_circle.png"
-                WidthRequest="60">
-                <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{StaticResource LightText}" />
-                </ImageButton.Behaviors>
-            </ImageButton>
-        </HorizontalStackLayout>
-
-        <!--  Tract Kg and Reps for each Set inputs  -->
-        <Grid Grid.Row="2" RowDefinitions="*, Auto">
-            <CollectionView Grid.Row="0" ItemsSource="{Binding ExerciseRecords}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:ExerciseRecords">
-
-                        <Grid
-                            Margin="0,0"
-                            HorizontalOptions="CenterAndExpand"
-                            RowDefinitions="Auto, Auto"
-                            RowSpacing="5">
-
-                            <Label
-                                Grid.Row="0"
-                                HorizontalOptions="StartAndExpand"
-                                Style="{StaticResource LargeLabel}"
-                                Text="{Binding Set, StringFormat='Set {0}'}" />
-
-                            <HorizontalStackLayout
-                                Grid.Row="1"
-                                Margin="0,0,0,10"
-                                HorizontalOptions="Center"
-                                Spacing="10"
-                                VerticalOptions="Center">
-
-                                <inputLayout:SfTextInputLayout
-                                    ContainerBackground="{StaticResource LightText}"
-                                    ContainerType="Outlined"
-                                    HorizontalOptions="Center"
-                                    Stroke="{StaticResource LightText}"
-                                    VerticalOptions="CenterAndExpand"
-                                    WidthRequest="120">
-                                    <editors:SfNumericEntry
-                                        CustomFormat="0 kg"
-                                        FontFamily="Montserrat"
-                                        FontSize="16"
-                                        Placeholder="Kg"
-                                        PlaceholderColor="Black"
-                                        Value="{Binding Weight}" />
-                                </inputLayout:SfTextInputLayout>
-
-                                <Label
-                                    HorizontalOptions="Center"
-                                    Style="{StaticResource LargeLabel}"
-                                    Text="X"
-                                    VerticalOptions="CenterAndExpand" />
-
-                                <inputLayout:SfTextInputLayout
-                                    ContainerBackground="{StaticResource LightText}"
-                                    ContainerType="Outlined"
-                                    HorizontalOptions="Center"
-                                    Stroke="{StaticResource LightText}"
-                                    WidthRequest="160">
-                                    <editors:SfNumericEntry
-                                        CustomFormat="0 Reps"
-                                        FontFamily="Montserrat"
-                                        FontSize="16"
-                                        Placeholder="Reps"
-                                        PlaceholderColor="Black"
-                                        ShowClearButton="False"
-                                        UpDownPlacementMode="Inline"
-                                        Value="{Binding Reps}" />
-                                </inputLayout:SfTextInputLayout>
-                            </HorizontalStackLayout>
-                        </Grid>
-
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-
-            <Button
-                Grid.Row="1"
-                Command="{Binding FinishWorkoutCommand}"
-                IsEnabled="{Binding FinishWorkoutButtonIsEnabled}"
-                IsVisible="{Binding FinishWorkoutButtonIsEnabled}"
-                Style="{StaticResource AddButton}"
-                Text="Finish Workout"
-                TextColor="{StaticResource LightText}"
-                VerticalOptions="EndAndExpand" />
-        </Grid>
-        <!--</VerticalStackLayout>-->
 
         <ActivityIndicator
             Grid.RowSpan="2"

@@ -18,7 +18,7 @@
 
     <Grid
         Margin="20,10"
-        RowDefinitions="Auto, *"
+        RowDefinitions="Auto, *, Auto"
         RowSpacing="10">
 
         <VerticalStackLayout
@@ -81,6 +81,13 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
+        <Button
+            Grid.Row="2"
+            Command="{Binding StartPreMadeWorkoutCommand}"
+            HorizontalOptions="CenterAndExpand"
+            Style="{StaticResource AddButton}"
+            Text="Start Workout" />
 
         <ActivityIndicator
             Grid.RowSpan="2"

@@ -1,6 +1,8 @@
 ﻿using BodyBuddy.Models;
 using BodyBuddy.Repositories;
+using BodyBuddy.Views.WorkoutViews;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -71,5 +73,21 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 IsBusy = false;
             }
         }
+
+        #region Navigation
+
+        [RelayCommand]
+        async Task StartPreMadeWorkout()
+        {
+            if (WorkoutDetails == null) return;
+
+            await Task.Delay(100); // Add a short delay
+            await Shell.Current.GoToAsync(nameof(StartedWorkoutPage), true, new Dictionary<string, object>
+            {
+                { "Workout", WorkoutDetails }
+            });
+        }
+
+        #endregion
     }
 }
