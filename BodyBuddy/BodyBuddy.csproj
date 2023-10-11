@@ -114,6 +114,9 @@
 	  <MauiXaml Update="Views\ExerciseViews\MuscleGroupPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Popups\EditIntakeGoalPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Popups\EditSetsAndRepsPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -163,6 +166,12 @@
 	  <MauiImage Include="Resources\Images\Icons\previous_circle.svg" />
 	  <MauiImage Include="Resources\Images\Icons\trashcan.svg" />
 	  <MauiImage Include="Resources\Images\Icons\water_glass.svg" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Views\Popups\EditIntakeGoalPopup.xaml.cs">
+	    <DependentUpon>EditIntakeGoalPopup.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadGenericExceptionInfoBarBodyBuddyHideInfoBar="True" XamarinHotReloadUnhandledDeviceExceptionBodyBuddyHideInfoBar="True" /></VisualStudio></ProjectExtensions>

@@ -1,8 +1,12 @@
 ﻿using BodyBuddy.Models;
 using BodyBuddy.Repositories;
+using BodyBuddy.Views.Popups;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Mopups.Interfaces;
+using Mopups.Pages;
+using Mopups.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,21 +19,29 @@ namespace BodyBuddy.ViewModels.IntakeViewmodels
 	public partial class IntakeViewModel : BaseViewModel
 	{
 		private readonly IIntakeRepository _intakeRepository;
+		IPopupNavigation _popupNavigation;
 
 		[ObservableProperty]
 		private Intake _intakeDetails;
 		[ObservableProperty]
-		private int _calorieEntryText;
+		private string _errorMessage;
+		[ObservableProperty]
+		private int _waterCurrent, _caloriesCurrent, _calorieEntryText, _newIntakeGoal, _calorieGoal, _waterGoal;
 
-		public IntakeViewModel(IIntakeRepository intakeRepository)
+		public IntakeViewModel(IIntakeRepository intakeRepository, IPopupNavigation popupNavigation)
 		{
 			_intakeRepository = intakeRepository;
+			_popupNavigation = popupNavigation;
+		}
+
+		public async Task Intilialize()
+		{
+			await GetIntakeGoals();
 		}
 
 		[RelayCommand]
 		public async Task GetIntakeGoals()
 		{
-
 			if (IsBusy) return;
 
 			try
@@ -40,6 +52,10 @@ namespace BodyBuddy.ViewModels.IntakeViewmodels
 				if (intake != null)
 				{
 					IntakeDetails = intake;
+					CaloriesCurrent = IntakeDetails.CalorieCurrent;
+					WaterCurrent = IntakeDetails.WaterCurrent;
+					CalorieGoal = IntakeDetails.CalorieGoal;
+					WaterGoal = IntakeDetails.WaterGoal;
 				}
 				else
 				{
@@ -58,22 +74,66 @@ namespace BodyBuddy.ViewModels.IntakeViewmodels
 			}
 		}
 
-		// This method probably shouldnt call GetIntakeGoals, but its the only way I have gotten it to update IntakeDetails in realtime
 		[RelayCommand]
 		async Task AddWaterClicked()
 		{
-			IntakeDetails.WaterCurrent += 250;
+			WaterCurrent += 250;
+			IntakeDetails.WaterCurrent = WaterCurrent;
 			await _intakeRepository.SaveChangesAsync(IntakeDetails);
-			await GetIntakeGoals();
 		}
 
-		// This method probably shouldnt call GetIntakeGoals, but its the only way I have gotten it to update IntakeDetails in realtime
 		[RelayCommand]
 		async Task AddKcalClicked(int calories)
 		{
-			IntakeDetails.CalorieCurrent += calories;
+			CaloriesCurrent += calories;
+			IntakeDetails.CalorieCurrent = CaloriesCurrent;
 			await _intakeRepository.SaveChangesAsync(IntakeDetails);
-			await GetIntakeGoals();
 		}
+
+		#region popup methods
+
+		public async Task<bool> SaveNewIntakeGoal(string intakeType)
+		{
+			if (NewIntakeGoal == 0)
+			{
+				ErrorMessage = "New intake goal cannot be empty.";
+				return false;
+			}
+			else
+			{
+				if(intakeType == "Calorie")
+				{
+					IntakeDetails.CalorieGoal = NewIntakeGoal;
+					CalorieGoal = IntakeDetails.CalorieGoal;
+				}
+				else
+				{
+					IntakeDetails.WaterGoal = NewIntakeGoal;
+					WaterGoal = IntakeDetails.WaterGoal;
+				}
+
+				await _intakeRepository.SaveChangesAsync(IntakeDetails);
+
+				NewIntakeGoal = 0;
+				ErrorMessage = "";
+
+				return true;
+			}
+		}
+
+		[RelayCommand]
+		public void DeclineEditIntake()
+		{
+			ErrorMessage = string.Empty;
+			NewIntakeGoal = 0;
+		}
+
+		[RelayCommand]
+		private void ClickToShowPopup_Clicked(string intakeType)
+		{
+			_popupNavigation.PushAsync(new EditIntakeGoalPopup(this, intakeType));
+		}
+
+		#endregion popup methods
 	}
 }

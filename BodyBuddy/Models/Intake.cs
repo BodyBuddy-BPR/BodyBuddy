@@ -6,7 +6,7 @@ namespace BodyBuddy.Models
 	[Table("Intake")]
 	public class Intake
 	{
-		[PrimaryKey, AutoIncrement]
+		[PrimaryKey]
 		[Column("id")]
 		public int Id { get; set; }
 

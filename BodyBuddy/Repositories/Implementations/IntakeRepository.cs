@@ -16,29 +16,34 @@ namespace BodyBuddy.Repositories.Implementations
 		public IntakeRepository(SQLiteAsyncConnection context)
 		{
 			_context = context ?? throw new ArgumentNullException(nameof(context));
-			//_supabaseClient = supabaseClient;
 		}
 
 		public async Task<Intake> GetIntakeAsync()
 		{
 			try
 			{
+				//Get current date at midnight in UTC, and convert it to a timestamp
 				DateTime currentDateTime = DateTime.UtcNow.Date;
 				int currentDateTimestamp = (int)(currentDateTime.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
 
+				//Check if there already exists an entry in the database with the timestamp for today, if not, we create one.
 				var existingIntake = await _context.Table<Intake>()
 					.Where(x => x.Date == currentDateTimestamp)
 					.FirstOrDefaultAsync();
 
 				if (existingIntake == null)
 				{
+					// Creating a new Intake entry in the database, if one does not already exist.
 					existingIntake = new Intake();
+					existingIntake.Id = await GetNextIntakeId();
 					existingIntake.Date = currentDateTimestamp;
 
 					var previousIntake = await _context.Table<Intake>()
 						.OrderByDescending(x => x.Date)
 						.FirstOrDefaultAsync();
 
+					// If a previous entry in the database exists for an intake, get the CalorieGoal and WaterGoal from this to
+					// also be on the new one. If one does not exist, set a default water and calorie goal.
 					if (previousIntake != null)
 					{
 						existingIntake.CalorieGoal = previousIntake.CalorieGoal;
@@ -54,6 +59,7 @@ namespace BodyBuddy.Repositories.Implementations
 						existingIntake.WaterCurrent = 0;
 					}
 
+					// Insert the new entry in the database
 					await _context.InsertAsync(existingIntake);
 				}
 
@@ -64,6 +70,12 @@ namespace BodyBuddy.Repositories.Implementations
 				Console.WriteLine($"Error in GetIntakeAsync: {ex}");
 				return new Intake();
 			}
+		}
+
+		private async Task<int> GetNextIntakeId()
+		{
+			var lastItem = await _context.Table<Intake>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
+			return lastItem?.Id + 1 ?? 1;
 		}
 
 		public async Task SaveChangesAsync(Intake intakeDetails)

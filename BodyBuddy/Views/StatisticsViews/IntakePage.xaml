@@ -44,24 +44,24 @@
                     WidthRequest="30" />
                 <Label
                     Style="{StaticResource MediumLabel}"
-                    Text="{Binding IntakeDetails.WaterCurrent}"
+                    Text="{Binding WaterCurrent, StringFormat='{0} /'}"
                     TextColor="White"
                     VerticalOptions="Center" />
                 <Label
+                    Margin="0,0,20,0"
                     Style="{StaticResource MediumLabel}"
-                    Text=" / "
+                    Text="{Binding WaterGoal, StringFormat=' {0} ml'}"
                     TextColor="White"
                     VerticalOptions="Center" />
-                <Label
-                    Style="{StaticResource MediumLabel}"
-                    Text="{Binding IntakeDetails.WaterGoal}"
-                    TextColor="White"
-                    VerticalOptions="Center" />
-                <Label
-                    Style="{StaticResource MediumLabel}"
-                    Text=" ml"
-                    TextColor="White"
-                    VerticalOptions="Center" />
+                <ImageButton
+                    Margin="0,20"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:IntakeViewModel}}, Path=ClickToShowPopup_ClickedCommand}"
+                    CommandParameter="Water"
+                    CornerRadius="15"
+                    HeightRequest="30"
+                    Source="pencil.png"
+                    VerticalOptions="Center"
+                    WidthRequest="30" />
             </HorizontalStackLayout>
 
         </VerticalStackLayout>
@@ -117,24 +117,25 @@
                 <Label
                     Margin="20,0,0,0"
                     Style="{StaticResource MediumLabel}"
-                    Text="{Binding IntakeDetails.CalorieCurrent}"
+                    Text="{Binding CaloriesCurrent, StringFormat='{0} /'}"
                     TextColor="White"
                     VerticalOptions="Center" />
                 <Label
+                    Margin="0,0,20,0"
                     Style="{StaticResource MediumLabel}"
-                    Text=" / "
+                    Text="{Binding CalorieGoal, StringFormat=' {0} kcal'}"
                     TextColor="White"
                     VerticalOptions="Center" />
-                <Label
-                    Style="{StaticResource MediumLabel}"
-                    Text="{Binding IntakeDetails.CalorieGoal}"
-                    TextColor="White"
-                    VerticalOptions="Center" />
-                <Label
-                    Style="{StaticResource MediumLabel}"
-                    Text=" kcal"
-                    TextColor="White"
-                    VerticalOptions="Center" />
+                <ImageButton
+                    Margin="0,20"
+                    BorderColor="White"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:IntakeViewModel}}, Path=ClickToShowPopup_ClickedCommand}"
+                    CommandParameter="Calorie"
+                    CornerRadius="15"
+                    HeightRequest="30"
+                    Source="pencil.png"
+                    VerticalOptions="Center"
+                    WidthRequest="30" />
             </HorizontalStackLayout>
 
         </VerticalStackLayout>
