@@ -38,9 +38,9 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         public Exercise exerciseToEdit;
 
         [ObservableProperty]
-        public bool smallButtonsIsEnabled = false; 
+        public bool smallButtonsIsEnabled = false; // This is the small Add Exercise & Start Workout buttons
         [ObservableProperty]
-        public bool largeButtonIsEnabled = true;
+        public bool largeButtonIsEnabled = true; // This is for when there are no exercises then a large Add Exercise Button is shown
 
         #endregion
 
