@@ -145,8 +145,8 @@
             <Button
                 Command="{Binding AddExercisesCommand}"
                 HeightRequest="40"
-                IsEnabled="{Binding SmallButtonsIsEnabled}"
-                IsVisible="{Binding SmallButtonsIsEnabled}"
+                IsEnabled="{Binding SmallButtonModifyIsEnabled}"
+                IsVisible="{Binding SmallButtonModifyIsEnabled}"
                 Style="{StaticResource BaseButton}"
                 Text="Add Exercises"
                 WidthRequest="180" />
@@ -163,8 +163,8 @@
             <Button
                 Command="{Binding AddExercisesCommand}"
                 HorizontalOptions="CenterAndExpand"
-                IsEnabled="{Binding LargeButtonIsEnabled}"
-                IsVisible="{Binding LargeButtonIsEnabled}"
+                IsEnabled="{Binding LargeButtonModifyIsEnabled}"
+                IsVisible="{Binding LargeButtonModifyIsEnabled}"
                 Style="{StaticResource AddButton}"
                 Text="Add Exercises" />
         </HorizontalStackLayout>

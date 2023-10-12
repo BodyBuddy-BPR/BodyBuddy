@@ -42,9 +42,11 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         public Exercise exerciseToEdit;
 
         [ObservableProperty]
-        public bool smallButtonsIsEnabled = false; // This is the small Add Exercise & Start Workout buttons
+        private bool smallButtonsIsEnabled; // This is the small Add Exercise & Start Workout buttons
         [ObservableProperty]
-        public bool largeButtonIsEnabled = true; // This is for when there are no exercises then a large Add Exercise Button is shown
+        private bool largeButtonModifyIsEnabled, smallButtonModifyIsEnabled; // For the AddExercisesCommand 
+
+
 
         #endregion
 
@@ -68,12 +70,21 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
             await GetExercisesFromWorkout();
 
-            if(Exercises.Count > 0)
+            IsPremade = true;
+
+            //Setting up Visibility of small and big buttons
+            if (Exercises.Count > 0)
             {
-                LargeButtonIsEnabled = false;
+                LargeButtonModifyIsEnabled = (false && !IsPremade);
+                SmallButtonModifyIsEnabled = (!IsPremade);
                 SmallButtonsIsEnabled = true;
             }
-            IsPremade = false;
+            else
+            {
+                LargeButtonModifyIsEnabled = (!IsPremade);
+                SmallButtonModifyIsEnabled = (false && !IsPremade);
+                SmallButtonsIsEnabled = false;
+            }
         }
 
 
@@ -123,8 +134,8 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
                 if (Exercises.Count == 0)
                 {
-                    SmallButtonsIsEnabled = false;
-                    LargeButtonIsEnabled = true;
+                    SmallButtonModifyIsEnabled = false;
+                    LargeButtonModifyIsEnabled = true && !IsPremade;
                 }
             }
         }
