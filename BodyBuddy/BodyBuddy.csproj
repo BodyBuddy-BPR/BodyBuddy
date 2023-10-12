@@ -67,8 +67,11 @@
 	  <None Remove="Database\BodyBuddyDb.db" />
 	  <None Remove="Resources\Images\dumbbell.svg" />
 	  <None Remove="Resources\Images\home.svg" />
+	  <None Remove="Resources\Images\Icons\apple.svg" />
+	  <None Remove="Resources\Images\Icons\knifeandfork.svg" />
 	  <None Remove="Resources\Images\Icons\next_circle.svg" />
 	  <None Remove="Resources\Images\Icons\previous_circle.svg" />
+	  <None Remove="Resources\Images\Icons\water_glass.svg" />
 	  <None Remove="Resources\Images\list.svg" />
 	  <None Remove="Resources\Images\minus_sign.svg" />
 	  <None Remove="Resources\Images\no_image.svg" />
@@ -111,10 +114,16 @@
 	  <MauiXaml Update="Views\ExerciseViews\MuscleGroupPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Popups\EditIntakeGoalPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Popups\EditSetsAndRepsPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Popups\EditWorkoutPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\StatisticsViews\IntakePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\WorkoutViews\CreateWorkoutPage.xaml">
@@ -145,8 +154,10 @@
 	  <MauiImage Include="Resources\Images\Categories\strength.svg" />
 	  <MauiImage Include="Resources\Images\Categories\stretching.svg" />
 	  <MauiImage Include="Resources\Images\Categories\strongman.svg" />
+	  <MauiImage Include="Resources\Images\Icons\apple.svg" />
 	  <MauiImage Include="Resources\Images\Icons\dumbbell.svg" />
 	  <MauiImage Include="Resources\Images\Icons\home.svg" />
+	  <MauiImage Include="Resources\Images\Icons\knifeandfork.svg" />
 	  <MauiImage Include="Resources\Images\Icons\list.svg" />
 	  <MauiImage Include="Resources\Images\Icons\minus_sign.svg" />
 	  <MauiImage Include="Resources\Images\Icons\next_circle.svg" />
@@ -154,8 +165,15 @@
 	  <MauiImage Include="Resources\Images\Icons\plus_sign.svg" />
 	  <MauiImage Include="Resources\Images\Icons\previous_circle.svg" />
 	  <MauiImage Include="Resources\Images\Icons\trashcan.svg" />
+	  <MauiImage Include="Resources\Images\Icons\water_glass.svg" />
 	</ItemGroup>
 
-	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadUnhandledDeviceExceptionBodyBuddyHideInfoBar="True" /></VisualStudio></ProjectExtensions>
+	<ItemGroup>
+	  <Compile Update="Views\Popups\EditIntakeGoalPopup.xaml.cs">
+	    <DependentUpon>EditIntakeGoalPopup.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadGenericExceptionInfoBarBodyBuddyHideInfoBar="True" XamarinHotReloadUnhandledDeviceExceptionBodyBuddyHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 
 </Project>

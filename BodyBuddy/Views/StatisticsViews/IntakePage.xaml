@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BodyBuddy.Views.StatisticsViews.IntakePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:BodyBuddy.Models"
+    xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.IntakeViewmodels"
+    x:DataType="viewModel:IntakeViewModel">
+    <Grid
+        Margin="20,0"
+        RowDefinitions="Auto, Auto"
+        RowSpacing="10">
+
+        <VerticalStackLayout Grid.Row="0">
+
+            <Label
+                Margin="0,20"
+                Style="{StaticResource TitleLabel}"
+                Text="Water Intake" />
+
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Image
+                    Margin="20,0"
+                    Aspect="AspectFill"
+                    HeightRequest="120"
+                    Source="water_glass.png"
+                    WidthRequest="120" />
+                <Label
+                    Style="{StaticResource LargeLabel}"
+                    Text="250 ml"
+                    TextColor="White"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Margin="0,20" HorizontalOptions="Center">
+                <ImageButton
+                    Margin="20,0"
+                    BackgroundColor="{StaticResource Secondary}"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:IntakeViewModel}}, Path=AddWaterClickedCommand}"
+                    CornerRadius="15"
+                    HeightRequest="30"
+                    Source="plus_sign.png"
+                    VerticalOptions="Center"
+                    WidthRequest="30" />
+                <Label
+                    Style="{StaticResource MediumLabel}"
+                    Text="{Binding WaterCurrent, StringFormat='{0} /'}"
+                    TextColor="White"
+                    VerticalOptions="Center" />
+                <Label
+                    Margin="0,0,20,0"
+                    Style="{StaticResource MediumLabel}"
+                    Text="{Binding WaterGoal, StringFormat=' {0} ml'}"
+                    TextColor="White"
+                    VerticalOptions="Center" />
+                <ImageButton
+                    Margin="0,20"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:IntakeViewModel}}, Path=ClickToShowPopup_ClickedCommand}"
+                    CommandParameter="Water"
+                    CornerRadius="15"
+                    HeightRequest="30"
+                    Source="pencil.png"
+                    VerticalOptions="Center"
+                    WidthRequest="30" />
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Row="1">
+
+            <Label
+                Margin="0,20"
+                Style="{StaticResource TitleLabel}"
+                Text="Calorie Intake" />
+
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Image
+                    Margin="20,0"
+                    Aspect="AspectFill"
+                    HeightRequest="120"
+                    Source="apple.png"
+                    WidthRequest="120" />
+                <Frame
+                    Padding="20,0"
+                    BackgroundColor="{StaticResource Secondary}"
+                    CornerRadius="60"
+                    HasShadow="True"
+                    HeightRequest="50">
+                    <HorizontalStackLayout HorizontalOptions="Center">
+                        <Entry
+                            x:Name="CalorieEntry"
+                            Keyboard="Numeric"
+                            MaxLength="4"
+                            MinimumWidthRequest="50"
+                            Style="{StaticResource MediumEntry}"
+                            Text="{Binding CalorieEntryText}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <Label
+                            Style="{StaticResource LargeLabel}"
+                            Text=" kcal"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Frame>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Margin="0,20" HorizontalOptions="Center">
+                <ImageButton
+                    BackgroundColor="{StaticResource Secondary}"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:IntakeViewModel}}, Path=AddKcalClickedCommand}"
+                    CommandParameter="{Binding CalorieEntryText}"
+                    CornerRadius="15"
+                    HeightRequest="30"
+                    Source="plus_sign.png"
+                    WidthRequest="30" />
+                <Label
+                    Margin="20,0,0,0"
+                    Style="{StaticResource MediumLabel}"
+                    Text="{Binding CaloriesCurrent, StringFormat='{0} /'}"
+                    TextColor="White"
+                    VerticalOptions="Center" />
+                <Label
+                    Margin="0,0,20,0"
+                    Style="{StaticResource MediumLabel}"
+                    Text="{Binding CalorieGoal, StringFormat=' {0} kcal'}"
+                    TextColor="White"
+                    VerticalOptions="Center" />
+                <ImageButton
+                    Margin="0,20"
+                    BorderColor="White"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:IntakeViewModel}}, Path=ClickToShowPopup_ClickedCommand}"
+                    CommandParameter="Calorie"
+                    CornerRadius="15"
+                    HeightRequest="30"
+                    Source="pencil.png"
+                    VerticalOptions="Center"
+                    WidthRequest="30" />
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+
+    </Grid>
+</ContentPage>
