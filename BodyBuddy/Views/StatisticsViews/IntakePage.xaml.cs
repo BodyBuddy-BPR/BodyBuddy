@@ -1,8 +1,4 @@
 using BodyBuddy.ViewModels.IntakeViewmodels;
-using BodyBuddy.Views.Popups;
-using CommunityToolkit.Mvvm.Input;
-using Mopups.Interfaces;
-using Mopups.Services;
 
 namespace BodyBuddy.Views.StatisticsViews;
 

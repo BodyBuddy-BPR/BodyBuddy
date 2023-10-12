@@ -38,7 +38,7 @@
                             VerticalOptions="Center" />
 
                         <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutViewModel}}, Path=GoToPreMadeWorkoutDetailsCommand}" CommandParameter="{Binding .}" />
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutViewModel}}, Path=GoToWorkoutDetailsCommand}" CommandParameter="{Binding .}" />
                         </Frame.GestureRecognizers>
                     </Frame>
                 </DataTemplate>

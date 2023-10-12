@@ -22,6 +22,10 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         [ObservableProperty]
         private Workout _workoutDetails;
 
+        // IsPremade (used to hide edit and deletions)
+        [ObservableProperty]
+        private bool _isPremade;
+
         // Displayed Fields
         [ObservableProperty]
         public string workoutName, workoutDescription;
@@ -38,9 +42,11 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         public Exercise exerciseToEdit;
 
         [ObservableProperty]
-        public bool smallButtonsIsEnabled = false; // This is the small Add Exercise & Start Workout buttons
+        private bool smallButtonsIsEnabled; // This is the small Add Exercise & Start Workout buttons
         [ObservableProperty]
-        public bool largeButtonIsEnabled = true; // This is for when there are no exercises then a large Add Exercise Button is shown
+        private bool largeButtonModifyIsEnabled, smallButtonModifyIsEnabled; // For the AddExercisesCommand 
+
+
 
         #endregion
 
@@ -51,6 +57,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             _workoutRepository = workoutRepository;
             _workoutExercisesRepository = workoutExercisesRepository;
         }
+
 
         public async Task Initialize()
         {
@@ -63,10 +70,24 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
             await GetExercisesFromWorkout();
 
-            if(Exercises.Count > 0)
+            //TODO: SEBT Future --> DTO objects (IsPremade = WorkoutDetails.Premade)
+            if (WorkoutDetails.PreMade == 0)
+                IsPremade = false;
+            else
+                IsPremade = true;
+
+            //Setting up Visibility of small and big buttons
+            if (Exercises.Count > 0)
             {
-                LargeButtonIsEnabled = false;
+                LargeButtonModifyIsEnabled = (false && !IsPremade);
+                SmallButtonModifyIsEnabled = (!IsPremade);
                 SmallButtonsIsEnabled = true;
+            }
+            else
+            {
+                LargeButtonModifyIsEnabled = (!IsPremade);
+                SmallButtonModifyIsEnabled = (false && !IsPremade);
+                SmallButtonsIsEnabled = false;
             }
         }
 
@@ -117,8 +138,8 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
                 if (Exercises.Count == 0)
                 {
-                    SmallButtonsIsEnabled = false;
-                    LargeButtonIsEnabled = true;
+                    SmallButtonModifyIsEnabled = false;
+                    LargeButtonModifyIsEnabled = true && !IsPremade;
                 }
             }
         }

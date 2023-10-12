@@ -1,14 +1,9 @@
 ﻿using BodyBuddy.Models;
 using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BodyBuddy.Repositories.Implementations
 {
-	public class IntakeRepository : IIntakeRepository
+    public class IntakeRepository : IIntakeRepository
 	{
 
 		private readonly SQLiteAsyncConnection _context;

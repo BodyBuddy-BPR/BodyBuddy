@@ -1,6 +1,5 @@
 using BodyBuddy.ViewModels.WorkoutViewModels;
 using Mopups.Interfaces;
-using Mopups.Services;
 
 namespace BodyBuddy.Views.WorkoutViews;
 
