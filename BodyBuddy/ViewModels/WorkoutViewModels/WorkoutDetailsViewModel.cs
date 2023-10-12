@@ -70,7 +70,11 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
             await GetExercisesFromWorkout();
 
-            IsPremade = true;
+            //TODO: SEBT Future --> DTO objects (IsPremade = WorkoutDetails.Premade)
+            if (WorkoutDetails.PreMade == 0)
+                IsPremade = false;
+            else
+                IsPremade = true;
 
             //Setting up Visibility of small and big buttons
             if (Exercises.Count > 0)

@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace BodyBuddy.Helpers
 {
-    public class InverseBooleanConverter : IValueConverter
+    public class BooleanInvertConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is bool boolValue)
             {
-                return boolValue ? true : false;
+                return !boolValue;
             }
 
             return false;

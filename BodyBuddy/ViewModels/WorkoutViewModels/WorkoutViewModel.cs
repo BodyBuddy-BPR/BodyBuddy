@@ -144,22 +144,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 { "Workout", workout }
             });
         }
-
-        [RelayCommand]
-        public async Task GoToPreMadeWorkoutDetails(Workout workout)
-        {
-            if (workout == null)
-            {
-                return;
-            }
-
-            await Task.Delay(100);
-            await Shell.Current.GoToAsync(nameof(PreMadeWorkoutDetailsPage), true, new Dictionary<string, object>
-            {
-                { "Workout", workout }
-            });
-        }
-
         #endregion
     }
 }

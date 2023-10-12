@@ -64,7 +64,6 @@ public static class MauiProgram
         builder.Services.AddTransient<WorkoutDetailsPage>();
 
         builder.Services.AddSingleton<PreMadeWorkoutsPage>();
-        builder.Services.AddTransient<PreMadeWorkoutDetailsPage>();
 
         builder.Services.AddSingleton<StartedWorkoutPage>();
 

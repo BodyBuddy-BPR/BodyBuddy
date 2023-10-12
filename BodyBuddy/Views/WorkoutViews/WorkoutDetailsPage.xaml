@@ -14,7 +14,7 @@
         <ResourceDictionary>
             <!--  Other resources  -->
             <helpers:ExerciseImageHelper x:Key="ExerciseImageHelper" />
-            <helpers:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <helpers:BooleanInvertConverter x:Key="BooleanInvertConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -112,6 +112,7 @@
                                             Clicked="SetsAndRepsBtn_Clicked"
                                             CommandParameter="{Binding .}"
                                             HeightRequest="25"
+                                            IsVisible="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutDetailsViewModel}}, Path=IsPremade, Converter={StaticResource BooleanInvertConverter}}"
                                             Source="pencil.png"
                                             WidthRequest="25" />
                                     </HorizontalStackLayout>
@@ -128,6 +129,7 @@
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutDetailsViewModel}}, Path=DeleteFromWorkoutCommand}"
                                     CommandParameter="{Binding .}"
                                     IconImageSource="trashcan.png"
+                                    IsVisible="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutDetailsViewModel}}, Path=IsPremade, Converter={StaticResource BooleanInvertConverter}}"
                                     Text="Delete" />
                             </SwipeItems>
                         </SwipeView.RightItems>
