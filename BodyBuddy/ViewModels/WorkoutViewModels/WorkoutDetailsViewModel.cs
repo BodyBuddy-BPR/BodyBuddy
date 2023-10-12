@@ -188,16 +188,26 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 IsBusy = true;
 
+                var existingExercise = Exercises.FirstOrDefault(e => e.Id == ExerciseToEdit.Id);
+
+                if (existingExercise != null)
+                {
+                    int index = Exercises.IndexOf(existingExercise);
+
+                    // Remove the existing exercise from the list
+                    Exercises.Remove(existingExercise);
+
+                    // Modify the exercise
+                    existingExercise.Sets = ExerciseToEdit.Sets;
+                    existingExercise.Reps = ExerciseToEdit.Reps;
+
+                    // Add the modified exercise back at the correct index
+                    Exercises.Insert(index, existingExercise);
+                }
+
                 // Edit the exercise in the repository
                 await _workoutExercisesRepository.EditExerciseInWorkout(WorkoutDetails.Id, ExerciseToEdit);
 
-                //// Get the updated list of exercises from the repository
-                //var updatedExercises = await _workoutRepository.GetExercisesInWorkout(WorkoutDetails.Id, false);
-                //Exercises.Clear();
-                //foreach (var exercise in updatedExercises)
-                //{
-                //    Exercises.Add(exercise);
-                //}
             }
             catch (Exception ex)
             {
@@ -207,7 +217,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             finally
             {
                 IsBusy = false;
-                await GetExercisesFromWorkout();
             }
         }
 
