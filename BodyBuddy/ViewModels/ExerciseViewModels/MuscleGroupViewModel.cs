@@ -3,14 +3,8 @@ using BodyBuddy.Repositories;
 using BodyBuddy.Views.ExerciseViews;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BodyBuddy.ViewModels.ExerciseViewModels
 {

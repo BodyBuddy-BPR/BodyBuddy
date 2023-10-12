@@ -3,16 +3,10 @@ using BodyBuddy.Repositories;
 using BodyBuddy.ViewModels.IntakeViewmodels;
 using Mopups.Interfaces;
 using Moq;
-using NuGet.Frameworks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UnitTest.ViewModels
 {
-	public class IntakeViewModelTests
+    public class IntakeViewModelTests
 	{
 		private IntakeViewModel target;
 		private Mock<IIntakeRepository> mockRepo;

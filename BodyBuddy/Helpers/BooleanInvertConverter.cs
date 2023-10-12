@@ -2,16 +2,16 @@
 
 namespace BodyBuddy.Helpers
 {
-    public class CategoryImageHelper : IValueConverter
+    public class BooleanInvertConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is string categoryName)
+            if (value is bool boolValue)
             {
-                string modifiedCategoryName = categoryName.ToLower().Replace(" ", "_");
-                return $"Categories/{modifiedCategoryName}.png";
+                return !boolValue;
             }
-            return "no_image.png";
+
+            return false;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

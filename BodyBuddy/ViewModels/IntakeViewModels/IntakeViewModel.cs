@@ -1,22 +1,14 @@
 ﻿using BodyBuddy.Models;
 using BodyBuddy.Repositories;
 using BodyBuddy.Views.Popups;
-using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Mopups.Interfaces;
-using Mopups.Pages;
-using Mopups.Services;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BodyBuddy.ViewModels.IntakeViewmodels
 {
-	public partial class IntakeViewModel : BaseViewModel
+    public partial class IntakeViewModel : BaseViewModel
 	{
 		private readonly IIntakeRepository _intakeRepository;
 		IPopupNavigation _popupNavigation;

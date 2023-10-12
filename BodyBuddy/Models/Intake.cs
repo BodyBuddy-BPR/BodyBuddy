@@ -1,9 +1,8 @@
 ﻿using SQLite;
-using System;
 
 namespace BodyBuddy.Models
 {
-	[Table("Intake")]
+    [Table("Intake")]
 	public class Intake
 	{
 		[PrimaryKey]

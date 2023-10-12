@@ -14,19 +14,9 @@
         <ResourceDictionary>
             <!--  Other resources  -->
             <helpers:ExerciseImageHelper x:Key="ExerciseImageHelper" />
+            <helpers:BooleanInvertConverter x:Key="BooleanInvertConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
-
-    <ContentPage.ToolbarItems>
-        <ToolbarItem
-            Clicked="EditBtn_Clicked"
-            CommandParameter="{Binding WorkoutDetails}"
-            IconImageSource="pencil.png" />
-        <ToolbarItem
-            Command="{Binding DeleteWorkoutCommand}"
-            CommandParameter="{Binding WorkoutDetails}"
-            IconImageSource="trashcan.png" />
-    </ContentPage.ToolbarItems>
 
     <Grid
         Margin="20,10"
@@ -122,6 +112,7 @@
                                             Clicked="SetsAndRepsBtn_Clicked"
                                             CommandParameter="{Binding .}"
                                             HeightRequest="25"
+                                            IsVisible="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutDetailsViewModel}}, Path=IsPremade, Converter={StaticResource BooleanInvertConverter}}"
                                             Source="pencil.png"
                                             WidthRequest="25" />
                                     </HorizontalStackLayout>
@@ -138,6 +129,7 @@
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutDetailsViewModel}}, Path=DeleteFromWorkoutCommand}"
                                     CommandParameter="{Binding .}"
                                     IconImageSource="trashcan.png"
+                                    IsVisible="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutDetailsViewModel}}, Path=IsPremade, Converter={StaticResource BooleanInvertConverter}}"
                                     Text="Delete" />
                             </SwipeItems>
                         </SwipeView.RightItems>
@@ -155,8 +147,8 @@
             <Button
                 Command="{Binding AddExercisesCommand}"
                 HeightRequest="40"
-                IsEnabled="{Binding SmallButtonsIsEnabled}"
-                IsVisible="{Binding SmallButtonsIsEnabled}"
+                IsEnabled="{Binding SmallButtonModifyIsEnabled}"
+                IsVisible="{Binding SmallButtonModifyIsEnabled}"
                 Style="{StaticResource BaseButton}"
                 Text="Add Exercises"
                 WidthRequest="180" />
@@ -173,8 +165,8 @@
             <Button
                 Command="{Binding AddExercisesCommand}"
                 HorizontalOptions="CenterAndExpand"
-                IsEnabled="{Binding LargeButtonIsEnabled}"
-                IsVisible="{Binding LargeButtonIsEnabled}"
+                IsEnabled="{Binding LargeButtonModifyIsEnabled}"
+                IsVisible="{Binding LargeButtonModifyIsEnabled}"
                 Style="{StaticResource AddButton}"
                 Text="Add Exercises" />
         </HorizontalStackLayout>

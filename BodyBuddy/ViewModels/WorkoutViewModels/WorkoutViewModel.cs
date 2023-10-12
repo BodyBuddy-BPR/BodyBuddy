@@ -5,8 +5,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Security.Policy;
-using System.Windows.Input;
 
 namespace BodyBuddy.ViewModels.WorkoutViewModels
 {
@@ -144,22 +142,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 { "Workout", workout }
             });
         }
-
-        [RelayCommand]
-        public async Task GoToPreMadeWorkoutDetails(Workout workout)
-        {
-            if (workout == null)
-            {
-                return;
-            }
-
-            await Task.Delay(100);
-            await Shell.Current.GoToAsync(nameof(PreMadeWorkoutDetailsPage), true, new Dictionary<string, object>
-            {
-                { "Workout", workout }
-            });
-        }
-
         #endregion
     }
 }

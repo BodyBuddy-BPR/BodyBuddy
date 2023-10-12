@@ -2,8 +2,6 @@ using Mopups.Services;
 using BodyBuddy.ViewModels.WorkoutViewModels;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Alerts;
-using System.Threading;
-using Font = Microsoft.Maui.Font;
 
 namespace BodyBuddy.Views.WorkoutViews;
 
