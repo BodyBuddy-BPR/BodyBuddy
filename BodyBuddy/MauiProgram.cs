@@ -85,8 +85,6 @@ public static class MauiProgram
         builder.Services.AddSingleton<WorkoutViewModel>();
         builder.Services.AddTransient<WorkoutDetailsViewModel>();
 
-        builder.Services.AddTransient<PreMadeWorkoutDetailsViewModel>();
-
         builder.Services.AddSingleton<StartedWorkoutViewModel>();
 
         // Exercise
