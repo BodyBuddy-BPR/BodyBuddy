@@ -1,16 +1,7 @@
 ﻿using BodyBuddy.Models;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using BodyBuddy.Views;
-using System.Text;
-using System.Threading.Tasks;
 using BodyBuddy.Views.ExerciseViews;
-using BodyBuddy.Database;
-using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BodyBuddy.ViewModels.ExerciseViewModels
 {

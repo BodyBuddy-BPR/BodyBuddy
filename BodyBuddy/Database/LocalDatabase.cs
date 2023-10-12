@@ -1,11 +1,5 @@
-﻿using BodyBuddy.Models;
-using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using SQLite;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BodyBuddy.Database
 {

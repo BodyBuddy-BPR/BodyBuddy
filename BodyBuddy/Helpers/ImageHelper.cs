@@ -1,11 +1,5 @@
-﻿using Imagekit;
-using Imagekit.Sdk;
-using System;
-using System.Collections.Generic;
+﻿using Imagekit.Sdk;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BodyBuddy.Helpers
 {

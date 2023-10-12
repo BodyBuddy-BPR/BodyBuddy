@@ -1,5 +1,4 @@
-﻿using BodyBuddy.Views;
-using BodyBuddy.Views.ExerciseViews;
+﻿using BodyBuddy.Views.ExerciseViews;
 using BodyBuddy.Views.WorkoutViews;
 
 namespace BodyBuddy;

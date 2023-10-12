@@ -5,8 +5,6 @@ using Syncfusion.Maui.Core.Hosting;
 using Supabase;
 using BodyBuddy.Repositories;
 using BodyBuddy.Repositories.Implementations;
-using BodyBuddy.ViewModels;
-using BodyBuddy.Views;
 using BodyBuddy.Views.ExerciseViews;
 using BodyBuddy.ViewModels.ExerciseViewModels;
 using BodyBuddy.ViewModels.IntakeViewmodels;
