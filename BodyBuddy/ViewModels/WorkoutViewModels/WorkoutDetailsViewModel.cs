@@ -188,7 +188,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 IsBusy = true;
 
-                var existingExercise = Exercises.FirstOrDefault(e => e.Id == ExerciseToEdit.Id);
+                var existingExercise = Exercises.FirstOrDefault(e => e.WorkoutId == ExerciseToEdit.WorkoutId);
 
                 if (existingExercise != null)
                 {

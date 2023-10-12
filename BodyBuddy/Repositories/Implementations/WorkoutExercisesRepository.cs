@@ -62,6 +62,8 @@ namespace BodyBuddy.Repositories.Implementations
                     {
                         var exercise = await _context.Table<Exercise>().FirstOrDefaultAsync(x => x.Id == workout.ExerciseId);
 
+                        exercise.WorkoutId = workout.Id;
+
                         // Check if the exercise is not null
                         if (workout.Sets != 0)
                         {
@@ -102,7 +104,7 @@ namespace BodyBuddy.Repositories.Implementations
             try
             {
                 WorkoutExercises workoutExerciseToChange = await _context.Table<WorkoutExercises>()
-                    .FirstOrDefaultAsync(x => x.WorkoutId == workoutId && x.ExerciseId == changedExercise.Id);
+                    .FirstOrDefaultAsync(x => x.WorkoutId == workoutId && x.Id == changedExercise.WorkoutId);
 
                 if (workoutExerciseToChange != null)
                 {
