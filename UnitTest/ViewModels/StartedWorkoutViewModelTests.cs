@@ -55,7 +55,7 @@ namespace UnitTest.ViewModels
             target.IsBusy = false;
             target.Exercises = exercises;
             target.WorkoutDetails = workout;
-            workoutExercisesMockRepo.Setup(repo => repo.GetExercisesInWorkout(It.IsAny<int>(), It.IsAny<bool>()))
+            workoutExercisesMockRepo.Setup(repo => repo.GetExercisesInWorkout(It.IsAny<int>()))
                 .ReturnsAsync(returnExercises);
 
             // Act 
