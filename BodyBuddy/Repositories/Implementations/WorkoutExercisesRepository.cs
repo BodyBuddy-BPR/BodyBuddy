@@ -17,76 +17,41 @@ namespace BodyBuddy.Repositories.Implementations
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<List<Exercise>> GetExercisesInWorkout(int workoutId, bool isPreMade)
+        public async Task<List<Exercise>> GetExercisesInWorkout(int workoutId)
         {
-            if (isPreMade)
-            {
-                List<Exercise> exercises = new();
-                try
-                {
-                    var workoutIds = await _context.Table<PreMadeWorkoutExercises>().Where(x => x.WorkoutId == workoutId).ToListAsync();
-                    foreach (var workout in workoutIds)
-                    {
-                        var exercise = await _context.Table<Exercise>().FirstOrDefaultAsync(x => x.Id == workout.ExerciseId);
 
-                        if (workout.Sets != 0)
-                        {
-                            // Update the Sets and Reps properties
-                            exercise.Sets = workout.Sets;
-                            exercise.Reps = workout.Reps;
-                            exercises.Add(exercise);
-                        }
-                        else
-                        {
-                            exercise.Sets = 3;
-                            exercise.Reps = 12;
-                            exercises.Add(exercise);
-                        }
-                    }
-                    return exercises;
-                }
-                catch (Exception ex)
+            List<Exercise> exercises = new();
+            try
+            {
+                var workoutIds = await _context.Table<WorkoutExercises>().Where(x => x.WorkoutId == workoutId).ToListAsync();
+                foreach (var workout in workoutIds)
                 {
-                    // Handle or log the exception
-                    Console.WriteLine($"Error in GetExercisesAsync: {ex}");
-                    return new List<Exercise>(); // Return an empty list or handle the error gracefully.
+                    var exercise = await _context.Table<Exercise>().FirstOrDefaultAsync(x => x.Id == workout.ExerciseId);
+
+                    exercise.WorkoutId = workout.Id;
+
+                    // Check if the exercise is not null
+                    if (workout.Sets != 0)
+                    {
+                        // Update the Sets and Reps properties
+                        exercise.Sets = workout.Sets;
+                        exercise.Reps = workout.Reps;
+                        exercises.Add(exercise);
+                    }
+                    else
+                    {
+                        exercise.Sets = 3;
+                        exercise.Reps = 12;
+                        exercises.Add(exercise);
+                    }
                 }
+                return exercises;
             }
-            else
+            catch (Exception ex)
             {
-                List<Exercise> exercises = new();
-                try
-                {
-                    var workoutIds = await _context.Table<WorkoutExercises>().Where(x => x.WorkoutId == workoutId).ToListAsync();
-                    foreach (var workout in workoutIds)
-                    {
-                        var exercise = await _context.Table<Exercise>().FirstOrDefaultAsync(x => x.Id == workout.ExerciseId);
-
-                        exercise.WorkoutId = workout.Id;
-
-                        // Check if the exercise is not null
-                        if (workout.Sets != 0)
-                        {
-                            // Update the Sets and Reps properties
-                            exercise.Sets = workout.Sets;
-                            exercise.Reps = workout.Reps;
-                            exercises.Add(exercise);
-                        }
-                        else
-                        {
-                            exercise.Sets = 3;
-                            exercise.Reps = 12;
-                            exercises.Add(exercise);
-                        }
-                    }
-                    return exercises;
-                }
-                catch (Exception ex)
-                {
-                    // Handle or log the exception
-                    Console.WriteLine($"Error in GetExercisesAsync: {ex}");
-                    return new List<Exercise>(); // Return an empty list or handle the error gracefully.
-                }
+                // Handle or log the exception
+                Console.WriteLine($"Error in GetExercisesAsync: {ex}");
+                return new List<Exercise>(); // Return an empty list or handle the error gracefully.
             }
         }
 

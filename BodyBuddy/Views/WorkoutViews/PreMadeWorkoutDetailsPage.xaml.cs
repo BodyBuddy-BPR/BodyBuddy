@@ -4,14 +4,14 @@ namespace BodyBuddy.Views.WorkoutViews;
 
 public partial class PreMadeWorkoutDetailsPage : ContentPage
 {
-    private PreMadeWorkoutDetailsViewModel _viewModel;
+    private WorkoutDetailsViewModel _viewModel;
 
-    public PreMadeWorkoutDetailsPage(PreMadeWorkoutDetailsViewModel preMadeWorkoutDetailsViewModel)
+    public PreMadeWorkoutDetailsPage(WorkoutDetailsViewModel workoutDetailsViewModel)
     {
         InitializeComponent();
 
-        _viewModel = preMadeWorkoutDetailsViewModel;
-        BindingContext = preMadeWorkoutDetailsViewModel;
+        _viewModel = workoutDetailsViewModel;
+        BindingContext = workoutDetailsViewModel;
     }
 
     protected override async void OnAppearing()

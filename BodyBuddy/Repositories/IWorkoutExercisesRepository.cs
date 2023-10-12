@@ -9,7 +9,7 @@ namespace BodyBuddy.Repositories
 {
     public interface IWorkoutExercisesRepository
     {
-        Task<List<Exercise>> GetExercisesInWorkout(int workoutId, bool isPreMade);
+        Task<List<Exercise>> GetExercisesInWorkout(int workoutId);
 
         Task AddExerciseToWorkout(int workoutId, int exerciseId);
 

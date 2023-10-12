@@ -58,8 +58,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 IsBusy = true;
 
-                bool isPremade = Convert.ToBoolean(WorkoutDetails.PreMade); 
-                var workoutPlan = await _workoutExercisesRepository.GetExercisesInWorkout(WorkoutDetails.Id, isPremade); // False for user made workouts
+                var workoutPlan = await _workoutExercisesRepository.GetExercisesInWorkout(WorkoutDetails.Id);
 
                 if (Exercises.Count != 0)
                 {

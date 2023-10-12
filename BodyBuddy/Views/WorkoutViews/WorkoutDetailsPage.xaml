@@ -51,7 +51,7 @@
         <CollectionView Grid.Row="1" ItemsSource="{Binding Exercises}">
 
             <!--  View to show when there are no exercises in a workout  -->
-            <CollectionView.EmptyView>
+            <!--<CollectionView.EmptyView>
                 <ContentView>
                     <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
                         <Label
@@ -69,7 +69,7 @@
                             Text="Try adding some" />
                     </StackLayout>
                 </ContentView>
-            </CollectionView.EmptyView>
+            </CollectionView.EmptyView>-->
 
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
