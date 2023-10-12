@@ -21,13 +21,46 @@ public partial class WorkoutDetailsPage : ContentPage
         _popupNavigation = popupNavigation;
     }
 
-	protected override async void OnAppearing()
+    //When !IsPremade --> Allow edit and deletion of workouts
+    //IsVisible is not a part of ToolbarItem, so had to be added through codebehind,
+    //based on viewmodel properties
+    private void UpdateToolbarItemsVisibility()
+    {
+        var toolbarItems = new List<ToolbarItem>();
+
+        if (!_viewModel.IsPremade)
+        {
+            toolbarItems.Add(new ToolbarItem
+            {
+                Command = new Command(EditBtn_Clicked),
+                CommandParameter = _viewModel.WorkoutDetails,
+                IconImageSource = "pencil.png"
+            });
+
+            toolbarItems.Add(new ToolbarItem
+            {
+                Command = _viewModel.DeleteWorkoutCommand,
+                CommandParameter = _viewModel.WorkoutDetails,
+                IconImageSource = "trashcan.png"
+            });
+        }
+
+        ToolbarItems.Clear();
+        foreach (ToolbarItem toolbarItem in toolbarItems)
+        {
+            ToolbarItems.Add(toolbarItem);
+        }
+    }
+
+
+    protected override async void OnAppearing()
 	{
 		base.OnAppearing();
 		await _viewModel.Initialize();
-	}
+        UpdateToolbarItemsVisibility();
+    }
 
-    private void EditBtn_Clicked(object sender, EventArgs e)
+    private void EditBtn_Clicked()
     {
 		_viewModel.PopupName = _viewModel.WorkoutName;
 		_viewModel.PopupDescription = _viewModel.WorkoutDescription;

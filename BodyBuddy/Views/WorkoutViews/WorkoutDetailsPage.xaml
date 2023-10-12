@@ -14,19 +14,9 @@
         <ResourceDictionary>
             <!--  Other resources  -->
             <helpers:ExerciseImageHelper x:Key="ExerciseImageHelper" />
+            <helpers:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
-
-    <ContentPage.ToolbarItems>
-        <ToolbarItem
-            Clicked="EditBtn_Clicked"
-            CommandParameter="{Binding WorkoutDetails}"
-            IconImageSource="pencil.png" />
-        <ToolbarItem
-            Command="{Binding DeleteWorkoutCommand}"
-            CommandParameter="{Binding WorkoutDetails}"
-            IconImageSource="trashcan.png" />
-    </ContentPage.ToolbarItems>
 
     <Grid
         Margin="20,10"

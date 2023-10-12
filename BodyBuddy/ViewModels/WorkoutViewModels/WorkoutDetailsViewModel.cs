@@ -22,6 +22,10 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         [ObservableProperty]
         private Workout _workoutDetails;
 
+        // IsPremade (used to hide edit and deletions)
+        [ObservableProperty]
+        private bool _isPremade;
+
         // Displayed Fields
         [ObservableProperty]
         public string workoutName, workoutDescription;
@@ -52,6 +56,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             _workoutExercisesRepository = workoutExercisesRepository;
         }
 
+
         public async Task Initialize()
         {
             WorkoutName = WorkoutDetails.Name;
@@ -68,6 +73,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 LargeButtonIsEnabled = false;
                 SmallButtonsIsEnabled = true;
             }
+            IsPremade = false;
         }
 
 
