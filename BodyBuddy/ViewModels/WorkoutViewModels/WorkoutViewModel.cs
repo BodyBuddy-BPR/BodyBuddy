@@ -18,6 +18,9 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         public ObservableCollection<Workout> PreMadeWorkouts { get; set; } = new ObservableCollection<Workout>();
 
         [ObservableProperty]
+        private bool isPremade;
+
+        [ObservableProperty]
         public string workoutName, workoutDescription;
 
         [ObservableProperty]
@@ -28,6 +31,8 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             Title = string.Empty;
 
             _workoutRepository = workoutRepository;
+            IsPremade = false;
+
         }
 
 

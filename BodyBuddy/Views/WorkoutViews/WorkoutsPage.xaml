@@ -3,11 +3,18 @@
     x:Class="BodyBuddy.Views.WorkoutViews.WorkoutsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:helpers="clr-namespace:BodyBuddy.Helpers"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.WorkoutViewModels"
     Title="{Binding Title}"
     x:DataType="viewModel:WorkoutViewModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <helpers:BooleanInvertConverter x:Key="BooleanInvertConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Grid
         Margin="20,10"
@@ -57,6 +64,7 @@
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutViewModel}}, Path=DeleteWorkoutCommand}"
                                     CommandParameter="{Binding .}"
                                     IconImageSource="trashcan.png"
+                                    IsVisible="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutViewModel}}, Path=IsPremade, Converter={StaticResource BooleanInvertConverter}}"
                                     Text="Delete" />
                             </SwipeItems>
                         </SwipeView.RightItems>
@@ -84,6 +92,7 @@
         <Button
             Grid.Row="2"
             Clicked="ClickToShowPopup_Clicked"
+            IsVisible="{Binding IsPremade, Converter={StaticResource BooleanInvertConverter}}"
             Style="{StaticResource AddButton}"
             Text="Create Workout"
             TextColor="{StaticResource LightText}" />
