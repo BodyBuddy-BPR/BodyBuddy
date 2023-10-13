@@ -2,6 +2,7 @@
 using BodyBuddy.Repositories;
 using BodyBuddy.ViewModels.WorkoutViewModels;
 using Moq;
+using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
 namespace UnitTests.ViewModels
 {
@@ -11,7 +12,8 @@ namespace UnitTests.ViewModels
         private Mock<IWorkoutRepository> mockRepo;
         private Workout preMadeWorkout1, preMadeWorkout2;
         private Workout workout1, workout2;
-        private List<Workout> premadeWorkoutList, workoutList;
+        private List<Workout> premadeWorkoutList;
+        private List<Workout> workoutList;
 
         [SetUp]
         public void Setup()
@@ -43,23 +45,24 @@ namespace UnitTests.ViewModels
             mockRepo.Verify(repo => repo.GetWorkoutPlansAsync(It.IsAny<int>()), Times.Never());
         }
 
-        [Test]
-        public async Task IfNotBusy_GetWorkoutPlanIsCalled()
+        [TestCase(true, 1)]
+        [TestCase(false, 0)]
+        public async Task GetWorkoutPlanIsCalledAndReturnsCorrectWorkoutList(bool boolIsPremade, int isPremadeNumber)
         {
             //Arrange
             target.IsBusy = false;
-            mockRepo.Setup(repo => repo.GetWorkoutPlansAsync(1)).ReturnsAsync(premadeWorkoutList);
-            mockRepo.Setup(repo => repo.GetWorkoutPlansAsync(0)).ReturnsAsync(workoutList);
-            target.PreMadeWorkouts.Add(workout2);
+            target.IsPreMadeWorkout = boolIsPremade;
+            mockRepo.Setup(repo => repo.GetWorkoutPlansAsync(isPremadeNumber)).ReturnsAsync(workoutList);
             target.Workouts.Add(workout2);
 
             //Act
             await target.GetWorkoutPlans();
 
             //Assert
-            mockRepo.Verify(repo => repo.GetWorkoutPlansAsync(It.IsAny<int>()), Times.Exactly(2));
-            Assert.That(target.PreMadeWorkouts, Is.EqualTo(premadeWorkoutList));
+            mockRepo.Verify(repo => repo.GetWorkoutPlansAsync(isPremadeNumber), Times.Exactly(1));
+            mockRepo.Verify(repo => repo.GetWorkoutPlansAsync(It.IsAny<int>()), Times.Exactly(1));
             Assert.That(target.Workouts, Is.EqualTo(workoutList));
+            Assert.That(target.Workouts.Count, Is.EqualTo(2));
         }
     }
 }
