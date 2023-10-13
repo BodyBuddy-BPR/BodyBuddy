@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:exerciseViews="clr-namespace:BodyBuddy.Views.ExerciseViews"
+    xmlns:helpers="clr-namespace:BodyBuddy.Helpers"
     xmlns:local="clr-namespace:BodyBuddy"
     xmlns:statisticsViews="clr-namespace:BodyBuddy.Views.StatisticsViews"
     xmlns:workoutViews="clr-namespace:BodyBuddy.Views.WorkoutViews"
@@ -45,15 +46,9 @@
             Icon="knifeandfork.png" />
 
         <Tab Title="Workouts" Icon="list.png">
-            <ShellContent
-                Title="Workouts"
-                ContentTemplate="{DataTemplate workoutViews:PreMadeWorkoutsPage}"
-                Route="PreMadeWorkoutsPage" />
+            <ShellContent Title="{x:Static helpers:Strings.PremadeWorkOuts}" ContentTemplate="{DataTemplate workoutViews:WorkoutsPage}" />
 
-            <ShellContent
-                Title="My Workouts"
-                ContentTemplate="{DataTemplate workoutViews:WorkoutsPage}"
-                Route="WorkoutsPage" />
+            <ShellContent Title="{x:Static helpers:Strings.NonPremadeWorkOuts}" ContentTemplate="{DataTemplate workoutViews:WorkoutsPage}" />
         </Tab>
 
         <ShellContent

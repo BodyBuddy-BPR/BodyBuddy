@@ -58,10 +58,8 @@ public static class MauiProgram
         #region Views
 
         // Workout
-        builder.Services.AddSingleton<WorkoutsPage>();
+        builder.Services.AddTransient<WorkoutsPage>();
         builder.Services.AddTransient<WorkoutDetailsPage>();
-
-        builder.Services.AddSingleton<PreMadeWorkoutsPage>();
 
         builder.Services.AddSingleton<StartedWorkoutPage>();
 
@@ -79,7 +77,7 @@ public static class MauiProgram
         #region ViewModels
 
         // Workout
-        builder.Services.AddSingleton<WorkoutViewModel>();
+        builder.Services.AddTransient<WorkoutViewModel>();
         builder.Services.AddTransient<WorkoutDetailsViewModel>();
 
         builder.Services.AddSingleton<StartedWorkoutViewModel>();

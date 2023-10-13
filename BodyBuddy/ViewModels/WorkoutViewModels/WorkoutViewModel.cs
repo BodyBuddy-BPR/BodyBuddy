@@ -12,11 +12,11 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
     {
         private readonly IWorkoutRepository _workoutRepository;
 
-        public ObservableCollection<Workout> MyWorkouts { get; set; } = new ObservableCollection<Workout>();
-        public ObservableCollection<Workout> PreMadeWorkouts { get; set; } = new ObservableCollection<Workout>();
+        public ObservableCollection<Workout> Workouts { get; set; } = new ObservableCollection<Workout>();
+        //public ObservableCollection<Workout> PreMadeWorkouts { get; set; } = new ObservableCollection<Workout>();
 
         [ObservableProperty]
-        private bool isPremade;
+        private bool _isPreMadeWorkout;
 
         [ObservableProperty]
         public string workoutName, workoutDescription;
@@ -29,8 +29,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             Title = string.Empty;
 
             _workoutRepository = workoutRepository;
-            IsPremade = false;
-
         }
 
 
@@ -43,28 +41,20 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 IsBusy = true;
 
-                // Getting Premade Workouts
-                var preMadeWorkoutPlans = await _workoutRepository.GetWorkoutPlansAsync(1); // 1 for premade workouts
-
-                if (PreMadeWorkouts.Count != 0)
-                {
-                    PreMadeWorkouts.Clear();
-                }
-                foreach (var workoutPlan in preMadeWorkoutPlans)
-                {
-                    PreMadeWorkouts.Add(workoutPlan);
-                }
-
+                List<Workout> workoutPlans;
                 // Getting User Workouts
-                var workoutPlans = await _workoutRepository.GetWorkoutPlansAsync(0); // 0 for user made workouts
+                if (IsPreMadeWorkout)
+                    workoutPlans = await _workoutRepository.GetWorkoutPlansAsync(1); // 0 for user made workouts
+                else
+                    workoutPlans = await _workoutRepository.GetWorkoutPlansAsync(0); // 0 for user made workouts
 
-                if (MyWorkouts.Count != 0)
+                if (Workouts.Count != 0)
                 {
-                    MyWorkouts.Clear();
+                    Workouts.Clear();
                 }
                 foreach (var workoutPlan in workoutPlans)
                 {
-                    MyWorkouts.Add(workoutPlan);
+                    Workouts.Add(workoutPlan);
                 }
 
             }
@@ -88,7 +78,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 if (workout == null) return;
                 await _workoutRepository.DeleteWorkout(workout);
-                MyWorkouts.Remove(workout);
+                Workouts.Remove(workout);
             }
         }
 
@@ -113,7 +103,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 Workout workout = new() { Name = WorkoutName, Description = WorkoutDescription, PreMade = 0 };
                 await _workoutRepository.PostWorkoutPlanAsync(workout);
-                MyWorkouts.Add(workout);
+                Workouts.Add(workout);
 
                 WorkoutName = string.Empty;
                 WorkoutDescription = string.Empty;

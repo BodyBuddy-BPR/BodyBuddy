@@ -51,7 +51,7 @@ namespace UnitTests.ViewModels
             mockRepo.Setup(repo => repo.GetWorkoutPlansAsync(1)).ReturnsAsync(premadeWorkoutList);
             mockRepo.Setup(repo => repo.GetWorkoutPlansAsync(0)).ReturnsAsync(workoutList);
             target.PreMadeWorkouts.Add(workout2);
-            target.MyWorkouts.Add(workout2);
+            target.Workouts.Add(workout2);
 
             //Act
             await target.GetWorkoutPlans();
@@ -59,7 +59,7 @@ namespace UnitTests.ViewModels
             //Assert
             mockRepo.Verify(repo => repo.GetWorkoutPlansAsync(It.IsAny<int>()), Times.Exactly(2));
             Assert.That(target.PreMadeWorkouts, Is.EqualTo(premadeWorkoutList));
-            Assert.That(target.MyWorkouts, Is.EqualTo(workoutList));
+            Assert.That(target.Workouts, Is.EqualTo(workoutList));
         }
     }
 }
