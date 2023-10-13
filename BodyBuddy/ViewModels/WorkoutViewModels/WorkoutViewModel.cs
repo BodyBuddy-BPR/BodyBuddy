@@ -13,7 +13,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         private readonly IWorkoutRepository _workoutRepository;
 
         public ObservableCollection<Workout> Workouts { get; set; } = new ObservableCollection<Workout>();
-        //public ObservableCollection<Workout> PreMadeWorkouts { get; set; } = new ObservableCollection<Workout>();
 
         [ObservableProperty]
         private bool _isPreMadeWorkout;
