@@ -42,6 +42,8 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
                 List<Workout> workoutPlans;
                 // Getting User Workouts
+                // TODO: --> Make a DTO in a service class, so this one takes true/false rather than 1 and 0
+                // Then map from DTO to DB method and back (change bool to ints and back)
                 if (IsPreMadeWorkout)
                     workoutPlans = await _workoutRepository.GetWorkoutPlansAsync(1); // 0 for user made workouts
                 else
