@@ -4,7 +4,7 @@ using BodyBuddy.ViewModels.WorkoutViewModels;
 using Moq;
 using System.Collections.ObjectModel;
 
-namespace UnitTest.ViewModels
+namespace UnitTest.ViewModels.WorkoutViewModels
 {
     public class StartedWorkoutViewModelTests
     {
