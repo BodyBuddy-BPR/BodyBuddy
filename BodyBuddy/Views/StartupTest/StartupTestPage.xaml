@@ -31,13 +31,19 @@
                 Text="{Binding Name}" />
 
             <!--  Gender  -->
-            <!--  TODO SEBT Multiple Choice Picker  -->
-            <Label
-                HorizontalOptions="Center"
-                IsVisible="{Binding IsGenderVisible}"
-                Style="{StaticResource TitleLabel}"
-                Text="Gender"
-                VerticalOptions="Center" />
+            <StackLayout Padding="20" IsVisible="{Binding IsGenderVisible}">
+                <CollectionView x:Name="genderListView" ItemsSource="{Binding GenderList}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Orientation="Horizontal">
+                                <!--  Use the index of the item to bind to the correct item in SelectedStates  -->
+                                <CheckBox IsChecked="{Binding Source={x:Reference genderListView}, Path=BindingContext.GenderSelectedStates[index]}" />
+                                <Label Text="{Binding .}" VerticalOptions="Center" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
 
             <!--  TODO - SEBT Numeric Values Only  -->
             <!--  Weight  -->
@@ -54,30 +60,30 @@
                 Placeholder="Enter Height"
                 Style="{StaticResource StartupInputField}" />
 
-            <!--  Age  -->
+            <!--  Birthday  -->
             <!--  TODO SEBT -> Date Picker here  -->
             <DatePicker
                 Date="{Binding SelectedDate}"
                 HorizontalOptions="Center"
-                IsVisible="{Binding IsAgeVisible}"
+                IsVisible="{Binding IsBirthdayVisible}"
                 MaximumDate="{Binding MaxDate}"
                 MinimumDate="{Binding MinDate}"
                 VerticalOptions="Center" />
-            <!--<Label
-                HorizontalOptions="Center"
-                IsVisible="{Binding IsAgeVisible}"
-                Style="{StaticResource TitleLabel}"
-                Text="Age"
-                VerticalOptions="Center" />-->
 
             <!--  Active  -->
-            <!--  TODO SEBT Multiple Choice Picker  -->
-            <Label
-                HorizontalOptions="Center"
-                IsVisible="{Binding IsActiveVisible}"
-                Style="{StaticResource TitleLabel}"
-                Text="Active"
-                VerticalOptions="Center" />
+            <StackLayout Padding="20" IsVisible="{Binding IsActiveVisible}">
+                <CollectionView x:Name="activityListView" ItemsSource="{Binding ActivityList}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Orientation="Horizontal">
+                                <!--  Use the index of the item to bind to the correct item in SelectedStates  -->
+                                <CheckBox IsChecked="{Binding Source={x:Reference activityListView}, Path=BindingContext.ActivitySelectedStates[index]}" />
+                                <Label Text="{Binding .}" VerticalOptions="Center" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
 
             <!--  Passive Calorie Burn  -->
             <Label
@@ -88,20 +94,28 @@
                 VerticalOptions="Center" />
 
             <!--  Goal  -->
-            <Label
-                HorizontalOptions="Center"
-                IsVisible="{Binding IsGoalVisible}"
-                Style="{StaticResource TitleLabel}"
-                Text="Goal"
-                VerticalOptions="Center" />
+            <StackLayout Padding="20" IsVisible="{Binding IsGoalVisible}">
+                <CollectionView x:Name="goalListView" ItemsSource="{Binding GoalList}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Orientation="Horizontal">
+                                <!--  Use the index of the item to bind to the correct item in SelectedStates  -->
+                                <CheckBox IsChecked="{Binding Source={x:Reference goalListView}, Path=BindingContext.GoalSelectedStates[index]}" />
+                                <Label Text="{Binding .}" VerticalOptions="Center" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+
 
         </VerticalStackLayout>
 
         <Button
             Grid.Row="2"
-            Command="{Binding ButtonTestCommand}"
+            Command="{Binding NextButtonCommand}"
             Style="{StaticResource AddButton}"
-            Text="{Binding ForwardButtonText}" />
+            Text="Next!" />
 
     </Grid>
 </ContentPage>

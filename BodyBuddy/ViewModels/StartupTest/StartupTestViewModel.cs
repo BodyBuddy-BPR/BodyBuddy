@@ -1,4 +1,6 @@
-﻿using BodyBuddy.Helpers;
+﻿using BodyBuddy.Dtos;
+using BodyBuddy.Helpers;
+using BodyBuddy.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -13,92 +15,175 @@ namespace BodyBuddy.ViewModels.StartupTest
 {
     public partial class StartupTestViewModel : BaseViewModel
     {
+
+
         #region ObservableProperties
+        //IsVisible
         [ObservableProperty]
         private bool _isNameVisible, _isGenderVisible, _isWeightVisible, _isHeightVisible;
         [ObservableProperty]
-        private bool _isAgeVisible, _isActiveVisible, _isPassiveCalorieBurnVisible, _isGoalVisible;
-
-        [ObservableProperty]
-        private string _questionaireText, _forwardButtonText;
+        private bool _isBirthdayVisible, _isActiveVisible, _isPassiveCalorieBurnVisible, _isGoalVisible, _submitDataIsVisible;
 
         //Saved Properties
         [ObservableProperty] private string name, gender, active, goal;
-        [ObservableProperty] private double weight, height, passiveCalorieBurn;
+        [ObservableProperty] private double weight;
+        [ObservableProperty] private int height, passiveCalorieBurn;
         [ObservableProperty] private DateTime selectedDate = new DateTime(2005, 1, 1);
 
-
+        //Others
+        [ObservableProperty]
+        private string _questionaireText, _forwardButtonText;
         [ObservableProperty] private DateTime minDate = new DateTime(1914, 7, 28);
         [ObservableProperty] private DateTime maxDate = DateTime.Now;
 
+        public List<string> GenderList { get; set; } = new List<string> { Strings.STARTUP_GENDER_FEMALE, Strings.STARTUP_GENDER_MALE, Strings.STARTUP_GENDER_NONE };
+        public List<string> ActivityList { get; set; } = new List<string> { Strings.STARTUP_ACTIVITY_VERYACTIVE, Strings.STARTUP_ACTIVITY_ACTIVE,
+            Strings.STARTUP_ACTIVITY_LITTLEACTIVE, Strings.STARTUP_ACTIVITY_NOTVERYACTIVE };
+        public List<string> GoalList { get; set; } = new List<string> { Strings.STARTUP_GOAL_LOSEWEIGHT, Strings.STARTUP_GOAL_GAINMUSCLE };
+        public List<string> TargetList { get; set; } = new List<string> { Strings.STARTUP_GENDER_FEMALE, Strings.STARTUP_GENDER_MALE, Strings.STARTUP_GENDER_NONE };
+
+
+        public List<bool> GenderSelectedStates { get; set; } = new List<bool> { false, false, false };
+        public List<bool> ActivitySelectedStates { get; set; } = new List<bool> { false, false, false, false };
+        public List<bool> GoalSelectedStates { get; set; } = new List<bool> { false, false };
+
+
+        private IStartupTestService _startupTestService;
         #endregion
 
-        public StartupTestViewModel()
+        public StartupTestViewModel(IStartupTestService startupTestService)
         {
-            IsNameVisible = true;
-            QuestionaireText = "What is your Name?";
-            ForwardButtonText = "Next Question";
+            _startupTestService = startupTestService;
+
+            UpdateVisibility();
+            SetStateProperties();
         }
 
-
+        [RelayCommand]
+        public void NextButton()
+        {
+            StateNext();
+        }
 
         [RelayCommand]
-        public void ButtonTest()
+        public void BackButton()
         {
-            var steps = new List<(string PropertyName, Func<bool> Getter, Action<bool> Setter, string NextQuestionText)>
-{
-    ("IsNameVisible", () => IsNameVisible, value => IsNameVisible = value, "What is your gender?"),
-    ("IsGenderVisible", () => IsGenderVisible, value => IsGenderVisible = value, "What is your weight?"),
-    ("IsWeightVisible", () => IsWeightVisible, value => IsWeightVisible = value, "What is your height?"),
-    ("IsHeightVisible", () => IsHeightVisible, value => IsHeightVisible = value, "What is your age?"),
-    ("IsAgeVisible", () => IsAgeVisible, value => IsAgeVisible = value, "How active are you?"),
-    ("IsActiveVisible", () => IsActiveVisible, value => IsActiveVisible = value, "What is your passive calorie burn?"),
-    ("IsPassiveCalorieBurnVisible", () => IsPassiveCalorieBurnVisible, value => IsPassiveCalorieBurnVisible = value, "What are your goals?"),
-    ("IsGoalVisible", () => IsGoalVisible, value => IsGoalVisible = value, "The end, well done!")
-};
-
-            for (int i = 0; i < steps.Count; i++)
-            {
-                if (steps[i].Getter())
-                {
-                    // Set the current flag to false
-                    steps[i].Setter(false);
-
-                    // If there's a next step, set its flag to true and update the question text
-                    if (i + 1 < steps.Count)
-                    {
-                        steps[i + 1].Setter(true);
-                        QuestionaireText = steps[i].NextQuestionText;
-                    }
-                    else
-                    {
-                        ForwardButtonText = steps[i].NextQuestionText;
-                    }
-
-                    return;
-                }
-            }
+            StatePrevious();
         }
 
         [RelayCommand]
         public void SubmitData()
         {
+            StartupTestDto startupTestData = new()
+            {
+                Name = Name,
+                Gender = Gender,
+                ActiveAmount = Active,
+                Goal = Goal,
+                Weight = Weight,
+                Height = Height,
+                PassiveCalorieBurn = PassiveCalorieBurn,
+                Birthday = SelectedDate
+            };
 
+            _startupTestService.SaveStartupTestData(startupTestData);
         }
 
-        //private void DisableAllText()
-        //{
-        //    IsNameVisible = false;
-        //    IsGenderVisible = false;
-        //    IsWeightVisible = false;
-        //    IsHeightVisible = false;
-        //    IsAgeVisible = false;
-        //    IsActiveVisible = false;
-        //    IsPassiveCalorieBurnVisible = false;
-        //    IsGoalVisible = false;
-        //}
+        #region STATE SHIT
+        public enum State
+        {
+            NameEntry,
+            GenderSelection,
+            WeightEntry,
+            HeightEntry,
+            BirthdaySelection,
+            ActivitySelection,
+            PassiveCalorieBurnEntry,
+            GoalSelection,
+            Done
+        }
+        private State CurrentState { get; set; } = State.NameEntry;
 
+        private delegate bool CurrentStateDone();
+        private CurrentStateDone currentStateDone;
 
+        private void StateNext()
+        {
+            if (CurrentState != State.Done && currentStateDone())
+            {
+                CurrentState++;
+                UpdateVisibility();
+                SetStateProperties();
+            }
+        }
 
+        private void StatePrevious()
+        {
+            if (CurrentState != State.NameEntry)
+            {
+                CurrentState--;
+                UpdateVisibility();
+                SetStateProperties();
+            }
+        }
+
+        private void UpdateVisibility()
+        {
+            IsNameVisible = (CurrentState == State.NameEntry);
+            IsGenderVisible = (CurrentState == State.GenderSelection);
+            IsWeightVisible = (CurrentState == State.WeightEntry);
+            IsHeightVisible = (CurrentState == State.HeightEntry);
+            IsBirthdayVisible = (CurrentState == State.BirthdaySelection);
+            IsActiveVisible = (CurrentState == State.ActivitySelection);
+            IsPassiveCalorieBurnVisible = (CurrentState == State.PassiveCalorieBurnEntry);
+            IsGoalVisible = (CurrentState == State.GoalSelection);
+        }
+
+        private void SetStateProperties()
+        {
+            switch (CurrentState)
+            {
+                case State.NameEntry:
+                    QuestionaireText = "What is your Name?";
+                    ForwardButtonText = "Next Question";
+                    currentStateDone = () => { return !string.IsNullOrEmpty(Name); };
+                    break;
+                case State.GenderSelection:
+                    QuestionaireText = "What is your gender?";
+                    currentStateDone = () => { return !string.IsNullOrEmpty(Gender); };
+                    break;
+                case State.WeightEntry:
+                    QuestionaireText = "What is your weight?";
+                    currentStateDone = () => { return Weight > 0; };
+                    break;
+                case State.HeightEntry:
+                    QuestionaireText = "When is your height?";
+                    currentStateDone = () => { return Height > 0; };
+                    break;
+                case State.BirthdaySelection:
+                    QuestionaireText = "When is your birthday?";
+                    currentStateDone = () => { return true; };
+                    break;
+                case State.ActivitySelection:
+                    QuestionaireText = "How active are you?";
+                    currentStateDone = () => { return !string.IsNullOrEmpty(Active); };
+                    break;
+                case State.PassiveCalorieBurnEntry:
+                    QuestionaireText = "What is your passive calorie burn?";
+                    currentStateDone = () => { return PassiveCalorieBurn > 0; };
+                    break;
+                case State.GoalSelection:
+                    QuestionaireText = "What are your goals?";
+                    currentStateDone = () => { return !string.IsNullOrEmpty(Goal); };
+                    break;
+                case State.Done:
+                    QuestionaireText = "You're done!";
+                    ForwardButtonText = "Submit Data";
+                    currentStateDone = () => { return false; };
+                    SubmitDataIsVisible = true;
+                    break;
+            }
+        }
+        #endregion
     }
 }

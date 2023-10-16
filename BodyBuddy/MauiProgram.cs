@@ -17,6 +17,7 @@ using Mopups.Services;
 using BodyBuddy.Views.StartupTest;
 using BodyBuddy.ViewModels.StartupTest;
 using BodyBuddy.Services;
+using BodyBuddy.Mappers;
 
 namespace BodyBuddy;
 
@@ -112,6 +113,9 @@ public static class MauiProgram
 
         #endregion
 
+        #region Helpers
+        builder.Services.AddSingleton<StartupTestMapper>();
+        #endregion
 
         #region Database
 
