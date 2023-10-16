@@ -3,13 +3,7 @@ using BodyBuddy.Helpers;
 using BodyBuddy.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BodyBuddy.ViewModels.StartupTest
 {
@@ -22,7 +16,9 @@ namespace BodyBuddy.ViewModels.StartupTest
         [ObservableProperty]
         private bool _isNameVisible, _isGenderVisible, _isWeightVisible, _isHeightVisible;
         [ObservableProperty]
-        private bool _isBirthdayVisible, _isActiveVisible, _isPassiveCalorieBurnVisible, _isGoalVisible, _submitDataIsVisible;
+        private bool _isBirthdayVisible, _isActiveVisible, _isPassiveCalorieBurnVisible, _isGoalVisible;
+        [ObservableProperty] 
+        private bool _submitDataIsVisible, _nextIsVisible;
 
         //Saved Properties
         [ObservableProperty] private string name, gender, active, goal;
@@ -32,9 +28,12 @@ namespace BodyBuddy.ViewModels.StartupTest
 
         //Others
         [ObservableProperty]
-        private string _questionaireText, _forwardButtonText;
+        private string _questionaireText;
+
         [ObservableProperty] private DateTime minDate = new DateTime(1914, 7, 28);
         [ObservableProperty] private DateTime maxDate = DateTime.Now;
+
+
 
         public List<string> GenderList { get; set; } = new List<string> { Strings.STARTUP_GENDER_FEMALE, Strings.STARTUP_GENDER_MALE, Strings.STARTUP_GENDER_NONE };
         public List<string> ActivityList { get; set; } = new List<string> { Strings.STARTUP_ACTIVITY_VERYACTIVE, Strings.STARTUP_ACTIVITY_ACTIVE,
@@ -54,9 +53,12 @@ namespace BodyBuddy.ViewModels.StartupTest
         public StartupTestViewModel(IStartupTestService startupTestService)
         {
             _startupTestService = startupTestService;
-
-            UpdateVisibility();
+            
+            //SetStateProperties HAS TO BE FIRST!
             SetStateProperties();
+            UpdateVisibility();
+
+            PropertyChanged += OnPropertyChange;
         }
 
         [RelayCommand]
@@ -89,7 +91,7 @@ namespace BodyBuddy.ViewModels.StartupTest
             _startupTestService.SaveStartupTestData(startupTestData);
         }
 
-        #region STATE SHIT
+        #region State Machine
         public enum State
         {
             NameEntry,
@@ -112,8 +114,8 @@ namespace BodyBuddy.ViewModels.StartupTest
             if (CurrentState != State.Done && currentStateDone())
             {
                 CurrentState++;
-                UpdateVisibility();
                 SetStateProperties();
+                UpdateVisibility();
             }
         }
 
@@ -122,8 +124,24 @@ namespace BodyBuddy.ViewModels.StartupTest
             if (CurrentState != State.NameEntry)
             {
                 CurrentState--;
-                UpdateVisibility();
                 SetStateProperties();
+                UpdateVisibility();
+            }
+        }
+
+        private void OnPropertyChange(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(Name):
+                case nameof(Gender):
+                case nameof(Active):
+                case nameof(Goal):
+                case nameof(Weight):
+                case nameof(Height):
+                case nameof(PassiveCalorieBurn):
+                    UpdateActionButtonsVisibility();
+                    break;
             }
         }
 
@@ -137,6 +155,12 @@ namespace BodyBuddy.ViewModels.StartupTest
             IsActiveVisible = (CurrentState == State.ActivitySelection);
             IsPassiveCalorieBurnVisible = (CurrentState == State.PassiveCalorieBurnEntry);
             IsGoalVisible = (CurrentState == State.GoalSelection);
+            UpdateActionButtonsVisibility();
+        }
+        private void UpdateActionButtonsVisibility()
+        {
+            NextIsVisible = (CurrentState != State.Done && currentStateDone());
+            SubmitDataIsVisible = (CurrentState == State.Done && !currentStateDone());
         }
 
         private void SetStateProperties()
@@ -145,7 +169,6 @@ namespace BodyBuddy.ViewModels.StartupTest
             {
                 case State.NameEntry:
                     QuestionaireText = "What is your Name?";
-                    ForwardButtonText = "Next Question";
                     currentStateDone = () => { return !string.IsNullOrEmpty(Name); };
                     break;
                 case State.GenderSelection:
@@ -178,7 +201,6 @@ namespace BodyBuddy.ViewModels.StartupTest
                     break;
                 case State.Done:
                     QuestionaireText = "You're done!";
-                    ForwardButtonText = "Submit Data";
                     currentStateDone = () => { return false; };
                     SubmitDataIsVisible = true;
                     break;

@@ -114,8 +114,16 @@
         <Button
             Grid.Row="2"
             Command="{Binding NextButtonCommand}"
+            IsVisible="{Binding NextIsVisible}"
             Style="{StaticResource AddButton}"
-            Text="Next!" />
+            Text="Next Question!" />
+
+        <Button
+            Grid.Row="2"
+            Command="{Binding SubmitDataCommand}"
+            IsVisible="{Binding SubmitDataIsVisible}"
+            Style="{StaticResource AddButton}"
+            Text="Submit Data!" />
 
     </Grid>
 </ContentPage>
