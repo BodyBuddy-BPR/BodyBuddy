@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BodyBuddy.Views.StartupTest.StartupTestPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControls="clr-namespace:BodyBuddy.CustomControls"
+    xmlns:model="clr-namespace:BodyBuddy.Models"
+    xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.StartupTest"
+    Title="StartupTest"
+    x:DataType="viewModel:StartupTestViewModel">
+
+    <Grid
+        Margin="20,10"
+        RowDefinitions="Auto, *, Auto"
+        RowSpacing="15">
+        <Label
+            Grid.Row="0"
+            Style="{StaticResource TitleLabel}"
+            Text="{Binding QuestionaireText}" />
+
+        <VerticalStackLayout
+            Grid.Row="1"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+
+            <!--  Name  -->
+            <customControls:CustomEntry
+                IsVisible="{Binding IsNameVisible}"
+                Placeholder="Enter Name"
+                Style="{StaticResource StartupInputField}"
+                Text="{Binding Name}" />
+
+            <!--  Gender  -->
+            <!--  TODO SEBT Multiple Choice Picker  -->
+            <Label
+                HorizontalOptions="Center"
+                IsVisible="{Binding IsGenderVisible}"
+                Style="{StaticResource TitleLabel}"
+                Text="Gender"
+                VerticalOptions="Center" />
+
+            <!--  TODO - SEBT Numeric Values Only  -->
+            <!--  Weight  -->
+            <customControls:CustomEntry
+                IsVisible="{Binding IsWeightVisible}"
+                Keyboard="Numeric"
+                Placeholder="Enter Weight"
+                Style="{StaticResource StartupInputField}" />
+
+            <!--  Height  -->
+            <customControls:CustomEntry
+                IsVisible="{Binding IsHeightVisible}"
+                Keyboard="Numeric"
+                Placeholder="Enter Height"
+                Style="{StaticResource StartupInputField}" />
+
+            <!--  Age  -->
+            <!--  TODO SEBT -> Date Picker here  -->
+            <DatePicker
+                Date="{Binding SelectedDate}"
+                HorizontalOptions="Center"
+                IsVisible="{Binding IsAgeVisible}"
+                MaximumDate="{Binding MaxDate}"
+                MinimumDate="{Binding MinDate}"
+                VerticalOptions="Center" />
+            <!--<Label
+                HorizontalOptions="Center"
+                IsVisible="{Binding IsAgeVisible}"
+                Style="{StaticResource TitleLabel}"
+                Text="Age"
+                VerticalOptions="Center" />-->
+
+            <!--  Active  -->
+            <!--  TODO SEBT Multiple Choice Picker  -->
+            <Label
+                HorizontalOptions="Center"
+                IsVisible="{Binding IsActiveVisible}"
+                Style="{StaticResource TitleLabel}"
+                Text="Active"
+                VerticalOptions="Center" />
+
+            <!--  Passive Calorie Burn  -->
+            <Label
+                HorizontalOptions="Center"
+                IsVisible="{Binding IsPassiveCalorieBurnVisible}"
+                Style="{StaticResource TitleLabel}"
+                Text="Passive Calorie Burn"
+                VerticalOptions="Center" />
+
+            <!--  Goal  -->
+            <Label
+                HorizontalOptions="Center"
+                IsVisible="{Binding IsGoalVisible}"
+                Style="{StaticResource TitleLabel}"
+                Text="Goal"
+                VerticalOptions="Center" />
+
+        </VerticalStackLayout>
+
+        <Button
+            Grid.Row="2"
+            Command="{Binding ButtonTestCommand}"
+            Style="{StaticResource AddButton}"
+            Text="{Binding ForwardButtonText}" />
+
+    </Grid>
+</ContentPage>

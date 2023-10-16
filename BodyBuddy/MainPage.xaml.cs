@@ -1,4 +1,6 @@
-﻿namespace BodyBuddy;
+﻿using BodyBuddy.Views.StartupTest;
+
+namespace BodyBuddy;
 
 public partial class MainPage : ContentPage
 {
@@ -9,7 +11,7 @@ public partial class MainPage : ContentPage
 		InitializeComponent();
 	}
 
-	private void OnCounterClicked(object sender, EventArgs e)
+	private async void OnCounterClicked(object sender, EventArgs e)
 	{
 		count++;
 
@@ -19,6 +21,7 @@ public partial class MainPage : ContentPage
 			CounterBtn.Text = $"Clicked {count} times";
 
 		SemanticScreenReader.Announce(CounterBtn.Text);
-	}
+        await Shell.Current.GoToAsync(nameof(StartupTestPage), true);
+    }
 }
 
