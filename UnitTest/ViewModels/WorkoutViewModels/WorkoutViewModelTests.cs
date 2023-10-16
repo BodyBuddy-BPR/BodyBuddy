@@ -2,9 +2,8 @@
 using BodyBuddy.Repositories;
 using BodyBuddy.ViewModels.WorkoutViewModels;
 using Moq;
-using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
-namespace UnitTests.ViewModels
+namespace UnitTest.ViewModels.WorkoutViewModels
 {
     public class WorkoutViewModelTests
     {
@@ -50,7 +49,7 @@ namespace UnitTests.ViewModels
         public async Task GetWorkoutPlanIsCalledAndReturnsCorrectWorkoutList(bool boolIsPremade, int isPremadeNumber)
         {
             //Arrange
-            target.IsBusy = false; 
+            target.IsBusy = false;
             target.IsPreMadeWorkout = boolIsPremade;
             mockRepo.Setup(repo => repo.GetWorkoutPlansAsync(isPremadeNumber)).ReturnsAsync(workoutList);
             target.Workouts.Add(workout2);
