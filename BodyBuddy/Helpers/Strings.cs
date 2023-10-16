@@ -10,5 +10,9 @@ namespace BodyBuddy.Helpers
     {
         public static string PremadeWorkOuts = "Workouts";
         public static string NonPremadeWorkOuts = "My Workouts";
+
+        public static string FEMALE = "Female";
+        public static string MALE = "Male";
+        public static string NO_GENDER = "No gender";
     }
 }

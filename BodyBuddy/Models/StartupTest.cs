@@ -12,24 +12,24 @@ namespace BodyBuddy.Models
         public string Name { get; set; }
 
         [Column("gender")]
-        public string Gender { get; set; }
+        public int Gender { get; set; }
 
         [Column("weight")]
-        public int Weight { get; set; }
+        public float Weight { get; set; }
 
         [Column("height")]
-        public string Height { get; set; }
+        public int Height { get; set; }
 
         [Column("birthday")]
-        public string Birthday { get; set; }
+        public long Birthday { get; set; }
 
         [Column("activeAmount")]
-        public string ActiveAmount { get; set; }
+        public int ActiveAmount { get; set; }
 
         [Column("passiveCalorieBurn")]
         public int PassiveCalorieBurn { get; set; }
 
         [Column("goal")]
-        public string Goal { get; set; }
+        public int Goal { get; set; }
     }
 }
