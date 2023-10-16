@@ -42,8 +42,15 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             _workoutExercisesRepository = workoutExercisesRepository;
         }
 
-        [RelayCommand]
-        public async Task GetExercises()
+        public async Task Initialize()
+        {
+            await GetExercises();
+            await GetWorkouts();
+        }
+
+        #region Gets
+
+        private async Task GetExercises()
         {
 
             if (IsBusy) return;
@@ -85,8 +92,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             }
         }
 
-        [RelayCommand]
-        public async Task GetWorkouts()
+        private async Task GetWorkouts()
         {
             if (IsBusy) return;
 
@@ -120,6 +126,8 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             }
         }
 
+        #endregion
+
         private void SetSelectedWorkout()
         {
             if (CachedData.SharedWorkout != null && WorkoutsList.Any(x => x.Id == CachedData.SharedWorkout.Id))
@@ -149,6 +157,8 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             }
         }
 
+        #region Navigation
+
         // Navigation to exercise details
         [RelayCommand]
         async Task GoToExerciseDetails(Exercise exercise)
@@ -162,5 +172,6 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             });
         }
 
+        #endregion
     }
 }
