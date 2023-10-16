@@ -11,9 +11,41 @@ namespace BodyBuddy.Mappers
 {
     public class StartupTestMapper
     {
-        public StartupTestMapper() { }
+        #region MappingStringsToIntegers --> Add here if more options are being added later!
+        private readonly Dictionary<string, int> _goalToInteger = new Dictionary<string, int>
+{
+    { Strings.STARTUP_GOAL_GAINMUSCLE, 0 },
+    { Strings.STARTUP_GOAL_LOSEWEIGHT, 1 }
+};
 
-        public StartupTest MapFromDtoToDb(StartupTestDto startupTestDto)
+        private readonly Dictionary<string, int> _activityToInteger = new Dictionary<string, int>
+{
+    { Strings.STARTUP_ACTIVITY_VERYACTIVE, 0 },
+    { Strings.STARTUP_ACTIVITY_ACTIVE, 1 },
+    { Strings.STARTUP_ACTIVITY_LITTLEACTIVE, 2 },
+    { Strings.STARTUP_ACTIVITY_NOTVERYACTIVE, 3 }
+};
+
+        private readonly Dictionary<string, int> _genderToInteger = new Dictionary<string, int>
+{
+    { Strings.STARTUP_GENDER_FEMALE, 0 },
+    { Strings.STARTUP_GENDER_MALE, 1 },
+    { Strings.STARTUP_GENDER_NONE, 2 }
+};
+
+        private readonly Dictionary<int, string> _goalToString;
+        private readonly Dictionary<int, string> _activityToString;
+        private readonly Dictionary<int, string> _genderToString;
+        #endregion
+
+        public StartupTestMapper()
+        {
+            _goalToString = _goalToInteger.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
+            _activityToString = _activityToInteger.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
+            _genderToString = _genderToInteger.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
+        }
+
+        public StartupTest MapToDatabase(StartupTestDto startupTestDto)
         {
             return new StartupTest()
             {
@@ -22,46 +54,96 @@ namespace BodyBuddy.Mappers
                 Gender = GenderToInteger(startupTestDto.Gender),
                 Weight = startupTestDto.Weight,
                 Height = startupTestDto.Height,
-                Birthday = BirthdayToInteger(startupTestDto.Birthday),
-                ActiveAmount = ActiveAmountToInteger(startupTestDto.ActiveAmount),
+                Birthday = DateTimeToEpoch(startupTestDto.Birthday),
+                ActiveAmount = ActivityToInteger(startupTestDto.ActiveAmount),
                 PassiveCalorieBurn = startupTestDto.PassiveCalorieBurn,
                 Goal = GoalToInteger(startupTestDto.Goal)
             };
         }
 
-        public StartupTestDto MapFromDbToDto(StartupTest startupTest)
+        public StartupTestDto MapToDto(StartupTest startupTest)
         {
-            throw new NotImplementedException();
+            return new StartupTestDto()
+            {
+                Id = startupTest.Id,
+                Name = startupTest.Name,
+                Gender = IntegerToGender(startupTest.Gender),
+                Weight = startupTest.Weight,
+                Height = startupTest.Height,
+                Birthday = EpochToDateTime(startupTest.Birthday),
+                ActiveAmount = IntegerToActivity(startupTest.ActiveAmount),
+                PassiveCalorieBurn = startupTest.PassiveCalorieBurn,
+                Goal = IntegerToGoal(startupTest.Goal)
+            };
         }
 
-        #region Converters From Dto --> DB
-        private int GoalToInteger(string goal)
+
+
+        #region Converters
+        //Birthday
+        private long DateTimeToEpoch(DateTime dateTime)
         {
-            throw new NotImplementedException();
+            DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            return (long)(dateTime.ToUniversalTime() - epochStart).TotalSeconds;
+
         }
 
-        private int ActiveAmountToInteger(string activeAmount)
+        private DateTime EpochToDateTime(long epoch)
         {
-            throw new NotImplementedException();
+            DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            return epochStart.AddSeconds(epoch);
         }
 
-        private int BirthdayToInteger(DateTime birthday)
+        //Goal
+        public int GoalToInteger(string goal)
         {
-            throw new NotImplementedException();
+            return MapToInteger(goal, _goalToInteger);
         }
 
-        private int GenderToInteger(string gender)
+        public string IntegerToGoal(int value)
         {
-            if (gender == Strings.FEMALE)
-                return 0;
-            else if (gender == Strings.MALE)
-                return 1;
-            else if (gender == Strings.NO_GENDER)
-                return 2;
-            else
-                throw new NotImplementedException();
+            return MapToString(value, _goalToString);
+        }
+
+        //Activity
+        public int ActivityToInteger(string activity)
+        {
+            return MapToInteger(activity, _activityToInteger);
+        }
+
+        public string IntegerToActivity(int value)
+        {
+            return MapToString(value, _activityToString);
+        }
+
+        // Gender
+        public int GenderToInteger(string gender)
+        {
+            return MapToInteger(gender, _genderToInteger);
+        }
+
+        public string IntegerToGender(int value)
+        {
+            return MapToString(value, _genderToString);
+        }
+
+        private int MapToInteger(string value, Dictionary<string, int> mapping)
+        {
+            if (mapping.TryGetValue(value, out int result))
+            {
+                return result;
+            }
+            throw new NotImplementedException(value);
+        }
+
+        private string MapToString(int value, Dictionary<int, string> mapping)
+        {
+            if (mapping.TryGetValue(value, out string result))
+            {
+                return result;
+            }
+            throw new NotImplementedException(value.ToString());
         }
     }
     #endregion
-}
 }

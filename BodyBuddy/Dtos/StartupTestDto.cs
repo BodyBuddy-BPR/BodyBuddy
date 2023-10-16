@@ -14,7 +14,7 @@ namespace BodyBuddy.Dtos
 
         public string Gender { get; set; }
 
-        public float Weight { get; set; }
+        public double Weight { get; set; }
 
         public int Height { get; set; }
 

@@ -15,7 +15,7 @@ namespace BodyBuddy.Models
         public int Gender { get; set; }
 
         [Column("weight")]
-        public float Weight { get; set; }
+        public double Weight { get; set; }
 
         [Column("height")]
         public int Height { get; set; }
