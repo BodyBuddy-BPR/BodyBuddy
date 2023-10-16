@@ -55,6 +55,28 @@ public static class MauiProgram
 
         #region Dependency Registration
 
+        #region Database
+
+        // Local Database
+        builder.Services.AddSingleton<LocalDatabase>();
+        builder.Services.AddTransient(async provider =>
+        {
+            var localDatabase = provider.GetRequiredService<LocalDatabase>();
+            await localDatabase.Initialization; // Wait for initialization
+            return await localDatabase.GetAsyncConnection();
+        });
+        builder.Services.AddSingleton(provider =>
+        {
+            var localDatabase = provider.GetRequiredService<LocalDatabase>();
+            return localDatabase.GetAsyncConnection().Result; // Use .Result to block and get the connection synchronously.
+        });
+
+        // Supabase Database
+        builder.Services.AddSingleton(provider => new Supabase.Client(url, key, options));
+
+        #endregion
+
+
         #region Views
 
         // Workout
@@ -100,27 +122,6 @@ public static class MauiProgram
         builder.Services.AddSingleton<IWorkoutExercisesRepository, WorkoutExercisesRepository>();
         builder.Services.AddSingleton<IIntakeRepository, IntakeRepository>();
         builder.Services.AddSingleton<IExerciseRecordsRepository, ExerciseRecordsRepository>();
-
-        #endregion
-
-
-        #region Database
-
-        // Local Database
-        builder.Services.AddSingleton<LocalDatabase>();
-        builder.Services.AddTransient(async provider =>
-        {
-            var localDatabase = provider.GetRequiredService<LocalDatabase>();
-            return await localDatabase.GetAsyncConnection();
-        });
-        builder.Services.AddSingleton(provider =>
-        {
-            var localDatabase = provider.GetRequiredService<LocalDatabase>();
-            return localDatabase.GetAsyncConnection().Result; // Use .Result to block and get the connection synchronously.
-        });
-
-        // Supabase Database
-        builder.Services.AddSingleton(provider => new Supabase.Client(url, key, options));
 
         #endregion
 
