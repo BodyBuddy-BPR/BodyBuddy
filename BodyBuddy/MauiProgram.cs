@@ -16,6 +16,7 @@ using Mopups.Interfaces;
 using Mopups.Services;
 using BodyBuddy.Views.StartupTest;
 using BodyBuddy.ViewModels.StartupTest;
+using BodyBuddy.Services;
 
 namespace BodyBuddy;
 
@@ -96,9 +97,13 @@ public static class MauiProgram
         builder.Services.AddSingleton<IntakeViewModel>();
         #endregion
 
+        #region Services
+        builder.Services.AddSingleton<IStartupTestService, StartupTestService>();
+        #endregion
+
 
         #region Repositories
-
+        builder.Services.AddSingleton<IStartupTestRepository, StartupTestRepository>();
         builder.Services.AddSingleton<IExerciseRepository, ExerciseRepository>();
         builder.Services.AddSingleton<IWorkoutRepository, WorkoutRepository>();
         builder.Services.AddSingleton<IWorkoutExercisesRepository, WorkoutExercisesRepository>();
