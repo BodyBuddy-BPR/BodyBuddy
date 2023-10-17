@@ -45,6 +45,7 @@ namespace BodyBuddy.ViewModels.StartupTest
         public List<bool> GenderSelectedStates { get; set; } = new List<bool> { false, false, false };
         public List<bool> ActivitySelectedStates { get; set; } = new List<bool> { false, false, false, false };
         public List<bool> GoalSelectedStates { get; set; } = new List<bool> { false, false };
+        public List<bool> TargetSelectedStates { get; set; } = new List<bool> { false, false };
 
 
         private IStartupTestService _startupTestService;
@@ -106,6 +107,7 @@ namespace BodyBuddy.ViewModels.StartupTest
         }
         private State CurrentState { get; set; } = State.NameEntry;
 
+        //Returning a bool depending on the CurrentState and the 
         private delegate bool CurrentStateDone();
         private CurrentStateDone currentStateDone;
 
