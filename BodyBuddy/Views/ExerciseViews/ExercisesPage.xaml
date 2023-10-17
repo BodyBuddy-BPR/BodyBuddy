@@ -93,6 +93,7 @@
                                         CornerRadius="18"
                                         HeightRequest="36"
                                         Source="plus_sign.png"
+                                        Style="{StaticResource ImageButtonVisualState}"
                                         WidthRequest="36" />
 
                                 </Grid>

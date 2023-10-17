@@ -3,6 +3,7 @@
     x:Class="BodyBuddy.Views.StatisticsViews.IntakePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:effectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.IntakeViewmodels"
     x:DataType="viewModel:IntakeViewModel"
@@ -38,14 +39,14 @@
             <HorizontalStackLayout Margin="0,20" HorizontalOptions="Center">
                 <ImageButton
                     Margin="20,0"
-                    Padding="8"
                     BackgroundColor="{StaticResource Primary}"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:IntakeViewModel}}, Path=AddWaterClickedCommand}"
-                    CornerRadius="25"
-                    HeightRequest="50"
-                    Source="plus_circle.png"
+                    CornerRadius="22"
+                    HeightRequest="44"
+                    Source="plus_sign.png"
+                    Style="{StaticResource ImageButtonVisualState}"
                     VerticalOptions="Center"
-                    WidthRequest="50" />
+                    WidthRequest="44" />
                 <Label
                     Style="{StaticResource LargeLabel}"
                     Text="{Binding WaterCurrent, StringFormat='{0} /'}"
@@ -64,6 +65,7 @@
                     CornerRadius="15"
                     HeightRequest="30"
                     Source="pencil_white.png"
+                    Style="{StaticResource ImageButtonVisualState}"
                     VerticalOptions="Center"
                     WidthRequest="30" />
             </HorizontalStackLayout>
@@ -113,14 +115,14 @@
             <!--  Input Row  -->
             <HorizontalStackLayout Margin="0,20" HorizontalOptions="Center">
                 <ImageButton
-                    Padding="8"
                     BackgroundColor="{StaticResource Secondary}"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:IntakeViewModel}}, Path=AddKcalClickedCommand}"
                     CommandParameter="{Binding CalorieEntryText}"
-                    CornerRadius="25"
-                    HeightRequest="50"
-                    Source="plus_circle.png"
-                    WidthRequest="50" />
+                    CornerRadius="22"
+                    HeightRequest="44"
+                    Source="plus_sign.png"
+                    Style="{StaticResource ImageButtonVisualState}"
+                    WidthRequest="44" />
                 <Label
                     Margin="20,0,0,0"
                     Style="{StaticResource LargeLabel}"
@@ -141,6 +143,7 @@
                     CornerRadius="15"
                     HeightRequest="30"
                     Source="pencil_white.png"
+                    Style="{StaticResource ImageButtonVisualState}"
                     VerticalOptions="Center"
                     WidthRequest="30" />
             </HorizontalStackLayout>
