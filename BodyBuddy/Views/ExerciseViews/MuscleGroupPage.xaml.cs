@@ -14,7 +14,9 @@ public partial class MuscleGroupPage : ContentPage
 
 	protected override async void OnAppearing()
 	{
-		base.OnAppearing();
+        await Task.Delay(50); // Add a short delay
+
+        base.OnAppearing();
 		await _viewModel.GetMusclegroups();
 	}
 }

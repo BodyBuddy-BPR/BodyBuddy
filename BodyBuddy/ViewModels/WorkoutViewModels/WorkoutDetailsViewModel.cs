@@ -266,6 +266,19 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             });
         }
 
+        [RelayCommand]
+        async Task ToExerciseDetails(Exercise exercise)
+        {
+            if (exercise is null)
+                return;
+
+            await Task.Delay(100); // Add a short delay
+            await Shell.Current.GoToAsync(nameof(ExerciseDetailsPage), true, new Dictionary<string, object>
+            {
+                {"Exercise", exercise }
+            });
+        }
+
         #endregion
     }
 }

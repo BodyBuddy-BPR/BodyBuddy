@@ -12,4 +12,11 @@ public partial class CategoryPage : ContentPage
 		_viewmodel = categoryViewModel;
 		BindingContext = categoryViewModel;
 	}
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        await Task.Delay(50); // Add a short delay
+    }
 }

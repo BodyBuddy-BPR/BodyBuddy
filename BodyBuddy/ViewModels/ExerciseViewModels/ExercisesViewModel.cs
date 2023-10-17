@@ -152,7 +152,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             }
             else
             {
-                await Shell.Current.DisplayAlert("Error!", "Select a workout", "OK");
+                await Shell.Current.DisplayAlert("No Workout", "Try selecting a Workout first", "OK");
                 return;
             }
         }
@@ -166,6 +166,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             if (exercise is null)
                 return;
 
+            await Task.Delay(100); // Add a short delay
             await Shell.Current.GoToAsync(nameof(ExerciseDetailsPage), true, new Dictionary<string, object>
             {
                 {"Exercise", exercise }

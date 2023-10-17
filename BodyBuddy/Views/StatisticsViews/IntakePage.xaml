@@ -5,19 +5,21 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.IntakeViewmodels"
-    x:DataType="viewModel:IntakeViewModel">
+    x:DataType="viewModel:IntakeViewModel"
+    Shell.NavBarIsVisible="False">
     <Grid
-        Margin="20,0"
+        Margin="20,10"
         RowDefinitions="Auto, Auto"
         RowSpacing="10">
 
-        <VerticalStackLayout Grid.Row="0">
-
+        <!--  Water Section  -->
+        <VerticalStackLayout Grid.Row="0" Spacing="10">
             <Label
                 Margin="0,20"
                 Style="{StaticResource TitleLabel}"
                 Text="Water Intake" />
 
+            <!--  Image Row  -->
             <HorizontalStackLayout HorizontalOptions="Center">
                 <Image
                     Margin="20,0"
@@ -32,24 +34,26 @@
                     VerticalOptions="Center" />
             </HorizontalStackLayout>
 
+            <!--  Input Row  -->
             <HorizontalStackLayout Margin="0,20" HorizontalOptions="Center">
                 <ImageButton
                     Margin="20,0"
-                    BackgroundColor="{StaticResource Secondary}"
+                    Padding="8"
+                    BackgroundColor="{StaticResource Primary}"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:IntakeViewModel}}, Path=AddWaterClickedCommand}"
-                    CornerRadius="15"
-                    HeightRequest="30"
-                    Source="plus_sign.png"
+                    CornerRadius="25"
+                    HeightRequest="50"
+                    Source="plus_circle.png"
                     VerticalOptions="Center"
-                    WidthRequest="30" />
+                    WidthRequest="50" />
                 <Label
-                    Style="{StaticResource MediumLabel}"
+                    Style="{StaticResource LargeLabel}"
                     Text="{Binding WaterCurrent, StringFormat='{0} /'}"
                     TextColor="White"
                     VerticalOptions="Center" />
                 <Label
                     Margin="0,0,20,0"
-                    Style="{StaticResource MediumLabel}"
+                    Style="{StaticResource LargeLabel}"
                     Text="{Binding WaterGoal, StringFormat=' {0} ml'}"
                     TextColor="White"
                     VerticalOptions="Center" />
@@ -59,20 +63,21 @@
                     CommandParameter="Water"
                     CornerRadius="15"
                     HeightRequest="30"
-                    Source="pencil.png"
+                    Source="pencil_white.png"
                     VerticalOptions="Center"
                     WidthRequest="30" />
             </HorizontalStackLayout>
-
         </VerticalStackLayout>
 
-        <VerticalStackLayout Grid.Row="1">
 
+        <!--  Calorie Section  -->
+        <VerticalStackLayout Grid.Row="1" Spacing="10">
             <Label
                 Margin="0,20"
                 Style="{StaticResource TitleLabel}"
                 Text="Calorie Intake" />
 
+            <!--  Image and Calorie Entry Row  -->
             <HorizontalStackLayout HorizontalOptions="Center">
                 <Image
                     Margin="20,0"
@@ -105,24 +110,26 @@
                 </Frame>
             </HorizontalStackLayout>
 
+            <!--  Input Row  -->
             <HorizontalStackLayout Margin="0,20" HorizontalOptions="Center">
                 <ImageButton
+                    Padding="8"
                     BackgroundColor="{StaticResource Secondary}"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:IntakeViewModel}}, Path=AddKcalClickedCommand}"
                     CommandParameter="{Binding CalorieEntryText}"
-                    CornerRadius="15"
-                    HeightRequest="30"
-                    Source="plus_sign.png"
-                    WidthRequest="30" />
+                    CornerRadius="25"
+                    HeightRequest="50"
+                    Source="plus_circle.png"
+                    WidthRequest="50" />
                 <Label
                     Margin="20,0,0,0"
-                    Style="{StaticResource MediumLabel}"
+                    Style="{StaticResource LargeLabel}"
                     Text="{Binding CaloriesCurrent, StringFormat='{0} /'}"
                     TextColor="White"
                     VerticalOptions="Center" />
                 <Label
                     Margin="0,0,20,0"
-                    Style="{StaticResource MediumLabel}"
+                    Style="{StaticResource LargeLabel}"
                     Text="{Binding CalorieGoal, StringFormat=' {0} kcal'}"
                     TextColor="White"
                     VerticalOptions="Center" />
@@ -133,7 +140,7 @@
                     CommandParameter="Calorie"
                     CornerRadius="15"
                     HeightRequest="30"
-                    Source="pencil.png"
+                    Source="pencil_white.png"
                     VerticalOptions="Center"
                     WidthRequest="30" />
             </HorizontalStackLayout>

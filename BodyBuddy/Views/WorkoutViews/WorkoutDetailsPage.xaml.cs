@@ -34,14 +34,14 @@ public partial class WorkoutDetailsPage : ContentPage
             {
                 Command = new Command(EditBtn_Clicked),
                 CommandParameter = _viewModel.WorkoutDetails,
-                IconImageSource = "pencil.png"
+                IconImageSource = "pencil_white.png"
             });
 
             toolbarItems.Add(new ToolbarItem
             {
                 Command = _viewModel.DeleteWorkoutCommand,
                 CommandParameter = _viewModel.WorkoutDetails,
-                IconImageSource = "trashcan.png"
+                IconImageSource = "trashcan_white.png"
             });
         }
 
@@ -56,7 +56,10 @@ public partial class WorkoutDetailsPage : ContentPage
     protected override async void OnAppearing()
 	{
 		base.OnAppearing();
-		await _viewModel.Initialize();
+
+        await Task.Delay(50); // Add a short delay
+
+        await _viewModel.Initialize();
         UpdateToolbarItemsVisibility();
     }
 
