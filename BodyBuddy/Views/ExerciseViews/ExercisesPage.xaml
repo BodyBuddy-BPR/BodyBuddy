@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+    xmlns:effectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:helpers="clr-namespace:BodyBuddy.Helpers"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
@@ -47,67 +48,60 @@
             ItemsSource="{Binding ExercisesList}"
             VerticalOptions="FillAndExpand">
 
-            <!--<CollectionView.EmptyView>
-                <StackLayout Margin="10,80" Spacing="20">
-                    <Label
-                        HorizontalOptions="CenterAndExpand"
-                        Style="{StaticResource TitleLabel}"
-                        Text="No Exercises" />
-                    <Label
-                        HorizontalOptions="CenterAndExpand"
-                        Style="{StaticResource MediumLabel}"
-                        Text="Pick a musclegroup or search for an exercise" />
-                </StackLayout>
-            </CollectionView.EmptyView>-->
-
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Exercise">
                     <Grid Padding="0,5">
 
                         <Frame HeightRequest="80" Style="{StaticResource CardView}">
-                            <Grid ColumnDefinitions="80,*,50">
-                                <Image
-                                    Aspect="AspectFill"
-                                    HeightRequest="80"
-                                    WidthRequest="80">
-                                    <Image.Source>
-                                        <UriImageSource
-                                            CacheValidity="2"
-                                            CachingEnabled="True"
-                                            Uri="{Binding Images, Converter={StaticResource ExerciseImageHelper}}" />
-                                    </Image.Source>
-                                </Image>
+                            <effectsView:SfEffectsView
+                                Style="{StaticResource CardRippleEffect}"
+                                TouchDownCommand="{Binding Source={RelativeSource AncestorType={x:Type viewModel:ExercisesViewModel}}, Path=GoToExerciseDetailsCommand}"
+                                TouchDownCommandParameter="{Binding .}">
+                                <Grid ColumnDefinitions="80,*,55">
+                                    <Image
+                                        Aspect="AspectFill"
+                                        HeightRequest="81"
+                                        WidthRequest="80">
+                                        <Image.Source>
+                                            <UriImageSource
+                                                CacheValidity="2"
+                                                CachingEnabled="True"
+                                                Uri="{Binding Images, Converter={StaticResource ExerciseImageHelper}}" />
+                                        </Image.Source>
+                                    </Image>
 
-                                <VerticalStackLayout
-                                    Grid.Column="1"
-                                    Padding="10,0"
-                                    VerticalOptions="CenterAndExpand">
-                                    <Label
-                                        FontAttributes="Bold"
-                                        Style="{StaticResource MediumLabel}"
-                                        Text="{Binding Name}" />
-                                    <Label
-                                        MaxLines="1"
-                                        Style="{StaticResource SmallLabel}"
-                                        Text="{Binding Level}" />
-                                </VerticalStackLayout>
+                                    <VerticalStackLayout
+                                        Grid.Column="1"
+                                        Padding="10,0"
+                                        VerticalOptions="CenterAndExpand">
+                                        <Label
+                                            FontAttributes="Bold"
+                                            Style="{StaticResource MediumLabel}"
+                                            Text="{Binding Name}" />
+                                        <Label
+                                            MaxLines="1"
+                                            Style="{StaticResource SmallLabel}"
+                                            Text="{Binding Level}" />
+                                    </VerticalStackLayout>
 
-                                <ImageButton
-                                    Grid.Column="2"
-                                    BackgroundColor="{StaticResource Secondary}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:ExercisesViewModel}}, Path=AddExerciseToWorkoutCommand}"
-                                    CommandParameter="{Binding .}"
-                                    CornerRadius="15"
-                                    HeightRequest="30"
-                                    Source="plus_sign.png"
-                                    WidthRequest="30" />
+                                    <ImageButton
+                                        Grid.Column="2"
+                                        Padding="2"
+                                        BackgroundColor="{StaticResource Secondary}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:ExercisesViewModel}}, Path=AddExerciseToWorkoutCommand}"
+                                        CommandParameter="{Binding .}"
+                                        CornerRadius="18"
+                                        HeightRequest="36"
+                                        Source="plus_sign.png"
+                                        Style="{StaticResource ImageButtonVisualState}"
+                                        WidthRequest="36" />
 
-                            </Grid>
+                                </Grid>
 
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:ExercisesViewModel}}, Path=GoToExerciseDetailsCommand}" CommandParameter="{Binding .}" />
-                            </Frame.GestureRecognizers>
-
+                                <!--<Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:ExercisesViewModel}}, Path=GoToExerciseDetailsCommand}" CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>-->
+                            </effectsView:SfEffectsView>
                         </Frame>
 
                     </Grid>

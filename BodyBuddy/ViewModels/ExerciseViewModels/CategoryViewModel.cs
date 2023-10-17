@@ -21,6 +21,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             if (category is null)
                 return;
 
+            await Task.Delay(100); // Add a short delay
             await Shell.Current.GoToAsync(nameof(MuscleGroupPage), true, new Dictionary<string, object>
             {
                 { "Category", category }

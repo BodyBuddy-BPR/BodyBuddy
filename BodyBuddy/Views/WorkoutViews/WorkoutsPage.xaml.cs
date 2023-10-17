@@ -22,6 +22,9 @@ public partial class WorkoutsPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+
+        await Task.Delay(50); // Add a short delay
+
         string title = Shell.Current.CurrentItem?.CurrentItem?.CurrentItem?.Title;
         if (title == Strings.PremadeWorkOuts)
             _viewModel.IsPreMadeWorkout = true;

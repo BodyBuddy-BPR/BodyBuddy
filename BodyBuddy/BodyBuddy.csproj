@@ -70,7 +70,10 @@
 	  <None Remove="Resources\Images\Icons\apple.svg" />
 	  <None Remove="Resources\Images\Icons\knifeandfork.svg" />
 	  <None Remove="Resources\Images\Icons\next_circle.svg" />
+	  <None Remove="Resources\Images\Icons\pencil.svg" />
+	  <None Remove="Resources\Images\Icons\plus_circle.svg" />
 	  <None Remove="Resources\Images\Icons\previous_circle.svg" />
+	  <None Remove="Resources\Images\Icons\trashcan_white.svg" />
 	  <None Remove="Resources\Images\Icons\water_glass.svg" />
 	  <None Remove="Resources\Images\list.svg" />
 	  <None Remove="Resources\Images\minus_sign.svg" />
@@ -156,8 +159,11 @@
 	  <MauiImage Include="Resources\Images\Icons\minus_sign.svg" />
 	  <MauiImage Include="Resources\Images\Icons\next_circle.svg" />
 	  <MauiImage Include="Resources\Images\Icons\pencil.svg" />
+	  <MauiImage Include="Resources\Images\Icons\pencil_white.svg" />
+	  <MauiImage Include="Resources\Images\Icons\plus_circle.svg" />
 	  <MauiImage Include="Resources\Images\Icons\plus_sign.svg" />
 	  <MauiImage Include="Resources\Images\Icons\previous_circle.svg" />
+	  <MauiImage Include="Resources\Images\Icons\trashcan_white.svg" />
 	  <MauiImage Include="Resources\Images\Icons\trashcan.svg" />
 	  <MauiImage Include="Resources\Images\Icons\water_glass.svg" />
 	</ItemGroup>

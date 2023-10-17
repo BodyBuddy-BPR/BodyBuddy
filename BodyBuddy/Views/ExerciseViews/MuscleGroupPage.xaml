@@ -3,6 +3,7 @@
     x:Class="BodyBuddy.Views.ExerciseViews.MuscleGroupPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:effectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.ExerciseViewModels"
     Title="{Binding ExerciseCategory.Category}">
@@ -37,32 +38,22 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Exercise">
 
-                    <Frame
-                        Padding="15,0"
-                        HeightRequest="70"
-                        Style="{StaticResource CardView}">
-                        <!--<Grid ColumnDefinitions="auto,*">-->
-                        <!--<Image
-                                Margin="5,0"
-                                Aspect="AspectFill"
-                                HeightRequest="70"
-                                Source="no_image.jpg"
-                                WidthRequest="70" />-->
+                    <Frame HeightRequest="70" Style="{StaticResource CardView}">
 
-                        <Label
-                            FontAttributes="Bold"
-                            FontSize="18"
-                            HorizontalOptions="StartAndExpand"
-                            Style="{StaticResource MediumLabel}"
-                            Text="{Binding PrimaryMuscles}"
-                            VerticalOptions="Center" />
+                        <effectsView:SfEffectsView
+                            Padding="15,0"
+                            Style="{StaticResource CardRippleEffect}"
+                            TouchDownCommand="{Binding Source={RelativeSource AncestorType={x:Type viewModel:MuscleGroupViewModel}}, Path=GoToExercisesPageCommand}"
+                            TouchDownCommandParameter="{Binding .}">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="18"
+                                HorizontalOptions="StartAndExpand"
+                                Style="{StaticResource MediumLabel}"
+                                Text="{Binding PrimaryMuscles}"
+                                VerticalOptions="Center" />
 
-                        <!--</Grid>-->
-
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:MuscleGroupViewModel}}, Path=GoToExercisesPageCommand}" CommandParameter="{Binding .}" />
-                        </Frame.GestureRecognizers>
-
+                        </effectsView:SfEffectsView>
                     </Frame>
 
                 </DataTemplate>
