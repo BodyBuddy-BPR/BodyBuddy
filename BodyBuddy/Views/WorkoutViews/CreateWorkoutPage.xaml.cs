@@ -21,6 +21,7 @@ public partial class CreateWorkoutPage
 
         cameraView.IsEnabled = false;
         cameraView.IsVisible = false;
+        cameraPopupView.IsVisible = false;
     }
 
     private async void CreateBtn_Clicked(object sender, EventArgs e)
@@ -47,6 +48,11 @@ public partial class CreateWorkoutPage
     {
         try
         {
+            // Disabling/Enabling the correct views of the popup
+            normalPopupView.IsVisible = false;
+            popupBorder.HeightRequest = 375;
+            cameraPopupView.IsVisible = true;
+
             cameraView.IsEnabled = true;
             cameraView.IsVisible = true;
 
