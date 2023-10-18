@@ -3,6 +3,7 @@
     x:Class="BodyBuddy.Views.WorkoutViews.CreateWorkoutPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:camera="clr-namespace:Camera.MAUI;assembly=Camera.MAUI"
     xmlns:customControls="clr-namespace:BodyBuddy.CustomControls"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:mopupAnimation="clr-namespace:Mopups.Animations;assembly=Mopups"
@@ -26,7 +27,7 @@
 
     <Border
         BackgroundColor="{StaticResource CardBackground}"
-        HeightRequest="230"
+        HeightRequest="580"
         HorizontalOptions="Center"
         WidthRequest="330">
         <Border.StrokeShape>
@@ -67,6 +68,21 @@
                 Text="Create"
                 TextColor="{StaticResource LightText}"
                 VerticalOptions="End" />
+            <Button
+                Clicked="ScanCodeBtn_Clicked"
+                Style="{StaticResource AddButton}"
+                Text="Scan Code"
+                TextColor="{StaticResource LightText}"
+                VerticalOptions="End"
+                WidthRequest="200" />
+
+            <camera:CameraView 
+                x:Name="cameraView"
+                BarCodeDetectionEnabled="True"
+                CamerasLoaded="cameraView_CamerasLoaded"
+                HeightRequest="280"
+                WidthRequest="330" />
+
         </VerticalStackLayout>
     </Border>
 

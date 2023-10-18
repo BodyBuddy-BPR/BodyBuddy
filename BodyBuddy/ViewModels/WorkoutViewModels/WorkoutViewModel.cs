@@ -120,7 +120,64 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             ErrorMessage = string.Empty;
         }
 
+        // This method is used to read qr code data and create usable objects from it
+        public void ReadQrCodeData(string qrCodeData)
+        {
+            // Split the data into separate parts based on the delimiter ';'
+            string[] parts = qrCodeData.Split(';');
+
+            // Extract workout details
+            string workoutIdPart = parts.FirstOrDefault(p => p.StartsWith("WorkoutId:", StringComparison.OrdinalIgnoreCase));
+            int workoutId = 0;
+
+            if (workoutIdPart != null)
+            {
+                string workoutIdString = workoutIdPart.Split(':')[1];
+                int.TryParse(workoutIdString, out workoutId);
+            }
+
+            // Extract exercise details
+            List<Exercise> exercises = new List<Exercise>();
+
+            foreach (var part in parts)
+            {
+                if (part.StartsWith("ExerciseId:", StringComparison.OrdinalIgnoreCase))
+                {
+                    string[] exerciseParts = part.Split(',');
+
+                    int exerciseId;
+                    int.TryParse(exerciseParts[0].Split(':')[1], out exerciseId);
+
+                    int sets;
+                    int.TryParse(exerciseParts[1].Split(':')[1], out sets);
+
+                    int reps;
+                    int.TryParse(exerciseParts[2].Split(':')[1], out reps);
+
+                    exercises.Add(new Exercise
+                    {
+                        Id = exerciseId,
+                        Sets = sets,
+                        Reps = reps
+                        // Add other properties as needed
+                    });
+                }
+            }
+
+            // Now you have the workoutId and a list of exercises
+            // You can use this information to create a Workout object with associated exercises
+            Workout workout = new Workout
+            {
+                Id = workoutId,
+                // Set other properties as needed
+            };
+
+            // Do something with the workout and exercises
+        }
+
+
         #endregion 
+
 
         #region Navigation
 

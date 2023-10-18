@@ -53,10 +53,7 @@
                     <Grid Padding="0,5">
 
                         <Frame HeightRequest="80" Style="{StaticResource CardView}">
-                            <effectsView:SfEffectsView
-                                Style="{StaticResource CardRippleEffect}"
-                                TouchDownCommand="{Binding Source={RelativeSource AncestorType={x:Type viewModel:ExercisesViewModel}}, Path=GoToExerciseDetailsCommand}"
-                                TouchDownCommandParameter="{Binding .}">
+                            <effectsView:SfEffectsView Style="{StaticResource CardRippleEffect}">
                                 <Grid ColumnDefinitions="80,*,55">
                                     <Image
                                         Aspect="AspectFill"
@@ -86,21 +83,22 @@
 
                                     <ImageButton
                                         Grid.Column="2"
-                                        Padding="2"
                                         BackgroundColor="{StaticResource Secondary}"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:ExercisesViewModel}}, Path=AddExerciseToWorkoutCommand}"
                                         CommandParameter="{Binding .}"
-                                        CornerRadius="18"
-                                        HeightRequest="36"
+                                        CornerRadius="20"
+                                        HeightRequest="40"
                                         Source="plus_sign.png"
                                         Style="{StaticResource ImageButtonVisualState}"
-                                        WidthRequest="36" />
+                                        WidthRequest="40" />
 
                                 </Grid>
 
-                                <!--<Frame.GestureRecognizers>
+
+
+                                <effectsView:SfEffectsView.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:ExercisesViewModel}}, Path=GoToExerciseDetailsCommand}" CommandParameter="{Binding .}" />
-                                </Frame.GestureRecognizers>-->
+                                </effectsView:SfEffectsView.GestureRecognizers>
                             </effectsView:SfEffectsView>
                         </Frame>
 

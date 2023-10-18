@@ -21,7 +21,7 @@ public partial class WorkoutDetailsPage : ContentPage
         _popupNavigation = popupNavigation;
     }
 
-    //When !IsPremade --> Allow edit and deletion of workouts
+    //When !IsPremade --> Allow edit, share and deletion of workouts
     //IsVisible is not a part of ToolbarItem, so had to be added through codebehind,
     //based on viewmodel properties
     private void UpdateToolbarItemsVisibility()
@@ -36,13 +36,19 @@ public partial class WorkoutDetailsPage : ContentPage
                 CommandParameter = _viewModel.WorkoutDetails,
                 IconImageSource = "pencil_white.png"
             });
-
+            toolbarItems.Add(new ToolbarItem
+            {
+                Command = new Command(ShareBtn_Clicked),
+                CommandParameter = _viewModel.WorkoutDetails,
+                IconImageSource = "share_white.png"
+            });
             toolbarItems.Add(new ToolbarItem
             {
                 Command = _viewModel.DeleteWorkoutCommand,
                 CommandParameter = _viewModel.WorkoutDetails,
                 IconImageSource = "trashcan_white.png"
             });
+            
         }
 
         ToolbarItems.Clear();
@@ -52,7 +58,7 @@ public partial class WorkoutDetailsPage : ContentPage
         }
     }
 
-
+   
     protected override async void OnAppearing()
 	{
 		base.OnAppearing();
@@ -68,8 +74,12 @@ public partial class WorkoutDetailsPage : ContentPage
 		_viewModel.PopupName = _viewModel.WorkoutName;
 		_viewModel.PopupDescription = _viewModel.WorkoutDescription;
 
-        //popup.Show();
         _popupNavigation.PushAsync(new EditWorkoutPopup(_viewModel));
+    }
+
+    private void ShareBtn_Clicked(object obj)
+    {
+        _popupNavigation.PushAsync(new ShareWorkoutPopup(_viewModel));
     }
 
     private void SetsAndRepsBtn_Clicked(object sender, EventArgs e)

@@ -71,10 +71,7 @@
                     <SwipeView>
 
                         <Frame HeightRequest="120" Style="{StaticResource CardView}">
-                            <effectsView:SfEffectsView
-                                LongPressedCommand="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutDetailsViewModel}}, Path=ToExerciseDetailsCommand}"
-                                LongPressedCommandParameter="{Binding .}"
-                                Style="{StaticResource CardRippleEffect}">
+                            <effectsView:SfEffectsView Style="{StaticResource CardRippleEffect}">
                                 <Grid ColumnDefinitions="100,*">
 
                                     <!--  Left Column - Image  -->
@@ -125,6 +122,11 @@
 
                                     </VerticalStackLayout>
                                 </Grid>
+
+                                <effectsView:SfEffectsView.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutDetailsViewModel}}, Path=ToExerciseDetailsCommand}" CommandParameter="{Binding .}" />
+                                </effectsView:SfEffectsView.GestureRecognizers>
+
                             </effectsView:SfEffectsView>
                         </Frame>
 
