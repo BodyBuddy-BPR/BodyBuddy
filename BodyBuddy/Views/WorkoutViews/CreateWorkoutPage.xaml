@@ -28,7 +28,7 @@
     <Border
         x:Name="popupBorder"
         BackgroundColor="{StaticResource CardBackground}"
-        HeightRequest="240"
+        HeightRequest="230"
         HorizontalOptions="Center"
         WidthRequest="330">
         <Border.StrokeShape>
@@ -94,7 +94,6 @@
                     Style="{StaticResource LargeLabel}"
                     Text="Scan a friend's QR code"
                     TextColor="Black" />
-
                 <camera:CameraView
                     x:Name="cameraView"
                     BarCodeDetectionEnabled="True"
@@ -102,8 +101,49 @@
                     HeightRequest="300"
                     WidthRequest="330" />
             </VerticalStackLayout>
+
+
+            <!--  The view to show when a code has been scanned  -->
+            <VerticalStackLayout
+                x:Name="codeScannedPopupView"
+                Padding="15,15"
+                Spacing="5">
+                <Label
+                    Margin="0,0,0,10"
+                    Style="{StaticResource LargeLabel}"
+                    Text="Workout Info"
+                    TextColor="Black" />
+                <Label
+                    FontAttributes="Bold"
+                    Style="{StaticResource MediumLabel}"
+                    Text="Name:"
+                    TextColor="Black" />
+                <Label
+                    Margin="0,0,0,5"
+                    Style="{StaticResource MediumLabel}"
+                    Text="{Binding WorkoutName}"
+                    TextColor="Black" />
+
+                <Label
+                    FontAttributes="Bold"
+                    Style="{StaticResource MediumLabel}"
+                    Text="Description:"
+                    TextColor="Black" />
+                <Label
+                    Margin="0,0,0,10"
+                    Style="{StaticResource MediumLabel}"
+                    Text="{Binding WorkoutDescription}"
+                    TextColor="Black" />
+                <Button
+                    x:Name="CreateFromCodeBtn"
+                    Clicked="CreateFromCodeBtn_Clicked"
+                    Style="{StaticResource AddButton}"
+                    Text="Create"
+                    TextColor="{StaticResource LightText}"
+                    VerticalOptions="End" />
+            </VerticalStackLayout>
         </Grid>
-        
+
     </Border>
 
 </mopups:PopupPage>

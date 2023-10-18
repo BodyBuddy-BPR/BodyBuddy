@@ -147,7 +147,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
         {
             if(SelectedWorkout.Id != 0)
             {
-                await _workoutExercisesRepository.AddExerciseToWorkout(SelectedWorkout.Id, exercise.Id);
+                await _workoutExercisesRepository.AddExerciseToWorkout(SelectedWorkout.Id, exercise);
                 await Shell.Current.DisplaySnackbar($"{exercise.Name} added to {SelectedWorkout.Name}");
             }
             else

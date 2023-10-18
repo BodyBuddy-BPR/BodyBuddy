@@ -6,9 +6,11 @@ namespace BodyBuddy.Repositories
     {
         Task<List<Workout>> GetWorkoutPlansAsync(int isPreMade);
 
+        Task<Workout> GetSpecificWorkoutAsync(string name);
+
 		Task<int> PostWorkoutPlanAsync(Workout workout);
 
-		Task DeleteWorkout(Workout workout);
+		Task<bool> DeleteWorkout(Workout workout);
 
 		Task<bool> DoesWorkoutAlreadyExist(string name);
     }

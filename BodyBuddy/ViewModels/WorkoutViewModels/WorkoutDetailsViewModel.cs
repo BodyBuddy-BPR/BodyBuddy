@@ -242,14 +242,16 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         #endregion
 
-        #region Sharing Code Generation 
+
+        #region QR Code Generation 
 
         public string GenerateQrCodeData()
         {
             StringBuilder qrCodeData = new StringBuilder();
 
             // Append WorkoutDetails.Id
-            qrCodeData.Append($"WorkoutName:{WorkoutDetails.Name}, WorkoutDecription:{WorkoutDetails.Description};");
+            qrCodeData.Append($"WorkoutName:{Escape(WorkoutDetails.Name)};");
+            qrCodeData.Append($"WorkoutDescription:{Escape(WorkoutDetails.Description)};");
 
             // Append exercise details
             foreach (var exercise in Exercises)
@@ -259,9 +261,15 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
             return qrCodeData.ToString();
         }
+        private string Escape(string value)
+        {
+            // Replace any ';' in the value with a placeholder (you can choose any unique string)
+            return value?.Replace(";", "##semicolon##") ?? "";
+        }
 
 
         #endregion
+
 
         #region Navigation
 

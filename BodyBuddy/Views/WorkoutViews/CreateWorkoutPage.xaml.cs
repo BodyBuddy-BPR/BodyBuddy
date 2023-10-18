@@ -11,17 +11,15 @@ public partial class CreateWorkoutPage
 {
     private WorkoutViewModel _viewModel;
 
-    private bool cameraEnabled = false;
-
     public CreateWorkoutPage(WorkoutViewModel workoutsViewModel)
     {
         InitializeComponent();
         _viewModel = workoutsViewModel;
         BindingContext = workoutsViewModel;
 
-        cameraView.IsEnabled = false;
-        cameraView.IsVisible = false;
+        // Disabling views
         cameraPopupView.IsVisible = false;
+        codeScannedPopupView.IsVisible = false;
     }
 
     private async void CreateBtn_Clicked(object sender, EventArgs e)
@@ -31,6 +29,35 @@ public partial class CreateWorkoutPage
         if (valid)
         {
             await MopupService.Instance.PopAsync();
+
+            _viewModel.WorkoutName = string.Empty;
+            _viewModel.WorkoutDescription = string.Empty;
+        }
+        else
+        {
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
+            ToastDuration duration = ToastDuration.Short;
+            double fontSize = 14;
+
+            var toast = Toast.Make(_viewModel.ErrorMessage, duration, fontSize);
+            await toast.Show(cancellationTokenSource.Token);
+        }
+    }
+
+    private async void CreateFromCodeBtn_Clicked(object sender, EventArgs e)
+    {
+        var valid = await _viewModel.CreateWorkout();
+        
+
+        if (valid)
+        {
+            await _viewModel.AddExercisesToWorkout();
+
+            await MopupService.Instance.PopAsync();
+
+            _viewModel.WorkoutName = string.Empty;
+            _viewModel.WorkoutDescription = string.Empty;
         }
         else
         {
@@ -49,14 +76,12 @@ public partial class CreateWorkoutPage
         try
         {
             // Disabling/Enabling the correct views of the popup
-            normalPopupView.IsVisible = false;
-            popupBorder.HeightRequest = 375;
-            cameraPopupView.IsVisible = true;
+            normalPopupView.IsVisible = false; // Disable the entire normal view
+            popupBorder.HeightRequest = 375; // Set a new height of the popup
+            cameraPopupView.IsVisible = true; // Make Camera visible
 
-            cameraView.IsEnabled = true;
-            cameraView.IsVisible = true;
 
-            // Assuming you have a CameraView named "cameraView" in your XAML
+            // Subscribing to HandleBarCodeDetected
             cameraView.BarcodeDetected += HandleBarCodeDetected;
         }
         catch (Exception ex)
@@ -65,17 +90,28 @@ public partial class CreateWorkoutPage
         }
     }
 
-    private void HandleBarCodeDetected(object sender, BarcodeEventArgs args)
+    private async void HandleBarCodeDetected(object sender, BarcodeEventArgs args)
     {
-        if (!string.IsNullOrWhiteSpace(args.ToString()))
-        {
-            // Assuming you have a method to process the scanned QR code data
-            _viewModel.ReadQrCodeData(args.Result.ToString());
+        // Process the scanned QR code data
+        _viewModel.ReadQrCodeData(args.Result[0].Text);
 
-            // If you only want to process the first detected barcode, you can unsubscribe
-            cameraView.BarcodeDetected -= HandleBarCodeDetected;
-        }
+        // Delay execution for a short period
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            // Disabling Camera view
+            cameraPopupView.IsVisible = false;
+            popupBorder.HeightRequest = 235; // Set a new height of the popup
+            codeScannedPopupView.IsVisible = true;
+
+        });
+
+        // Unsubsribing after first detected barcode
+        await Task.Delay(500);
+        cameraView.BarcodeDetected -= HandleBarCodeDetected;
     }
+
+    
+
 
     private void cameraView_CamerasLoaded(object sender, EventArgs e)
     {
@@ -90,4 +126,5 @@ public partial class CreateWorkoutPage
             });
         }
     }
+
 }
