@@ -35,23 +35,24 @@ namespace BodyBuddy.Repositories.Implementations
                 return await _context.UpdateAsync(workout);
             else
             {
-                workout.Id = await GetNextIWorkoutd(); // Generate a unique Id
+                workout.Id = await GetNextWorkoutId(); // Generate a unique Id
                 return await _context.InsertAsync(workout);
             }
         }
-        private async Task<int> GetNextIWorkoutd()
+        private async Task<int> GetNextWorkoutId()
         {
             var lastItem = await _context.Table<Workout>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
             return lastItem?.Id + 1 ?? 1;
         }
 
-        public async Task DeleteWorkout(Workout workout)
+        public async Task<bool> DeleteWorkout(Workout workout)
         {
             // First deleting all exercises with the workout id from the joint table
             await _context.Table<WorkoutExercises>().DeleteAsync(x => x.WorkoutId == workout.Id);
 
             // Then deleting the workout from workout table
             await _context.DeleteAsync(workout);
+            return true;
         }
 
         public async Task<bool> DoesWorkoutAlreadyExist(string name)
@@ -66,7 +67,9 @@ namespace BodyBuddy.Repositories.Implementations
             }
         }
 
-
-
+        public async Task<Workout> GetSpecificWorkoutAsync(string name)
+        {
+            return await _context.Table<Workout>().FirstOrDefaultAsync(x => x.Name == name);
+        }
     }
 }

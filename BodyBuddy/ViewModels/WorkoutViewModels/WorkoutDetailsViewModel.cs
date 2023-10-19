@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 using Mopups.Services;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Text;
 
 namespace BodyBuddy.ViewModels.WorkoutViewModels
 {
@@ -45,8 +46,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         private bool smallButtonsIsEnabled; // This is the small Add Exercise & Start Workout buttons
         [ObservableProperty]
         private bool largeButtonModifyIsEnabled, smallButtonModifyIsEnabled; // For the AddExercisesCommand 
-
-
 
         #endregion
 
@@ -240,6 +239,34 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 IsBusy = false;
             }
         }
+
+        #endregion
+
+
+        #region QR Code Generation 
+
+        public string GenerateQrCodeData()
+        {
+            StringBuilder qrCodeData = new StringBuilder();
+
+            // Append WorkoutDetails.Id
+            qrCodeData.Append($"WorkoutName:{Escape(WorkoutDetails.Name)};");
+            qrCodeData.Append($"WorkoutDescription:{Escape(WorkoutDetails.Description)};");
+
+            // Append exercise details
+            foreach (var exercise in Exercises)
+            {
+                qrCodeData.Append($"ExerciseId:{exercise.Id},Sets:{exercise.Sets},Reps:{exercise.Reps};");
+            }
+
+            return qrCodeData.ToString();
+        }
+        private string Escape(string value)
+        {
+            // Replace any ';' in the value with a placeholder 
+            return value?.Replace(";", "##semicolon##") ?? "";
+        }
+
 
         #endregion
 

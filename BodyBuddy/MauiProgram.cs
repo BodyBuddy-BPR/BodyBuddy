@@ -14,6 +14,8 @@ using BodyBuddy.ViewModels.WorkoutViewModels;
 using Mopups.Hosting;
 using Mopups.Interfaces;
 using Mopups.Services;
+using Camera.MAUI;
+using Maui.FixesAndWorkarounds;
 
 namespace BodyBuddy;
 
@@ -26,7 +28,9 @@ public static class MauiProgram
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
             .ConfigureSyncfusionCore()
+            .ConfigureMauiWorkarounds()
             .ConfigureMopups()
+            .UseMauiCameraView()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

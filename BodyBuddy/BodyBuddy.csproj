@@ -68,11 +68,13 @@
 	  <None Remove="Resources\Images\dumbbell.svg" />
 	  <None Remove="Resources\Images\home.svg" />
 	  <None Remove="Resources\Images\Icons\apple.svg" />
+	  <None Remove="Resources\Images\Icons\camera_white.svg" />
 	  <None Remove="Resources\Images\Icons\knifeandfork.svg" />
 	  <None Remove="Resources\Images\Icons\next_circle.svg" />
 	  <None Remove="Resources\Images\Icons\pencil.svg" />
 	  <None Remove="Resources\Images\Icons\plus_circle.svg" />
 	  <None Remove="Resources\Images\Icons\previous_circle.svg" />
+	  <None Remove="Resources\Images\Icons\share_white.svg" />
 	  <None Remove="Resources\Images\Icons\trashcan_white.svg" />
 	  <None Remove="Resources\Images\Icons\water_glass.svg" />
 	  <None Remove="Resources\Images\list.svg" />
@@ -90,11 +92,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Camera.MAUI" Version="1.4.4" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.2.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
 		<PackageReference Include="Imagekit" Version="4.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Mopups" Version="1.1.1" />
+		<PackageReference Include="PureWeen.Maui.FixesAndWorkarounds" Version="1.4.9" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
 		<PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
 		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.5" />
@@ -121,6 +125,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Popups\EditSetsAndRepsPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Popups\ShareWorkoutPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Popups\EditWorkoutPopup.xaml">
@@ -152,6 +159,7 @@
 	  <MauiImage Include="Resources\Images\Categories\stretching.svg" />
 	  <MauiImage Include="Resources\Images\Categories\strongman.svg" />
 	  <MauiImage Include="Resources\Images\Icons\apple.svg" />
+	  <MauiImage Include="Resources\Images\Icons\camera_white.svg" />
 	  <MauiImage Include="Resources\Images\Icons\dumbbell.svg" />
 	  <MauiImage Include="Resources\Images\Icons\home.svg" />
 	  <MauiImage Include="Resources\Images\Icons\knifeandfork.svg" />
@@ -163,6 +171,7 @@
 	  <MauiImage Include="Resources\Images\Icons\plus_circle.svg" />
 	  <MauiImage Include="Resources\Images\Icons\plus_sign.svg" />
 	  <MauiImage Include="Resources\Images\Icons\previous_circle.svg" />
+	  <MauiImage Include="Resources\Images\Icons\share_white.svg" />
 	  <MauiImage Include="Resources\Images\Icons\trashcan_white.svg" />
 	  <MauiImage Include="Resources\Images\Icons\trashcan.svg" />
 	  <MauiImage Include="Resources\Images\Icons\water_glass.svg" />
@@ -171,6 +180,9 @@
 	<ItemGroup>
 	  <Compile Update="Views\Popups\EditIntakeGoalPopup.xaml.cs">
 	    <DependentUpon>EditIntakeGoalPopup.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Popups\ShareWorkoutPopup.xaml.cs">
+	    <DependentUpon>ShareWorkoutPopup.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
