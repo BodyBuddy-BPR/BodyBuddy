@@ -19,6 +19,7 @@ namespace UnitTest.ViewModels.WorkoutViewModels
         public void Setup()
         {
             mockRepo = new Mock<IWorkoutRepository>();
+            workoutExercisesMockRepo = new Mock<IWorkoutExercisesRepository>();
             target = new WorkoutViewModel(mockRepo.Object, workoutExercisesMockRepo.Object);
 
             preMadeWorkout1 = new Workout() { Id = 1, Name = "Workout1", PreMade = 1 };

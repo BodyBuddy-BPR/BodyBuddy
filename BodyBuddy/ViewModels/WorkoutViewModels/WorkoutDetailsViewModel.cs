@@ -263,7 +263,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         }
         private string Escape(string value)
         {
-            // Replace any ';' in the value with a placeholder (you can choose any unique string)
+            // Replace any ';' in the value with a placeholder 
             return value?.Replace(";", "##semicolon##") ?? "";
         }
 

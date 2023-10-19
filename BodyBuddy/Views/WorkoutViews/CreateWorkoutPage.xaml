@@ -28,7 +28,7 @@
     <Border
         x:Name="popupBorder"
         BackgroundColor="{StaticResource CardBackground}"
-        HeightRequest="230"
+        HeightRequest="225"
         HorizontalOptions="Center"
         WidthRequest="330">
         <Border.StrokeShape>
@@ -76,12 +76,14 @@
                         TextColor="{StaticResource LightText}"
                         WidthRequest="240" />
                     <ImageButton
+                        Padding="2"
                         BackgroundColor="{StaticResource Secondary}"
                         Clicked="ScanCodeBtn_Clicked"
                         CornerRadius="10"
-                        HeightRequest="40"
-                        Source="no_image"
-                        WidthRequest="50" />
+                        HeightRequest="45"
+                        Source="camera_white.png"
+                        Style="{StaticResource ImageButtonVisualState}"
+                        WidthRequest="60" />
                 </HorizontalStackLayout>
             </VerticalStackLayout>
 

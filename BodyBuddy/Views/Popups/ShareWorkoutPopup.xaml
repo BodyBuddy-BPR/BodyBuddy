@@ -33,20 +33,25 @@
             <RoundRectangle CornerRadius="20" />
         </Border.StrokeShape>
 
-        <VerticalStackLayout Padding="15,15" Spacing="10">
+        <VerticalStackLayout Padding="15,15" Spacing="5">
             <Label
                 Style="{StaticResource TitleLabel}"
                 Text="Share"
                 TextColor="Black" />
+            <Label
+                Style="{StaticResource MediumLabel}"
+                Text="You can use this code to share your workout"
+                TextColor="Black" />
 
             <camera:BarcodeImage
                 x:Name="QRcode"
+                BarcodeBackground="Transparent"
                 BarcodeFormat="QR_CODE"
-                BarcodeHeight="330"
+                BarcodeHeight="300"
                 BarcodeMargin="1"
-                BarcodeWidth="330"
-                HeightRequest="330"
-                WidthRequest="330" />
+                BarcodeWidth="300"
+                HeightRequest="300"
+                WidthRequest="300" />
 
         </VerticalStackLayout>
     </Border>
