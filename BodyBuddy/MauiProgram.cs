@@ -20,6 +20,10 @@ using BodyBuddy.ViewModels;
 using BodyBuddy.Mappers;
 using BodyBuddy.Services;
 using BodyBuddy.Services.Implementations;
+using BodyBuddy.Views.Authentication;
+using BodyBuddy.Views.Profile;
+using BodyBuddy.ViewModels.Profile;
+using BodyBuddy.ViewModels.Authentication;
 
 namespace BodyBuddy;
 
@@ -104,6 +108,13 @@ public static class MauiProgram
 
         // Statistics
         builder.Services.AddSingleton<IntakePage>();
+
+        // Profile
+        builder.Services.AddSingleton<ProfilePage>();
+
+        // Authentication
+        builder.Services.AddSingleton<LoginPage>();
+
         #endregion
 
 
@@ -111,6 +122,8 @@ public static class MauiProgram
 
         // MainPage
         builder.Services.AddSingleton<MainPageViewModel>();
+
+        
 
         // Workout
         builder.Services.AddTransient<WorkoutViewModel>();
@@ -126,6 +139,12 @@ public static class MauiProgram
 
         // Statistics
         builder.Services.AddSingleton<IntakeViewModel>();
+
+        // Profile
+        builder.Services.AddSingleton<ProfileViewModel>();
+
+        // Authentication
+        builder.Services.AddSingleton<LoginViewModel>();
         #endregion
 
 

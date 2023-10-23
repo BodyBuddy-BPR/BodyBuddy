@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage
+    x:Class="BodyBuddy.Views.Authentication.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:BodyBuddy.Models"
+    xmlns:mopupAnimation="clr-namespace:Mopups.Animations;assembly=Mopups"
+    xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+    xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.Authentication"
+    x:DataType="viewModel:LoginViewModel">
+
+    <Grid>
+
+        <!--  Login page  -->
+        <StackLayout Margin="20" IsVisible="{Binding IsLogin}">
+            <Image
+                HeightRequest="50"
+                HorizontalOptions="StartAndExpand"
+                Source="no_image.png" />
+
+            <!--  Titel  -->
+            <StackLayout Margin="0,60">
+                <Label
+                    FontSize="32"
+                    Style="{StaticResource welcome}"
+                    Text="Sign In" />
+            </StackLayout>
+
+            <!--  Login Info  -->
+            <VerticalStackLayout>
+
+                <!--  Enter Email  -->
+                <Label
+                    FontFamily="OpenSansRegular"
+                    FontSize="16"
+                    Text="Email"
+                    TextColor="{StaticResource SecondaryColor}" />
+                <Grid Margin="0,5">
+                    <Frame
+                        BackgroundColor="White"
+                        CornerRadius="5"
+                        Opacity="0.3" />
+                    <Entry
+                        Margin="5,0"
+                        BackgroundColor="Transparent"
+                        Placeholder="Enter username"
+                        PlaceholderColor="Gray"
+                        TextColor="White" />
+
+                </Grid>
+
+                <!--  Enter Password  -->
+                <Label
+                    FontFamily="OpenSansRegular"
+                    FontSize="16"
+                    Text="Password"
+                    TextColor="{StaticResource SecondaryColor}" />
+                <Grid Margin="0,5">
+                    <Frame
+                        BackgroundColor="White"
+                        CornerRadius="5"
+                        Opacity="0.3" />
+                    <Entry
+                        Margin="5,0"
+                        BackgroundColor="Transparent"
+                        IsPassword="True"
+                        Placeholder="Enter password"
+                        PlaceholderColor="Gray"
+                        TextColor="White" />
+
+                </Grid>
+            </VerticalStackLayout>
+
+            <!--  Sign In Button  -->
+            <Button
+                Margin="0,15"
+                BackgroundColor="{StaticResource SecondaryColor}"
+                FontFamily="OpenSansBold"
+                Text="Sign in"
+                TextColor="{StaticResource PrimaryColor}" />
+
+            <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                <Label
+                    Style="{StaticResource MediumLabel}"
+                    Text="Don't have an account?"
+                    TextColor="{StaticResource LightText}"
+                    VerticalOptions="Center" />
+                <Button
+                    BackgroundColor="Transparent"
+                    Clicked="SignUp_Clicked"
+                    FontFamily="OpenSansRegular"
+                    FontSize="16"
+                    Text="Register"
+                    TextColor="{StaticResource LightText}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+        </StackLayout>
+
+
+        <!--  Sign Up page  -->
+        <StackLayout Margin="20" IsVisible="{Binding IsSignUp}">
+            <Image
+                HeightRequest="50"
+                HorizontalOptions="StartAndExpand"
+                Source="no_image.png" />
+
+            <!--  Titel  -->
+            <StackLayout Margin="0,60">
+                <Label
+                    FontSize="32"
+                    Style="{StaticResource welcome}"
+                    Text="Sign Up" />
+            </StackLayout>
+
+            <!--  Register Info  -->
+            <VerticalStackLayout>
+
+                <!--  Enter Email  -->
+                <Label
+                    FontFamily="OpenSansRegular"
+                    FontSize="16"
+                    Text="Email"
+                    TextColor="{StaticResource SecondaryColor}" />
+                <Grid Margin="0,5">
+                    <Frame
+                        BackgroundColor="White"
+                        CornerRadius="5"
+                        Opacity="0.3" />
+                    <Entry
+                        Margin="5,0"
+                        BackgroundColor="Transparent"
+                        Placeholder="Enter email"
+                        PlaceholderColor="Gray"
+                        TextColor="White" />
+                </Grid>
+
+                <!--  Enter Password  -->
+                <Label
+                    FontFamily="OpenSansRegular"
+                    FontSize="16"
+                    Text="Password"
+                    TextColor="{StaticResource SecondaryColor}" />
+                <Grid Margin="0,5">
+                    <Frame
+                        BackgroundColor="White"
+                        CornerRadius="5"
+                        Opacity="0.3" />
+                    <Entry
+                        Margin="5,0"
+                        BackgroundColor="Transparent"
+                        IsPassword="True"
+                        Placeholder="Enter password"
+                        PlaceholderColor="Gray"
+                        TextColor="White" />
+
+                </Grid>
+            </VerticalStackLayout>
+
+            <HorizontalStackLayout
+                Margin="0,15"
+                HorizontalOptions="Center"
+                Spacing="10">
+                <Button
+                    BackgroundColor="{StaticResource SecondaryColor}"
+                    Clicked="Login_Clicked"
+                    FontFamily="OpenSansBold"
+                    Text="Cancel"
+                    TextColor="{StaticResource PrimaryColor}"
+                    WidthRequest="140" />
+                <Button
+                    BackgroundColor="{StaticResource SecondaryColor}"
+                    FontFamily="OpenSansBold"
+                    Text="Sign in"
+                    TextColor="{StaticResource PrimaryColor}"
+                    WidthRequest="140" />
+            </HorizontalStackLayout>
+
+        </StackLayout>
+
+
+
+    </Grid>
+
+</mopups:PopupPage>

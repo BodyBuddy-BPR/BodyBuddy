@@ -6,6 +6,7 @@
     xmlns:exerciseViews="clr-namespace:BodyBuddy.Views.ExerciseViews"
     xmlns:helpers="clr-namespace:BodyBuddy.Helpers"
     xmlns:local="clr-namespace:BodyBuddy"
+    xmlns:profileViews="clr-namespace:BodyBuddy.Views.Profile"
     xmlns:statisticsViews="clr-namespace:BodyBuddy.Views.StatisticsViews"
     xmlns:workoutViews="clr-namespace:BodyBuddy.Views.WorkoutViews"
     FlyoutBackgroundColor="{StaticResource Background}"
@@ -55,6 +56,11 @@
             Title="Exercises"
             ContentTemplate="{DataTemplate exerciseViews:CategoryPage}"
             Icon="dumbbell.png" />
+
+        <ShellContent
+            Title="Profile"
+            ContentTemplate="{DataTemplate profileViews:ProfilePage}"
+            Icon="no_image.png" />
     </TabBar>
 
 </Shell>
