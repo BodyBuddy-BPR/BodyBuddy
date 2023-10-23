@@ -8,7 +8,7 @@
     xmlns:effectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:helpers="clr-namespace:BodyBuddy.Helpers"
     xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
-    xmlns:model="clr-namespace:BodyBuddy.Models"
+    xmlns:model="clr-namespace:BodyBuddy.Models" 
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewModels="clr-namespace:BodyBuddy.ViewModels.WorkoutViewModels"
     Title="{Binding WorkoutDetails.Name}"
@@ -22,14 +22,14 @@
     </ContentPage.Resources>
 
     <Grid
-        Margin="20,5"
+        Margin="12,5"
         RowDefinitions="*"
         RowSpacing="20">
 
         <!--  The Exercise to do  -->
         <Frame
             Grid.Row="0"
-            Padding="20,15"
+            Padding="5,8"
             Style="{StaticResource CardView}">
 
             <Grid RowDefinitions="Auto, Auto, *" RowSpacing="10">
@@ -75,12 +75,12 @@
                             VerticalOptions="Center" />
                     </HorizontalStackLayout>
 
-                    <Label
+                    <!--<Label
                         FontAttributes="Italic"
                         HorizontalOptions="Center"
                         Style="{StaticResource MediumLabel}"
                         Text="You can do it!"
-                        TextColor="Black" />
+                        TextColor="Black" />-->
                 </VerticalStackLayout>
 
 
@@ -91,20 +91,20 @@
                     Spacing="20">
                     <ImageButton
                         Command="{Binding PreviousExerciseCommand}"
-                        HeightRequest="60"
+                        HeightRequest="50"
                         IsVisible="{Binding PreviousButtonIsEnabled}"
                         Source="previous_circle.png"
-                        WidthRequest="60">
+                        WidthRequest="50">
                         <ImageButton.Behaviors>
                             <toolkit:IconTintColorBehavior TintColor="{StaticResource PrimaryDarker}" />
                         </ImageButton.Behaviors>
                     </ImageButton>
                     <ImageButton
                         Command="{Binding NextExerciseCommand}"
-                        HeightRequest="60"
+                        HeightRequest="50"
                         IsVisible="{Binding NextButtonIsEnabled}"
                         Source="next_circle.png"
-                        WidthRequest="60">
+                        WidthRequest="50">
                         <ImageButton.Behaviors>
                             <toolkit:IconTintColorBehavior TintColor="{StaticResource PrimaryDarker}" />
                         </ImageButton.Behaviors>
@@ -112,7 +112,10 @@
                 </HorizontalStackLayout>
 
                 <!--  Tract Kg and Reps for each Set inputs  -->
-                <Grid Grid.Row="2" RowDefinitions="*, Auto">
+                <Grid
+                    Grid.Row="2"
+                    HorizontalOptions="Center"
+                    RowDefinitions="*, Auto">
                     <CollectionView Grid.Row="0" ItemsSource="{Binding ExerciseRecords}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="model:ExerciseRecords">
@@ -141,11 +144,12 @@
                                             HorizontalOptions="Center"
                                             Stroke="{StaticResource Primary}"
                                             VerticalOptions="CenterAndExpand"
-                                            WidthRequest="120">
+                                            WidthRequest="145">
                                             <editors:SfNumericEntry
                                                 CustomFormat="0 kg"
+                                                FontAttributes="Bold"
                                                 FontFamily="Montserrat"
-                                                FontSize="16"
+                                                FontSize="15"
                                                 Placeholder="Kg"
                                                 PlaceholderColor="Black"
                                                 Value="{Binding Weight}" />
@@ -165,8 +169,9 @@
                                             WidthRequest="160">
                                             <editors:SfNumericEntry
                                                 CustomFormat="0 Reps"
+                                                FontAttributes="Bold"
                                                 FontFamily="Montserrat"
-                                                FontSize="16"
+                                                FontSize="15"
                                                 Placeholder="Reps"
                                                 PlaceholderColor="Black"
                                                 ShowClearButton="False"
@@ -183,6 +188,7 @@
                     <!--  Finish Workout Btn  -->
                     <Button
                         Grid.Row="1"
+                        Margin="0,5,0,0"
                         Command="{Binding FinishWorkoutCommand}"
                         IsEnabled="{Binding FinishWorkoutButtonIsEnabled}"
                         IsVisible="{Binding FinishWorkoutButtonIsEnabled}"
