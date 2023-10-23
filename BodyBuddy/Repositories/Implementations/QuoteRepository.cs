@@ -20,6 +20,14 @@ namespace BodyBuddy.Repositories.Implementations
         private readonly string datePreferencesKey = "LastFetchedDate";
         private readonly string quotePreferencesKey = "LastFetchedQuote";
 
+#if GITHUB_BUILD
+    string url = Environment.GetEnvironmentVariable("SUPABASE_URL");
+    string key = Environment.GetEnvironmentVariable("SUPABASE_KEY");
+#else
+        string url = AppSettingKeys.SUPABASE_URL;
+        string key = AppSettingKeys.SUPABASE_KEY;
+#endif
+
         public QuoteRepository(DateTimeService dateTimeService, Client supabaseClient)
         {
             _dateTimeService = dateTimeService;
@@ -36,7 +44,7 @@ namespace BodyBuddy.Repositories.Implementations
 
                 using (var httpClient = new HttpClient())
                 {
-                    string apiUrl = $"{AppSettingKeys.SUPABASE_URL}/rest/v1/random_quote?apikey={AppSettingKeys.SUPABASE_KEY}&limit=1";
+                    string apiUrl = $"{url}/rest/v1/random_quote?apikey={key}&limit=1";
                     var response = await httpClient.GetStringAsync(apiUrl);
 
                     // Deserialize the JSON response
