@@ -16,6 +16,10 @@ using Mopups.Interfaces;
 using Mopups.Services;
 using Camera.MAUI;
 using Maui.FixesAndWorkarounds;
+using BodyBuddy.ViewModels;
+using BodyBuddy.Mappers;
+using BodyBuddy.Services;
+using BodyBuddy.Services.Implementations;
 
 namespace BodyBuddy;
 
@@ -83,6 +87,9 @@ public static class MauiProgram
 
         #region Views
 
+        // MainPage
+        builder.Services.AddSingleton<MainPage>();
+
         // Workout
         builder.Services.AddTransient<WorkoutsPage>();
         builder.Services.AddTransient<WorkoutDetailsPage>();
@@ -101,6 +108,9 @@ public static class MauiProgram
 
 
         #region ViewModels
+
+        // MainPage
+        builder.Services.AddSingleton<MainPageViewModel>();
 
         // Workout
         builder.Services.AddTransient<WorkoutViewModel>();
@@ -126,14 +136,24 @@ public static class MauiProgram
         builder.Services.AddSingleton<IWorkoutExercisesRepository, WorkoutExercisesRepository>();
         builder.Services.AddSingleton<IIntakeRepository, IntakeRepository>();
         builder.Services.AddSingleton<IExerciseRecordsRepository, ExerciseRecordsRepository>();
+        builder.Services.AddSingleton<IQuoteRepository, QuoteRepository>();
 
         #endregion
 
 
         #region Services
 
+        builder.Services.AddSingleton<IQuoteService, QuoteService>();
         builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
         builder.Services.AddSingleton<IPopupNavigation>(MopupService.Instance);
+        builder.Services.AddSingleton<DateTimeService>(); ;
+
+        #endregion
+
+
+        #region Helpers
+
+        builder.Services.AddSingleton<QuoteMapper>();
 
         #endregion
 
