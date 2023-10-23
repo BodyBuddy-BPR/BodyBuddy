@@ -45,6 +45,8 @@ namespace BodyBuddy.Repositories.Implementations
 						existingIntake.WaterGoal = previousIntake.WaterGoal;
 						existingIntake.CalorieCurrent = 0;
 						existingIntake.WaterCurrent = 0;
+						existingIntake.WaterProgress = 0;
+						existingIntake.CalorieProgress = 0;
 					}
 					else
 					{
@@ -52,6 +54,8 @@ namespace BodyBuddy.Repositories.Implementations
 						existingIntake.WaterGoal = 2500;
 						existingIntake.CalorieCurrent = 0;
 						existingIntake.WaterCurrent = 0;
+						existingIntake.WaterProgress = 0;
+						existingIntake.CalorieProgress = 0;
 					}
 
 					// Insert the new entry in the database

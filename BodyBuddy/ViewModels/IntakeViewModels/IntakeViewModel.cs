@@ -19,6 +19,8 @@ namespace BodyBuddy.ViewModels.IntakeViewmodels
 		private string _errorMessage;
 		[ObservableProperty]
 		private int _waterCurrent, _caloriesCurrent, _calorieEntryText, _newIntakeGoal, _calorieGoal, _waterGoal;
+		[ObservableProperty]
+		private double _waterIntakeProgress, _calorieIntakeProgress;
 
 		public IntakeViewModel(IIntakeRepository intakeRepository, IPopupNavigation popupNavigation)
 		{
@@ -48,6 +50,8 @@ namespace BodyBuddy.ViewModels.IntakeViewmodels
 					WaterCurrent = IntakeDetails.WaterCurrent;
 					CalorieGoal = IntakeDetails.CalorieGoal;
 					WaterGoal = IntakeDetails.WaterGoal;
+					WaterIntakeProgress = IntakeDetails.WaterProgress;
+					CalorieIntakeProgress = IntakeDetails.CalorieProgress;
 				}
 				else
 				{
@@ -71,6 +75,8 @@ namespace BodyBuddy.ViewModels.IntakeViewmodels
 		{
 			WaterCurrent += 250;
 			IntakeDetails.WaterCurrent = WaterCurrent;
+			WaterIntakeProgress = (double)WaterCurrent / (double)WaterGoal;
+			IntakeDetails.WaterProgress = WaterIntakeProgress;
 			await _intakeRepository.SaveChangesAsync(IntakeDetails);
 		}
 
@@ -79,7 +85,14 @@ namespace BodyBuddy.ViewModels.IntakeViewmodels
 		{
 			CaloriesCurrent += calories;
 			IntakeDetails.CalorieCurrent = CaloriesCurrent;
+			CalorieIntakeProgress = (double)CaloriesCurrent / (double)CalorieGoal;
+			IntakeDetails.CalorieProgress = CalorieIntakeProgress;
 			await _intakeRepository.SaveChangesAsync(IntakeDetails);
+		}
+
+		public string CalorieIntakeProgressAsPercentage
+		{
+			get { return $"{CalorieIntakeProgress * 100:F1} %"; }
 		}
 
 		#region popup methods
@@ -97,11 +110,15 @@ namespace BodyBuddy.ViewModels.IntakeViewmodels
 				{
 					IntakeDetails.CalorieGoal = NewIntakeGoal;
 					CalorieGoal = IntakeDetails.CalorieGoal;
+					IntakeDetails.CalorieProgress = (double)CaloriesCurrent / (double)NewIntakeGoal;
+					CalorieIntakeProgress = IntakeDetails.CalorieProgress;
 				}
 				else
 				{
 					IntakeDetails.WaterGoal = NewIntakeGoal;
 					WaterGoal = IntakeDetails.WaterGoal;
+					IntakeDetails.WaterProgress = (double)WaterCurrent / (double)NewIntakeGoal;
+					WaterIntakeProgress = IntakeDetails.WaterProgress;
 				}
 
 				await _intakeRepository.SaveChangesAsync(IntakeDetails);
