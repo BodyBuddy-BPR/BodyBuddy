@@ -69,6 +69,7 @@
 	  <None Remove="Resources\Images\home.svg" />
 	  <None Remove="Resources\Images\Icons\apple.svg" />
 	  <None Remove="Resources\Images\Icons\camera_white.svg" />
+	  <None Remove="Resources\Images\Icons\google.svg" />
 	  <None Remove="Resources\Images\Icons\knifeandfork.svg" />
 	  <None Remove="Resources\Images\Icons\next_circle.svg" />
 	  <None Remove="Resources\Images\Icons\pencil.svg" />
@@ -167,6 +168,7 @@
 	  <MauiImage Include="Resources\Images\Icons\apple.svg" />
 	  <MauiImage Include="Resources\Images\Icons\camera_white.svg" />
 	  <MauiImage Include="Resources\Images\Icons\dumbbell.svg" />
+	  <MauiImage Include="Resources\Images\Icons\google.svg" />
 	  <MauiImage Include="Resources\Images\Icons\home.svg" />
 	  <MauiImage Include="Resources\Images\Icons\knifeandfork.svg" />
 	  <MauiImage Include="Resources\Images\Icons\list.svg" />
