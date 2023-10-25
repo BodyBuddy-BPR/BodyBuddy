@@ -203,39 +203,39 @@ public partial class StartupTestViewModel : BaseViewModel
         switch (CurrentState)
         {
             case State.NameEntry:
-                QuestionaireText = "What is your name?";
+                QuestionnaireText = "What is your name?";
                 currentStateDone = () => !string.IsNullOrEmpty(Name);
                 break;
             case State.GenderSelection:
-                QuestionaireText = "What is your gender?";
+                QuestionnaireText = "What is your gender?";
                 currentStateDone = () => !string.IsNullOrEmpty(Gender);
                 break;
             case State.WeightEntry:
-                QuestionaireText = "What is your weight?";
+                QuestionnaireText = "What is your weight?";
                 currentStateDone = () => Weight > 0;
                 break;
             case State.HeightEntry:
-                QuestionaireText = "When is your height?";
+                QuestionnaireText = "When is your height?";
                 currentStateDone = () => Height > 0;
                 break;
             case State.BirthdaySelection:
-                QuestionaireText = "When is your birthday?";
+                QuestionnaireText = "When is your birthday?";
                 currentStateDone = () => true;
                 break;
             case State.ActivitySelection:
-                QuestionaireText = "How active are you?";
+                QuestionnaireText = "How active are you?";
                 currentStateDone = () => !string.IsNullOrEmpty(Active);
                 break;
             case State.PassiveCalorieBurnEntry:
-                QuestionaireText = "What is your passive calorie burn?";
+                QuestionnaireText = "What is your passive calorie burn?";
                 currentStateDone = () => PassiveCalorieBurn > 0;
                 break;
             case State.GoalSelection:
-                QuestionaireText = "What are your workout goals?";
+                QuestionnaireText = "What are your workout goals?";
                 currentStateDone = () => !string.IsNullOrEmpty(Goal);
                 break;
             case State.Done:
-                QuestionaireText = "You're done!";
+                QuestionnaireText = "You're done!";
                 currentStateDone = () => true;
                 SubmitDataIsVisible = true;
                 break;

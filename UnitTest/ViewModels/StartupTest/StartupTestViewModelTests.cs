@@ -27,22 +27,16 @@ namespace UnitTest.ViewModels.StartupTest
         [TestCase(6, false, false, false, false, false, false, true, false)]
         [TestCase(7, false, false, false, false, false, false, false, true)]
         [TestCase(8, false, false, false, false, false, false, false, false)]
-        public void Test_StateNext_Progression_AndPropertyVisibility(int nextClicks, bool nameVisible, bool genderVisible, bool weightVisible, bool heightVisible,
+        public void Test_StateNext_Progression_AndPropertyVisibility(int stateNumber, bool nameVisible, bool genderVisible, bool weightVisible, bool heightVisible,
             bool birthdayVisible, bool activeVisible, bool passiveCalorieVisible, bool goalVisible)
         {
-            target.Name = "Name";
-            target.Gender = "Gender";
-            target.Active = "Active";
-            target.Goal = "Goal";
-            target.Weight = 1.0;
-            target.Height = 1;
-            target.PassiveCalorieBurn = 1;
-            target.SelectedDate = new DateTime(1997, 1, 1);
-            for (int i = 0; i < nextClicks; i++)
-            {
-                target.NextButton();
-            }
+            // Arrange
+            TargetSetup();
 
+            // Act
+            GoToState(stateNumber);
+
+            // Assert
             Assert.That(target.IsNameVisible, Is.EqualTo(nameVisible));
             Assert.That(target.IsGenderVisible, Is.EqualTo(genderVisible));
             Assert.That(target.IsWeightVisible, Is.EqualTo(weightVisible));
@@ -62,7 +56,49 @@ namespace UnitTest.ViewModels.StartupTest
         [TestCase(6, "What is your passive calorie burn?")]
         [TestCase(7, "What are your workout goals?")]
         [TestCase(8, "You're done!")]
-        public void ProgressingThroughStates_UpdatesQuestionnaireTextCorrectly(int nextClicks, string expectedQuestionnaireText)
+        public void ProgressingThroughStates_UpdatesQuestionnaireTextCorrectly(int stateNumber, string expectedQuestionnaireText)
+        {
+            // Arrange
+            TargetSetup();
+
+            // Act
+            GoToState(stateNumber);
+
+            // Assert
+            Assert.That(target.QuestionnaireText, Is.EqualTo(expectedQuestionnaireText));
+        }
+
+        [TestCase(0,false)]
+        [TestCase(1,false)]
+        [TestCase(2,false)]
+        [TestCase(3,false)]
+        [TestCase(4,false)]
+        [TestCase(5,false)]
+        [TestCase(6,false)]
+        [TestCase(7,false)]
+        [TestCase(8,true)]
+        public void Verify_SubmitIsVisible_OnlyOnDoneState(int stateNumber, bool expectedSubmitVisible)
+        {
+            // Arrange
+            TargetSetup();
+
+            // Act
+            GoToState(stateNumber);
+
+            // Assert
+            Assert.That(target.SubmitDataIsVisible, Is.EqualTo(expectedSubmitVisible));
+
+        }
+
+        private void GoToState(int stateNumber)
+        {
+            for (var i = 0; i < stateNumber; i++)
+            {
+                target.NextButton();
+            }
+        }
+
+        private void TargetSetup()
         {
             target.Name = "Name";
             target.Gender = "Gender";
@@ -72,12 +108,6 @@ namespace UnitTest.ViewModels.StartupTest
             target.Height = 1;
             target.PassiveCalorieBurn = 1;
             target.SelectedDate = new DateTime(1997, 1, 1);
-            for (int i = 0; i < nextClicks; i++)
-            {
-                target.NextButton();
-            }
-
-            Assert.That(target.QuestionnaireText, Is.EqualTo(expectedQuestionnaireText));
         }
     }
 }
