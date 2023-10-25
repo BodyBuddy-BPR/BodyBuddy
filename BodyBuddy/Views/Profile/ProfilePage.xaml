@@ -7,28 +7,157 @@
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.Profile"
     Title="Profile Page"
     x:DataType="viewModel:ProfileViewModel">
-    <Grid
-        Margin="20,10"
-        RowDefinitions="Auto, *, *, Auto"
-        RowSpacing="15">
+
+
+    <Grid Margin="20" RowSpacing="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
         <Label
             Grid.Row="0"
-            Style="{StaticResource TitleLabel}"
+            FontAttributes="Bold"
+            FontSize="24"
+            HorizontalOptions="Center"
             Text="Profile Text" />
 
-        <VerticalStackLayout
-            Grid.Row="1"
-            HorizontalOptions="Center"
-            VerticalOptions="Center">
-            <Label Text="{Binding StartupTestDto.Name}" />
-            <Label Text="{Binding StartupTestDto.Gender}" />
-            <Label Text="{Binding StartupTestDto.Weight}" />
-            <Label Text="{Binding StartupTestDto.Height}" />
-            <Label Text="{Binding StartupTestDto.Birthday}" />
-            <Label Text="{Binding StartupTestDto.ActiveAmount}" />
-            <Label Text="{Binding StartupTestDto.PassiveCalorieBurn}" />
-            <Label Text="{Binding StartupTestDto.Goal}" />
+        <Grid Grid.Row="1" RowSpacing="15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-        </VerticalStackLayout>
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                HorizontalTextAlignment="End"
+                Style="{StaticResource MediumLabel}"
+                Text="Name:"
+                VerticalTextAlignment="Center" />
+            <Label
+                Grid.Row="0"
+                Grid.Column="1"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="{Binding StartupTestDto.Name}"
+                VerticalTextAlignment="Center" />
+
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                HorizontalTextAlignment="End"
+                Style="{StaticResource MediumLabel}"
+                Text="Gender:"
+                VerticalTextAlignment="Center" />
+            <Label
+                Grid.Row="1"
+                Grid.Column="1"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="{Binding StartupTestDto.Gender}"
+                VerticalTextAlignment="Center" />
+
+            <Label
+                Grid.Row="2"
+                Grid.Column="0"
+                HorizontalTextAlignment="End"
+                Style="{StaticResource MediumLabel}"
+                Text="Weight:"
+                VerticalTextAlignment="Center" />
+            <Label
+                Grid.Row="2"
+                Grid.Column="1"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="{Binding StartupTestDto.Weight, StringFormat='{0} kg'}"
+                VerticalTextAlignment="Center" />
+
+            <Label
+                Grid.Row="3"
+                Grid.Column="0"
+                HorizontalTextAlignment="End"
+                Style="{StaticResource MediumLabel}"
+                Text="Height:"
+                VerticalTextAlignment="Center" />
+            <Label
+                Grid.Row="3"
+                Grid.Column="1"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="{Binding StartupTestDto.Height, StringFormat='{0} cm'}"
+                VerticalTextAlignment="Center" />
+
+            <Label
+                Grid.Row="4"
+                Grid.Column="0"
+                HorizontalTextAlignment="End"
+                Style="{StaticResource MediumLabel}"
+                Text="Birthday:"
+                VerticalTextAlignment="Center" />
+            <Label
+                Grid.Row="4"
+                Grid.Column="1"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="{Binding StartupTestDto.Birthday}"
+                VerticalTextAlignment="Center" />
+
+            <Label
+                Grid.Row="5"
+                Grid.Column="0"
+                HorizontalTextAlignment="End"
+                Style="{StaticResource MediumLabel}"
+                Text="Active Amount:"
+                VerticalTextAlignment="Center" />
+            <Label
+                Grid.Row="5"
+                Grid.Column="1"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="{Binding StartupTestDto.ActiveAmount}"
+                VerticalTextAlignment="Center" />
+
+            <Label
+                Grid.Row="6"
+                Grid.Column="0"
+                HorizontalTextAlignment="End"
+                Style="{StaticResource MediumLabel}"
+                Text="Passive Calorie Burn:"
+                VerticalTextAlignment="Center" />
+            <Label
+                Grid.Row="6"
+                Grid.Column="1"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="{Binding StartupTestDto.PassiveCalorieBurn}"
+                VerticalTextAlignment="Center" />
+
+            <Label
+                Grid.Row="7"
+                Grid.Column="0"
+                HorizontalTextAlignment="End"
+                Style="{StaticResource MediumLabel}"
+                Text="Goal:"
+                VerticalTextAlignment="Center" />
+            <Label
+                Grid.Row="7"
+                Grid.Column="1"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="{Binding StartupTestDto.Goal}"
+                VerticalTextAlignment="Center" />
+
+        </Grid>
     </Grid>
 </ContentPage>
