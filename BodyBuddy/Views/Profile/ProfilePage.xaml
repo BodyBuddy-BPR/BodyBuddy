@@ -7,9 +7,28 @@
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.Profile"
     Title="Profile Page"
     x:DataType="viewModel:ProfileViewModel">
-    <VerticalStackLayout>
-        <Label Text="{Binding StartupTestDto.Name}" />
-        <Label Text="{Binding StartupTestDto.Gender}" />
-        <!--  ... Other UI elements  -->
-    </VerticalStackLayout>
+    <Grid
+        Margin="20,10"
+        RowDefinitions="Auto, *, *, Auto"
+        RowSpacing="15">
+        <Label
+            Grid.Row="0"
+            Style="{StaticResource TitleLabel}"
+            Text="Profile Text" />
+
+        <VerticalStackLayout
+            Grid.Row="1"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+            <Label Text="{Binding StartupTestDto.Name}" />
+            <Label Text="{Binding StartupTestDto.Gender}" />
+            <Label Text="{Binding StartupTestDto.Weight}" />
+            <Label Text="{Binding StartupTestDto.Height}" />
+            <Label Text="{Binding StartupTestDto.Birthday}" />
+            <Label Text="{Binding StartupTestDto.ActiveAmount}" />
+            <Label Text="{Binding StartupTestDto.PassiveCalorieBurn}" />
+            <Label Text="{Binding StartupTestDto.Goal}" />
+
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>
