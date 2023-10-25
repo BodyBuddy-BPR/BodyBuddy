@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace BodyBuddy.Helpers
+namespace BodyBuddy.Converters
 {
     public class BooleanInvertConverter : IValueConverter
     {

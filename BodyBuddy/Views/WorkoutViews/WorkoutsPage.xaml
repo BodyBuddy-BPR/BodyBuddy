@@ -3,8 +3,8 @@
     x:Class="BodyBuddy.Views.WorkoutViews.WorkoutsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:BodyBuddy.Converters"
     xmlns:effectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
-    xmlns:helpers="clr-namespace:BodyBuddy.Helpers"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.WorkoutViewModels"
@@ -14,7 +14,7 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <helpers:BooleanInvertConverter x:Key="BooleanInvertConverter" />
+            <converters:BooleanInvertConverter x:Key="BooleanInvertConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 

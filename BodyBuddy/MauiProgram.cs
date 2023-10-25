@@ -20,6 +20,10 @@ using BodyBuddy.ViewModels;
 using BodyBuddy.Mappers;
 using BodyBuddy.Services;
 using BodyBuddy.Services.Implementations;
+using BodyBuddy.Views.StartupTest;
+using BodyBuddy.Views.Profile;
+using BodyBuddy.ViewModels.StartupTest;
+using BodyBuddy.ViewModels.Profile;
 
 namespace BodyBuddy;
 
@@ -91,6 +95,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<MainPage>();
 
         // Workout
+        builder.Services.AddSingleton<StartupTestPage>();
+        builder.Services.AddSingleton<ProfilePage>();
         builder.Services.AddTransient<WorkoutsPage>();
         builder.Services.AddTransient<WorkoutDetailsPage>();
 
@@ -113,6 +119,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<MainPageViewModel>();
 
         // Workout
+        builder.Services.AddSingleton<StartupTestViewModel>();
+        builder.Services.AddSingleton<ProfileViewModel>();
         builder.Services.AddTransient<WorkoutViewModel>();
         builder.Services.AddTransient<WorkoutDetailsViewModel>();
 
@@ -128,9 +136,13 @@ public static class MauiProgram
         builder.Services.AddSingleton<IntakeViewModel>();
         #endregion
 
+        #region Services
+        builder.Services.AddSingleton<IStartupTestService, StartupTestService>();
+        #endregion
+
 
         #region Repositories
-
+        builder.Services.AddSingleton<IStartupTestRepository, StartupTestRepository>();
         builder.Services.AddSingleton<IExerciseRepository, ExerciseRepository>();
         builder.Services.AddSingleton<IWorkoutRepository, WorkoutRepository>();
         builder.Services.AddSingleton<IWorkoutExercisesRepository, WorkoutExercisesRepository>();
@@ -140,6 +152,9 @@ public static class MauiProgram
 
         #endregion
 
+        #region Helpers
+        builder.Services.AddSingleton<StartupTestMapper>();
+        #endregion
 
         #region Services
 
