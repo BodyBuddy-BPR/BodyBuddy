@@ -20,6 +20,10 @@ using BodyBuddy.ViewModels;
 using BodyBuddy.Mappers;
 using BodyBuddy.Services;
 using BodyBuddy.Services.Implementations;
+using BodyBuddy.Views.StartupTest;
+using BodyBuddy.Views.Profile;
+using BodyBuddy.ViewModels.StartupTest;
+using BodyBuddy.ViewModels.Profile;
 
 namespace BodyBuddy;
 
