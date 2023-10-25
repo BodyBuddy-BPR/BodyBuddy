@@ -49,10 +49,8 @@ jobs:
           dotnet workload install maui-android maui-ios --skip-manifest-update
         fi
         
-    - name: List workload directories
-      run: |
-        ls /usr/local/share/dotnet/sdk-manifests/
-        ls /usr/local/share/dotnet/sdk-packs/
+    - name: Check installed workloads
+      run: dotnet workload list
 
     # Restore dependencies
     - name: Restore dependencies
