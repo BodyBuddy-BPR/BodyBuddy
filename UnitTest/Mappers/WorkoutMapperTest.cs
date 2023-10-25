@@ -26,6 +26,9 @@ public class WorkoutMapperTest
 
     [TestCase(0, false)]
     [TestCase(1, true)]
+    [TestCase(5, true)]
+    [TestCase(15, true)]
+    [TestCase(-1, true)]
     public void MapToDto_MapsCorrectBool(int preMade, bool expectedBool)
     {
         WorkoutModel workoutModel = new() { Id = 1, Description = "Description", Name = "Name", PreMade = preMade };
@@ -42,10 +45,6 @@ public class WorkoutMapperTest
 
     [TestCase(false, 0)]
     [TestCase(true, 1)]
-    [TestCase(true, 2)]
-    [TestCase(true, 3)]
-    [TestCase(true, 55)]
-    [TestCase(true, -1)]
     public void MapToDto_MapsCorrectBool(bool premade, int expectedBoolInteger)
     {
         WorkoutDto workoutDto  = new() { Id = 1, Description = "Description", Name = "Name", PreMade = premade };

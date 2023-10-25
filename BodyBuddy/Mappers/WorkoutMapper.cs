@@ -32,7 +32,7 @@ namespace BodyBuddy.Mappers
                 Id = workoutModel.Id,
                 Description = workoutModel.Description,
                 Name = workoutModel.Name,
-                PreMade = workoutModel.PreMade == 1
+                PreMade = workoutModel.PreMade != 0
             };
         }
     }
