@@ -15,6 +15,9 @@ public partial class ExerciseDetailsPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-		await _viewModel.GetExerciseDetails();
+
+        await Task.Delay(50); // Add a short delay
+
+        await _viewModel.GetExerciseDetails();
     }
 }

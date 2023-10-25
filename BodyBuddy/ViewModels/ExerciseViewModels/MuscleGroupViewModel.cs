@@ -58,6 +58,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
 
             exercise.Category = ExerciseCategory.Category;
 
+            await Task.Delay(100); // Add a short delay
             await Shell.Current.GoToAsync(nameof(ExercisesPage), true, new Dictionary<string, object>
             {
                 { "Exercise", exercise }

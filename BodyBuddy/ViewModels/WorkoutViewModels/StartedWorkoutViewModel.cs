@@ -1,5 +1,6 @@
 ﻿using BodyBuddy.Models;
 using BodyBuddy.Repositories;
+using BodyBuddy.Views.ExerciseViews;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
@@ -199,5 +200,22 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         #endregion
 
+
+        #region Navigation 
+
+        [RelayCommand]
+        async Task ToExercise(Exercise exercise)
+        {
+            if (exercise is null)
+                return;
+
+            await Task.Delay(100); // Add a short delay
+            await Shell.Current.GoToAsync(nameof(ExerciseDetailsPage), true, new Dictionary<string, object>
+            {
+                {"Exercise", exercise }
+            });
+        }
+
+        #endregion
     }
 }

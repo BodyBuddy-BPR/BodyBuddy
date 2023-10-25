@@ -16,6 +16,9 @@ public partial class StartedWorkoutPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+
+        await Task.Delay(50); // Add a short delay
+
         await _viewModel.Initialize();
     }
 }

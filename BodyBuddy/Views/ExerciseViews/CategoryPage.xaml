@@ -3,6 +3,7 @@
     x:Class="BodyBuddy.Views.ExerciseViews.CategoryPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:effectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:imageHelper="clr-namespace:BodyBuddy.Helpers"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.ExerciseViewModels"
@@ -15,8 +16,8 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    
-    
+
+
     <Grid
         Margin="20,10"
         RowDefinitions="Auto, *, Auto"
@@ -44,29 +45,30 @@
                 <DataTemplate x:DataType="model:Exercise">
 
                     <Frame
-                        Padding="10"
                         HeightRequest="130"
                         Style="{StaticResource CardView}"
                         WidthRequest="160">
-                        <StackLayout>
-                            <Image
-                                Aspect="AspectFit"
-                                HeightRequest="80"
-                                Source="{Binding Category, Converter={StaticResource CategoryImageHelper}}"
-                                WidthRequest="70" />
+                        <effectsView:SfEffectsView
+                            Padding="10"
+                            Style="{StaticResource CardRippleEffect}"
+                            TouchDownCommand="{Binding Source={RelativeSource AncestorType={x:Type viewModel:CategoryViewModel}}, Path=GoToPrimaryMusclesPageCommand}"
+                            TouchDownCommandParameter="{Binding .}">
+                            <StackLayout>
+                                <Image
+                                    Aspect="AspectFit"
+                                    HeightRequest="80"
+                                    Source="{Binding Category, Converter={StaticResource CategoryImageHelper}}"
+                                    WidthRequest="70" />
 
-                            <Label
-                                HorizontalOptions="CenterAndExpand"
-                                LineBreakMode="TailTruncation"
-                                Style="{StaticResource LargeLabel}"
-                                Text="{Binding Category}" />
-                        </StackLayout>
+                                <Label
+                                    HorizontalOptions="CenterAndExpand"
+                                    LineBreakMode="TailTruncation"
+                                    Style="{StaticResource LargeLabel}"
+                                    Text="{Binding Category}" />
+                            </StackLayout>
+                        </effectsView:SfEffectsView>
 
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:CategoryViewModel}}, Path=GoToPrimaryMusclesPageCommand}" CommandParameter="{Binding .}" />
-                        </Frame.GestureRecognizers>
                     </Frame>
-
                 </DataTemplate>
 
             </CollectionView.ItemTemplate>

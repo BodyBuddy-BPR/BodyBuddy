@@ -42,8 +42,15 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             _workoutExercisesRepository = workoutExercisesRepository;
         }
 
-        [RelayCommand]
-        public async Task GetExercises()
+        public async Task Initialize()
+        {
+            await GetExercises();
+            await GetWorkouts();
+        }
+
+        #region Gets
+
+        private async Task GetExercises()
         {
 
             if (IsBusy) return;
@@ -85,8 +92,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             }
         }
 
-        [RelayCommand]
-        public async Task GetWorkouts()
+        private async Task GetWorkouts()
         {
             if (IsBusy) return;
 
@@ -120,6 +126,8 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             }
         }
 
+        #endregion
+
         private void SetSelectedWorkout()
         {
             if (CachedData.SharedWorkout != null && WorkoutsList.Any(x => x.Id == CachedData.SharedWorkout.Id))
@@ -139,15 +147,17 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
         {
             if(SelectedWorkout.Id != 0)
             {
-                await _workoutExercisesRepository.AddExerciseToWorkout(SelectedWorkout.Id, exercise.Id);
+                await _workoutExercisesRepository.AddExerciseToWorkout(SelectedWorkout.Id, exercise);
                 await Shell.Current.DisplaySnackbar($"{exercise.Name} added to {SelectedWorkout.Name}");
             }
             else
             {
-                await Shell.Current.DisplayAlert("Error!", "Select a workout", "OK");
+                await Shell.Current.DisplayAlert("No Workout", "Try selecting a Workout first", "OK");
                 return;
             }
         }
+
+        #region Navigation
 
         // Navigation to exercise details
         [RelayCommand]
@@ -156,11 +166,13 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             if (exercise is null)
                 return;
 
+            await Task.Delay(100); // Add a short delay
             await Shell.Current.GoToAsync(nameof(ExerciseDetailsPage), true, new Dictionary<string, object>
             {
                 {"Exercise", exercise }
             });
         }
 
+        #endregion
     }
 }

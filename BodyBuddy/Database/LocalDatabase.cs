@@ -5,14 +5,15 @@ namespace BodyBuddy.Database
 {
     public class LocalDatabase
     {
-
         private SQLiteAsyncConnection _context;
+        private Task initializationTask;
 
         public LocalDatabase()
         {
+            initializationTask = InitAsync();
         }
 
-        private async Task Init()
+        private async Task InitAsync()
         {
             if (_context is not null)
                 return;
@@ -48,6 +49,8 @@ namespace BodyBuddy.Database
             }
             return _context;
         }
+
+        public Task Initialization => initializationTask;
     }
 
 }

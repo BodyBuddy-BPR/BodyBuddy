@@ -14,12 +14,12 @@ using BodyBuddy.ViewModels.WorkoutViewModels;
 using Mopups.Hosting;
 using Mopups.Interfaces;
 using Mopups.Services;
-using BodyBuddy.Views.StartupTest;
-using BodyBuddy.ViewModels.StartupTest;
-using BodyBuddy.Services;
+using Camera.MAUI;
+using Maui.FixesAndWorkarounds;
+using BodyBuddy.ViewModels;
 using BodyBuddy.Mappers;
-using BodyBuddy.Views.Profile;
-using BodyBuddy.ViewModels.Profile;
+using BodyBuddy.Services;
+using BodyBuddy.Services.Implementations;
 
 namespace BodyBuddy;
 
@@ -32,7 +32,9 @@ public static class MauiProgram
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
             .ConfigureSyncfusionCore()
+            .ConfigureMauiWorkarounds()
             .ConfigureMopups()
+            .UseMauiCameraView()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -61,7 +63,32 @@ public static class MauiProgram
 
         #region Dependency Registration
 
+        #region Database
+
+        // Local Database
+        builder.Services.AddSingleton<LocalDatabase>();
+        builder.Services.AddTransient(async provider =>
+        {
+            var localDatabase = provider.GetRequiredService<LocalDatabase>();
+            await localDatabase.Initialization; // Wait for initialization
+            return await localDatabase.GetAsyncConnection();
+        });
+        builder.Services.AddSingleton(provider =>
+        {
+            var localDatabase = provider.GetRequiredService<LocalDatabase>();
+            return localDatabase.GetAsyncConnection().Result; // Use .Result to block and get the connection synchronously.
+        });
+
+        // Supabase Database
+        builder.Services.AddSingleton(provider => new Supabase.Client(url, key, options));
+
+        #endregion
+
+
         #region Views
+
+        // MainPage
+        builder.Services.AddSingleton<MainPage>();
 
         // Workout
         builder.Services.AddSingleton<StartupTestPage>();
@@ -83,6 +110,9 @@ public static class MauiProgram
 
 
         #region ViewModels
+
+        // MainPage
+        builder.Services.AddSingleton<MainPageViewModel>();
 
         // Workout
         builder.Services.AddSingleton<StartupTestViewModel>();
@@ -114,6 +144,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IWorkoutExercisesRepository, WorkoutExercisesRepository>();
         builder.Services.AddSingleton<IIntakeRepository, IntakeRepository>();
         builder.Services.AddSingleton<IExerciseRecordsRepository, ExerciseRecordsRepository>();
+        builder.Services.AddSingleton<IQuoteRepository, QuoteRepository>();
 
         #endregion
 
@@ -121,31 +152,19 @@ public static class MauiProgram
         builder.Services.AddSingleton<StartupTestMapper>();
         #endregion
 
-        #region Database
+        #region Services
 
-        // Local Database
-        builder.Services.AddSingleton<LocalDatabase>();
-        builder.Services.AddTransient(async provider =>
-        {
-            var localDatabase = provider.GetRequiredService<LocalDatabase>();
-            return await localDatabase.GetAsyncConnection();
-        });
-        builder.Services.AddSingleton(provider =>
-        {
-            var localDatabase = provider.GetRequiredService<LocalDatabase>();
-            return localDatabase.GetAsyncConnection().Result; // Use .Result to block and get the connection synchronously.
-        });
-
-        // Supabase Database
-        builder.Services.AddSingleton(provider => new Supabase.Client(url, key, options));
+        builder.Services.AddSingleton<IQuoteService, QuoteService>();
+        builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
+        builder.Services.AddSingleton<IPopupNavigation>(MopupService.Instance);
+        builder.Services.AddSingleton<DateTimeService>(); ;
 
         #endregion
 
 
-        #region Services
+        #region Helpers
 
-        builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
-        builder.Services.AddSingleton<IPopupNavigation>(MopupService.Instance);
+        builder.Services.AddSingleton<QuoteMapper>();
 
         #endregion
 

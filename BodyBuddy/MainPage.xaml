@@ -3,47 +3,44 @@
     x:Class="BodyBuddy.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui">
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+    xmlns:modelDto="clr-namespace:BodyBuddy.Dtos"
+    xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels"
+    x:DataType="viewModel:MainPageViewModel"
+    Shell.NavBarIsVisible="False">
 
     <ContentPage.Behaviors>
         <mct:StatusBarBehavior StatusBarColor="{StaticResource Background}" />
     </ContentPage.Behaviors>
 
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25"
-            VerticalOptions="Center">
+    <!--  Entire Page  -->
+    <Grid
+        Margin="15,10"
+        RowDefinitions="Auto, Auto, *, Auto"
+        RowSpacing="15">
 
-            <Image
-                HeightRequest="200"
-                HorizontalOptions="Center"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                Source="dotnet_bot.png" />
+        <Label
+            Grid.Row="0"
+            Style="{StaticResource TitleLabel}"
+            Text="Hello" />
 
-            <Label
-                FontSize="32"
-                HorizontalOptions="Center"
-                SemanticProperties.HeadingLevel="Level1"
-                Text="Hello, World!"
-                TextColor="Black" />
+        <Frame
+            Grid.Row="1"
+            Padding="10,15"
+            Style="{StaticResource CardView}">
+            <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
+                <Label
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Style="{StaticResource LargeLabel}"
+                    Text="{Binding Quote.Quote}" />
+                <Label
+                    HorizontalOptions="Center"
+                    Style="{StaticResource MediumLabel}"
+                    Text="{Binding Quote.Author, StringFormat='- {0}'}" />
+            </VerticalStackLayout>
+        </Frame>
 
-            <Label
-                FontSize="18"
-                HorizontalOptions="Center"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                SemanticProperties.HeadingLevel="Level2"
-                Text="Welcome to .NET Multi-platform App UI"
-                TextColor="Black" />
-
-            <Button
-                x:Name="CounterBtn"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Text="Click me" />
-
-        </VerticalStackLayout>
-    </ScrollView>
+    </Grid>
 
 </ContentPage>

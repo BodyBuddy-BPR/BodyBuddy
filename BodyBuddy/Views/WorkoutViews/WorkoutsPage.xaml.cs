@@ -19,19 +19,20 @@ public partial class WorkoutsPage : ContentPage
         _popupNavigation = popupNavigation;
     }
 
+
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        string title = Shell.Current.CurrentItem?.CurrentItem?.CurrentItem?.Title;
-        if (title == Strings.PremadeWorkOuts)
-            _viewModel.IsPreMadeWorkout = true;
-        else
-            _viewModel.IsPreMadeWorkout = false;
-        _viewModel.Title = title;
+
+        await Task.Delay(100); // Add a short delay
+
+        PageDetector();
 
         await _viewModel.GetWorkoutPlans();
     }
 
+
+    // Button to show CreateWorkoutPage Popup
     private void ClickToShowPopup_Clicked(object sender, EventArgs e)
     {
         //popup.Show();
@@ -39,4 +40,20 @@ public partial class WorkoutsPage : ContentPage
     }
 
 
+    // This method finds out if you need the premade workouts or the users own
+    private void PageDetector()
+    {
+        string title = Shell.Current.CurrentItem?.CurrentItem?.CurrentItem?.Title;
+
+        if (title == Strings.PremadeWorkOuts)
+        {
+            _viewModel.IsPreMadeWorkout = true;
+        }
+        else
+        {
+            _viewModel.IsPreMadeWorkout = false;
+        }
+
+        _viewModel.Title = title;
+    }
 }

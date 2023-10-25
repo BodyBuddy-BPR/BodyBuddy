@@ -1,27 +1,25 @@
-﻿using BodyBuddy.Views.StartupTest;
+﻿using BodyBuddy.ViewModels;
 
 namespace BodyBuddy;
 
 public partial class MainPage : ContentPage
 {
-	int count = 0;
+	private MainPageViewModel _viewModel;
 
-	public MainPage()
+	public MainPage(MainPageViewModel mainPageViewModel)
 	{
 		InitializeComponent();
+		_viewModel = mainPageViewModel;
+		BindingContext = mainPageViewModel;
 	}
 
-	private async void OnCounterClicked(object sender, EventArgs e)
-	{
-		count++;
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
 
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
+        await Task.Delay(100); // Add a short delay
 
-		SemanticScreenReader.Announce(CounterBtn.Text);
-        await Shell.Current.GoToAsync(nameof(StartupTestPage), true);
+        await _viewModel.GetDailyQuote();
     }
 }
 
