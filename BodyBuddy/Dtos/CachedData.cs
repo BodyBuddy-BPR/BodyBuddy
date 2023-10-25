@@ -4,6 +4,6 @@ namespace BodyBuddy.Dtos
 {
     public class CachedData
     {
-        public static Workout SharedWorkout { get; set; }
+        public static WorkoutModel SharedWorkout { get; set; }
     }
 }

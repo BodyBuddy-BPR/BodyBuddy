@@ -27,12 +27,12 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
         private Exercise _queryDetails; //Category and Musclegroup selected in the previous pages
 
         [ObservableProperty]
-        private Workout _selectedWorkout;
+        private WorkoutModel _selectedWorkout;
 
         #endregion
 
         public ObservableCollection<Exercise> ExercisesList { get; set; } = new ObservableCollection<Exercise>();
-        public ObservableCollection<Workout> WorkoutsList { get; set; } = new ObservableCollection<Workout>();
+        public ObservableCollection<WorkoutModel> WorkoutsList { get; set; } = new ObservableCollection<WorkoutModel>();
 
         public ExercisesViewModel(IExerciseRepository exerciseRepository, IWorkoutRepository workoutRepository, IWorkoutExercisesRepository workoutExercisesRepository)
         {
@@ -138,7 +138,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             else
             {
                 //SelectedWorkout = null;
-                SelectedWorkout = new Workout { Name = "Select a workout" };
+                SelectedWorkout = new WorkoutModel { Name = "Select a workout" };
                 //return;
             }
         }

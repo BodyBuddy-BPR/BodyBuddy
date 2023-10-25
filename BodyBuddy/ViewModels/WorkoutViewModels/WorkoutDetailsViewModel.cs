@@ -22,7 +22,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         // Query field
         [ObservableProperty]
-        private Workout _workoutDetails;
+        private WorkoutModel _workoutDetails;
 
         // IsPremade (used to hide edit and deletions)
         [ObservableProperty]
@@ -164,7 +164,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             }
             else
             {
-                Workout workout = new() { Id = WorkoutDetails.Id, Name = PopupName, Description = PopupDescription, PreMade = 0 };
+                WorkoutModel workout = new() { Id = WorkoutDetails.Id, Name = PopupName, Description = PopupDescription, PreMade = 0 };
                 await _workoutRepository.PostWorkoutPlanAsync(workout);
 
                 WorkoutName = PopupName;
@@ -181,7 +181,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         }
 
         [RelayCommand]
-        async Task DeleteWorkout(Workout workout)
+        async Task DeleteWorkout(WorkoutModel workout)
         {
             bool result = await Shell.Current.DisplayAlert("Delete", $"Are you sure you want to delete {workout.Name}?", "OK", "Cancel");
 

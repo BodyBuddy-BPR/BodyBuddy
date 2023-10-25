@@ -12,7 +12,7 @@ namespace UnitTest.ViewModels.WorkoutViewModels
         private Mock<IExerciseRecordsRepository> exerciseRecordsMockRepo;
         private Mock<IWorkoutExercisesRepository> workoutExercisesMockRepo;
 
-        private Workout workout;
+        private WorkoutModel workout;
         private ObservableCollection<Exercise> exercises;
 
         [SetUp]
@@ -23,7 +23,7 @@ namespace UnitTest.ViewModels.WorkoutViewModels
 
             target = new StartedWorkoutViewModel(workoutExercisesMockRepo.Object, exerciseRecordsMockRepo.Object);
 
-            workout = new Workout() { Id = 1, Name = "Workout1", PreMade = 0 };
+            workout = new WorkoutModel() { Id = 1, Name = "Workout1", PreMade = 0 };
             exercises = new ObservableCollection<Exercise>()
             {
                 new Exercise() { Id = 1},

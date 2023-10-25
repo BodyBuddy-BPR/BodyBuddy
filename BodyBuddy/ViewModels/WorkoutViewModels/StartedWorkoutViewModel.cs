@@ -16,7 +16,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         // Query field for the started workout
         [ObservableProperty]
-        private Workout _workoutDetails;
+        private WorkoutModel _workoutDetails;
 
         [ObservableProperty]
         private Exercise _displayedExercise;
