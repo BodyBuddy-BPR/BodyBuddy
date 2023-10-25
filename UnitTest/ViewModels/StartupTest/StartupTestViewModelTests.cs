@@ -52,5 +52,32 @@ namespace UnitTest.ViewModels.StartupTest
             Assert.That(target.IsPassiveCalorieBurnVisible, Is.EqualTo(passiveCalorieVisible));
             Assert.That(target.IsGoalVisible, Is.EqualTo(goalVisible));
         }
+
+        [TestCase(0, "What is your name?")]
+        [TestCase(1, "What is your gender?")]
+        [TestCase(2, "What is your weight?")]
+        [TestCase(3, "When is your height?")]
+        [TestCase(4, "When is your birthday?")]
+        [TestCase(5, "How active are you?")]
+        [TestCase(6, "What is your passive calorie burn?")]
+        [TestCase(7, "What are your workout goals?")]
+        [TestCase(8, "You're done!")]
+        public void ProgressingThroughStates_UpdatesQuestionnaireTextCorrectly(int nextClicks, string expectedQuestionnaireText)
+        {
+            target.Name = "Name";
+            target.Gender = "Gender";
+            target.Active = "Active";
+            target.Goal = "Goal";
+            target.Weight = 1.0;
+            target.Height = 1;
+            target.PassiveCalorieBurn = 1;
+            target.SelectedDate = new DateTime(1997, 1, 1);
+            for (int i = 0; i < nextClicks; i++)
+            {
+                target.NextButton();
+            }
+
+            Assert.That(target.QuestionnaireText, Is.EqualTo(expectedQuestionnaireText));
+        }
     }
 }

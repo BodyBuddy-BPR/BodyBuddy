@@ -22,7 +22,7 @@
         <Label
             Grid.Row="0"
             Style="{StaticResource TitleLabel}"
-            Text="{Binding QuestionaireText}" />
+            Text="{Binding QuestionnaireText}" />
 
         <VerticalStackLayout
             Grid.Row="1"

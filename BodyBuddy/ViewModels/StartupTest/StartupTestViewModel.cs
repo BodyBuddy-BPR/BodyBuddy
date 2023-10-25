@@ -30,7 +30,7 @@ public partial class StartupTestViewModel : BaseViewModel
 
     //Others
     [ObservableProperty]
-    private string _questionaireText;
+    private string _questionnaireText;
 
     [ObservableProperty] private DateTime minDate = new(1914, 7, 28);
     [ObservableProperty] private DateTime maxDate = DateTime.Now;
@@ -231,7 +231,7 @@ public partial class StartupTestViewModel : BaseViewModel
                 currentStateDone = () => PassiveCalorieBurn > 0;
                 break;
             case State.GoalSelection:
-                QuestionaireText = "What are your goals?";
+                QuestionaireText = "What are your workout goals?";
                 currentStateDone = () => !string.IsNullOrEmpty(Goal);
                 break;
             case State.Done:

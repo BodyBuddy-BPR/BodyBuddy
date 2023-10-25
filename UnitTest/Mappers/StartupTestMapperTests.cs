@@ -2,11 +2,6 @@
 using BodyBuddy.Helpers;
 using BodyBuddy.Mappers;
 using BodyBuddy.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UnitTest.Mappers
 {
@@ -61,7 +56,7 @@ namespace UnitTest.Mappers
         
         [TestCase("Female", 0, "Very active", 0, "Gain Muscle", 0)]
         [TestCase("Male", 1, "Active", 1, "Gain Muscle", 0)]
-        [TestCase("Prefer not to say", 2, "A little actice", 2, "Lose Weight", 1)]
+        [TestCase("Prefer not to say", 2, "A little active", 2, "Lose Weight", 1)]
         [TestCase("Female", 0, "Not very active", 3, "Lose Weight", 1)]
         public void CorrectlyMappingDefaultDtoToDbEntity(string gender, int expectedGender, string activity, int expectedActivity, string goal, int expectedGoal)
         {
@@ -87,7 +82,7 @@ namespace UnitTest.Mappers
 
         [TestCase("Female", 0, "Very active", 0, "Gain Muscle", 0)]
         [TestCase("Male", 1, "Active", 1, "Gain Muscle", 0)]
-        [TestCase("Prefer not to say", 2, "A little actice", 2, "Lose Weight", 1)]
+        [TestCase("Prefer not to say", 2, "A little active", 2, "Lose Weight", 1)]
         [TestCase("Female", 0, "Not very active", 3, "Lose Weight", 1)]
         public void CorrectlyMappingDefaultDbToDto(string expectedGender, int gender, string expectedActivity, int activity, string expectedGoal, int goal)
         {
@@ -130,7 +125,7 @@ namespace UnitTest.Mappers
         [TestCase("a", "Very active", "Gain Muscle")]
         [TestCase("Female", "a", "Gain Muscle")]
         [TestCase("Female", "Very active", "a")]
-        public void NotImplementedDtoToDatebaseEntity(string gender, string activity, string goal)
+        public void NotImplementedDtoToDatabaseEntity(string gender, string activity, string goal)
         {
             // Arrange
             startupTestDto.Gender = gender;
