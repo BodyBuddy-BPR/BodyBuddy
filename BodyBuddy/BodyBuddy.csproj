@@ -169,6 +169,8 @@
 	  <MauiImage Include="Resources\Images\Icons\dumbbell.svg" />
 	  <MauiImage Include="Resources\Images\Icons\home.svg" />
 	  <MauiImage Include="Resources\Images\Icons\knifeandfork.svg" />
+	  <MauiImage Include="Resources\Images\Icons\profile.svg" />
+	  <MauiImage Include="Resources\Images\Icons\questionmark.svg" />
 	  <MauiImage Include="Resources\Images\Icons\list.svg" />
 	  <MauiImage Include="Resources\Images\Icons\minus_sign.svg" />
 	  <MauiImage Include="Resources\Images\Icons\next_circle.svg" />

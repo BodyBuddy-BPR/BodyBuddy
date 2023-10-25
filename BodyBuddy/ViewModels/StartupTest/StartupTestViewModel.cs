@@ -23,17 +23,17 @@ public partial class StartupTestViewModel : BaseViewModel
     private bool _submitDataIsVisible, _nextIsVisible, _backIsVisible;
 
     //Saved Properties
-    [ObservableProperty] private string name, gender, active, goal;
-    [ObservableProperty] private double weight;
-    [ObservableProperty] private int height, passiveCalorieBurn;
-    [ObservableProperty] private DateTime selectedDate = new(2005, 1, 1);
+    [ObservableProperty] private string _name, _gender, _active, _goal;
+    [ObservableProperty] private double _weight;
+    [ObservableProperty] private int _height, _passiveCalorieBurn;
+    [ObservableProperty] private DateTime _selectedDate = new(2005, 1, 1);
 
     //Others
     [ObservableProperty]
     private string _questionnaireText;
 
-    [ObservableProperty] private DateTime minDate = new(1914, 7, 28);
-    [ObservableProperty] private DateTime maxDate = DateTime.Now;
+    [ObservableProperty] private DateTime _minDate = new(1914, 7, 28);
+    [ObservableProperty] private DateTime _maxDate = DateTime.Now;
 
 
     //Setting lists for multiple choice questions (Add more here, if more options become available
