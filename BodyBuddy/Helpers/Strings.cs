@@ -20,7 +20,7 @@ namespace BodyBuddy.Helpers
 
         public static string STARTUP_ACTIVITY_VERYACTIVE = "Very active";
         public static string STARTUP_ACTIVITY_ACTIVE = "Active";
-        public static string STARTUP_ACTIVITY_LITTLEACTIVE = "A little actice";
+        public static string STARTUP_ACTIVITY_LITTLEACTIVE = "A little active";
         public static string STARTUP_ACTIVITY_NOTVERYACTIVE = "Not very active";
 
         public static string STARTUP_FOCUSAREA_UPPERBODY = "Upper Body";

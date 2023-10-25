@@ -118,7 +118,7 @@
                 Grid.Column="0"
                 HorizontalTextAlignment="End"
                 Style="{StaticResource MediumLabel}"
-                Text="Active Amount:"
+                Text="Activity Level:"
                 VerticalTextAlignment="Center" />
             <Label
                 Grid.Row="5"
@@ -157,7 +157,6 @@
                 Style="{StaticResource MediumLabel}"
                 Text="{Binding StartupTestDto.Goal}"
                 VerticalTextAlignment="Center" />
-
         </Grid>
     </Grid>
 </ContentPage>
