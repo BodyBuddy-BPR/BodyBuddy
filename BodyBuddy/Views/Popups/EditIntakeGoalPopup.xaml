@@ -26,37 +26,81 @@
 
     <Border
         BackgroundColor="{StaticResource CardBackground}"
-        HeightRequest="200"
+        HeightRequest="230"
         HorizontalOptions="Center"
         WidthRequest="330">
         <Border.StrokeShape>
             <RoundRectangle CornerRadius="20" />
         </Border.StrokeShape>
 
-        <VerticalStackLayout Padding="15,15" Spacing="10">
+        <VerticalStackLayout Padding="15,15">
+
             <Label
                 Style="{StaticResource TitleLabel}"
-                Text="Edit intake goal"
+                Text="Edit intake"
                 TextColor="Black" />
 
-            <customControls:CustomEntry
-                x:Name="intakeEntry"
-                BackgroundColor="Transparent"
-                FontSize="20"
-                Keyboard="Numeric"
-                MaxLength="32"
-                Placeholder="New intake goal"
-                PlaceholderColor="DarkGrey"
-                Style="{StaticResource BaseEntry}"
-                Text="{Binding NewIntakeGoal}"
-                TextColor="Black" />
+            <VerticalStackLayout>
+                <Label
+                    Style="{StaticResource SmallLabel}"
+                    Text="Current Intake"
+                    TextColor="Black" />
+                <customControls:CustomEntry
+                    x:Name="currentIntakeEntry"
+                    Margin="20,0"
+                    BackgroundColor="Transparent"
+                    FontSize="20"
+                    Keyboard="Numeric"
+                    MaxLength="32"
+                    Placeholder="New intake goal"
+                    PlaceholderColor="DarkGrey"
+                    Style="{StaticResource BaseEntry}"
+                    Text="{Binding NewCurrentIntake}"
+                    TextColor="Black" />
+            </VerticalStackLayout>
 
-            <Button
-                Clicked="SaveBtn_Clicked"
-                Style="{StaticResource AddButton}"
-                Text="Save"
-                TextColor="{StaticResource LightText}"
-                VerticalOptions="End" />
+            <VerticalStackLayout>
+                <Label
+                    Style="{StaticResource SmallLabel}"
+                    Text="Intake Goal"
+                    TextColor="Black" />
+                <customControls:CustomEntry
+                    x:Name="intakeGoalEntry"
+                    Margin="20,0"
+                    BackgroundColor="Transparent"
+                    FontSize="20"
+                    Keyboard="Numeric"
+                    MaxLength="32"
+                    Placeholder="New intake goal"
+                    PlaceholderColor="DarkGrey"
+                    Style="{StaticResource BaseEntry}"
+                    Text="{Binding NewIntakeGoal}"
+                    TextColor="Black" />
+            </VerticalStackLayout>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Grid.Column="0"
+                    Clicked="CancelBtn_Clicked"
+                    HorizontalOptions="Start"
+                    Style="{StaticResource CancelButton}"
+                    Text="Cancel"
+                    TextColor="{StaticResource LightText}"
+                    WidthRequest="100" />
+                <Button
+                    Grid.Column="1"
+                    Clicked="SaveBtn_Clicked"
+                    HorizontalOptions="End"
+                    Style="{StaticResource AddButton}"
+                    Text="Save"
+                    TextColor="{StaticResource LightText}"
+                    WidthRequest="100" />
+            </Grid>
+
         </VerticalStackLayout>
     </Border>
 

@@ -80,21 +80,37 @@ namespace UnitTest.ViewModels.IntakeViewModels
             Assert.That(target.CaloriesCurrent, Is.EqualTo(calories));
         }
 
-        [Test]
-        public async Task SaveNewIntakeGoalReturnsFalseIfNewIntakeGoalIsZeroTest()
+        [TestCase(0)]
+        [TestCase(-10)]
+        public async Task SaveNewIntakeGoalReturnsFalseIfNewIntakeGoalIsZeroOrNegativeTest(int newGoal)
         {
             // Arrange
-            target.NewIntakeGoal = 0;
+            target.NewIntakeGoal = newGoal;
 
             // Act
             bool result = await target.SaveNewIntakeGoal("Calorie");
 
             // Assert
             Assert.That(result, Is.EqualTo(false));
-            Assert.That(target.ErrorMessage, Is.EqualTo("New intake goal cannot be empty."));
+            Assert.That(target.ErrorMessage, Is.EqualTo("New intake goal cannot be negative or zero."));
         }
 
-        [TestCase("Calorie")]
+        [Test]
+		public async Task SaveNewIntakeGoalReturnsFalseIfNewIntakeCurrentIsNegativeTest()
+		{
+            // Arrange
+            target.NewCurrentIntake = -10;
+
+			// Act
+			bool result = await target.SaveNewIntakeGoal("Calorie");
+
+			// Assert
+			Assert.That(result, Is.EqualTo(false));
+			Assert.That(target.ErrorMessage, Is.EqualTo("Current intake cannot be negative."));
+		}
+
+
+		[TestCase("Calorie")]
         [TestCase("Water")]
         public async Task CorrectGoalIsChangedBasedOnIntakeTypeStringTest(string intakeType)
         {
@@ -133,5 +149,5 @@ namespace UnitTest.ViewModels.IntakeViewModels
             Assert.That(target.ErrorMessage, Is.EqualTo(""));
             Assert.That(target.NewIntakeGoal, Is.EqualTo(0));
         }
-    }
+	}
 }

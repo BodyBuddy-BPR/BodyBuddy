@@ -39,24 +39,25 @@
             <!--  Input Row  -->
             <Grid Margin="0,20">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="18.5*" /> 
+                    <!--  If you want a space between progress bar and button, change this width to 22.5  -->
                     <ColumnDefinition Width="80*" />
                     <ColumnDefinition Width="10*" />
                 </Grid.ColumnDefinitions>
                 <progressBar:SfCircularProgressBar
                     Grid.Column="0"
+                    HorizontalOptions="Center"
                     Maximum="1"
                     Minimum="0"
                     Progress="{Binding WaterIntakeProgress}"
                     ProgressFill="{StaticResource Primary}" />
                 <ImageButton
                     Grid.Column="0"
-                    Margin="9,0"
                     BackgroundColor="{StaticResource Primary}"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:IntakeViewModel}}, Path=AddWaterClickedCommand}"
                     CornerRadius="22"
                     HeightRequest="44"
-                    HorizontalOptions="Start"
+                    HorizontalOptions="Center"
                     Source="plus_sign.png"
                     Style="{StaticResource ImageButtonVisualState}"
                     VerticalOptions="Center"
@@ -147,26 +148,26 @@
             <!--  Input Row  -->
             <Grid Margin="0,20">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="18.5*" /> 
+                    <!--  If you want a space between progress bar and button, change this width to 22.5  -->
                     <ColumnDefinition Width="80*" />
                     <ColumnDefinition Width="10*" />
                 </Grid.ColumnDefinitions>
                 <progressBar:SfCircularProgressBar
                     Grid.Column="0"
+                    HorizontalOptions="Center"
                     Maximum="1"
                     Minimum="0"
                     Progress="{Binding CalorieIntakeProgress}"
                     ProgressFill="{StaticResource Secondary}" />
-
                 <ImageButton
                     Grid.Column="0"
-                    Margin="9,0"
                     BackgroundColor="{StaticResource Secondary}"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:IntakeViewModel}}, Path=AddKcalClickedCommand}"
                     CommandParameter="{Binding CalorieEntryText}"
                     CornerRadius="22"
                     HeightRequest="44"
-                    HorizontalOptions="Start"
+                    HorizontalOptions="Center"
                     Source="plus_sign.png"
                     Style="{StaticResource ImageButtonVisualState}"
                     VerticalOptions="Center"

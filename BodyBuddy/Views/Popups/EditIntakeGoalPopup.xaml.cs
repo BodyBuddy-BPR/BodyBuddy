@@ -38,4 +38,9 @@ public partial class EditIntakeGoalPopup
 		}
 	}
 
+	private async void CancelBtn_Clicked(object sender, EventArgs e)
+	{
+			await MopupService.Instance.PopAsync();
+	}
+
 }
