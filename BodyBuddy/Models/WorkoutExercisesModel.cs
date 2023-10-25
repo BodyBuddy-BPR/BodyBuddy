@@ -3,7 +3,7 @@
 namespace BodyBuddy.Models
 {
 	[Table("WorkoutExercises")]
-	public class WorkoutExercises
+	public class WorkoutExercisesModel
 	{
 		[PrimaryKey] 
 		public int Id { get; set; }

@@ -48,7 +48,7 @@ namespace BodyBuddy.Repositories.Implementations
         public async Task<bool> DeleteWorkout(WorkoutModel workout)
         {
             // First deleting all exercises with the workout id from the joint table
-            await _context.Table<WorkoutExercises>().DeleteAsync(x => x.WorkoutId == workout.Id);
+            await _context.Table<WorkoutExercisesModel>().DeleteAsync(x => x.WorkoutId == workout.Id);
 
             // Then deleting the workout from workout table
             await _context.DeleteAsync(workout);
