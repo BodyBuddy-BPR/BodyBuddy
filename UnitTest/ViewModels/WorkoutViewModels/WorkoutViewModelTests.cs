@@ -1,5 +1,7 @@
-﻿using BodyBuddy.Models;
+﻿using BodyBuddy.Dtos;
+using BodyBuddy.Models;
 using BodyBuddy.Repositories;
+using BodyBuddy.Services;
 using BodyBuddy.ViewModels.WorkoutViewModels;
 using Moq;
 
@@ -8,22 +10,22 @@ namespace UnitTest.ViewModels.WorkoutViewModels
     public class WorkoutViewModelTests
     {
         private WorkoutViewModel target;
-        private Mock<IWorkoutRepository> mockRepo;
+        private Mock<IWorkoutService> mockService;
         private Mock<IWorkoutExercisesRepository> workoutExercisesMockRepo;
-        private WorkoutModel workout1, workout2;
-        private List<WorkoutModel> workoutList;
+        private WorkoutDto workout1, workout2;
+        private List<WorkoutDto> workoutList;
 
         [SetUp]
         public void Setup()
         {
-            mockRepo = new Mock<IWorkoutRepository>();
+            mockService = new Mock<IWorkoutService>();
             workoutExercisesMockRepo = new Mock<IWorkoutExercisesRepository>();
-            target = new WorkoutViewModel(mockRepo.Object, workoutExercisesMockRepo.Object);
+            target = new WorkoutViewModel(mockService.Object, workoutExercisesMockRepo.Object);
 
-            workout1 = new WorkoutModel() { Id = 3, Name = "Workout3", PreMade = 0 };
-            workout2 = new WorkoutModel() { Id = 4, Name = "Workout4", PreMade = 0 };
+            workout1 = new WorkoutDto { Id = 3, Name = "Workout3", PreMade = false };
+            workout2 = new WorkoutDto { Id = 4, Name = "Workout4", PreMade = false };
 
-            workoutList = new List<WorkoutModel>() { workout1, workout2 };
+            workoutList = new List<WorkoutDto> { workout1, workout2 };
 
         }
 
@@ -37,25 +39,25 @@ namespace UnitTest.ViewModels.WorkoutViewModels
             await target.GetWorkoutPlans();
 
             //Assert
-            mockRepo.Verify(repo => repo.GetWorkoutPlansAsync(It.IsAny<int>()), Times.Never());
+            mockService.Verify(service => service.GetWorkoutPlans(It.IsAny<bool>()), Times.Never());
         }
 
-        [TestCase(true, 1)]
-        [TestCase(false, 0)]
-        public async Task GetWorkoutPlanIsCalledAndReturnsCorrectWorkoutList(bool boolIsPremade, int isPremadeNumber)
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetWorkoutPlanIsCalledAndReturnsCorrectWorkoutList(bool preMade)
         {
             //Arrange
             target.IsBusy = false;
-            target.IsPreMadeWorkout = boolIsPremade;
-            mockRepo.Setup(repo => repo.GetWorkoutPlansAsync(isPremadeNumber)).ReturnsAsync(workoutList);
+            target.IsPreMadeWorkout = preMade;
+            mockService.Setup(service => service.GetWorkoutPlans(preMade)).ReturnsAsync(workoutList);
             target.Workouts.Add(workout2);
 
             //Act
             await target.GetWorkoutPlans();
 
             //Assert
-            mockRepo.Verify(repo => repo.GetWorkoutPlansAsync(isPremadeNumber), Times.Exactly(1));
-            mockRepo.Verify(repo => repo.GetWorkoutPlansAsync(It.IsAny<int>()), Times.Exactly(1));
+            mockService.Verify(service => service.GetWorkoutPlans(preMade), Times.Exactly(1));
+            mockService.Verify(service => service.GetWorkoutPlans(It.IsAny<bool>()), Times.Exactly(1));
             Assert.That(target.Workouts, Is.EqualTo(workoutList));
             Assert.That(target.Workouts.Count, Is.EqualTo(2));
         }
