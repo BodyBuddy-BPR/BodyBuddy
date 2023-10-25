@@ -11,18 +11,27 @@ namespace BodyBuddy.Services.Implementations
     {
         private Client _supabase;
 
+        // Used for Secure Storage
         private const string UserIdKey = "UserId";
         private const string UserEmailKey = "UserEmail";
         private const string UserPasswordKey = "UserPassword";
+
+        // Used for Preferences
+        private readonly string _skipLoginKey = "SkipLogInKey"; 
 
         public UserAuthenticationService(Client client)
         {
             _supabase = client;
         }
+
         public bool IsUserLoggedIn()
         {
             var user = _supabase.Auth.CurrentUser;
-            return user is not null && user.Role == "authenticated";
+            if (user is not null && user.Role == "authenticated")
+            {
+                return true;
+            }
+            return false;
         }
 
         public async Task<bool> SignUserIn(string user, string password)
@@ -66,8 +75,14 @@ namespace BodyBuddy.Services.Implementations
             {
                 await _supabase.Auth.SignOut();
 
-                // Clear user ID on sign-out
+                // Clear user info on sign-out
                 SecureStorage.Remove(UserIdKey);
+                SecureStorage.Remove(UserEmailKey);
+                SecureStorage.Remove(UserPasswordKey);
+
+                //Preferences.Set(_skipLoginKey, false);
+
+                var user = _supabase.Auth.CurrentUser;
 
                 return true;
             }

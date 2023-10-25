@@ -36,18 +36,16 @@ namespace BodyBuddy.ViewModels
         public async Task AttemptToLogin()
         {
 
-            if (_userAuthService.IsUserLoggedIn())
-            {
-                return;
-            }
+            if (_userAuthService.IsUserLoggedIn()) return;
+            
 
-            var skipped = Preferences.Get(_skipLoginKey, false);
-            if (skipped) return;
+            var isLoginSkipped = Preferences.Get(_skipLoginKey, false);
+            //if (skipped) return;
 
             // Attempt auto-login
             var autoLoginSuccess = await _userAuthService.TryAutoSignIn();
 
-            if (!autoLoginSuccess)
+            if (!autoLoginSuccess && !isLoginSkipped)
             {
                 await Shell.Current.GoToAsync($"{nameof(LoginPage)}", true, new Dictionary<string, object>
                 {

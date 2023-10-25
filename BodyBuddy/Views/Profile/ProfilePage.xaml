@@ -169,23 +169,15 @@
 
         </Grid>
         <Button
+            x:Name="LoginBtn"
             Grid.Row="2"
-            Clicked="Login_Clicked"
-            IsVisible="{Binding IsLoggedIn, Converter={StaticResource BooleanInvertConverter}}"
+            Clicked="LoginOrOut_Clicked"
             Style="{StaticResource BaseButton}"
-            Text="Login"
+            Text=""
             TextColor="#212121"
             VerticalOptions="EndAndExpand"
             WidthRequest="140" />
-        <Button
-            Grid.Row="2"
-            Command="{Binding LogOutCommand}"
-            IsVisible="{Binding IsLoggedIn}"
-            Style="{StaticResource BaseButton}"
-            Text="Logout"
-            TextColor="#212121"
-            VerticalOptions="EndAndExpand"
-            WidthRequest="140" />
+
     </Grid>
 
 </ContentPage>

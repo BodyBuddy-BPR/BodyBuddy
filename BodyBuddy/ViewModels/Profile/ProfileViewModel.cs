@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BodyBuddy.Views.Authentication;
 using CommunityToolkit.Mvvm.Input;
 using Supabase;
 using CommunityToolkit.Maui.Alerts;
@@ -45,7 +46,14 @@ namespace BodyBuddy.ViewModels.Profile
 
         #region Login / Logout
 
-        [RelayCommand]
+        public async Task LogIn()
+        {
+            await Shell.Current.GoToAsync($"{nameof(LoginPage)}", true, new Dictionary<string, object>
+            {
+                { "SkipVisible", false }
+            });
+        }
+
         public async Task LogOut()
         {
             var loggedOut = await _userAuthenticationService.SignUserOut();

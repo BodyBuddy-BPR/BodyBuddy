@@ -19,13 +19,24 @@ public partial class ProfilePage : ContentPage
     {
         base.OnAppearing();
         await _viewModel.Initialize();
+
+        // Changes the button text depending on if the user is logged in
+        LoginBtn.Text = _viewModel.IsLoggedIn switch
+        {
+            true => "Logout",
+            false => "Login"
+        };
     }
 
-    private async void Login_Clicked(object sender, EventArgs e)
+    private async void LoginOrOut_Clicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync($"{nameof(LoginPage)}", true, new Dictionary<string, object>
+        if (!_viewModel.IsLoggedIn)
         {
-            { "SkipVisible", false }
-        });
+            await _viewModel.LogIn();
+        }
+        else if (_viewModel.IsLoggedIn)
+        {
+            await _viewModel.LogOut();
+        }
     }
 }
