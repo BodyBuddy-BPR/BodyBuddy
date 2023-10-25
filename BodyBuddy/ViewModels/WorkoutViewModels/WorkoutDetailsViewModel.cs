@@ -128,18 +128,19 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         [RelayCommand]
         async Task DeleteFromWorkout(ExerciseModel exercise)
         {
+            if (exercise == null) return;
+
             bool result = await Shell.Current.DisplayAlert("Delete", $"Are you sure you want to remove {exercise.Name} from this workout?", "OK", "Cancel");
 
             if (result)
             {
-                if (exercise == null) return;
                 await _workoutExercisesRepository.DeleteExerciseFromWorkout(WorkoutDetails.Id, exercise.Id);
                 Exercises.Remove(exercise);
 
                 if (Exercises.Count == 0)
                 {
                     SmallButtonModifyIsEnabled = false;
-                    LargeButtonModifyIsEnabled = true && !IsPremade;
+                    LargeButtonModifyIsEnabled = !IsPremade;
                 }
             }
         }

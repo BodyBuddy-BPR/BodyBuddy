@@ -31,8 +31,8 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
 
         #endregion
 
-        public ObservableCollection<ExerciseModel> ExercisesList { get; set; } = new ObservableCollection<ExerciseModel>();
-        public ObservableCollection<WorkoutModel> WorkoutsList { get; set; } = new ObservableCollection<WorkoutModel>();
+        public ObservableCollection<ExerciseModel> ExercisesList { get; set; } = new();
+        public ObservableCollection<WorkoutModel> WorkoutsList { get; set; } = new();
 
         public ExercisesViewModel(IExerciseRepository exerciseRepository, IWorkoutRepository workoutRepository, IWorkoutExercisesRepository workoutExercisesRepository)
         {

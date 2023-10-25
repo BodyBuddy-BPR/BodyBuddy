@@ -13,7 +13,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         private readonly IWorkoutRepository _workoutRepository;
         private readonly IWorkoutExercisesRepository _workoutExercisesRepository;
 
-        public ObservableCollection<WorkoutModel> Workouts { get; set; } = new ObservableCollection<WorkoutModel>();
+        public ObservableCollection<WorkoutModel> Workouts { get; set; } = new();
 
         [ObservableProperty]
         private bool _isPreMadeWorkout;
@@ -75,11 +75,12 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         [RelayCommand]
         async Task DeleteWorkout(WorkoutModel workout)
         {
+            if (workout == null) return;
+
             bool result = await Shell.Current.DisplayAlert("Delete", $"Are you sure you want to delete {workout.Name}?", "OK", "Cancel");
 
             if (result)
             {
-                if (workout == null) return;
                 bool deleted = await _workoutRepository.DeleteWorkout(workout);
                 if (deleted)
                 {
@@ -154,9 +155,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             string workoutName = workoutNamePart?.Split(':')[1];
             string workoutDescription = workoutDescriptionPart?.Split(':')[1];
 
-            // Extract exercise details
-            //List<Exercise> exercises = new List<Exercise>();
-
             foreach (var part in parts)
             {
                 if (part.StartsWith("ExerciseId:", StringComparison.OrdinalIgnoreCase))
@@ -192,10 +190,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         public async Task AddExercisesToWorkout()
         {
-            //List<Exercise> exerciseList = new();
-
-            //exerciseList.AddRange(Exercises);
-
             try
             {
                 var workout = await _workoutRepository.GetSpecificWorkoutAsync(WorkoutName);

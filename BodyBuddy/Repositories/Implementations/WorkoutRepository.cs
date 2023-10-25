@@ -39,11 +39,6 @@ namespace BodyBuddy.Repositories.Implementations
                 return await _context.InsertAsync(workout);
             }
         }
-        private async Task<int> GetNextWorkoutId()
-        {
-            var lastItem = await _context.Table<WorkoutModel>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
-            return lastItem?.Id + 1 ?? 1;
-        }
 
         public async Task<bool> DeleteWorkout(WorkoutModel workout)
         {
@@ -57,19 +52,35 @@ namespace BodyBuddy.Repositories.Implementations
 
         public async Task<bool> DoesWorkoutAlreadyExist(string name)
         {
-            if (await _context.Table<WorkoutModel>().FirstOrDefaultAsync(x => x.Name == name) == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return await _context.Table<WorkoutModel>().FirstOrDefaultAsync(x => x.Name == name) != null;
         }
 
         public async Task<WorkoutModel> GetSpecificWorkoutAsync(string name)
         {
             return await _context.Table<WorkoutModel>().FirstOrDefaultAsync(x => x.Name == name);
+        }
+
+
+        #region new sep
+
+        public async Task<int> AddWorkoutPlanAsync(WorkoutModel workout)
+        {
+            workout.Id = await GetNextWorkoutId(); // Generate a unique Id
+            return await _context.InsertAsync(workout);
+        }
+
+        public async Task<int> UpdateWorkoutPlanAsync(WorkoutModel workout)
+        {
+            return await _context.UpdateAsync(workout);
+        }
+
+        #endregion
+
+
+        private async Task<int> GetNextWorkoutId()
+        {
+            var lastItem = await _context.Table<WorkoutModel>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
+            return lastItem?.Id + 1 ?? 1;
         }
     }
 }

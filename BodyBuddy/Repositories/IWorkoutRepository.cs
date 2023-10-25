@@ -13,6 +13,11 @@ namespace BodyBuddy.Repositories
 		Task<bool> DeleteWorkout(WorkoutModel workout);
 
 		Task<bool> DoesWorkoutAlreadyExist(string name);
+
+
+
+        Task<int> AddWorkoutPlanAsync(WorkoutModel workoutModel);
+        Task<int> UpdateWorkoutPlanAsync(WorkoutModel workoutModel);
     }
 
 
