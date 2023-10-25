@@ -8,6 +8,7 @@ using Mopups.Services;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
+using BodyBuddy.Dtos;
 
 namespace BodyBuddy.ViewModels.WorkoutViewModels
 {

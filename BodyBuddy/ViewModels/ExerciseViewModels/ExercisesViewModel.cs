@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using BodyBuddy.Dtos;
 
 namespace BodyBuddy.ViewModels.ExerciseViewModels
 {
