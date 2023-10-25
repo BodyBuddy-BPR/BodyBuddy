@@ -3,15 +3,21 @@
     x:Class="BodyBuddy.Views.StartupTest.StartupTestPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:BodyBuddy.Converters"
     xmlns:customControls="clr-namespace:BodyBuddy.CustomControls"
+    xmlns:local="clr-namespace:BodyBuddy.Events"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.StartupTest"
     Title="StartupTest"
     x:DataType="viewModel:StartupTestViewModel">
-
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:StringToDoubleConverter x:Key="StringToDoubleConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <Grid
         Margin="20,10"
-        RowDefinitions="Auto, *, Auto"
+        RowDefinitions="Auto, *, *, Auto"
         RowSpacing="15">
         <Label
             Grid.Row="0"
@@ -31,37 +37,42 @@
                 Text="{Binding Name}" />
 
             <!--  Gender  -->
-            <StackLayout Padding="20" IsVisible="{Binding IsGenderVisible}">
-                <CollectionView x:Name="genderListView" ItemsSource="{Binding GenderList}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout Orientation="Horizontal">
-                                <!--  Use the index of the item to bind to the correct item in SelectedStates  -->
-                                <CheckBox IsChecked="{Binding Source={x:Reference genderListView}, Path=BindingContext.GenderSelectedStates[index]}" />
-                                <Label Text="{Binding .}" VerticalOptions="Center" />
-                            </StackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </StackLayout>
+            <CollectionView
+                x:Name="genderListView"
+                IsVisible="{Binding IsGenderVisible}"
+                ItemsSource="{Binding GenderList}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <RadioButton Content="{Binding .}" GroupName="GenderGroup">
+                            <RadioButton.Behaviors>
+                                <local:CheckedChangedBehavior Command="{Binding Source={x:Reference genderListView}, Path=BindingContext.RadioButtonCheckedCommand}" />
+                            </RadioButton.Behaviors>
+                        </RadioButton>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
-            <!--  TODO - SEBT Numeric Values Only  -->
             <!--  Weight  -->
             <customControls:CustomEntry
+                HorizontalOptions="Center"
                 IsVisible="{Binding IsWeightVisible}"
                 Keyboard="Numeric"
                 Placeholder="Enter Weight"
-                Style="{StaticResource StartupInputField}" />
+                Style="{StaticResource StartupInputField}"
+                Text="{Binding Weight, Converter={StaticResource StringToDoubleConverter}}" />
+
 
             <!--  Height  -->
             <customControls:CustomEntry
+                HorizontalOptions="Center"
                 IsVisible="{Binding IsHeightVisible}"
                 Keyboard="Numeric"
                 Placeholder="Enter Height"
-                Style="{StaticResource StartupInputField}" />
+                Style="{StaticResource StartupInputField}"
+                Text="{Binding Height, Converter={StaticResource StringToDoubleConverter}}" />
+
 
             <!--  Birthday  -->
-            <!--  TODO SEBT -> Date Picker here  -->
             <DatePicker
                 Date="{Binding SelectedDate}"
                 HorizontalOptions="Center"
@@ -71,42 +82,63 @@
                 VerticalOptions="Center" />
 
             <!--  Active  -->
-            <StackLayout Padding="20" IsVisible="{Binding IsActiveVisible}">
-                <CollectionView x:Name="activityListView" ItemsSource="{Binding ActivityList}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout Orientation="Horizontal">
-                                <!--  Use the index of the item to bind to the correct item in SelectedStates  -->
-                                <CheckBox IsChecked="{Binding Source={x:Reference activityListView}, Path=BindingContext.ActivitySelectedStates[index]}" />
-                                <Label Text="{Binding .}" VerticalOptions="Center" />
-                            </StackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </StackLayout>
+            <CollectionView
+                x:Name="activeListView"
+                IsVisible="{Binding IsActiveVisible}"
+                ItemsSource="{Binding ActivityList}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <RadioButton Content="{Binding .}" GroupName="GenderGroup">
+                            <RadioButton.Behaviors>
+                                <local:CheckedChangedBehavior Command="{Binding Source={x:Reference activeListView}, Path=BindingContext.RadioButtonCheckedCommand}" />
+                            </RadioButton.Behaviors>
+                        </RadioButton>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <!--  Padding 25?  -->
 
             <!--  Passive Calorie Burn  -->
-            <Label
+            <customControls:CustomEntry
                 HorizontalOptions="Center"
                 IsVisible="{Binding IsPassiveCalorieBurnVisible}"
-                Style="{StaticResource TitleLabel}"
-                Text="Passive Calorie Burn"
+                Keyboard="Numeric"
+                Placeholder="Enter Passive Calorie Burn"
+                Style="{StaticResource StartupInputField}"
+                Text="{Binding PassiveCalorieBurn, Converter={StaticResource StringToDoubleConverter}}"
                 VerticalOptions="Center" />
 
+
             <!--  Goal  -->
-            <StackLayout Padding="20" IsVisible="{Binding IsGoalVisible}">
+            <CollectionView
+                x:Name="goalListView"
+                IsVisible="{Binding IsGoalVisible}"
+                ItemsSource="{Binding GoalList}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <RadioButton Content="{Binding .}" GroupName="GoalGroup">
+                            <RadioButton.Behaviors>
+                                <local:CheckedChangedBehavior Command="{Binding Source={x:Reference goalListView}, Path=BindingContext.RadioButtonCheckedCommand}" />
+                            </RadioButton.Behaviors>
+                        </RadioButton>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <!--<StackLayout Padding="20" IsVisible="{Binding IsGoalVisible}">
                 <CollectionView x:Name="goalListView" ItemsSource="{Binding GoalList}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Orientation="Horizontal">
-                                <!--  Use the index of the item to bind to the correct item in SelectedStates  -->
+            -->
+            <!--  Use the index of the item to bind to the correct item in SelectedStates  -->
+            <!--
                                 <CheckBox IsChecked="{Binding Source={x:Reference goalListView}, Path=BindingContext.GoalSelectedStates[index]}" />
                                 <Label Text="{Binding .}" VerticalOptions="Center" />
                             </StackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-            </StackLayout>
+            </StackLayout>-->
 
 
         </VerticalStackLayout>
@@ -117,6 +149,13 @@
             IsVisible="{Binding NextIsVisible}"
             Style="{StaticResource AddButton}"
             Text="Next Question!" />
+
+        <Button
+            Grid.Row="3"
+            Command="{Binding BackButtonCommand}"
+            IsVisible="{Binding BackIsVisible}"
+            Style="{StaticResource AddButton}"
+            Text="Previous Question!" />
 
         <Button
             Grid.Row="2"

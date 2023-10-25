@@ -4,6 +4,7 @@ using BodyBuddy.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.ComponentModel;
+using System.Windows.Input;
 
 namespace BodyBuddy.ViewModels.StartupTest
 {
@@ -17,8 +18,8 @@ namespace BodyBuddy.ViewModels.StartupTest
         private bool _isNameVisible, _isGenderVisible, _isWeightVisible, _isHeightVisible;
         [ObservableProperty]
         private bool _isBirthdayVisible, _isActiveVisible, _isPassiveCalorieBurnVisible, _isGoalVisible;
-        [ObservableProperty] 
-        private bool _submitDataIsVisible, _nextIsVisible;
+        [ObservableProperty]
+        private bool _submitDataIsVisible, _nextIsVisible, _backIsVisible;
 
         //Saved Properties
         [ObservableProperty] private string name, gender, active, goal;
@@ -34,18 +35,21 @@ namespace BodyBuddy.ViewModels.StartupTest
         [ObservableProperty] private DateTime maxDate = DateTime.Now;
 
 
-
-        public List<string> GenderList { get; set; } = new List<string> { Strings.STARTUP_GENDER_FEMALE, Strings.STARTUP_GENDER_MALE, Strings.STARTUP_GENDER_NONE };
-        public List<string> ActivityList { get; set; } = new List<string> { Strings.STARTUP_ACTIVITY_VERYACTIVE, Strings.STARTUP_ACTIVITY_ACTIVE,
+        //Setting lists for multiple choice questions (Add more here, if more options become available
+        public List<string> GenderList { get; } = new List<string> { Strings.STARTUP_GENDER_FEMALE, Strings.STARTUP_GENDER_MALE, Strings.STARTUP_GENDER_NONE };
+        public List<string> ActivityList { get; } = new List<string> { Strings.STARTUP_ACTIVITY_VERYACTIVE, Strings.STARTUP_ACTIVITY_ACTIVE,
             Strings.STARTUP_ACTIVITY_LITTLEACTIVE, Strings.STARTUP_ACTIVITY_NOTVERYACTIVE };
-        public List<string> GoalList { get; set; } = new List<string> { Strings.STARTUP_GOAL_LOSEWEIGHT, Strings.STARTUP_GOAL_GAINMUSCLE };
-        public List<string> TargetList { get; set; } = new List<string> { Strings.STARTUP_GENDER_FEMALE, Strings.STARTUP_GENDER_MALE, Strings.STARTUP_GENDER_NONE };
+        public List<string> GoalList { get; } = new List<string> { Strings.STARTUP_GOAL_LOSEWEIGHT, Strings.STARTUP_GOAL_GAINMUSCLE };
+        public List<string> TargetList { get; } = new List<string> { Strings.STARTUP_FOCUSAREA_UPPERBODY, Strings.STARTUP_FOCUSAREA_LOWERBODY,
+            Strings.STARTUP_FOCUSAREA_ABSANDCORE, Strings.STARTUP_FOCUSAREA_OTHER };
 
+
+        public ICommand RadioButtonCheckedCommand { get; }
 
         public List<bool> GenderSelectedStates { get; set; } = new List<bool> { false, false, false };
         public List<bool> ActivitySelectedStates { get; set; } = new List<bool> { false, false, false, false };
         public List<bool> GoalSelectedStates { get; set; } = new List<bool> { false, false };
-        public List<bool> TargetSelectedStates { get; set; } = new List<bool> { false, false };
+        public List<bool> TargetSelectedStates { get; set; } = new List<bool> { false, false, false, false };
 
 
         private IStartupTestService _startupTestService;
@@ -54,12 +58,25 @@ namespace BodyBuddy.ViewModels.StartupTest
         public StartupTestViewModel(IStartupTestService startupTestService)
         {
             _startupTestService = startupTestService;
-            
+
             //SetStateProperties HAS TO BE FIRST!
             SetStateProperties();
             UpdateVisibility();
+            RadioButtonCheckedCommand = new Command<string>(OnRadioButtonChecked);
+
+
 
             PropertyChanged += OnPropertyChange;
+        }
+
+        private void OnRadioButtonChecked(string selectedValue)
+        {
+            if (CurrentState == State.GenderSelection)
+                Gender = selectedValue;
+            else if (CurrentState == State.ActivitySelection)
+                Active = selectedValue;
+            else if (CurrentState == State.GoalSelection)
+                Goal = selectedValue;
         }
 
         [RelayCommand]
@@ -131,6 +148,7 @@ namespace BodyBuddy.ViewModels.StartupTest
             }
         }
 
+        //Used to check on any property changed and UpdateActionButtons if any of the following below are changed
         private void OnPropertyChange(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
@@ -161,8 +179,9 @@ namespace BodyBuddy.ViewModels.StartupTest
         }
         private void UpdateActionButtonsVisibility()
         {
+            BackIsVisible = (CurrentState != State.NameEntry);
             NextIsVisible = (CurrentState != State.Done && currentStateDone());
-            SubmitDataIsVisible = (CurrentState == State.Done && !currentStateDone());
+            SubmitDataIsVisible = (CurrentState == State.Done && currentStateDone());
         }
 
         private void SetStateProperties()
@@ -203,7 +222,7 @@ namespace BodyBuddy.ViewModels.StartupTest
                     break;
                 case State.Done:
                     QuestionaireText = "You're done!";
-                    currentStateDone = () => { return false; };
+                    currentStateDone = () => { return true; };
                     SubmitDataIsVisible = true;
                     break;
             }
