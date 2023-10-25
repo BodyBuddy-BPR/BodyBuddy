@@ -34,7 +34,7 @@ namespace BodyBuddy.Repositories.Implementations
             _supabaseClient = supabaseClient;
         }
 
-        public async Task<Quote> FetchNewQuote()
+        public async Task<QuoteModel> FetchNewQuote()
         {
             DateTime lastFetchedDate = Preferences.Get(datePreferencesKey, DateTime.MinValue);
 
@@ -48,7 +48,7 @@ namespace BodyBuddy.Repositories.Implementations
                     var response = await httpClient.GetStringAsync(apiUrl);
 
                     // Deserialize the JSON response
-                    var quote = JsonConvert.DeserializeObject<Quote[]>(response)[0];
+                    var quote = JsonConvert.DeserializeObject<QuoteModel[]>(response)[0];
 
                     // Save the new quote and update the last fetched date in SharedPreferences
                     Preferences.Set(datePreferencesKey, _dateTimeService.Today);
@@ -59,7 +59,7 @@ namespace BodyBuddy.Repositories.Implementations
             }
 
             // Return the previously fetched quote
-            return new Quote { quote = Preferences.Get(quotePreferencesKey, "To enjoy the glow of good health, you must exercise."), Author = "Gene Tunney" };
+            return new QuoteModel { quote = Preferences.Get(quotePreferencesKey, "To enjoy the glow of good health, you must exercise."), Author = "Gene Tunney" };
         }
     }
 }

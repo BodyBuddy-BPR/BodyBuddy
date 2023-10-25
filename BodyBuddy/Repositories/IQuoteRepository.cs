@@ -9,6 +9,6 @@ namespace BodyBuddy.Repositories
 {
     public interface IQuoteRepository
     {
-        Task<Quote> FetchNewQuote();
+        Task<QuoteModel> FetchNewQuote();
     }
 }

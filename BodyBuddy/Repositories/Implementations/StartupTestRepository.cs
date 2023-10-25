@@ -17,12 +17,12 @@ namespace BodyBuddy.Repositories.Implementations
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<StartupTest> GetStartupTestData()
+        public async Task<StartupTestModel> GetStartupTestData()
         {
-            return await _context.Table<StartupTest>().FirstOrDefaultAsync();
+            return await _context.Table<StartupTestModel>().FirstOrDefaultAsync();
         }
 
-        public async Task SaveStartupTestData(StartupTest startupTest)
+        public async Task SaveStartupTestData(StartupTestModel startupTest)
         {
             if (startupTest.Id == 0)
                 await _context.InsertAsync(startupTest);

@@ -45,9 +45,9 @@ namespace BodyBuddy.Mappers
             _genderToString = _genderToInteger.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
         }
 
-        public StartupTest MapToDatabase(StartupTestDto startupTestDto)
+        public StartupTestModel MapToDatabase(StartupTestDto startupTestDto)
         {
-            return new StartupTest()
+            return new StartupTestModel()
             {
                 Id = startupTestDto.Id,
                 Name = startupTestDto.Name,
@@ -61,7 +61,7 @@ namespace BodyBuddy.Mappers
             };
         }
 
-        public StartupTestDto MapToDto(StartupTest startupTest)
+        public StartupTestDto MapToDto(StartupTestModel startupTest)
         {
             if(startupTest == null)
                 return new StartupTestDto();
