@@ -55,7 +55,7 @@ namespace BodyBuddy.ViewModels.StartupTest
         {
             _startupTestService = startupTestService;
 
-            //SetStateProperties HAS TO BE FIRST!
+            //SetStateProperties HAS TO BE FIRST! (Timing)
             SetStateProperties();
             UpdateVisibility();
             RadioButtonCheckedCommand = new Command<string>(OnRadioButtonChecked);

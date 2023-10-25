@@ -6,6 +6,7 @@
     xmlns:exerciseViews="clr-namespace:BodyBuddy.Views.ExerciseViews"
     xmlns:helpers="clr-namespace:BodyBuddy.Helpers"
     xmlns:local="clr-namespace:BodyBuddy"
+    xmlns:profile="clr-namespace:BodyBuddy.Views.Profile"
     xmlns:statisticsViews="clr-namespace:BodyBuddy.Views.StatisticsViews"
     xmlns:workoutViews="clr-namespace:BodyBuddy.Views.WorkoutViews"
     FlyoutBackgroundColor="{StaticResource Background}"
@@ -43,6 +44,11 @@
         <ShellContent
             Title="Macros"
             ContentTemplate="{DataTemplate statisticsViews:IntakePage}"
+            Icon="knifeandfork.png" />
+
+        <ShellContent
+            Title="Profile"
+            ContentTemplate="{DataTemplate profile:ProfilePage}"
             Icon="knifeandfork.png" />
 
         <Tab Title="Workouts" Icon="list.png">

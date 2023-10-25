@@ -8,10 +8,6 @@ namespace BodyBuddy.Dtos
 {
     public class StartupTestDto
     {
-        public StartupTestDto()
-        {
-            FocusAreas = new();
-        }
         public int Id { get; set; }
 
         public string Name { get; set; }
@@ -30,6 +26,6 @@ namespace BodyBuddy.Dtos
 
         public string Goal { get; set; }
 
-        public List<string> FocusAreas { get; set; }
+        public List<string> FocusAreas { get; set; } = new();
     }
 }

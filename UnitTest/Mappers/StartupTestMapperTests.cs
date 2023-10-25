@@ -48,6 +48,16 @@ namespace UnitTest.Mappers
             };
         }
 
+        [Test]
+        public void MapToDto_DoesNotReturnNull_WhenInputIsNull()
+        {
+            //Act
+            var returnStartupTestDb = target.MapToDto(null);
+
+            //Assert
+            Assert.NotNull(returnStartupTestDb);
+        }
+
         
         [TestCase("Female", 0, "Very active", 0, "Gain Muscle", 0)]
         [TestCase("Male", 1, "Active", 1, "Gain Muscle", 0)]

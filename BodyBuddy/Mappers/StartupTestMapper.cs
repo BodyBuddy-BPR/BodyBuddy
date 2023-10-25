@@ -63,6 +63,9 @@ namespace BodyBuddy.Mappers
 
         public StartupTestDto MapToDto(StartupTest startupTest)
         {
+            if(startupTest == null)
+                return new StartupTestDto();
+
             return new StartupTestDto()
             {
                 Id = startupTest.Id,
