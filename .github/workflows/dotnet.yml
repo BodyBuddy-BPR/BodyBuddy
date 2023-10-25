@@ -48,6 +48,11 @@ jobs:
         if [[ ! -d "/usr/local/share/dotnet/sdk-manifests/7.0.100/Microsoft.NET.Sdk.Maui" ]]; then
           dotnet workload install maui-android maui-ios --skip-manifest-update
         fi
+        
+    - name: List workload directories
+      run: |
+        ls /usr/local/share/dotnet/sdk-manifests/
+        ls /usr/local/share/dotnet/sdk-packs/
 
     # Restore dependencies
     - name: Restore dependencies
