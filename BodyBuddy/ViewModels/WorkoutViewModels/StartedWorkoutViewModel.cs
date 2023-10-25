@@ -19,9 +19,9 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         private WorkoutModel _workoutDetails;
 
         [ObservableProperty]
-        private Exercise _displayedExercise;
+        private ExerciseModel _displayedExercise;
         public ObservableCollection<ExerciseRecords> ExerciseRecords { get; set; } = new ObservableCollection<ExerciseRecords>();
-        public ObservableCollection<Exercise> Exercises { get; set; } = new ObservableCollection<Exercise>();
+        public ObservableCollection<ExerciseModel> Exercises { get; set; } = new ObservableCollection<ExerciseModel>();
               
 
         // Keep track of the index of the currently displayed exercise
@@ -204,7 +204,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         #region Navigation 
 
         [RelayCommand]
-        async Task ToExercise(Exercise exercise)
+        async Task ToExercise(ExerciseModel exercise)
         {
             if (exercise is null)
                 return;

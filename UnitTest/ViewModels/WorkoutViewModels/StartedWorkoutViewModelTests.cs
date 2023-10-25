@@ -13,7 +13,7 @@ namespace UnitTest.ViewModels.WorkoutViewModels
         private Mock<IWorkoutExercisesRepository> workoutExercisesMockRepo;
 
         private WorkoutModel workout;
-        private ObservableCollection<Exercise> exercises;
+        private ObservableCollection<ExerciseModel> exercises;
 
         [SetUp]
         public void Setup()
@@ -24,27 +24,27 @@ namespace UnitTest.ViewModels.WorkoutViewModels
             target = new StartedWorkoutViewModel(workoutExercisesMockRepo.Object, exerciseRecordsMockRepo.Object);
 
             workout = new WorkoutModel() { Id = 1, Name = "Workout1", PreMade = 0 };
-            exercises = new ObservableCollection<Exercise>()
+            exercises = new ObservableCollection<ExerciseModel>()
             {
-                new Exercise() { Id = 1},
-                new Exercise() { Id = 2},
-                new Exercise() { Id = 3}
+                new ExerciseModel() { Id = 1},
+                new ExerciseModel() { Id = 2},
+                new ExerciseModel() { Id = 3}
             };
         }
 
         [Test]
         public async Task ClearExercisesIfNotEmptyTest()
         {
-            var displayedExercise = new Exercise() { Id = 4 };
+            var displayedExercise = new ExerciseModel() { Id = 4 };
 
             // Arrange
-            var returnExercises = new List<Exercise>()
+            var returnExercises = new List<ExerciseModel>()
             {
                 displayedExercise,
-                new Exercise() { Id = 5},
-                new Exercise() { Id = 6},
-                new Exercise() { Id = 7},
-                new Exercise() { Id = 8}
+                new ExerciseModel() { Id = 5},
+                new ExerciseModel() { Id = 6},
+                new ExerciseModel() { Id = 7},
+                new ExerciseModel() { Id = 8}
             };
 
             target.IsBusy = false;

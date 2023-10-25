@@ -41,7 +41,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         public int sets, reps;
 
         [ObservableProperty]
-        public Exercise exerciseToEdit;
+        public ExerciseModel exerciseToEdit;
 
         [ObservableProperty]
         private bool smallButtonsIsEnabled; // This is the small Add Exercise & Start Workout buttons
@@ -50,7 +50,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         #endregion
 
-        public ObservableCollection<Exercise> Exercises { get; set; } = new ObservableCollection<Exercise>();
+        public ObservableCollection<ExerciseModel> Exercises { get; set; } = new ObservableCollection<ExerciseModel>();
 
         public WorkoutDetailsViewModel(IWorkoutRepository workoutRepository, IWorkoutExercisesRepository workoutExercisesRepository)
         {
@@ -126,7 +126,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
 
         [RelayCommand]
-        async Task DeleteFromWorkout(Exercise exercise)
+        async Task DeleteFromWorkout(ExerciseModel exercise)
         {
             bool result = await Shell.Current.DisplayAlert("Delete", $"Are you sure you want to remove {exercise.Name} from this workout?", "OK", "Cancel");
 
@@ -295,7 +295,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         }
 
         [RelayCommand]
-        async Task ToExerciseDetails(Exercise exercise)
+        async Task ToExerciseDetails(ExerciseModel exercise)
         {
             if (exercise is null)
                 return;

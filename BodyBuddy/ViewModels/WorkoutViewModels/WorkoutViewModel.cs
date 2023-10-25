@@ -138,7 +138,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         }
 
         // This method is used to read qr code data and create usable objects from it
-        public List<Exercise> Exercises { get; set; } = new List<Exercise>();
+        public List<ExerciseModel> Exercises { get; set; } = new List<ExerciseModel>();
         public void ReadQrCodeData(string qrCodeData)
         {
             // Unescape the values before splitting
@@ -172,7 +172,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                     int reps;
                     int.TryParse(exerciseParts[2].Split(':')[1], out reps);
 
-                    Exercises.Add(new Exercise
+                    Exercises.Add(new ExerciseModel
                     {
                         Id = exerciseId,
                         Sets = sets,

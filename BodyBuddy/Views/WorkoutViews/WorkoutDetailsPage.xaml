@@ -68,7 +68,7 @@
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:Exercise">
+                <DataTemplate x:DataType="model:ExerciseModel">
                     <SwipeView>
 
                         <Frame HeightRequest="120" Style="{StaticResource CardView}">

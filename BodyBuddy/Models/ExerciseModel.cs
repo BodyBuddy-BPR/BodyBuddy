@@ -4,7 +4,8 @@ using SQLite;
 
 namespace BodyBuddy.Models
 {
-    public class Exercise
+    [Table("Exercise")]
+    public class ExerciseModel
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }

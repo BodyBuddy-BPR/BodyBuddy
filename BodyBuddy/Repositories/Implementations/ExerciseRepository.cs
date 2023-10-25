@@ -14,14 +14,14 @@ namespace BodyBuddy.Repositories.Implementations
             //_supabaseClient = supabaseClient;
         }
 
-        public async Task<List<Exercise>> GetExercisesAsync(string category, string musclegroup)
+        public async Task<List<ExerciseModel>> GetExercisesAsync(string category, string musclegroup)
         {
             string lowerCategory = category.ToLower();
             string lowerMusclegroup = musclegroup.ToLower();
 
             try
             {
-                var exercises = await _context.Table<Exercise>()
+                var exercises = await _context.Table<ExerciseModel>()
                     .Where(x => x.Category == lowerCategory && x.PrimaryMuscles == lowerMusclegroup).ToListAsync();
 
                 return exercises;
@@ -30,7 +30,7 @@ namespace BodyBuddy.Repositories.Implementations
             {
                 // Handle or log the exception
                 Console.WriteLine($"Error in GetExercisesAsync: {ex}");
-                return new List<Exercise>(); // Return an empty list or handle the error gracefully.
+                return new List<ExerciseModel>(); // Return an empty list or handle the error gracefully.
             }
         }
 
@@ -42,7 +42,7 @@ namespace BodyBuddy.Repositories.Implementations
 
                 var sql = $"SELECT DISTINCT primaryMuscles FROM Exercise WHERE category = '{lowerCategory}'";
 
-                var distinctMuscleGroupsObjects = await _context.QueryAsync<Exercise>(sql);
+                var distinctMuscleGroupsObjects = await _context.QueryAsync<ExerciseModel>(sql);
 
                 // Convert the objects to strings
                 var distinctMuscleGroups = distinctMuscleGroupsObjects.Select(x => x.PrimaryMuscles).ToList();
@@ -58,9 +58,9 @@ namespace BodyBuddy.Repositories.Implementations
         }
 
 
-        public async Task<Exercise> GetExerciseDetails(int id)
+        public async Task<ExerciseModel> GetExerciseDetails(int id)
         {
-            var exercise = await _context.Table<Exercise>().FirstOrDefaultAsync(x => x.Id == id);
+            var exercise = await _context.Table<ExerciseModel>().FirstOrDefaultAsync(x => x.Id == id);
             return exercise;
         }
 

@@ -24,14 +24,14 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
         #region ObservableProperties
 
         [ObservableProperty]
-        private Exercise _queryDetails; //Category and Musclegroup selected in the previous pages
+        private ExerciseModel _queryDetails; //Category and Musclegroup selected in the previous pages
 
         [ObservableProperty]
         private WorkoutModel _selectedWorkout;
 
         #endregion
 
-        public ObservableCollection<Exercise> ExercisesList { get; set; } = new ObservableCollection<Exercise>();
+        public ObservableCollection<ExerciseModel> ExercisesList { get; set; } = new ObservableCollection<ExerciseModel>();
         public ObservableCollection<WorkoutModel> WorkoutsList { get; set; } = new ObservableCollection<WorkoutModel>();
 
         public ExercisesViewModel(IExerciseRepository exerciseRepository, IWorkoutRepository workoutRepository, IWorkoutExercisesRepository workoutExercisesRepository)
@@ -144,7 +144,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
         }
 
         [RelayCommand]
-        async Task AddExerciseToWorkout(Exercise exercise)
+        async Task AddExerciseToWorkout(ExerciseModel exercise)
         {
             if(SelectedWorkout.Id != 0)
             {
@@ -162,7 +162,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
 
         // Navigation to exercise details
         [RelayCommand]
-        async Task GoToExerciseDetails(Exercise exercise)
+        async Task GoToExerciseDetails(ExerciseModel exercise)
         {
             if (exercise is null)
                 return;
