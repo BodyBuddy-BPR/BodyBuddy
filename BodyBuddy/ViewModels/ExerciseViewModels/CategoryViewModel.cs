@@ -7,7 +7,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
 {
     public partial class CategoryViewModel : BaseViewModel
     {
-        public ObservableCollection<Exercise> Categories { get; set; } = new ObservableCollection<Exercise>();
+        public ObservableCollection<ExerciseModel> Categories { get; set; } = new();
 
         public CategoryViewModel()
         {
@@ -16,7 +16,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
         }
 
         [RelayCommand]
-        async Task GoToPrimaryMusclesPage(Exercise category)
+        async Task GoToPrimaryMusclesPage(ExerciseModel category)
         {
             if (category is null)
                 return;
@@ -30,13 +30,13 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
 
         private void GenerateCategories()
         {
-            Categories.Add(new Exercise { Category = "Strength" });
-            Categories.Add(new Exercise { Category = "Cardio" });
-            Categories.Add(new Exercise { Category = "Stretching" });
-            Categories.Add(new Exercise { Category = "Plyometrics" });
-            Categories.Add(new Exercise { Category = "Strongman" });
-            Categories.Add(new Exercise { Category = "Powerlifting" });
-            Categories.Add(new Exercise { Category = "Olympic weightlifting" });
+            Categories.Add(new ExerciseModel { Category = "Strength" });
+            Categories.Add(new ExerciseModel { Category = "Cardio" });
+            Categories.Add(new ExerciseModel { Category = "Stretching" });
+            Categories.Add(new ExerciseModel { Category = "Plyometrics" });
+            Categories.Add(new ExerciseModel { Category = "Strongman" });
+            Categories.Add(new ExerciseModel { Category = "Powerlifting" });
+            Categories.Add(new ExerciseModel { Category = "Olympic weightlifting" });
         }
     }
 }

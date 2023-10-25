@@ -36,7 +36,7 @@
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:Exercise">
+                <DataTemplate x:DataType="model:ExerciseModel">
 
                     <Frame HeightRequest="70" Style="{StaticResource CardView}">
 

@@ -8,7 +8,7 @@ namespace UnitTest.Mappers
     public class StartupTestMapperTests
     {
         private StartupTestMapper target;
-        private StartupTest startupTest;
+        private StartupTestModel startupTest;
         private StartupTestDto startupTestDto;
 
 

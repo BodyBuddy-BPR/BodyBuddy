@@ -13,7 +13,7 @@ namespace UnitTest.ViewModels.ExerciseViewModels
         {
             Mock<IExerciseRepository> mock = new Mock<IExerciseRepository>();
             target = new MuscleGroupViewModel(mock.Object);
-            target.ExerciseCategory = new Exercise();
+            target.ExerciseCategory = new ExerciseModel();
         }
 
         [Test]

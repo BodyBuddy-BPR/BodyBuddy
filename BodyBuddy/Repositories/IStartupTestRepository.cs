@@ -4,7 +4,7 @@ namespace BodyBuddy.Repositories
 {
     public interface IStartupTestRepository
     {
-        Task SaveStartupTestData(StartupTest startupTest);
-        Task<StartupTest> GetStartupTestData();
+        Task SaveStartupTestData(StartupTestModel startupTest);
+        Task<StartupTestModel> GetStartupTestData();
     }
 }

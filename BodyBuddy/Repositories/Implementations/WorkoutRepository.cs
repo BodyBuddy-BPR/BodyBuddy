@@ -13,11 +13,11 @@ namespace BodyBuddy.Repositories.Implementations
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<List<Workout>> GetWorkoutPlansAsync(int isPreMade)
+        public async Task<List<WorkoutModel>> GetWorkoutPlansAsync(int isPreMade)
         {
             try
             {
-                var workouts = await _context.Table<Workout>().Where(x => x.PreMade.Equals(isPreMade)).ToListAsync();
+                var workouts = await _context.Table<WorkoutModel>().Where(x => x.PreMade.Equals(isPreMade)).ToListAsync();
 
                 return workouts;
             }
@@ -25,11 +25,11 @@ namespace BodyBuddy.Repositories.Implementations
             {
                 // Handle or log the exception
                 Console.WriteLine($"Error in GetExercisesAsync: {ex}");
-                return new List<Workout>(); // Return an empty list
+                return new List<WorkoutModel>(); // Return an empty list
             }
         }
 
-        public async Task<int> PostWorkoutPlanAsync(Workout workout)
+        public async Task<int> PostWorkoutPlanAsync(WorkoutModel workout)
         {
             if (workout.Id != 0)
                 return await _context.UpdateAsync(workout);
@@ -41,14 +41,14 @@ namespace BodyBuddy.Repositories.Implementations
         }
         private async Task<int> GetNextWorkoutId()
         {
-            var lastItem = await _context.Table<Workout>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
+            var lastItem = await _context.Table<WorkoutModel>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
             return lastItem?.Id + 1 ?? 1;
         }
 
-        public async Task<bool> DeleteWorkout(Workout workout)
+        public async Task<bool> DeleteWorkout(WorkoutModel workout)
         {
             // First deleting all exercises with the workout id from the joint table
-            await _context.Table<WorkoutExercises>().DeleteAsync(x => x.WorkoutId == workout.Id);
+            await _context.Table<WorkoutExercisesModel>().DeleteAsync(x => x.WorkoutId == workout.Id);
 
             // Then deleting the workout from workout table
             await _context.DeleteAsync(workout);
@@ -57,7 +57,7 @@ namespace BodyBuddy.Repositories.Implementations
 
         public async Task<bool> DoesWorkoutAlreadyExist(string name)
         {
-            if (await _context.Table<Workout>().FirstOrDefaultAsync(x => x.Name == name) == null)
+            if (await _context.Table<WorkoutModel>().FirstOrDefaultAsync(x => x.Name == name) == null)
             {
                 return false;
             }
@@ -67,9 +67,9 @@ namespace BodyBuddy.Repositories.Implementations
             }
         }
 
-        public async Task<Workout> GetSpecificWorkoutAsync(string name)
+        public async Task<WorkoutModel> GetSpecificWorkoutAsync(string name)
         {
-            return await _context.Table<Workout>().FirstOrDefaultAsync(x => x.Name == name);
+            return await _context.Table<WorkoutModel>().FirstOrDefaultAsync(x => x.Name == name);
         }
     }
 }

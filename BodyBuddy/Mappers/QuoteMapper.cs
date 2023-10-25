@@ -10,12 +10,15 @@ namespace BodyBuddy.Mappers
 {
     public class QuoteMapper
     {
-        public QuoteDto MapToDto(Quote quote)
+        public QuoteDto MapToDto(QuoteModel quote)
         {
+            if (quote == null)
+                return new QuoteDto();
+
             return new QuoteDto()
             {
                 Id = quote.Id,
-                Quote = quote.quote,
+                Quote = quote.Quote,
                 Author = quote.Author,
             };
         }

@@ -17,14 +17,14 @@ namespace UnitTest.ViewModels.ExerciseViewModels
             _exerciseRepoMock = new Mock<IExerciseRepository>();
             _connectivityMock = new Mock<IConnectivity>();
             target = new ExerciseDetailsViewModel(_exerciseRepoMock.Object, _connectivityMock.Object);
-            target.ExerciseDetails = new Exercise() { Id = 1 };
+            target.ExerciseDetails = new ExerciseModel() { Id = 1 };
         }
 
         [Test]
         public async Task GetExerciseDetails_WithValidExercise_ReturnsDetails()
         {
             // Arrange
-            var mockExercise = new Exercise
+            var mockExercise = new ExerciseModel
             {
                 Id = 1,
                 Name = "Squat",
@@ -48,7 +48,7 @@ namespace UnitTest.ViewModels.ExerciseViewModels
         public async Task ProcessExerciseDetails_WithNullProperties_ConvertsToEmptyString()
         {
             // Arrange
-            var exercise = new Exercise
+            var exercise = new ExerciseModel
             {
                 Id=1
             };
@@ -79,7 +79,7 @@ namespace UnitTest.ViewModels.ExerciseViewModels
         public async Task PopulateExerciseImagesList_WithValidImages_AddsImages(string imagePath, int amountOfImages)
         {
             // Arrange
-            var mockExercise = new Exercise
+            var mockExercise = new ExerciseModel
             {
                 Id = 1,
                 Name = "Squat",

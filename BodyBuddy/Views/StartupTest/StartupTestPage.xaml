@@ -45,7 +45,12 @@
                 ItemsSource="{Binding GenderList}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <RadioButton Content="{Binding .}" GroupName="GenderGroup">
+                        <RadioButton
+                            BackgroundColor="Transparent"
+                            Content="{Binding .}"
+                            GroupName="GenderGroup"
+                            HorizontalOptions="Center"
+                            WidthRequest="125">
                             <RadioButton.Behaviors>
                                 <local:RadioButtonCheckChangedBehavior Command="{Binding Source={x:Reference GenderListView}, Path=BindingContext.RadioButtonCheckedCommand}" />
                             </RadioButton.Behaviors>
@@ -86,11 +91,17 @@
             <!--  Active  -->
             <CollectionView
                 x:Name="ActiveListView"
+                HorizontalOptions="Center"
                 IsVisible="{Binding IsActiveVisible}"
                 ItemsSource="{Binding ActivityList}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <RadioButton Content="{Binding .}" GroupName="GenderGroup">
+                        <RadioButton
+                            BackgroundColor="Transparent"
+                            Content="{Binding .}"
+                            GroupName="GenderGroup"
+                            HorizontalOptions="Center"
+                            WidthRequest="125">
                             <RadioButton.Behaviors>
                                 <local:RadioButtonCheckChangedBehavior Command="{Binding Source={x:Reference ActiveListView}, Path=BindingContext.RadioButtonCheckedCommand}" />
                             </RadioButton.Behaviors>
@@ -118,7 +129,12 @@
                 ItemsSource="{Binding GoalList}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <RadioButton Content="{Binding .}" GroupName="GoalGroup">
+                        <RadioButton
+                            BackgroundColor="Transparent"
+                            Content="{Binding .}"
+                            GroupName="GoalGroup"
+                            HorizontalOptions="Center"
+                            WidthRequest="125">
                             <RadioButton.Behaviors>
                                 <local:RadioButtonCheckChangedBehavior Command="{Binding Source={x:Reference GoalListView}, Path=BindingContext.RadioButtonCheckedCommand}" />
                             </RadioButton.Behaviors>

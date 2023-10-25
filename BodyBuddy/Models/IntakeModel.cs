@@ -3,28 +3,28 @@
 namespace BodyBuddy.Models
 {
     [Table("Intake")]
-	public class Intake
+	public class IntakeModel
 	{
 		[PrimaryKey]
 		[Column("id")]
 		public int Id { get; set; }
 
-		[Column("caloriegoal")]
+		[Column("calorieGoal")]
 		public int CalorieGoal { get; set; }
 
-		[Column("watergoal")]
+		[Column("waterGoal")]
 		public int WaterGoal { get; set; }
 
-		[Column("caloriecurrent")]
+		[Column("calorieCurrent")]
 		public int CalorieCurrent { get; set; }
 
-		[Column("watercurrent")]
+		[Column("waterCurrent")]
 		public int WaterCurrent { get; set; }
 
 		[Column("date")]
 		public int Date { get; set; }
 
-		public Intake()
+		public IntakeModel()
 		{
 			Date = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
 		}
