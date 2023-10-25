@@ -7,10 +7,10 @@ using System.Windows.Input;
 
 namespace BodyBuddy.Events
 {
-    public class CheckedChangedBehavior : Behavior<RadioButton>
+    public class RadioButtonCheckChangedBehavior : Behavior<RadioButton>
     {
         public static readonly BindableProperty CommandProperty =
-        BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(CheckedChangedBehavior), null);
+        BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(RadioButtonCheckChangedBehavior), null);
 
         public ICommand Command
         {

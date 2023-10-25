@@ -17,10 +17,12 @@
     </ContentPage.Resources>
     <Grid
         Margin="20,10"
-        RowDefinitions="Auto, *, *, Auto"
+        RowDefinitions="Auto, *, Auto, Auto"
         RowSpacing="15">
         <Label
             Grid.Row="0"
+            Padding="0,40,0,0"
+            HorizontalOptions="Center"
             Style="{StaticResource TitleLabel}"
             Text="{Binding QuestionnaireText}" />
 
@@ -38,14 +40,14 @@
 
             <!--  Gender  -->
             <CollectionView
-                x:Name="genderListView"
+                x:Name="GenderListView"
                 IsVisible="{Binding IsGenderVisible}"
                 ItemsSource="{Binding GenderList}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <RadioButton Content="{Binding .}" GroupName="GenderGroup">
                             <RadioButton.Behaviors>
-                                <local:CheckedChangedBehavior Command="{Binding Source={x:Reference genderListView}, Path=BindingContext.RadioButtonCheckedCommand}" />
+                                <local:RadioButtonCheckChangedBehavior Command="{Binding Source={x:Reference GenderListView}, Path=BindingContext.RadioButtonCheckedCommand}" />
                             </RadioButton.Behaviors>
                         </RadioButton>
                     </DataTemplate>
@@ -83,14 +85,14 @@
 
             <!--  Active  -->
             <CollectionView
-                x:Name="activeListView"
+                x:Name="ActiveListView"
                 IsVisible="{Binding IsActiveVisible}"
                 ItemsSource="{Binding ActivityList}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <RadioButton Content="{Binding .}" GroupName="GenderGroup">
                             <RadioButton.Behaviors>
-                                <local:CheckedChangedBehavior Command="{Binding Source={x:Reference activeListView}, Path=BindingContext.RadioButtonCheckedCommand}" />
+                                <local:RadioButtonCheckChangedBehavior Command="{Binding Source={x:Reference ActiveListView}, Path=BindingContext.RadioButtonCheckedCommand}" />
                             </RadioButton.Behaviors>
                         </RadioButton>
                     </DataTemplate>
@@ -111,14 +113,14 @@
 
             <!--  Goal  -->
             <CollectionView
-                x:Name="goalListView"
+                x:Name="GoalListView"
                 IsVisible="{Binding IsGoalVisible}"
                 ItemsSource="{Binding GoalList}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <RadioButton Content="{Binding .}" GroupName="GoalGroup">
                             <RadioButton.Behaviors>
-                                <local:CheckedChangedBehavior Command="{Binding Source={x:Reference goalListView}, Path=BindingContext.RadioButtonCheckedCommand}" />
+                                <local:RadioButtonCheckChangedBehavior Command="{Binding Source={x:Reference GoalListView}, Path=BindingContext.RadioButtonCheckedCommand}" />
                             </RadioButton.Behaviors>
                         </RadioButton>
                     </DataTemplate>
@@ -135,18 +137,17 @@
             Text="Next Question!" />
 
         <Button
-            Grid.Row="3"
-            Command="{Binding BackButtonCommand}"
-            IsVisible="{Binding BackIsVisible}"
-            Style="{StaticResource AddButton}"
-            Text="Previous Question!" />
-
-        <Button
             Grid.Row="2"
             Command="{Binding SubmitDataCommand}"
             IsVisible="{Binding SubmitDataIsVisible}"
             Style="{StaticResource AddButton}"
             Text="Submit Data!" />
 
+        <Button
+            Grid.Row="3"
+            Command="{Binding BackButtonCommand}"
+            IsVisible="{Binding BackIsVisible}"
+            Style="{StaticResource AddButton}"
+            Text="Previous Question!" />
     </Grid>
 </ContentPage>
