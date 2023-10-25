@@ -203,7 +203,7 @@ public partial class StartupTestViewModel : BaseViewModel
         switch (CurrentState)
         {
             case State.NameEntry:
-                QuestionaireText = "What is your Name?";
+                QuestionaireText = "What is your name?";
                 currentStateDone = () => !string.IsNullOrEmpty(Name);
                 break;
             case State.GenderSelection:
@@ -239,6 +239,9 @@ public partial class StartupTestViewModel : BaseViewModel
                 currentStateDone = () => true;
                 SubmitDataIsVisible = true;
                 break;
+            default:
+                throw new InvalidOperationException($"Unexpected state: {CurrentState}");
+
         }
     }
 
