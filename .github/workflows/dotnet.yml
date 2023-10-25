@@ -11,27 +11,56 @@ on:
 
 jobs:
   build:
-
     runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v3
+
+    # Setup .NET SDK
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
+
+    # Cache .NET packages
+    - name: Cache .NET packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
+    # Cache MAUI workloads
+    - name: Cache MAUI workloads
+      uses: actions/cache@v2
+      with:
+        path: |
+          /usr/local/share/dotnet/sdk-manifests/
+          /usr/local/share/dotnet/sdk-packs/
+        key: ${{ runner.os }}-maui-workloads-${{ hashFiles('**/*.json') }}
+        restore-keys: |
+          ${{ runner.os }}-maui-workloads-
+
+    # Install MAUI Workloads (if not cached)
     - name: Install MAUI Workloads
-      run: dotnet workload install maui-android maui-ios --skip-manifest-update
-      #run: |
-        #dotnet workload install maui --skip-manifest-update
-        #dotnet workload install maui-android maui-ios --skip-manifest-update
+      run: |
+        if [[ ! -d "/usr/local/share/dotnet/sdk-manifests/7.0.100/Microsoft.NET.Sdk.Maui" ]]; then
+          dotnet workload install maui-android maui-ios --skip-manifest-update
+        fi
+
+    # Restore dependencies
     - name: Restore dependencies
       run: dotnet restore
+
+    # Build project
     - name: Build
       run: dotnet build BodyBuddy.sln --no-restore -p:DefineConstants=GITHUB_BUILD
       env:
         SYNCFUNCTION_KEY: ${{ secrets.SYNCFUNCTION_KEY }}
         SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
         SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+
+    # Test project
     - name: Test
       run: dotnet test --no-build --verbosity normal
