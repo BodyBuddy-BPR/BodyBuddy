@@ -102,6 +102,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\Profile\ProfilePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\StartupTest\StartupTestPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -168,6 +171,9 @@
 	<ItemGroup>
 	  <Compile Update="Views\Popups\EditIntakeGoalPopup.xaml.cs">
 	    <DependentUpon>EditIntakeGoalPopup.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Profile\ProfilePage.xaml.cs">
+	    <DependentUpon>ProfilePage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 

@@ -8,7 +8,7 @@ namespace BodyBuddy.Views.WorkoutViews;
 public partial class WorkoutsPage : ContentPage
 {
     private WorkoutViewModel _viewModel;
-    IPopupNavigation _popupNavigation;
+    private IPopupNavigation _popupNavigation;
 
     public WorkoutsPage(WorkoutViewModel workoutsViewModel, IPopupNavigation popupNavigation)
     {

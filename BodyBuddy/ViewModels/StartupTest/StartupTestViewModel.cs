@@ -1,6 +1,7 @@
 ﻿using BodyBuddy.Dtos;
 using BodyBuddy.Helpers;
 using BodyBuddy.Services;
+using BodyBuddy.Views.Profile;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.ComponentModel;
@@ -25,13 +26,13 @@ namespace BodyBuddy.ViewModels.StartupTest
         [ObservableProperty] private string name, gender, active, goal;
         [ObservableProperty] private double weight;
         [ObservableProperty] private int height, passiveCalorieBurn;
-        [ObservableProperty] private DateTime selectedDate = new DateTime(2005, 1, 1);
+        [ObservableProperty] private DateTime selectedDate = new(2005, 1, 1);
 
         //Others
         [ObservableProperty]
         private string _questionaireText;
 
-        [ObservableProperty] private DateTime minDate = new DateTime(1914, 7, 28);
+        [ObservableProperty] private DateTime minDate = new(1914, 7, 28);
         [ObservableProperty] private DateTime maxDate = DateTime.Now;
 
 
@@ -75,7 +76,7 @@ namespace BodyBuddy.ViewModels.StartupTest
         }
 
         [RelayCommand]
-        public void SubmitData()
+        public async Task SubmitData()
         {
             StartupTestDto startupTestData = new()
             {
@@ -90,6 +91,9 @@ namespace BodyBuddy.ViewModels.StartupTest
             };
 
             _startupTestService.SaveStartupTestData(startupTestData);
+
+            await Task.Delay(100); // Add a short delay
+            await Shell.Current.GoToAsync(nameof(ProfilePage), true);
         }
 
         //Whenever radiobutton changes

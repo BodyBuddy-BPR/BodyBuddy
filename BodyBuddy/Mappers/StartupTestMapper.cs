@@ -12,22 +12,22 @@ namespace BodyBuddy.Mappers
     public class StartupTestMapper
     {
         #region MappingStringsToIntegers --> Add here if more options are being added later!
-        private readonly Dictionary<string, int> _goalToInteger = new Dictionary<string, int>
-{
+        private readonly Dictionary<string, int> _goalToInteger = new()
+        {
     { Strings.STARTUP_GOAL_GAINMUSCLE, 0 },
     { Strings.STARTUP_GOAL_LOSEWEIGHT, 1 }
 };
 
-        private readonly Dictionary<string, int> _activityToInteger = new Dictionary<string, int>
-{
+        private readonly Dictionary<string, int> _activityToInteger = new()
+        {
     { Strings.STARTUP_ACTIVITY_VERYACTIVE, 0 },
     { Strings.STARTUP_ACTIVITY_ACTIVE, 1 },
     { Strings.STARTUP_ACTIVITY_LITTLEACTIVE, 2 },
     { Strings.STARTUP_ACTIVITY_NOTVERYACTIVE, 3 }
 };
 
-        private readonly Dictionary<string, int> _genderToInteger = new Dictionary<string, int>
-{
+        private readonly Dictionary<string, int> _genderToInteger = new()
+        {
     { Strings.STARTUP_GENDER_FEMALE, 0 },
     { Strings.STARTUP_GENDER_MALE, 1 },
     { Strings.STARTUP_GENDER_NONE, 2 }
@@ -83,14 +83,14 @@ namespace BodyBuddy.Mappers
         //Birthday
         private long DateTimeToEpoch(DateTime dateTime)
         {
-            DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            DateTime epochStart = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return (long)(dateTime.ToUniversalTime() - epochStart).TotalSeconds;
 
         }
 
         private DateTime EpochToDateTime(long epoch)
         {
-            DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            DateTime epochStart = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return epochStart.AddSeconds(epoch);
         }
 

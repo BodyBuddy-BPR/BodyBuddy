@@ -1,4 +1,5 @@
 ﻿using BodyBuddy.Views.ExerciseViews;
+using BodyBuddy.Views.Profile;
 using BodyBuddy.Views.StartupTest;
 using BodyBuddy.Views.WorkoutViews;
 
@@ -9,6 +10,8 @@ public partial class AppShell : Shell
 	public AppShell()
 	{
 		InitializeComponent();
+		//Profile
+		Routing.RegisterRoute(nameof(ProfilePage), typeof(ProfilePage));
 
 		//Exercise Pages
 		Routing.RegisterRoute(nameof(CategoryPage), typeof(CategoryPage));
