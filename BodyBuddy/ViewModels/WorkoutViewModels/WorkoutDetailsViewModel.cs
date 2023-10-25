@@ -8,6 +8,7 @@ using Mopups.Services;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
+using BodyBuddy.Dtos;
 
 namespace BodyBuddy.ViewModels.WorkoutViewModels
 {
@@ -21,7 +22,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         // Query field
         [ObservableProperty]
-        private Workout _workoutDetails;
+        private WorkoutModel _workoutDetails;
 
         // IsPremade (used to hide edit and deletions)
         [ObservableProperty]
@@ -40,7 +41,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         public int sets, reps;
 
         [ObservableProperty]
-        public Exercise exerciseToEdit;
+        public ExerciseModel exerciseToEdit;
 
         [ObservableProperty]
         private bool smallButtonsIsEnabled; // This is the small Add Exercise & Start Workout buttons
@@ -49,7 +50,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         #endregion
 
-        public ObservableCollection<Exercise> Exercises { get; set; } = new ObservableCollection<Exercise>();
+        public ObservableCollection<ExerciseModel> Exercises { get; set; } = new ObservableCollection<ExerciseModel>();
 
         public WorkoutDetailsViewModel(IWorkoutRepository workoutRepository, IWorkoutExercisesRepository workoutExercisesRepository)
         {
@@ -125,7 +126,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
 
         [RelayCommand]
-        async Task DeleteFromWorkout(Exercise exercise)
+        async Task DeleteFromWorkout(ExerciseModel exercise)
         {
             bool result = await Shell.Current.DisplayAlert("Delete", $"Are you sure you want to remove {exercise.Name} from this workout?", "OK", "Cancel");
 
@@ -163,7 +164,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             }
             else
             {
-                Workout workout = new() { Id = WorkoutDetails.Id, Name = PopupName, Description = PopupDescription, PreMade = 0 };
+                WorkoutModel workout = new() { Id = WorkoutDetails.Id, Name = PopupName, Description = PopupDescription, PreMade = 0 };
                 await _workoutRepository.PostWorkoutPlanAsync(workout);
 
                 WorkoutName = PopupName;
@@ -180,7 +181,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         }
 
         [RelayCommand]
-        async Task DeleteWorkout(Workout workout)
+        async Task DeleteWorkout(WorkoutModel workout)
         {
             bool result = await Shell.Current.DisplayAlert("Delete", $"Are you sure you want to delete {workout.Name}?", "OK", "Cancel");
 
@@ -294,7 +295,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         }
 
         [RelayCommand]
-        async Task ToExerciseDetails(Exercise exercise)
+        async Task ToExerciseDetails(ExerciseModel exercise)
         {
             if (exercise is null)
                 return;

@@ -13,7 +13,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         private readonly IWorkoutRepository _workoutRepository;
         private readonly IWorkoutExercisesRepository _workoutExercisesRepository;
 
-        public ObservableCollection<Workout> Workouts { get; set; } = new ObservableCollection<Workout>();
+        public ObservableCollection<WorkoutModel> Workouts { get; set; } = new ObservableCollection<WorkoutModel>();
 
         [ObservableProperty]
         private bool _isPreMadeWorkout;
@@ -42,7 +42,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 IsBusy = true;
 
-                List<Workout> workoutPlans;
+                List<WorkoutModel> workoutPlans;
                 // Getting User Workouts
                 // TODO: --> Make a DTO in a service class, so this one takes true/false rather than 1 and 0
                 // Then map from DTO to DB method and back (change bool to ints and back)
@@ -73,7 +73,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         }
 
         [RelayCommand]
-        async Task DeleteWorkout(Workout workout)
+        async Task DeleteWorkout(WorkoutModel workout)
         {
             bool result = await Shell.Current.DisplayAlert("Delete", $"Are you sure you want to delete {workout.Name}?", "OK", "Cancel");
 
@@ -98,7 +98,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
             try
             {
-                Workout workout = new() { Name = WorkoutName, Description = WorkoutDescription, PreMade = 0 };
+                WorkoutModel workout = new() { Name = WorkoutName, Description = WorkoutDescription, PreMade = 0 };
                 await _workoutRepository.PostWorkoutPlanAsync(workout);
                 Workouts.Add(workout);
 
@@ -138,7 +138,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         }
 
         // This method is used to read qr code data and create usable objects from it
-        public List<Exercise> Exercises { get; set; } = new List<Exercise>();
+        public List<ExerciseModel> Exercises { get; set; } = new List<ExerciseModel>();
         public void ReadQrCodeData(string qrCodeData)
         {
             // Unescape the values before splitting
@@ -172,7 +172,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                     int reps;
                     int.TryParse(exerciseParts[2].Split(':')[1], out reps);
 
-                    Exercises.Add(new Exercise
+                    Exercises.Add(new ExerciseModel
                     {
                         Id = exerciseId,
                         Sets = sets,
@@ -222,7 +222,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         #region Navigation
 
         [RelayCommand]
-        public async Task GoToWorkoutDetails(Workout workout)
+        public async Task GoToWorkoutDetails(WorkoutModel workout)
         {
             if (workout == null)
             {

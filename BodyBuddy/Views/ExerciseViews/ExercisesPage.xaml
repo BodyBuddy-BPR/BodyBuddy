@@ -49,7 +49,7 @@
             VerticalOptions="FillAndExpand">
 
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:Exercise">
+                <DataTemplate x:DataType="model:ExerciseModel">
                     <Grid Padding="0,5">
 
                         <Frame HeightRequest="80" Style="{StaticResource CardView}">

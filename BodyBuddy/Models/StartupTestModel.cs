@@ -3,7 +3,7 @@
 namespace BodyBuddy.Models
 {
     [Table("StartupTest")]
-    public class StartupTest
+    public class StartupTestModel
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }

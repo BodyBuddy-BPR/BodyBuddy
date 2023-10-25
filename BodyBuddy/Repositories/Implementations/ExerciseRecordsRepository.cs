@@ -13,7 +13,7 @@ namespace BodyBuddy.Repositories.Implementations
         }
 
 
-        public async Task<int> SaveExerciseRecords(ExerciseRecords exerciseRecord)
+        public async Task<int> SaveExerciseRecords(ExerciseRecordsModel exerciseRecord)
         {
             if (exerciseRecord.Id != 0)
                 return await _context.UpdateAsync(exerciseRecord);
@@ -25,7 +25,7 @@ namespace BodyBuddy.Repositories.Implementations
         }
         private async Task<int> GetNextExerciseRecordsId()
         {
-            var lastItem = await _context.Table<ExerciseRecords>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
+            var lastItem = await _context.Table<ExerciseRecordsModel>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
             return lastItem?.Id + 1 ?? 1;
         }
     }

@@ -12,16 +12,16 @@ namespace BodyBuddy.Repositories.Implementations
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<List<Exercise>> GetExercisesInWorkout(int workoutId)
+        public async Task<List<ExerciseModel>> GetExercisesInWorkout(int workoutId)
         {
 
-            List<Exercise> exercises = new();
+            List<ExerciseModel> exercises = new();
             try
             {
-                var workoutIds = await _context.Table<WorkoutExercises>().Where(x => x.WorkoutId == workoutId).ToListAsync();
+                var workoutIds = await _context.Table<WorkoutExercisesModel>().Where(x => x.WorkoutId == workoutId).ToListAsync();
                 foreach (var workout in workoutIds)
                 {
-                    var exercise = await _context.Table<Exercise>().FirstOrDefaultAsync(x => x.Id == workout.ExerciseId);
+                    var exercise = await _context.Table<ExerciseModel>().FirstOrDefaultAsync(x => x.Id == workout.ExerciseId);
 
                     exercise.WorkoutId = workout.Id;
 
@@ -46,24 +46,24 @@ namespace BodyBuddy.Repositories.Implementations
             {
                 // Handle or log the exception
                 Console.WriteLine($"Error in GetExercisesAsync: {ex}");
-                return new List<Exercise>(); // Return an empty list or handle the error gracefully.
+                return new List<ExerciseModel>(); // Return an empty list or handle the error gracefully.
             }
         }
 
-        public async Task AddExerciseToWorkout(int workoutId, Exercise exercise)
+        public async Task AddExerciseToWorkout(int workoutId, ExerciseModel exercise)
         {
-            var lastItem = await _context.Table<WorkoutExercises>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
+            var lastItem = await _context.Table<WorkoutExercisesModel>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
             var newId = lastItem?.Id + 1 ?? 1;
 
-            WorkoutExercises workoutExercise = new() { Id = newId, WorkoutId = workoutId, ExerciseId = exercise.Id, Sets = exercise.Sets, Reps = exercise.Reps };
+            WorkoutExercisesModel workoutExercise = new() { Id = newId, WorkoutId = workoutId, ExerciseId = exercise.Id, Sets = exercise.Sets, Reps = exercise.Reps };
             await _context.InsertAsync(workoutExercise);
         }
 
-        public async Task EditExerciseInWorkout(int workoutId, Exercise changedExercise)
+        public async Task EditExerciseInWorkout(int workoutId, ExerciseModel changedExercise)
         {
             try
             {
-                WorkoutExercises workoutExerciseToChange = await _context.Table<WorkoutExercises>()
+                WorkoutExercisesModel workoutExerciseToChange = await _context.Table<WorkoutExercisesModel>()
                     .FirstOrDefaultAsync(x => x.WorkoutId == workoutId && x.Id == changedExercise.WorkoutId);
 
                 if (workoutExerciseToChange != null)
@@ -88,7 +88,7 @@ namespace BodyBuddy.Repositories.Implementations
         {
             try
             {
-                await _context.Table<WorkoutExercises>().DeleteAsync(x => x.WorkoutId == workoutId && x.ExerciseId == exerciseId);
+                await _context.Table<WorkoutExercisesModel>().DeleteAsync(x => x.WorkoutId == workoutId && x.ExerciseId == exerciseId);
             }
             catch (Exception ex)
             {

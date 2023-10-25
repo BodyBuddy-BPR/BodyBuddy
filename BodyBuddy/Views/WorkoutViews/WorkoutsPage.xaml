@@ -57,7 +57,7 @@
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:Workout">
+                <DataTemplate x:DataType="model:WorkoutModel">
                     <SwipeView>
                         <SwipeView.RightItems>
                             <SwipeItems Mode="Execute">

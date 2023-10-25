@@ -118,7 +118,7 @@
                     RowDefinitions="*, Auto">
                     <CollectionView Grid.Row="0" ItemsSource="{Binding ExerciseRecords}">
                         <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="model:ExerciseRecords">
+                            <DataTemplate x:DataType="model:ExerciseRecordsModel">
 
                                 <Grid
                                     Margin="0,0,0,-8"

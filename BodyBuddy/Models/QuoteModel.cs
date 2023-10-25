@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 namespace BodyBuddy.Models
 {
     [Table("Quotes")]
-    public class Quote : BaseModel
+    public class QuoteModel : BaseModel
     {
         [PrimaryKey("id")]
         public int Id { get; set; }
 
         [Column("quote")]
-        public string quote { get; set; }
+        public string Quote { get; set; }
 
         [Column("author")]
         public string Author { get; set; }

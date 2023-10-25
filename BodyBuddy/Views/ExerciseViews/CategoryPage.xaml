@@ -42,7 +42,7 @@
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:Exercise">
+                <DataTemplate x:DataType="model:ExerciseModel">
 
                     <Frame
                         HeightRequest="130"

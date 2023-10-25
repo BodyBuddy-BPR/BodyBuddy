@@ -35,7 +35,7 @@ namespace BodyBuddy.Repositories.Implementations
             _supabaseClient = supabaseClient;
         }
 
-        public async Task<Quote> FetchNewQuote()
+        public async Task<QuoteModel> FetchNewQuote()
         {
             DateTime lastFetchedDate = Preferences.Get(datePreferencesKey, DateTime.MinValue);
 

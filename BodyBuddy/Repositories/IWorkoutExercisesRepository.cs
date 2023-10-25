@@ -4,11 +4,11 @@ namespace BodyBuddy.Repositories
 {
     public interface IWorkoutExercisesRepository
     {
-        Task<List<Exercise>> GetExercisesInWorkout(int workoutId);
+        Task<List<ExerciseModel>> GetExercisesInWorkout(int workoutId);
 
-        Task AddExerciseToWorkout(int workoutId, Exercise exerciseId);
+        Task AddExerciseToWorkout(int workoutId, ExerciseModel exerciseId);
 
-        Task EditExerciseInWorkout(int workoutId, Exercise changedExercise);
+        Task EditExerciseInWorkout(int workoutId, ExerciseModel changedExercise);
 
         Task DeleteExerciseFromWorkout(int workoutId, int exerciseId);
 

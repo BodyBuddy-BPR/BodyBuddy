@@ -11,14 +11,14 @@ namespace UnitTest.ViewModels.IntakeViewModels
         private IntakeViewModel target;
         private Mock<IIntakeRepository> mockRepo;
         private Mock<IPopupNavigation> mockPopupNavigation;
-        private Intake defaultIntake;
+        private IntakeModel defaultIntake;
 
         [SetUp]
         public void Setup()
         {
             mockRepo = new Mock<IIntakeRepository>();
             mockPopupNavigation = new Mock<IPopupNavigation>();
-            defaultIntake = new Intake() { Id = 1, Date = 1697022414, CalorieCurrent = 0, CalorieGoal = 3500, WaterCurrent = 0, WaterGoal = 3000 };
+            defaultIntake = new IntakeModel() { Id = 1, Date = 1697022414, CalorieCurrent = 0, CalorieGoal = 3500, WaterCurrent = 0, WaterGoal = 3000 };
 
             target = new IntakeViewModel(mockRepo.Object, mockPopupNavigation.Object);
         }
