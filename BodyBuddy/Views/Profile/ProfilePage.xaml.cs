@@ -9,10 +9,16 @@ public partial class ProfilePage : ContentPage
     private ProfileViewModel _viewModel;
 
     public ProfilePage(ProfileViewModel profileViewModel)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         _viewModel = profileViewModel;
         BindingContext = profileViewModel;
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await _viewModel.Initialize();
     }
 
     private async void Login_Clicked(object sender, EventArgs e)

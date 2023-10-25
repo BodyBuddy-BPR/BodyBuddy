@@ -8,17 +8,161 @@
     x:DataType="viewModel:ProfileViewModel"
     Shell.NavBarIsVisible="False">
 
-    <VerticalStackLayout>
-        <Label
-            HorizontalOptions="Center"
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" />
 
+    <Grid Margin="20" RowSpacing="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Label
+            Grid.Row="0"
+            FontAttributes="Bold"
+            HorizontalOptions="Center"
+            Style="{StaticResource TitleLabel}"
+            Text="Your Profile" />
+
+        <Grid Grid.Row="1" RowSpacing="15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="Name:"
+                VerticalTextAlignment="Center" />
+            <Label
+                Grid.Row="0"
+                Grid.Column="1"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="{Binding StartupTestDto.Name}"
+                VerticalTextAlignment="Center" />
+
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="Gender:"
+                VerticalTextAlignment="Center" />
+            <Label
+                Grid.Row="1"
+                Grid.Column="1"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="{Binding StartupTestDto.Gender}"
+                VerticalTextAlignment="Center" />
+
+            <Label
+                Grid.Row="2"
+                Grid.Column="0"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="Weight:"
+                VerticalTextAlignment="Center" />
+            <Label
+                Grid.Row="2"
+                Grid.Column="1"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="{Binding StartupTestDto.Weight, StringFormat='{0} kg'}"
+                VerticalTextAlignment="Center" />
+
+            <Label
+                Grid.Row="3"
+                Grid.Column="0"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="Height:"
+                VerticalTextAlignment="Center" />
+            <Label
+                Grid.Row="3"
+                Grid.Column="1"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="{Binding StartupTestDto.Height, StringFormat='{0} cm'}"
+                VerticalTextAlignment="Center" />
+
+            <Label
+                Grid.Row="4"
+                Grid.Column="0"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="Birthday:"
+                VerticalTextAlignment="Center" />
+            <Label
+                Grid.Row="4"
+                Grid.Column="1"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="{Binding StartupTestDto.Birthday}"
+                VerticalTextAlignment="Center" />
+
+            <Label
+                Grid.Row="5"
+                Grid.Column="0"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="Activity Level:"
+                VerticalTextAlignment="Center" />
+            <Label
+                Grid.Row="5"
+                Grid.Column="1"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="{Binding StartupTestDto.ActiveAmount}"
+                VerticalTextAlignment="Center" />
+
+            <Label
+                Grid.Row="6"
+                Grid.Column="0"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="Passive Calorie Burn:"
+                VerticalTextAlignment="Center" />
+            <Label
+                Grid.Row="6"
+                Grid.Column="1"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="{Binding StartupTestDto.PassiveCalorieBurn}"
+                VerticalTextAlignment="Center" />
+
+            <Label
+                Grid.Row="7"
+                Grid.Column="0"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="Workout Goal:"
+                VerticalTextAlignment="Center" />
+            <Label
+                Grid.Row="7"
+                Grid.Column="1"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource MediumLabel}"
+                Text="{Binding StartupTestDto.Goal}"
+                VerticalTextAlignment="Center" />
+        </Grid>
+    </Grid>
         <Button
             Clicked="Login_Clicked"
             Style="{StaticResource BaseButton}"
             Text="Login"
             VerticalOptions="EndAndExpand"
             WidthRequest="120" />
-    </VerticalStackLayout>
 </ContentPage>
