@@ -20,7 +20,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         [ObservableProperty]
         private ExerciseModel _displayedExercise;
-        public ObservableCollection<ExerciseRecords> ExerciseRecords { get; set; } = new ObservableCollection<ExerciseRecords>();
+        public ObservableCollection<ExerciseRecordsModel> ExerciseRecords { get; set; } = new ObservableCollection<ExerciseRecordsModel>();
         public ObservableCollection<ExerciseModel> Exercises { get; set; } = new ObservableCollection<ExerciseModel>();
               
 
@@ -91,12 +91,12 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             if (DisplayedExercise.Records == null || DisplayedExercise.Records.Count == 0)
             {
                 // Generate sets only if records are not already present
-                DisplayedExercise.Records = new List<ExerciseRecords>();
+                DisplayedExercise.Records = new List<ExerciseRecordsModel>();
 
                 // Generate sets
                 for (int i = 1; i <= DisplayedExercise.Sets; i++)
                 {
-                    var exerciseRecord = new ExerciseRecords
+                    var exerciseRecord = new ExerciseRecordsModel
                     {
                         ExerciseId = DisplayedExercise.Id,
                         Set = i,
