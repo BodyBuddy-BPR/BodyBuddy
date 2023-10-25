@@ -15,7 +15,7 @@ namespace BodyBuddy.Models
         public int Id { get; set; }
 
         [Column("quote")]
-        public string quote { get; set; }
+        public string Quote { get; set; }
 
         [Column("author")]
         public string Author { get; set; }

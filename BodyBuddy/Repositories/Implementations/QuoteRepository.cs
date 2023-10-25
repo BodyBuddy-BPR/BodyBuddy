@@ -52,14 +52,14 @@ namespace BodyBuddy.Repositories.Implementations
 
                     // Save the new quote and update the last fetched date in SharedPreferences
                     Preferences.Set(datePreferencesKey, _dateTimeService.Today);
-                    Preferences.Set(quotePreferencesKey, quote.quote);
+                    Preferences.Set(quotePreferencesKey, quote.Quote);
 
                     return quote;
                 }
             }
 
             // Return the previously fetched quote
-            return new QuoteModel { quote = Preferences.Get(quotePreferencesKey, "To enjoy the glow of good health, you must exercise."), Author = "Gene Tunney" };
+            return new QuoteModel { Quote = Preferences.Get(quotePreferencesKey, "To enjoy the glow of good health, you must exercise."), Author = "Gene Tunney" };
         }
     }
 }

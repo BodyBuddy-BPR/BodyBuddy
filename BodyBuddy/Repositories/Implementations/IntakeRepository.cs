@@ -13,7 +13,7 @@ namespace BodyBuddy.Repositories.Implementations
 			_context = context ?? throw new ArgumentNullException(nameof(context));
 		}
 
-		public async Task<Intake> GetIntakeAsync()
+		public async Task<IntakeModel> GetIntakeAsync()
 		{
 			try
 			{
@@ -22,18 +22,18 @@ namespace BodyBuddy.Repositories.Implementations
 				int currentDateTimestamp = (int)(currentDateTime.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
 
 				//Check if there already exists an entry in the database with the timestamp for today, if not, we create one.
-				var existingIntake = await _context.Table<Intake>()
+				var existingIntake = await _context.Table<IntakeModel>()
 					.Where(x => x.Date == currentDateTimestamp)
 					.FirstOrDefaultAsync();
 
 				if (existingIntake == null)
 				{
 					// Creating a new Intake entry in the database, if one does not already exist.
-					existingIntake = new Intake();
+					existingIntake = new IntakeModel();
 					existingIntake.Id = await GetNextIntakeId();
 					existingIntake.Date = currentDateTimestamp;
 
-					var previousIntake = await _context.Table<Intake>()
+					var previousIntake = await _context.Table<IntakeModel>()
 						.OrderByDescending(x => x.Date)
 						.FirstOrDefaultAsync();
 
@@ -63,17 +63,17 @@ namespace BodyBuddy.Repositories.Implementations
 			catch (Exception ex)
 			{
 				Console.WriteLine($"Error in GetIntakeAsync: {ex}");
-				return new Intake();
+				return new IntakeModel();
 			}
 		}
 
 		private async Task<int> GetNextIntakeId()
 		{
-			var lastItem = await _context.Table<Intake>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
+			var lastItem = await _context.Table<IntakeModel>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
 			return lastItem?.Id + 1 ?? 1;
 		}
 
-		public async Task SaveChangesAsync(Intake intakeDetails)
+		public async Task SaveChangesAsync(IntakeModel intakeDetails)
 		{
 			await _context.UpdateAsync(intakeDetails);
 		}

@@ -12,10 +12,13 @@ namespace BodyBuddy.Mappers
     {
         public QuoteDto MapToDto(QuoteModel quote)
         {
+            if (quote == null)
+                return new QuoteDto();
+
             return new QuoteDto()
             {
                 Id = quote.Id,
-                Quote = quote.quote,
+                Quote = quote.Quote,
                 Author = quote.Author,
             };
         }
