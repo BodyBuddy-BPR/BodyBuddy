@@ -11,6 +11,13 @@ public partial class LoginPage : ContentPage
         InitializeComponent();
         _viewModel = loginViewModel;
         BindingContext = loginViewModel;
+
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await _viewModel.Initialize();
     }
 
     #region Sign In
@@ -78,5 +85,6 @@ public partial class LoginPage : ContentPage
         }
     }
 
-   
+
+
 }

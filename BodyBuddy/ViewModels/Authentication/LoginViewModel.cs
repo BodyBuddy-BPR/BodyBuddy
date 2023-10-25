@@ -9,16 +9,19 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BodyBuddy.Services;
 using static Supabase.Gotrue.Constants;
 
 namespace BodyBuddy.ViewModels.Authentication
 {
+    [QueryProperty(nameof(SkipVisible), "SkipVisible")]
     public partial class LoginViewModel : BaseViewModel
     {
         private Client _supabase;
+        private IUserAuthenticationService _userAuthenticationService;
 
         [ObservableProperty]
-        public bool isLogin = true; 
+        public bool isLogin = true;
         [ObservableProperty]
         public bool isSignUp = false;
 
@@ -27,31 +30,55 @@ namespace BodyBuddy.ViewModels.Authentication
 
         [ObservableProperty]
         public string signUpEmail, signUpPassword, signUpErrorMessage;
-        [ObservableProperty] 
+        [ObservableProperty]
         public bool signUpErrorVisible = false;
 
-        public LoginViewModel(Client client)
+        [ObservableProperty]
+        public bool skipVisible = false;
+
+        private readonly string _skipLoginKey = "SkipLogInKey";
+
+        public LoginViewModel(IUserAuthenticationService userAuthenticationService, Client client)
         {
+            _userAuthenticationService = userAuthenticationService;
             _supabase = client;
+        }
+
+        public async Task Initialize()
+        {
+            // Does nothing currently
+            
+
         }
 
         #region Sign In
 
         public async Task Login()
         {
-            //var session = await _supabase.Auth.SignUp(LoginEmail, LoginPassword);
             try
             {
-                var session = await _supabase.Auth.SignIn(LoginEmail, LoginPassword);
-                await MakeToast("Succesfully signed in.");
+                var success = await _userAuthenticationService.SignUserIn(LoginEmail, LoginPassword);
+
+                if (success)
+                {
+                    await MakeToast("successfully signed in.");
+                    await Shell.Current.Navigation.PopAsync();
+                    await Shell.Current.GoToAsync($"//{nameof(MainPage)}", true);
+                }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
-                await Shell.Current.DisplayAlert("Error!", $"Unable to login {ex.Message}", "OK");
+                await Shell.Current.DisplayAlert("Login Invalid", "Email or password is incorrect ", "OK");
             }
         }
 
+        [RelayCommand]
+        public async Task SkipLogin()
+        {
+            Preferences.Set(_skipLoginKey, true);
+            await Shell.Current.GoToAsync($"//{nameof(MainPage)}", true);
+        }
 
         [RelayCommand] // Currently this does not work
         public async Task LoginUsingThirdParty(string passedProvider)
@@ -77,8 +104,15 @@ namespace BodyBuddy.ViewModels.Authentication
         {
             try
             {
-                var session = await _supabase.Auth.SignUp(SignUpEmail, SignUpPassword);
-                await MakeToast("Congratulations! You have succesfully signed up. Now sign in");
+                var success = await _userAuthenticationService.SignUserIn(LoginEmail, LoginPassword);
+
+                if (success)
+                {
+                    await MakeToast("Congratulations! You have successfully signed up");
+
+                    await Shell.Current.Navigation.PopAsync();
+                    await Shell.Current.GoToAsync($"//{nameof(MainPage)}", true);
+                }
             }
             catch (Exception ex)
             {

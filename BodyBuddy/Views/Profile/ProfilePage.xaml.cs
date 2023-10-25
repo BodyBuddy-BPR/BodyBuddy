@@ -23,7 +23,9 @@ public partial class ProfilePage : ContentPage
 
     private async void Login_Clicked(object sender, EventArgs e)
     {
-        //await _popupNavigation.PushAsync(new LoginPage());
-        await Shell.Current.GoToAsync(nameof(LoginPage), true);
+        await Shell.Current.GoToAsync($"{nameof(LoginPage)}", true, new Dictionary<string, object>
+        {
+            { "SkipVisible", false }
+        });
     }
 }

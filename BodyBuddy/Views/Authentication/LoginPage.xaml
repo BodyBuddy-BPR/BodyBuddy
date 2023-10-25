@@ -5,13 +5,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:customControls="clr-namespace:BodyBuddy.CustomControls"
     xmlns:model="clr-namespace:BodyBuddy.Models"
-    xmlns:mopupAnimation="clr-namespace:Mopups.Animations;assembly=Mopups"
-    xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.Authentication"
     x:DataType="viewModel:LoginViewModel"
     BackgroundColor="#2f2f2f"
-    Shell.NavBarIsVisible="False">
+    Shell.NavBarIsVisible="True">
 
     <ContentPage.Resources>
         <Style x:Key="providerButton" TargetType="Button">
@@ -31,10 +29,6 @@
 
         <!--  ______________ Login page ______________  -->
         <StackLayout Margin="20,10" IsVisible="{Binding IsLogin}">
-            <!--<Image
-                HeightRequest="50"
-                HorizontalOptions="StartAndExpand"
-                Source="no_image.png" />-->
 
             <!--  Titel  -->
             <VerticalStackLayout Margin="0,30">
@@ -113,22 +107,33 @@
                 <Button
                     BackgroundColor="Transparent"
                     Clicked="GoToSignUp_Clicked"
-                    FontFamily="OpenSansRegular"
+                    FontFamily="Montserrat"
                     FontSize="16"
                     Text="Register"
                     TextColor="{StaticResource LightText}"
                     VerticalOptions="Center" />
             </HorizontalStackLayout>
 
+            <!--  Skip Login Button  -->
+            <Button
+                BackgroundColor="Transparent"
+                Command="{Binding SkipLoginCommand}"
+                FontFamily="Montserrat"
+                FontSize="16"
+                IsVisible="{Binding SkipVisible}"
+                Text="Skip"
+                TextColor="{StaticResource LightText}"
+                VerticalOptions="Center" />
+
             <!--  Sign in using providers  -->
-            <VerticalStackLayout Margin="0,30" Spacing="10">
+            <!--<VerticalStackLayout Margin="0,30" Spacing="10">
                 <Button
                     Command="{Binding LoginUsingThirdPartyCommand}"
                     CommandParameter="Google"
                     ImageSource="google"
                     Style="{StaticResource providerButton}"
                     Text="Sign in using Google" />
-            </VerticalStackLayout>
+            </VerticalStackLayout>-->
 
         </StackLayout>
 
@@ -171,11 +176,7 @@
                         Text="{Binding SignUpEmail}"
                         TextColor="{StaticResource LabelText}">
                         <Entry.Behaviors>
-                            <toolkit:EmailValidationBehavior
-                                x:Name="EmailValid"
-                                Flags="ValidateOnValueChanged"
-                                InvalidStyle="{StaticResource InvalidEntryStyle}"
-                                ValidStyle="{StaticResource ValidEntryStyle}" />
+                            <toolkit:EmailValidationBehavior x:Name="EmailValid" Flags="ValidateOnValueChanged" />
                         </Entry.Behaviors>
                     </Entry>
                 </Border>

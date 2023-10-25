@@ -7,19 +7,55 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BodyBuddy.ViewModels.Authentication;
+using BodyBuddy.Views.Authentication;
 
 namespace BodyBuddy.ViewModels
 {
     public partial class MainPageViewModel : BaseViewModel
     {
         private readonly IQuoteService _quoteService;
+        private IUserAuthenticationService _userAuthService;
 
         [ObservableProperty]
         public QuoteDto _quote;
 
-        public MainPageViewModel(IQuoteService quoteService)
+        private readonly string _skipLoginKey = "SkipLogInKey";
+
+        public MainPageViewModel(IQuoteService quoteService, IUserAuthenticationService userAuthService)
         {
             _quoteService = quoteService;
+            _userAuthService = userAuthService;
+        }
+
+        public async Task Initialize()
+        {
+            await GetDailyQuote();
+        }
+
+        public async Task AttemptToLogin()
+        {
+
+            if (_userAuthService.IsUserLoggedIn())
+            {
+                return;
+            }
+
+            var skipped = Preferences.Get(_skipLoginKey, false);
+            if (skipped) return;
+
+            // Attempt auto-login
+            var autoLoginSuccess = await _userAuthService.TryAutoSignIn();
+
+            if (!autoLoginSuccess)
+            {
+                await Shell.Current.GoToAsync($"{nameof(LoginPage)}", true, new Dictionary<string, object>
+                {
+                    { "SkipVisible", true }
+                });
+                //await Shell.Current.Navigation.PushModalAsync(new LoginPage(new LoginViewModel(null, null)));
+
+            }
         }
 
         public async Task GetDailyQuote()

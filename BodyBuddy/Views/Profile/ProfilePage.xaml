@@ -3,16 +3,24 @@
     x:Class="BodyBuddy.Views.Profile.ProfilePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:BodyBuddy.Converters"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.Profile"
     x:DataType="viewModel:ProfileViewModel"
     Shell.NavBarIsVisible="False">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!--  Other resources  -->
+            <converters:BooleanInvertConverter x:Key="BooleanInvertConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Grid Margin="20" RowSpacing="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Label
@@ -157,12 +165,27 @@
                 Style="{StaticResource MediumLabel}"
                 Text="{Binding StartupTestDto.Goal}"
                 VerticalTextAlignment="Center" />
+
+
         </Grid>
-    </Grid>
         <Button
+            Grid.Row="2"
             Clicked="Login_Clicked"
+            IsVisible="{Binding IsLoggedIn, Converter={StaticResource BooleanInvertConverter}}"
             Style="{StaticResource BaseButton}"
             Text="Login"
+            TextColor="#212121"
             VerticalOptions="EndAndExpand"
-            WidthRequest="120" />
+            WidthRequest="140" />
+        <Button
+            Grid.Row="2"
+            Command="{Binding LogOutCommand}"
+            IsVisible="{Binding IsLoggedIn}"
+            Style="{StaticResource BaseButton}"
+            Text="Logout"
+            TextColor="#212121"
+            VerticalOptions="EndAndExpand"
+            WidthRequest="140" />
+    </Grid>
+
 </ContentPage>
