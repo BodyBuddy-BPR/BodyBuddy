@@ -7,6 +7,7 @@
     xmlns:helpers="clr-namespace:BodyBuddy.Helpers"
     xmlns:local="clr-namespace:BodyBuddy"
     xmlns:profile="clr-namespace:BodyBuddy.Views.Profile"
+    xmlns:startup="clr-namespace:BodyBuddy.Views.StartupTest"
     xmlns:statisticsViews="clr-namespace:BodyBuddy.Views.StatisticsViews"
     xmlns:workoutViews="clr-namespace:BodyBuddy.Views.WorkoutViews"
     FlyoutBackgroundColor="{StaticResource Background}"
@@ -41,15 +42,14 @@
             Icon="home.png"
             Route="MainPage" />
 
+
+
         <ShellContent
             Title="Macros"
             ContentTemplate="{DataTemplate statisticsViews:IntakePage}"
             Icon="knifeandfork.png" />
 
-        <ShellContent
-            Title="Profile"
-            ContentTemplate="{DataTemplate profile:ProfilePage}"
-            Icon="knifeandfork.png" />
+
 
         <Tab Title="Workouts" Icon="list.png">
             <ShellContent Title="{x:Static helpers:Strings.PremadeWorkOuts}" ContentTemplate="{DataTemplate workoutViews:WorkoutsPage}" />
@@ -61,6 +61,17 @@
             Title="Exercises"
             ContentTemplate="{DataTemplate exerciseViews:CategoryPage}"
             Icon="dumbbell.png" />
+
+        <ShellContent
+            Title="Profile"
+            ContentTemplate="{DataTemplate profile:ProfilePage}"
+            Icon="profile.png" />
+
+        <!--  StartupTest Temp, until found another place  -->
+        <ShellContent
+            Title="Startup"
+            ContentTemplate="{DataTemplate startup:StartupTestPage}"
+            Icon="questionmark.png" />
     </TabBar>
 
 </Shell>
