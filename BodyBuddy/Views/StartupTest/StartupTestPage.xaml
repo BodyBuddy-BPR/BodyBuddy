@@ -124,23 +124,6 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <!--<StackLayout Padding="20" IsVisible="{Binding IsGoalVisible}">
-                <CollectionView x:Name="goalListView" ItemsSource="{Binding GoalList}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout Orientation="Horizontal">
-            -->
-            <!--  Use the index of the item to bind to the correct item in SelectedStates  -->
-            <!--
-                                <CheckBox IsChecked="{Binding Source={x:Reference goalListView}, Path=BindingContext.GoalSelectedStates[index]}" />
-                                <Label Text="{Binding .}" VerticalOptions="Center" />
-                            </StackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </StackLayout>-->
-
-
         </VerticalStackLayout>
 
         <Button
