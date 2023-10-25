@@ -126,6 +126,7 @@
             </CollectionView>
         </VerticalStackLayout>
 
+        <!--  Buttons  -->
         <Button
             Grid.Row="2"
             Command="{Binding NextButtonCommand}"

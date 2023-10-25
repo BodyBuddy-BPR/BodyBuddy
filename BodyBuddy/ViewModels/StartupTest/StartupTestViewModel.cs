@@ -93,7 +93,8 @@ namespace BodyBuddy.ViewModels.StartupTest
             _startupTestService.SaveStartupTestData(startupTestData);
 
             await Task.Delay(100); // Add a short delay
-            await Shell.Current.GoToAsync(nameof(ProfilePage), true);
+            // The // in front resets the stack, so there is no back button
+            await Shell.Current.GoToAsync($"//{nameof(MainPage)}", true);
         }
 
         //Whenever radiobutton changes
