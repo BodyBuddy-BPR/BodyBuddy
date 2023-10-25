@@ -5,15 +5,17 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using BodyBuddy.Dtos;
+using BodyBuddy.Services;
 
 namespace BodyBuddy.ViewModels.WorkoutViewModels
 {
     public partial class WorkoutViewModel : BaseViewModel
     {
-        private readonly IWorkoutRepository _workoutRepository;
+        private readonly IWorkoutService _workoutService;
         private readonly IWorkoutExercisesRepository _workoutExercisesRepository;
 
-        public ObservableCollection<WorkoutModel> Workouts { get; set; } = new();
+        public ObservableCollection<WorkoutDto> Workouts { get; set; } = new();
 
         [ObservableProperty]
         private bool _isPreMadeWorkout;
@@ -24,11 +26,11 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         [ObservableProperty]
         public string errorMessage;
 
-        public WorkoutViewModel(IWorkoutRepository workoutRepository, IWorkoutExercisesRepository workoutExercisesRepository)
+        public WorkoutViewModel(IWorkoutService workoutService, IWorkoutExercisesRepository workoutExercisesRepository)
         {
             Title = string.Empty;
 
-            _workoutRepository = workoutRepository;
+            _workoutService = workoutService;
             _workoutExercisesRepository = workoutExercisesRepository;
         }
 
@@ -42,14 +44,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 IsBusy = true;
 
-                List<WorkoutModel> workoutPlans;
-                // Getting User Workouts
-                // TODO: --> Make a DTO in a service class, so this one takes true/false rather than 1 and 0
-                // Then map from DTO to DB method and back (change bool to ints and back)
-                if (IsPreMadeWorkout)
-                    workoutPlans = await _workoutRepository.GetWorkoutPlansAsync(1); // 0 for premade workouts
-                else
-                    workoutPlans = await _workoutRepository.GetWorkoutPlansAsync(0); // 0 for user made workouts
+                var workoutPlans = await _workoutService.GetWorkoutPlans(IsPreMadeWorkout);
 
                 if (Workouts.Count != 0)
                 {
@@ -73,7 +68,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         }
 
         [RelayCommand]
-        async Task DeleteWorkout(WorkoutModel workout)
+        async Task DeleteWorkout(WorkoutDto workout)
         {
             if (workout == null) return;
 
@@ -81,7 +76,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
             if (result)
             {
-                bool deleted = await _workoutRepository.DeleteWorkout(workout);
+                bool deleted = await _workoutService.DeleteWorkout(workout);
                 if (deleted)
                 {
                     Workouts.Remove(workout);
@@ -99,8 +94,8 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
             try
             {
-                WorkoutModel workout = new() { Name = WorkoutName, Description = WorkoutDescription, PreMade = 0 };
-                await _workoutRepository.PostWorkoutPlanAsync(workout);
+                WorkoutDto workout = new() { Name = WorkoutName, Description = WorkoutDescription, PreMade = false };
+                await _workoutService.SaveWorkoutData(workout);
                 Workouts.Add(workout);
 
                 return true;
@@ -115,7 +110,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         public async Task<bool> ValidWorkout(string name)
         {
-            var exists = await _workoutRepository.DoesWorkoutAlreadyExist(name);
+            var exists = await _workoutService.DoesWorkoutAlreadyExist(name);
 
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -192,7 +187,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         {
             try
             {
-                var workout = await _workoutRepository.GetSpecificWorkoutAsync(WorkoutName);
+                var workout = await _workoutService.GetSpecificWorkoutAsync(WorkoutName);
 
                 foreach (var exercise in Exercises)
                 {
@@ -216,12 +211,10 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         #region Navigation
 
         [RelayCommand]
-        public async Task GoToWorkoutDetails(WorkoutModel workout)
+        public async Task GoToWorkoutDetails(WorkoutDto workout)
         {
             if (workout == null)
-            {
                 return;
-            }
 
             await Task.Delay(100);
             await Shell.Current.GoToAsync(nameof(WorkoutDetailsPage), true, new Dictionary<string, object>

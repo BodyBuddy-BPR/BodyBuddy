@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using BodyBuddy.Dtos;
+using BodyBuddy.Services;
 
 namespace BodyBuddy.ViewModels.ExerciseViewModels
 {
@@ -16,7 +17,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
         #region Injections
 
         private readonly IExerciseRepository _exerciseRepository;
-        private readonly IWorkoutRepository _workoutRepository;
+        private readonly IWorkoutService _workoutService;
         private readonly IWorkoutExercisesRepository _workoutExercisesRepository;
 
         #endregion
@@ -27,19 +28,19 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
         private ExerciseModel _queryDetails; //Category and Musclegroup selected in the previous pages
 
         [ObservableProperty]
-        private WorkoutModel _selectedWorkout;
+        private WorkoutDto _selectedWorkout;
 
         #endregion
 
         public ObservableCollection<ExerciseModel> ExercisesList { get; set; } = new();
-        public ObservableCollection<WorkoutModel> WorkoutsList { get; set; } = new();
+        public ObservableCollection<WorkoutDto> WorkoutsList { get; set; } = new();
 
-        public ExercisesViewModel(IExerciseRepository exerciseRepository, IWorkoutRepository workoutRepository, IWorkoutExercisesRepository workoutExercisesRepository)
+        public ExercisesViewModel(IExerciseRepository exerciseRepository, IWorkoutService workoutService, IWorkoutExercisesRepository workoutExercisesRepository)
         {
             Title = string.Empty;
 
             _exerciseRepository = exerciseRepository;
-            _workoutRepository = workoutRepository;
+            _workoutService = workoutService;
             _workoutExercisesRepository = workoutExercisesRepository;
         }
 
@@ -101,7 +102,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             {
                 IsBusy = true;
 
-                var workouts = await _workoutRepository.GetWorkoutPlansAsync(0);
+                var workouts = await _workoutService.GetWorkoutPlans(false);
 
                 if (WorkoutsList.Count != 0)
                 {
@@ -138,7 +139,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             else
             {
                 //SelectedWorkout = null;
-                SelectedWorkout = new WorkoutModel { Name = "Select a workout" };
+                SelectedWorkout = new WorkoutDto { Name = "Select a workout" };
                 //return;
             }
         }
@@ -154,7 +155,6 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             else
             {
                 await Shell.Current.DisplayAlert("No Workout", "Try selecting a Workout first", "OK");
-                return;
             }
         }
 

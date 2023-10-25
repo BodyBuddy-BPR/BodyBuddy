@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:BodyBuddy.Converters"
     xmlns:effectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
-    xmlns:model="clr-namespace:BodyBuddy.Models"
+    xmlns:model="clr-namespace:BodyBuddy.Dtos"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.WorkoutViewModels"
     Title="{Binding Title}"
@@ -57,7 +57,7 @@
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:WorkoutModel">
+                <DataTemplate x:DataType="model:WorkoutDto">
                     <SwipeView>
                         <SwipeView.RightItems>
                             <SwipeItems Mode="Execute">
