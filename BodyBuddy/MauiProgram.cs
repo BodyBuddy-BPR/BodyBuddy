@@ -136,11 +136,6 @@ public static class MauiProgram
         builder.Services.AddSingleton<IntakeViewModel>();
         #endregion
 
-        #region Services
-        builder.Services.AddSingleton<IStartupTestService, StartupTestService>();
-        #endregion
-
-
         #region Repositories
         builder.Services.AddSingleton<IStartupTestRepository, StartupTestRepository>();
         builder.Services.AddSingleton<IExerciseRepository, ExerciseRepository>();
@@ -157,12 +152,14 @@ public static class MauiProgram
         #endregion
 
         #region Services
-
+        builder.Services.AddSingleton<IStartupTestService, StartupTestService>();
+        builder.Services.AddSingleton<IWorkoutService, WorkoutService>();
         builder.Services.AddSingleton<IQuoteService, QuoteService>();
-        builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
-        builder.Services.AddSingleton<IPopupNavigation>(MopupService.Instance);
+
         builder.Services.AddSingleton<DateTimeService>(); ;
 
+        builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
+        builder.Services.AddSingleton<IPopupNavigation>(MopupService.Instance);
         #endregion
 
 
