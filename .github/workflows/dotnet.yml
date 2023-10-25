@@ -51,6 +51,10 @@ jobs:
         
     - name: Check installed workloads
       run: dotnet workload list
+    - name: Find Maui workload installation directory
+      run: |
+        echo "Searching for Microsoft.Maui.Controls.Runtime.ios..."
+        find / -name "Microsoft.Maui.Controls.Runtime.ios*" 2>/dev/null
 
     # Restore dependencies
     - name: Restore dependencies
