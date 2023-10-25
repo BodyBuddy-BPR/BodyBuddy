@@ -98,7 +98,6 @@
                 Margin="0,15"
                 BackgroundColor="{StaticResource Secondary}"
                 Clicked="SignIn_Clicked"
-                Command="{Binding LoginCommand}"
                 Style="{StaticResource BaseButton}"
                 Text="Sign in"
                 TextColor="Black" />
