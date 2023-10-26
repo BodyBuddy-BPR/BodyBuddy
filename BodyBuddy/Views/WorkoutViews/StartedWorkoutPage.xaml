@@ -96,7 +96,7 @@
                         Source="previous_circle.png"
                         WidthRequest="50">
                         <ImageButton.Behaviors>
-                            <toolkit:IconTintColorBehavior TintColor="{StaticResource PrimaryDarker}" />
+                            <toolkit:IconTintColorBehavior TintColor="#065A82" />
                         </ImageButton.Behaviors>
                     </ImageButton>
                     <ImageButton
@@ -106,7 +106,7 @@
                         Source="next_circle.png"
                         WidthRequest="50">
                         <ImageButton.Behaviors>
-                            <toolkit:IconTintColorBehavior TintColor="{StaticResource PrimaryDarker}" />
+                            <toolkit:IconTintColorBehavior TintColor="#065A82" />
                         </ImageButton.Behaviors>
                     </ImageButton>
                 </HorizontalStackLayout>

@@ -52,7 +52,7 @@
                     FontSize="16"
                     Text="Email"
                     TextColor="{StaticResource LightText}" />
-                <Border BackgroundColor="{StaticResource CardBackground}" Opacity="0.7">
+                <Border Opacity="0.7" Style="{StaticResource CardView}">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="5" />
                     </Border.StrokeShape>
@@ -72,7 +72,7 @@
                     FontSize="16"
                     Text="Password"
                     TextColor="{StaticResource LightText}" />
-                <Border BackgroundColor="{StaticResource CardBackground}" Opacity="0.7">
+                <Border Opacity="0.7" Style="{StaticResource CardView}">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="5" />
                     </Border.StrokeShape>
@@ -164,7 +164,7 @@
                     FontSize="16"
                     Text="Email"
                     TextColor="{StaticResource LightText}" />
-                <Border BackgroundColor="{StaticResource CardBackground}" Opacity="0.7">
+                <Border Opacity="0.7" Style="{StaticResource CardView}">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="5" />
                     </Border.StrokeShape>
@@ -201,7 +201,7 @@
                     FontSize="16"
                     Text="Password"
                     TextColor="{StaticResource LightText}" />
-                <Border BackgroundColor="{StaticResource CardBackground}" Opacity="0.7">
+                <Border Opacity="0.7" Style="{StaticResource CardView}">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="5" />
                     </Border.StrokeShape>

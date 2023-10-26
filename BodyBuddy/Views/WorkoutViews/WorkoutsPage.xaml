@@ -10,7 +10,7 @@
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.WorkoutViewModels"
     Title="{Binding Title}"
     x:DataType="viewModel:WorkoutViewModel"
-    Shell.NavBarIsVisible="False">
+    Shell.NavBarIsVisible="True">
 
     <ContentPage.Resources>
         <ResourceDictionary>

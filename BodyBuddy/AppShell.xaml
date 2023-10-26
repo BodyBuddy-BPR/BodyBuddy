@@ -10,21 +10,24 @@
     xmlns:startup="clr-namespace:BodyBuddy.Views.StartupTest"
     xmlns:statisticsViews="clr-namespace:BodyBuddy.Views.StatisticsViews"
     xmlns:workoutViews="clr-namespace:BodyBuddy.Views.WorkoutViews"
-    FlyoutBackgroundColor="{StaticResource Background}"
-    Shell.FlyoutBehavior="Disabled">
+    FlyoutBackgroundColor="{StaticResource NavigationBarColor}"
+    Shell.FlyoutBehavior="Flyout">
 
     <Shell.Resources>
         <ResourceDictionary>
             <Style x:Key="BaseStyle" TargetType="Element">
-                <Setter Property="Shell.BackgroundColor" Value="{StaticResource Background}" />
-                <Setter Property="Shell.ForegroundColor" Value="{StaticResource LightText}" />
-                <Setter Property="Shell.TitleColor" Value="{StaticResource LightText}" />
+                <!--  Navbar  -->
+                <Setter Property="Shell.BackgroundColor" Value="{StaticResource NavigationBarColor}" />
+                <Setter Property="Shell.ForegroundColor" Value="{StaticResource White}" />
+                <Setter Property="Shell.TitleColor" Value="{StaticResource White}" />
                 <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
                 <Setter Property="Shell.UnselectedColor" Value="{AppThemeBinding Dark=#95FFFFFF, Light=#95000000}" />
-                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Background}" />
-                <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource LightText}" />
+
+                <!--  TabBar  -->
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource TabBarColor}" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource White}" />
                 <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Dark=#95FFFFFF, Light=#95000000}" />
-                <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource LightText}" />
+                <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource White}" />
             </Style>
 
             <Style
@@ -42,13 +45,10 @@
             Icon="home.png"
             Route="MainPage" />
 
-
-
         <ShellContent
             Title="Macros"
             ContentTemplate="{DataTemplate statisticsViews:IntakePage}"
             Icon="knifeandfork.png" />
-
 
 
         <Tab Title="Workouts" Icon="list.png">
