@@ -4,8 +4,10 @@ using BodyBuddy.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.JavaScript;
 using System.Text;
 using System.Threading.Tasks;
+using BodyBuddy.Services.Implementations;
 
 namespace BodyBuddy.Mappers
 {
@@ -38,11 +40,15 @@ namespace BodyBuddy.Mappers
         private readonly Dictionary<int, string> _genderToString;
         #endregion
 
+        private readonly DateTimeService _dateTimeService;
+
         public StartupTestMapper()
         {
             _goalToString = _goalToInteger.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
             _activityToString = _activityToInteger.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
             _genderToString = _genderToInteger.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
+
+            _dateTimeService = new DateTimeService();
         }
 
         public StartupTestModel MapToDatabase(StartupTestDto startupTestDto)
@@ -54,7 +60,7 @@ namespace BodyBuddy.Mappers
                 Gender = GenderToInteger(startupTestDto.Gender),
                 Weight = startupTestDto.Weight,
                 Height = startupTestDto.Height,
-                Birthday = DateTimeToEpoch(startupTestDto.Birthday),
+                Birthday = _dateTimeService.ConvertToEpochTime(startupTestDto.Birthday),
                 ActiveAmount = ActivityToInteger(startupTestDto.ActiveAmount),
                 PassiveCalorieBurn = startupTestDto.PassiveCalorieBurn,
                 Goal = GoalToInteger(startupTestDto.Goal)
@@ -73,7 +79,7 @@ namespace BodyBuddy.Mappers
                 Gender = IntegerToGender(startupTest.Gender),
                 Weight = startupTest.Weight,
                 Height = startupTest.Height,
-                Birthday = EpochToDateTime(startupTest.Birthday),
+                Birthday = _dateTimeService.ConvertToDateTime(startupTest.Birthday),
                 ActiveAmount = IntegerToActivity(startupTest.ActiveAmount),
                 PassiveCalorieBurn = startupTest.PassiveCalorieBurn,
                 Goal = IntegerToGoal(startupTest.Goal)
@@ -83,20 +89,6 @@ namespace BodyBuddy.Mappers
 
 
         #region Converters
-        //Birthday
-        private long DateTimeToEpoch(DateTime dateTime)
-        {
-            DateTime epochStart = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            return (long)(dateTime.ToUniversalTime() - epochStart).TotalSeconds;
-
-        }
-
-        private DateTime EpochToDateTime(long epoch)
-        {
-            DateTime epochStart = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            return epochStart.AddSeconds(epoch);
-        }
-
         //Goal
         public int GoalToInteger(string goal)
         {
