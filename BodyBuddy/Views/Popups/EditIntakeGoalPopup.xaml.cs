@@ -20,7 +20,7 @@ public partial class EditIntakeGoalPopup
 
 	private async void SaveBtn_Clicked(object sender, EventArgs e)
 	{
-		var valid = await _viewModel.SaveNewIntakeGoal(_intakeType);
+		var valid = await _viewModel.SaveNewIntakeValues(_intakeType);
 
 		if (valid)
 		{
@@ -36,6 +36,11 @@ public partial class EditIntakeGoalPopup
 			var toast = Toast.Make(_viewModel.ErrorMessage, duration, fontSize);
 			await toast.Show(cancellationTokenSource.Token);
 		}
+	}
+
+	private async void CancelBtn_Clicked(object sender, EventArgs e)
+	{
+			await MopupService.Instance.PopAsync();
 	}
 
 }

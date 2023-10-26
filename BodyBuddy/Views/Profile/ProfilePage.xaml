@@ -3,24 +3,34 @@
     x:Class="BodyBuddy.Views.Profile.ProfilePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:BodyBuddy.Converters"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.Profile"
-    Title="Profile Page"
-    x:DataType="viewModel:ProfileViewModel">
+    x:DataType="viewModel:ProfileViewModel"
+    Shell.NavBarIsVisible="True">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!--  Other resources  -->
+            <converters:BooleanInvertConverter x:Key="BooleanInvertConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Grid Margin="20" RowSpacing="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Label
             Grid.Row="0"
             FontAttributes="Bold"
+            FontSize="28"
             HorizontalOptions="Center"
             Style="{StaticResource TitleLabel}"
-            Text="Your Profile" />
+            Text="Your Profile"
+            TextColor="{StaticResource LightText}" />
 
         <Grid Grid.Row="1" RowSpacing="15">
             <Grid.RowDefinitions>
@@ -44,6 +54,7 @@
                 HorizontalTextAlignment="Start"
                 Style="{StaticResource MediumLabel}"
                 Text="Name:"
+                TextColor="{StaticResource LightText}"
                 VerticalTextAlignment="Center" />
             <Label
                 Grid.Row="0"
@@ -51,6 +62,7 @@
                 HorizontalTextAlignment="Start"
                 Style="{StaticResource MediumLabel}"
                 Text="{Binding StartupTestDto.Name}"
+                TextColor="{StaticResource LightText}"
                 VerticalTextAlignment="Center" />
 
             <Label
@@ -59,6 +71,7 @@
                 HorizontalTextAlignment="Start"
                 Style="{StaticResource MediumLabel}"
                 Text="Gender:"
+                TextColor="{StaticResource LightText}"
                 VerticalTextAlignment="Center" />
             <Label
                 Grid.Row="1"
@@ -66,6 +79,7 @@
                 HorizontalTextAlignment="Start"
                 Style="{StaticResource MediumLabel}"
                 Text="{Binding StartupTestDto.Gender}"
+                TextColor="{StaticResource LightText}"
                 VerticalTextAlignment="Center" />
 
             <Label
@@ -74,6 +88,7 @@
                 HorizontalTextAlignment="Start"
                 Style="{StaticResource MediumLabel}"
                 Text="Weight:"
+                TextColor="{StaticResource LightText}"
                 VerticalTextAlignment="Center" />
             <Label
                 Grid.Row="2"
@@ -81,6 +96,7 @@
                 HorizontalTextAlignment="Start"
                 Style="{StaticResource MediumLabel}"
                 Text="{Binding StartupTestDto.Weight, StringFormat='{0} kg'}"
+                TextColor="{StaticResource LightText}"
                 VerticalTextAlignment="Center" />
 
             <Label
@@ -89,6 +105,7 @@
                 HorizontalTextAlignment="Start"
                 Style="{StaticResource MediumLabel}"
                 Text="Height:"
+                TextColor="{StaticResource LightText}"
                 VerticalTextAlignment="Center" />
             <Label
                 Grid.Row="3"
@@ -96,6 +113,7 @@
                 HorizontalTextAlignment="Start"
                 Style="{StaticResource MediumLabel}"
                 Text="{Binding StartupTestDto.Height, StringFormat='{0} cm'}"
+                TextColor="{StaticResource LightText}"
                 VerticalTextAlignment="Center" />
 
             <Label
@@ -104,6 +122,7 @@
                 HorizontalTextAlignment="Start"
                 Style="{StaticResource MediumLabel}"
                 Text="Birthday:"
+                TextColor="{StaticResource LightText}"
                 VerticalTextAlignment="Center" />
             <Label
                 Grid.Row="4"
@@ -111,6 +130,7 @@
                 HorizontalTextAlignment="Start"
                 Style="{StaticResource MediumLabel}"
                 Text="{Binding StartupTestDto.Birthday}"
+                TextColor="{StaticResource LightText}"
                 VerticalTextAlignment="Center" />
 
             <Label
@@ -119,6 +139,7 @@
                 HorizontalTextAlignment="Start"
                 Style="{StaticResource MediumLabel}"
                 Text="Activity Level:"
+                TextColor="{StaticResource LightText}"
                 VerticalTextAlignment="Center" />
             <Label
                 Grid.Row="5"
@@ -126,6 +147,7 @@
                 HorizontalTextAlignment="Start"
                 Style="{StaticResource MediumLabel}"
                 Text="{Binding StartupTestDto.ActiveAmount}"
+                TextColor="{StaticResource LightText}"
                 VerticalTextAlignment="Center" />
 
             <Label
@@ -134,6 +156,7 @@
                 HorizontalTextAlignment="Start"
                 Style="{StaticResource MediumLabel}"
                 Text="Passive Calorie Burn:"
+                TextColor="{StaticResource LightText}"
                 VerticalTextAlignment="Center" />
             <Label
                 Grid.Row="6"
@@ -141,6 +164,7 @@
                 HorizontalTextAlignment="Start"
                 Style="{StaticResource MediumLabel}"
                 Text="{Binding StartupTestDto.PassiveCalorieBurn}"
+                TextColor="{StaticResource LightText}"
                 VerticalTextAlignment="Center" />
 
             <Label
@@ -149,6 +173,7 @@
                 HorizontalTextAlignment="Start"
                 Style="{StaticResource MediumLabel}"
                 Text="Workout Goal:"
+                TextColor="{StaticResource LightText}"
                 VerticalTextAlignment="Center" />
             <Label
                 Grid.Row="7"
@@ -156,7 +181,21 @@
                 HorizontalTextAlignment="Start"
                 Style="{StaticResource MediumLabel}"
                 Text="{Binding StartupTestDto.Goal}"
+                TextColor="{StaticResource LightText}"
                 VerticalTextAlignment="Center" />
+
+
         </Grid>
+        <Button
+            x:Name="LoginBtn"
+            Grid.Row="2"
+            Clicked="LoginOrOut_Clicked"
+            Style="{StaticResource BaseButton}"
+            Text=""
+            TextColor="#212121"
+            VerticalOptions="EndAndExpand"
+            WidthRequest="140" />
+
     </Grid>
+
 </ContentPage>

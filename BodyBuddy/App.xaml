@@ -8,39 +8,33 @@
     <Application.Resources>
         <ResourceDictionary>
 
+            <!--  Primary Colors  -->
             <Color x:Key="Primary">#5297B7</Color>
-            <Color x:Key="PrimaryDarker">#065A82</Color>
-
             <Color x:Key="Secondary">#278F65</Color>
 
-            <Color x:Key="LabelText">black</Color>
+            <!--  Other Colors  -->
+            <Color x:Key="White">#D7E4EA</Color>
+
+            <!--  Text  -->
+            <Color x:Key="DarkText">#1F1F1F</Color>
             <Color x:Key="LightText">#D7E4EA</Color>
 
-            <Color x:Key="Background">#065A82</Color>
-            <Color x:Key="CardBackground">#D7E4EA</Color>
 
+            <Color x:Key="StatusBarColor">#065A82</Color>
+            <Color x:Key="NavigationBarColor">#065A82</Color>
+            <Color x:Key="PageBackgroundColor">#2f2f2f</Color>
+            <Color x:Key="TabBarColor">#065A82</Color>
+
+            <!--  Pages  -->
             <Style ApplyToDerivedTypes="True" TargetType="Page">
-                <!--<Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}" />-->
-                <Setter Property="BackgroundColor" Value="{StaticResource Background}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource PageBackgroundColor}" />
             </Style>
 
-            <Style ApplyToDerivedTypes="True" TargetType="NavigationPage">
-                <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
-                <Setter Property="BarBackgroundColor" Value="{StaticResource Primary}" />
-                <Setter Property="BarTextColor" Value="{StaticResource LabelText}" />
-            </Style>
-
+            <!--  Entry  -->
             <Style x:Key="BaseEntry" TargetType="Entry">
                 <Setter Property="FontFamily" Value="Montserrat" />
-                <Setter Property="PlaceholderColor" Value="{StaticResource LabelText}" />
-                <Setter Property="TextColor" Value="{StaticResource LabelText}" />
-                <Setter Property="FontSize" Value="16" />
-            </Style>
-
-            <Style
-                x:Key="MediumEntry"
-                BasedOn="{StaticResource BaseEntry}"
-                TargetType="Entry">
+                <Setter Property="PlaceholderColor" Value="{StaticResource DarkText}" />
+                <Setter Property="TextColor" Value="{StaticResource DarkText}" />
                 <Setter Property="FontSize" Value="16" />
             </Style>
 
@@ -56,9 +50,10 @@
                 <Setter Property="FontSize" Value="20" />
             </Style>
 
+            <!--  Label  -->
             <Style x:Key="BaseLabel" TargetType="Label">
                 <Setter Property="FontFamily" Value="Montserrat" />
-                <Setter Property="TextColor" Value="{StaticResource LabelText}" />
+                <Setter Property="TextColor" Value="{StaticResource DarkText}" />
             </Style>
 
             <Style
@@ -99,10 +94,12 @@
                 <Setter Property="TextColor" Value="White" />
             </Style>
 
+            <!--  RefreshView  -->
             <Style ApplyToDerivedTypes="True" TargetType="RefreshView">
                 <Setter Property="RefreshColor" Value="{StaticResource Primary}" />
             </Style>
 
+            <!--  Button  -->
             <Style x:Key="BaseButton" TargetType="Button">
                 <Setter Property="FontFamily" Value="Montserrat" />
                 <Setter Property="TextColor" Value="{StaticResource LightText}" />
@@ -119,16 +116,23 @@
                 <Setter Property="HeightRequest" Value="40" />
                 <Setter Property="WidthRequest" Value="300" />
             </Style>
+            <Style
+                x:Key="CancelButton"
+                BasedOn="{StaticResource BaseButton}"
+                TargetType="Button">
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="WidthRequest" Value="300" />
+                <Setter Property="BackgroundColor" Value="Red" />
+            </Style>
 
+            <!--  Frame  -->
             <Style x:Key="CardView" TargetType="Frame">
-                <!--<Setter Property="BorderColor" Value="#DDDDDD" />-->
                 <Setter Property="HasShadow" Value="{OnPlatform iOS=false, MacCatalyst=false, Default=true}" />
                 <Setter Property="Padding" Value="0" />
-                <Setter Property="Background" Value="{StaticResource CardBackground}" />
+                <Setter Property="Background" Value="{StaticResource White}" />
                 <Setter Property="CornerRadius" Value="10" />
                 <Setter Property="IsClippedToBounds" Value="True" />
             </Style>
-
 
             <Style x:Key="CardRippleEffect" TargetType="effectsView:SfEffectsView">
                 <Setter Property="TouchDownEffects" Value="Ripple" />
@@ -136,6 +140,7 @@
                 <Setter Property="InitialRippleFactor" Value="0.1" />
             </Style>
 
+            <!--  ImageButton  -->
             <Style x:Key="ImageButtonVisualState" TargetType="ImageButton">
                 <Setter Property="VisualStateManager.VisualStateGroups">
                     <VisualStateGroupList>

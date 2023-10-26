@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BodyBuddy.Views.Authentication.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControls="clr-namespace:BodyBuddy.CustomControls"
+    xmlns:model="clr-namespace:BodyBuddy.Models"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.Authentication"
+    x:DataType="viewModel:LoginViewModel"
+    BackgroundColor="#2f2f2f"
+    Shell.NavBarIsVisible="True">
+
+    <ContentPage.Resources>
+        <Style x:Key="providerButton" TargetType="Button">
+            <Setter Property="FontFamily" Value="Montserrat" />
+            <Setter Property="TextColor" Value="{StaticResource LightText}" />
+            <Setter Property="FontSize" Value="16" />
+            <!--<Setter Property="FontAttributes" Value="Bold" />-->
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Background" Value="#666666" />
+            <Setter Property="HeightRequest" Value="60" />
+            <Setter Property="WidthRequest" Value="280" />
+            <Setter Property="ContentLayout" Value="Right, 20" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid>
+
+        <!--  ______________ Login page ______________  -->
+        <StackLayout Margin="20,10" IsVisible="{Binding IsLogin}">
+
+            <!--  Titel  -->
+            <VerticalStackLayout Margin="0,30">
+                <Label
+                    FontSize="32"
+                    Style="{StaticResource TitleLabel}"
+                    Text="Welcome Back" />
+                <Label
+                    Opacity="0.8"
+                    Style="{StaticResource MediumLabel}"
+                    Text="Sign in to your account"
+                    TextColor="{StaticResource LightText}" />
+            </VerticalStackLayout>
+
+            <!--  Login Info  -->
+            <VerticalStackLayout>
+
+                <!--  Enter Email  -->
+                <Label
+                    FontFamily="OpenSansRegular"
+                    FontSize="16"
+                    Text="Email"
+                    TextColor="{StaticResource LightText}" />
+                <Border Opacity="0.7" Style="{StaticResource CardView}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="5" />
+                    </Border.StrokeShape>
+                    <Entry
+                        Margin="10,0"
+                        BackgroundColor="Transparent"
+                        FontSize="16"
+                        Placeholder="Enter email"
+                        PlaceholderColor="DarkGray"
+                        Style="{StaticResource BaseEntry}"
+                        Text="{Binding LoginEmail}" />
+                </Border>
+
+                <!--  Enter Password  -->
+                <Label
+                    Margin="0,4,0,0"
+                    FontFamily="OpenSansRegular"
+                    FontSize="16"
+                    Text="Password"
+                    TextColor="{StaticResource LightText}" />
+                <Border Opacity="0.7" Style="{StaticResource CardView}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="5" />
+                    </Border.StrokeShape>
+                    <Entry
+                        Margin="10,0"
+                        BackgroundColor="Transparent"
+                        IsPassword="True"
+                        Placeholder="Enter password"
+                        PlaceholderColor="DarkGray"
+                        Style="{StaticResource BaseEntry}"
+                        Text="{Binding LoginPassword}" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!--  Sign In Button  -->
+            <Button
+                Margin="0,15"
+                BackgroundColor="{StaticResource Secondary}"
+                Clicked="SignIn_Clicked"
+                Style="{StaticResource BaseButton}"
+                Text="Sign in"
+                TextColor="Black" />
+
+            <!--  New account  -->
+            <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                <Label
+                    Opacity="0.8"
+                    Style="{StaticResource MediumLabel}"
+                    Text="Don't have an account?"
+                    TextColor="{StaticResource LightText}"
+                    VerticalOptions="Center" />
+                <Button
+                    BackgroundColor="Transparent"
+                    Clicked="GoToSignUp_Clicked"
+                    FontFamily="Montserrat"
+                    FontSize="16"
+                    Text="Register"
+                    TextColor="{StaticResource LightText}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <!--  Skip Login Button  -->
+            <Button
+                BackgroundColor="Transparent"
+                Command="{Binding SkipLoginCommand}"
+                FontFamily="Montserrat"
+                FontSize="16"
+                IsVisible="{Binding SkipVisible}"
+                Text="Skip"
+                TextColor="{StaticResource LightText}"
+                VerticalOptions="Center" />
+
+            <!--  Sign in using providers  -->
+            <!--<VerticalStackLayout Margin="0,30" Spacing="10">
+                <Button
+                    Command="{Binding LoginUsingThirdPartyCommand}"
+                    CommandParameter="Google"
+                    ImageSource="google"
+                    Style="{StaticResource providerButton}"
+                    Text="Sign in using Google" />
+            </VerticalStackLayout>-->
+
+        </StackLayout>
+
+
+
+        <!--  ______________ Sign Up page ______________  -->
+        <StackLayout Margin="20,10" IsVisible="{Binding IsSignUp}">
+
+            <!--  Titel  -->
+            <VerticalStackLayout Margin="0,30">
+                <Label
+                    FontSize="32"
+                    Style="{StaticResource TitleLabel}"
+                    Text="Get Started" />
+                <Label
+                    Opacity="0.8"
+                    Style="{StaticResource MediumLabel}"
+                    Text="Create a new account"
+                    TextColor="{StaticResource LightText}" />
+            </VerticalStackLayout>
+
+            <!--  SignUp Info  -->
+            <VerticalStackLayout>
+
+                <!--  Enter Email  -->
+                <Label
+                    FontFamily="OpenSansRegular"
+                    FontSize="16"
+                    Text="Email"
+                    TextColor="{StaticResource LightText}" />
+                <Border Opacity="0.7" Style="{StaticResource CardView}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="5" />
+                    </Border.StrokeShape>
+                    <Entry
+                        Margin="10,0"
+                        BackgroundColor="Transparent"
+                        Placeholder="Enter email"
+                        PlaceholderColor="DarkGray"
+                        Style="{StaticResource BaseEntry}"
+                        Text="{Binding SignUpEmail}">
+                        <Entry.Behaviors>
+                            <toolkit:EmailValidationBehavior x:Name="EmailValid" Flags="ValidateOnValueChanged" />
+                        </Entry.Behaviors>
+                    </Entry>
+                </Border>
+                <!--  Display email sign up error message  -->
+                <Label
+                    x:Name="EmailError"
+                    Padding="2"
+                    FontAttributes="Bold"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    IsVisible="false"
+                    Opacity="0.7"
+                    Style="{StaticResource MediumLabel}"
+                    Text=""
+                    TextColor="Red"
+                    VerticalOptions="Center" />
+
+                <!--  Enter Password  -->
+                <Label
+                    Margin="0,4,0,0"
+                    FontFamily="OpenSansRegular"
+                    FontSize="16"
+                    Text="Password"
+                    TextColor="{StaticResource LightText}" />
+                <Border Opacity="0.7" Style="{StaticResource CardView}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="5" />
+                    </Border.StrokeShape>
+                    <Entry
+                        Margin="10,0"
+                        BackgroundColor="Transparent"
+                        IsPassword="True"
+                        Placeholder="Enter password"
+                        PlaceholderColor="DarkGray"
+                        Style="{StaticResource BaseEntry}"
+                        Text="{Binding SignUpPassword}">
+                        <Entry.Behaviors>
+                            <toolkit:MultiValidationBehavior x:Name="PasswordValid" Flags="ValidateOnValueChanged">
+
+                                <toolkit:CharactersValidationBehavior
+                                    x:Name="DigitValidation"
+                                    toolkit:MultiValidationBehavior.Error="Must have at least 1 number"
+                                    CharacterType="Digit"
+                                    MinimumCharacterTypeCount="1"
+                                    RegexPattern="" />
+                                <toolkit:CharactersValidationBehavior
+                                    x:Name="AnyValidation"
+                                    toolkit:MultiValidationBehavior.Error="Must be at least 6 characters"
+                                    CharacterType="Any"
+                                    MinimumCharacterTypeCount="6"
+                                    RegexPattern="" />
+
+                            </toolkit:MultiValidationBehavior>
+                        </Entry.Behaviors>
+                    </Entry>
+                </Border>
+
+                <!--  Display password sign up error message  -->
+                <Label
+                    x:Name="PasswordError"
+                    Padding="2"
+                    FontAttributes="Bold"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    IsVisible="false"
+                    Opacity="0.7"
+                    Style="{StaticResource MediumLabel}"
+                    Text=""
+                    TextColor="Red"
+                    VerticalOptions="Center" />
+
+
+            </VerticalStackLayout>
+
+            <!--  Sign Up Button  -->
+            <Button
+                Margin="0,15"
+                BackgroundColor="{StaticResource Secondary}"
+                Clicked="SignUp_Clicked"
+                Style="{StaticResource BaseButton}"
+                Text="Sign Up"
+                TextColor="Black" />
+
+            <!--  Already have an account? Sign in instead  -->
+            <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                <Label
+                    Opacity="0.8"
+                    Style="{StaticResource MediumLabel}"
+                    Text="Have an account?"
+                    TextColor="{StaticResource LightText}"
+                    VerticalOptions="Center" />
+                <Button
+                    BackgroundColor="Transparent"
+                    Clicked="GoToLogin_Clicked"
+                    FontFamily="OpenSansRegular"
+                    FontSize="16"
+                    Text="Sign In Now"
+                    TextColor="{StaticResource LightText}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+
+        </StackLayout>
+
+
+
+    </Grid>
+
+</ContentPage>
