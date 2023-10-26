@@ -88,7 +88,7 @@ namespace UnitTest.ViewModels.IntakeViewModels
             target.NewIntakeGoal = newGoal;
 
             // Act
-            bool result = await target.SaveNewIntakeGoal("Calorie");
+            bool result = await target.SaveNewIntakeValues("Calorie");
 
             // Assert
             Assert.That(result, Is.EqualTo(false));
@@ -102,7 +102,7 @@ namespace UnitTest.ViewModels.IntakeViewModels
             target.NewCurrentIntake = -10;
 
 			// Act
-			bool result = await target.SaveNewIntakeGoal("Calorie");
+			bool result = await target.SaveNewIntakeValues("Calorie");
 
 			// Assert
 			Assert.That(result, Is.EqualTo(false));
@@ -119,7 +119,7 @@ namespace UnitTest.ViewModels.IntakeViewModels
             target.NewIntakeGoal = 3500;
 
             // Act
-            bool result = await target.SaveNewIntakeGoal(intakeType);
+            bool result = await target.SaveNewIntakeValues(intakeType);
 
             // Assert
             if (intakeType == "Calorie")

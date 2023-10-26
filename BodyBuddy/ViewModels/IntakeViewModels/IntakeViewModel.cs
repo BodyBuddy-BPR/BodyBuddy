@@ -114,14 +114,14 @@ namespace BodyBuddy.ViewModels.IntakeViewmodels
 
 		#region popup methods
 
-		public async Task<bool> SaveNewIntakeGoal(string intakeType)
+		public async Task<bool> SaveNewIntakeValues(string intakeType)
 		{
 			if (NewCurrentIntake < 0)
 			{
 				ErrorMessage = "Current intake cannot be negative.";
 				return false;
 			}
-			else if (NewIntakeGoal == 0 || NewIntakeGoal < 0)
+			else if (NewIntakeGoal <= 0)
 			{
 				ErrorMessage = "New intake goal cannot be negative or zero.";
 				return false;

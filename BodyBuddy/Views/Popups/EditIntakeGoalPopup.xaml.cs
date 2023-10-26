@@ -20,7 +20,7 @@ public partial class EditIntakeGoalPopup
 
 	private async void SaveBtn_Clicked(object sender, EventArgs e)
 	{
-		var valid = await _viewModel.SaveNewIntakeGoal(_intakeType);
+		var valid = await _viewModel.SaveNewIntakeValues(_intakeType);
 
 		if (valid)
 		{
