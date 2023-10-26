@@ -27,9 +27,9 @@
 
     <Border
         x:Name="popupBorder"
-        BackgroundColor="{StaticResource CardBackground}"
         HeightRequest="225"
         HorizontalOptions="Center"
+        Style="{StaticResource CardView}"
         WidthRequest="330">
         <Border.StrokeShape>
             <RoundRectangle CornerRadius="20" />

@@ -8,7 +8,7 @@
     xmlns:progressBar="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.IntakeViewmodels"
     x:DataType="viewModel:IntakeViewModel"
-    Shell.NavBarIsVisible="False">
+    Shell.NavBarIsVisible="True">
     <Grid
         Margin="20,10"
         RowDefinitions="Auto, Auto"

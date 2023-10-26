@@ -7,22 +7,23 @@
     xmlns:modelDto="clr-namespace:BodyBuddy.Dtos"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels"
     x:DataType="viewModel:MainPageViewModel"
-    Shell.NavBarIsVisible="False">
+    Shell.NavBarIsVisible="True">
 
     <ContentPage.Behaviors>
-        <mct:StatusBarBehavior StatusBarColor="{StaticResource Background}" />
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource StatusBarColor}" />
     </ContentPage.Behaviors>
 
     <!--  Entire Page  -->
     <Grid
-        Margin="15,10"
+        Margin="15,15"
         RowDefinitions="Auto, Auto, *, Auto"
         RowSpacing="15">
 
         <Label
             Grid.Row="0"
+            FontSize="32"
             Style="{StaticResource TitleLabel}"
-            Text="Hello" />
+            Text="Welcome " />
 
         <Frame
             Grid.Row="1"

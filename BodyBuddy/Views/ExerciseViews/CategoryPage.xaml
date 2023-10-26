@@ -7,7 +7,6 @@
     xmlns:imageHelper="clr-namespace:BodyBuddy.Helpers"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.ExerciseViewModels"
-    Title="{Binding Title}"
     x:DataType="viewModel:CategoryViewModel">
 
     <ContentPage.Resources>
