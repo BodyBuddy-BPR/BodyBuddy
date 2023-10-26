@@ -87,6 +87,8 @@ public partial class WorkoutDetailsPage : ContentPage
         if (sender is ImageButton button && button.CommandParameter is ExerciseModel exercise)
         {
             _viewModel.ExerciseToEdit = exercise;
+            _viewModel.SetsToEdit = exercise.Sets;
+            _viewModel.RepsToEdit = exercise.Reps;
             _popupNavigation.PushAsync(new EditSetsAndRepsPopup(_viewModel));
             // Now 'exercise' holds the Exercise object associated with the clicked button.
             // You can use it as needed.

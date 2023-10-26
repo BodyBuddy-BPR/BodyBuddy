@@ -7,8 +7,8 @@ public partial class EditSetsAndRepsPopup
     private WorkoutDetailsViewModel _viewModel;
 
     public EditSetsAndRepsPopup(WorkoutDetailsViewModel workoutDetailsViewModel)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         _viewModel = workoutDetailsViewModel;
         BindingContext = workoutDetailsViewModel;
     }
@@ -18,28 +18,28 @@ public partial class EditSetsAndRepsPopup
     // Buttons that increase or decrease the count of Sets and Reps
     private void MinusSetsBtn_Clicked(object sender, EventArgs e)
     {
-        if (_viewModel.ExerciseToEdit.Sets > 0)
+        if (_viewModel.SetsToEdit > 1)
         {
-            _viewModel.ExerciseToEdit.Sets--;
-            SetsLabel.Text = _viewModel.ExerciseToEdit.Sets.ToString();
+            _viewModel.SetsToEdit--;
+            SetsLabel.Text = _viewModel.SetsToEdit.ToString();
         }
     }
     private void PlusSetsBtn_Clicked(object sender, EventArgs e)
     {
-        _viewModel.ExerciseToEdit.Sets++;
-        SetsLabel.Text = _viewModel.ExerciseToEdit.Sets.ToString();
+        _viewModel.SetsToEdit++;
+        SetsLabel.Text = _viewModel.SetsToEdit.ToString();
     }
     private void MinusRepsBtn_Clicked(object sender, EventArgs e)
     {
-        if (_viewModel.ExerciseToEdit.Reps > 0)
+        if (_viewModel.RepsToEdit > 1)
         {
-            _viewModel.ExerciseToEdit.Reps--;
-            RepsLabel.Text = _viewModel.ExerciseToEdit.Reps.ToString();
+            _viewModel.RepsToEdit--;
+            RepsLabel.Text = _viewModel.RepsToEdit.ToString();
         }
     }
     private void PlusRepsBtn_Clicked(object sender, EventArgs e)
     {
-        _viewModel.ExerciseToEdit.Reps++;
-        RepsLabel.Text = _viewModel.ExerciseToEdit.Reps.ToString();
+        _viewModel.RepsToEdit++;
+        RepsLabel.Text = _viewModel.RepsToEdit.ToString();
     }
 }

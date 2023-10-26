@@ -8,7 +8,7 @@ namespace BodyBuddy.Repositories
 
         Task AddExerciseToWorkout(int workoutId, ExerciseModel exerciseId);
 
-        Task EditExerciseInWorkout(int workoutId, ExerciseModel changedExercise);
+        Task<bool> EditExerciseInWorkout(int workoutId, ExerciseModel changedExercise);
 
         Task DeleteExerciseFromWorkout(int workoutId, int exerciseId);
 

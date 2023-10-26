@@ -39,7 +39,7 @@
             <!--  Input Row  -->
             <Grid Margin="0,20">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="18.5*" /> 
+                    <ColumnDefinition Width="18.5*" />
                     <!--  If you want a space between progress bar and button, change this width to 22.5  -->
                     <ColumnDefinition Width="80*" />
                     <ColumnDefinition Width="10*" />

@@ -38,7 +38,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         // Exercise Popup fields
         [ObservableProperty]
-        public int sets, reps;
+        public int setsToEdit, repsToEdit;
 
         [ObservableProperty]
         public ExerciseModel exerciseToEdit;
@@ -178,6 +178,10 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         public void DeclineEditWorkout()
         {
             ErrorMessage = string.Empty;
+
+            ExerciseToEdit = null;
+
+
         }
 
         [RelayCommand]
@@ -209,26 +213,31 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 IsBusy = true;
 
-                var existingExercise = Exercises.FirstOrDefault(e => e.WorkoutId == ExerciseToEdit.WorkoutId);
+                var existingExercise = Exercises.FirstOrDefault(e => e.WorkoutExerciseId == ExerciseToEdit.WorkoutExerciseId);
 
                 if (existingExercise != null)
                 {
-                    int index = Exercises.IndexOf(existingExercise);
+                    ExerciseToEdit.Sets = SetsToEdit;
+                    ExerciseToEdit.Reps = RepsToEdit;
 
-                    // Remove the existing exercise from the list
-                    Exercises.Remove(existingExercise);
+                    // Edit the exercise in the repository
+                    var edited = await _workoutExercisesRepository.EditExerciseInWorkout(WorkoutDetails.Id, ExerciseToEdit);
 
-                    // Modify the exercise
-                    existingExercise.Sets = ExerciseToEdit.Sets;
-                    existingExercise.Reps = ExerciseToEdit.Reps;
+                    if (edited)
+                    {
+                        var index = Exercises.IndexOf(existingExercise);
 
-                    // Add the modified exercise back at the correct index
-                    Exercises.Insert(index, existingExercise);
+                        // Remove the existing exercise from the list
+                        Exercises.Remove(existingExercise);
+
+                        // Modify the exercise
+                        existingExercise.Sets = ExerciseToEdit.Sets;
+                        existingExercise.Reps = ExerciseToEdit.Reps;
+
+                        // Add the modified exercise back at the correct index
+                        Exercises.Insert(index, existingExercise);
+                    }
                 }
-
-                // Edit the exercise in the repository
-                await _workoutExercisesRepository.EditExerciseInWorkout(WorkoutDetails.Id, ExerciseToEdit);
-
             }
             catch (Exception ex)
             {

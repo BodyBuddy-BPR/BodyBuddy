@@ -51,7 +51,7 @@ namespace BodyBuddy.Models
         // Used in WorkoutDetailsViewModel
 
         [Ignore]
-        public int WorkoutId { get; set; }
+        public int WorkoutExerciseId { get; set; }
 
         [Ignore]
         public int Sets { get; set; }

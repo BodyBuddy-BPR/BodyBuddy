@@ -18,19 +18,21 @@ namespace BodyBuddy.Repositories.Implementations
             List<ExerciseModel> exercises = new();
             try
             {
-                var workoutIds = await _context.Table<WorkoutExercisesModel>().Where(x => x.WorkoutId == workoutId).ToListAsync();
-                foreach (var workout in workoutIds)
-                {
-                    var exercise = await _context.Table<ExerciseModel>().FirstOrDefaultAsync(x => x.Id == workout.ExerciseId);
+                var workoutExercises = await _context.Table<WorkoutExercisesModel>()
+                    .Where(x => x.WorkoutId == workoutId).ToListAsync();
 
-                    exercise.WorkoutId = workout.Id;
+                foreach (var workoutExercise in workoutExercises)
+                {
+                    var exercise = await _context.Table<ExerciseModel>().FirstOrDefaultAsync(x => x.Id == workoutExercise.ExerciseId);
+
+                    exercise.WorkoutExerciseId = workoutExercise.Id;
 
                     // Check if the exercise is not null
-                    if (workout.Sets != 0)
+                    if (workoutExercise.Sets != 0)
                     {
                         // Update the Sets and Reps properties
-                        exercise.Sets = workout.Sets;
-                        exercise.Reps = workout.Reps;
+                        exercise.Sets = workoutExercise.Sets;
+                        exercise.Reps = workoutExercise.Reps;
                         exercises.Add(exercise);
                     }
                     else
@@ -59,29 +61,29 @@ namespace BodyBuddy.Repositories.Implementations
             await _context.InsertAsync(workoutExercise);
         }
 
-        public async Task EditExerciseInWorkout(int workoutId, ExerciseModel changedExercise)
+        public async Task<bool> EditExerciseInWorkout(int workoutId, ExerciseModel changedExercise)
         {
             try
             {
                 WorkoutExercisesModel workoutExerciseToChange = await _context.Table<WorkoutExercisesModel>()
-                    .FirstOrDefaultAsync(x => x.WorkoutId == workoutId && x.Id == changedExercise.WorkoutId);
+                    .FirstOrDefaultAsync(x => x.WorkoutId == workoutId && x.Id == changedExercise.WorkoutExerciseId);
 
-                if (workoutExerciseToChange != null)
-                {
-                    // Only updating the Sets and Reps values
-                    workoutExerciseToChange.Sets = changedExercise.Sets;
-                    workoutExerciseToChange.Reps = changedExercise.Reps;
+                if (workoutExerciseToChange == null) return false;
 
-                    await _context.UpdateAsync(workoutExerciseToChange);
-                }
-                else return;
+                // Only updating the Sets and Reps values
+                workoutExerciseToChange.Sets = changedExercise.Sets;
+                workoutExerciseToChange.Reps = changedExercise.Reps;
+
+                await _context.UpdateAsync(workoutExerciseToChange);
+                return true;
+
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in EditExerciseInWorkout: {ex}");
-                return;
             }
 
+            return false;
         }
 
         public async Task DeleteExerciseFromWorkout(int workoutId, int exerciseId)
