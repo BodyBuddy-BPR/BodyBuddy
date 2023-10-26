@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net7.0;net7.0-android;net7.0-ios</TargetFrameworks> <!-- net7.0-ios-->
+		<TargetFrameworks>net7.0;net7.0-android;net7.0-ios</TargetFrameworks>
+		<!-- net7.0-ios-->
 		<!--<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>-->
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
@@ -49,46 +50,47 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <AndroidResource Remove="Controls\**" />
-	  <AndroidResource Remove="Database\Migrations\**" />
-	  <Compile Remove="Controls\**" />
-	  <Compile Remove="Database\Migrations\**" />
-	  <EmbeddedResource Remove="Controls\**" />
-	  <EmbeddedResource Remove="Database\Migrations\**" />
-	  <MauiCss Remove="Controls\**" />
-	  <MauiCss Remove="Database\Migrations\**" />
-	  <MauiXaml Remove="Controls\**" />
-	  <MauiXaml Remove="Database\Migrations\**" />
-	  <None Remove="Controls\**" />
-	  <None Remove="Database\Migrations\**" />
+		<AndroidResource Remove="Controls\**" />
+		<AndroidResource Remove="Database\Migrations\**" />
+		<Compile Remove="Controls\**" />
+		<Compile Remove="Database\Migrations\**" />
+		<EmbeddedResource Remove="Controls\**" />
+		<EmbeddedResource Remove="Database\Migrations\**" />
+		<MauiCss Remove="Controls\**" />
+		<MauiCss Remove="Database\Migrations\**" />
+		<MauiXaml Remove="Controls\**" />
+		<MauiXaml Remove="Database\Migrations\**" />
+		<None Remove="Controls\**" />
+		<None Remove="Database\Migrations\**" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Database\BodyBuddyDb.db" />
-	  <None Remove="Resources\Images\dumbbell.svg" />
-	  <None Remove="Resources\Images\home.svg" />
-	  <None Remove="Resources\Images\Icons\apple.svg" />
-	  <None Remove="Resources\Images\Icons\camera_white.svg" />
-	  <None Remove="Resources\Images\Icons\knifeandfork.svg" />
-	  <None Remove="Resources\Images\Icons\next_circle.svg" />
-	  <None Remove="Resources\Images\Icons\pencil.svg" />
-	  <None Remove="Resources\Images\Icons\plus_circle.svg" />
-	  <None Remove="Resources\Images\Icons\previous_circle.svg" />
-	  <None Remove="Resources\Images\Icons\share_white.svg" />
-	  <None Remove="Resources\Images\Icons\trashcan_white.svg" />
-	  <None Remove="Resources\Images\Icons\water_glass.svg" />
-	  <None Remove="Resources\Images\list.svg" />
-	  <None Remove="Resources\Images\minus_sign.svg" />
-	  <None Remove="Resources\Images\no_image.svg" />
-	  <None Remove="Resources\Images\pencil.svg" />
-	  <None Remove="Resources\Images\plus_sign.svg" />
-	  <None Remove="Resources\Images\trashcan.svg" />
+		<None Remove="Database\BodyBuddyDb.db" />
+		<None Remove="Resources\Images\dumbbell.svg" />
+		<None Remove="Resources\Images\home.svg" />
+		<None Remove="Resources\Images\Icons\apple.svg" />
+		<None Remove="Resources\Images\Icons\camera_white.svg" />
+		<None Remove="Resources\Images\Icons\google.svg" />
+		<None Remove="Resources\Images\Icons\knifeandfork.svg" />
+		<None Remove="Resources\Images\Icons\next_circle.svg" />
+		<None Remove="Resources\Images\Icons\pencil.svg" />
+		<None Remove="Resources\Images\Icons\plus_circle.svg" />
+		<None Remove="Resources\Images\Icons\previous_circle.svg" />
+		<None Remove="Resources\Images\Icons\share_white.svg" />
+		<None Remove="Resources\Images\Icons\trashcan_white.svg" />
+		<None Remove="Resources\Images\Icons\water_glass.svg" />
+		<None Remove="Resources\Images\list.svg" />
+		<None Remove="Resources\Images\minus_sign.svg" />
+		<None Remove="Resources\Images\no_image.svg" />
+		<None Remove="Resources\Images\pencil.svg" />
+		<None Remove="Resources\Images\plus_sign.svg" />
+		<None Remove="Resources\Images\trashcan.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Include="Database\BodyBuddyDb.db">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </EmbeddedResource>
+		<EmbeddedResource Include="Database\BodyBuddyDb.db">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -109,94 +111,102 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\Profile\ProfilePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\StartupTest\StartupTestPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\ExerciseViews\ExerciseDetailsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\ExerciseViews\ExercisesPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\ExerciseViews\CategoryPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\ExerciseViews\MuscleGroupPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Popups\EditIntakeGoalPopup.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Popups\EditSetsAndRepsPopup.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Popups\ShareWorkoutPopup.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Popups\EditWorkoutPopup.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\StatisticsViews\IntakePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\WorkoutViews\CreateWorkoutPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\WorkoutViews\StartedWorkoutPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\WorkoutViews\WorkoutDetailsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\WorkoutViews\WorkoutsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+		<MauiXaml Update="Views\Authentication\LoginPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\StartupTest\StartupTestPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\ExerciseViews\ExerciseDetailsPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\ExerciseViews\ExercisesPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\ExerciseViews\CategoryPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\ExerciseViews\MuscleGroupPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Popups\EditIntakeGoalPopup.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Popups\EditSetsAndRepsPopup.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Popups\ShareWorkoutPopup.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Popups\EditWorkoutPopup.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Profile\ProfilePage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\StatisticsViews\IntakePage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\WorkoutViews\CreateWorkoutPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\WorkoutViews\StartedWorkoutPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\WorkoutViews\WorkoutDetailsPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\WorkoutViews\WorkoutsPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiImage Include="Resources\Images\Categories\cardio.svg" />
-	  <MauiImage Include="Resources\Images\Categories\olympic_weightlifting.svg" />
-	  <MauiImage Include="Resources\Images\Categories\plyometrics.svg" />
-	  <MauiImage Include="Resources\Images\Categories\powerlifting.svg" />
-	  <MauiImage Include="Resources\Images\Categories\strength.svg" />
-	  <MauiImage Include="Resources\Images\Categories\stretching.svg" />
-	  <MauiImage Include="Resources\Images\Categories\strongman.svg" />
-	  <MauiImage Include="Resources\Images\Icons\apple.svg" />
-	  <MauiImage Include="Resources\Images\Icons\camera_white.svg" />
-	  <MauiImage Include="Resources\Images\Icons\dumbbell.svg" />
-	  <MauiImage Include="Resources\Images\Icons\home.svg" />
-	  <MauiImage Include="Resources\Images\Icons\knifeandfork.svg" />
-	  <MauiImage Include="Resources\Images\Icons\profile.svg" />
-	  <MauiImage Include="Resources\Images\Icons\questionmark.svg" />
-	  <MauiImage Include="Resources\Images\Icons\list.svg" />
-	  <MauiImage Include="Resources\Images\Icons\minus_sign.svg" />
-	  <MauiImage Include="Resources\Images\Icons\next_circle.svg" />
-	  <MauiImage Include="Resources\Images\Icons\pencil.svg" />
-	  <MauiImage Include="Resources\Images\Icons\pencil_white.svg" />
-	  <MauiImage Include="Resources\Images\Icons\plus_circle.svg" />
-	  <MauiImage Include="Resources\Images\Icons\plus_sign.svg" />
-	  <MauiImage Include="Resources\Images\Icons\previous_circle.svg" />
-	  <MauiImage Include="Resources\Images\Icons\share_white.svg" />
-	  <MauiImage Include="Resources\Images\Icons\trashcan_white.svg" />
-	  <MauiImage Include="Resources\Images\Icons\trashcan.svg" />
-	  <MauiImage Include="Resources\Images\Icons\water_glass.svg" />
+		<MauiImage Include="Resources\Images\Categories\cardio.svg" />
+		<MauiImage Include="Resources\Images\Categories\olympic_weightlifting.svg" />
+		<MauiImage Include="Resources\Images\Categories\plyometrics.svg" />
+		<MauiImage Include="Resources\Images\Categories\powerlifting.svg" />
+		<MauiImage Include="Resources\Images\Categories\strength.svg" />
+		<MauiImage Include="Resources\Images\Categories\stretching.svg" />
+		<MauiImage Include="Resources\Images\Categories\strongman.svg" />
+		<MauiImage Include="Resources\Images\Icons\apple.svg" />
+		<MauiImage Include="Resources\Images\Icons\camera_white.svg" />
+		<MauiImage Include="Resources\Images\Icons\dumbbell.svg" />
+		<MauiImage Include="Resources\Images\Icons\google.svg" />
+		<MauiImage Include="Resources\Images\Icons\home.svg" />
+		<MauiImage Include="Resources\Images\Icons\knifeandfork.svg" />
+		<MauiImage Include="Resources\Images\Icons\profile.svg" />
+		<MauiImage Include="Resources\Images\Icons\questionmark.svg" />
+		<MauiImage Include="Resources\Images\Icons\list.svg" />
+		<MauiImage Include="Resources\Images\Icons\minus_sign.svg" />
+		<MauiImage Include="Resources\Images\Icons\next_circle.svg" />
+		<MauiImage Include="Resources\Images\Icons\pencil.svg" />
+		<MauiImage Include="Resources\Images\Icons\pencil_white.svg" />
+		<MauiImage Include="Resources\Images\Icons\plus_circle.svg" />
+		<MauiImage Include="Resources\Images\Icons\plus_sign.svg" />
+		<MauiImage Include="Resources\Images\Icons\previous_circle.svg" />
+		<MauiImage Include="Resources\Images\Icons\share_white.svg" />
+		<MauiImage Include="Resources\Images\Icons\trashcan_white.svg" />
+		<MauiImage Include="Resources\Images\Icons\trashcan.svg" />
+		<MauiImage Include="Resources\Images\Icons\water_glass.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\Popups\EditIntakeGoalPopup.xaml.cs">
-	    <DependentUpon>EditIntakeGoalPopup.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\Profile\ProfilePage.xaml.cs">
-	    <DependentUpon>ProfilePage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\Popups\ShareWorkoutPopup.xaml.cs">
-	    <DependentUpon>ShareWorkoutPopup.xaml</DependentUpon>
-	  </Compile>
+		<Compile Update="Views\Popups\EditIntakeGoalPopup.xaml.cs">
+			<DependentUpon>EditIntakeGoalPopup.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Profile\ProfilePage.xaml.cs">
+			<DependentUpon>ProfilePage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Popups\ShareWorkoutPopup.xaml.cs">
+			<DependentUpon>ShareWorkoutPopup.xaml</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
-	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadGenericExceptionInfoBarBodyBuddyHideInfoBar="True" XamarinHotReloadUnhandledDeviceExceptionBodyBuddyHideInfoBar="True" /></VisualStudio></ProjectExtensions>
+	<ProjectExtensions>
+		<VisualStudio>
+			<UserProperties XamarinHotReloadGenericExceptionInfoBarBodyBuddyHideInfoBar="True" XamarinHotReloadUnhandledDeviceExceptionBodyBuddyHideInfoBar="True" />
+		</VisualStudio>
+	</ProjectExtensions>
 
 </Project>

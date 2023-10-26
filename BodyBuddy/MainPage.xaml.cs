@@ -17,9 +17,11 @@ public partial class MainPage : ContentPage
     {
         base.OnAppearing();
 
-        await Task.Delay(100); // Add a short delay
+        await Task.Delay(200); // Add a short delay
 
-        await _viewModel.GetDailyQuote();
+        await _viewModel.AttemptToLogin();
+
+        await _viewModel.Initialize();
     }
 }
 

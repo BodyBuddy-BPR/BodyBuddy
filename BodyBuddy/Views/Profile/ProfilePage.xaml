@@ -3,16 +3,24 @@
     x:Class="BodyBuddy.Views.Profile.ProfilePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:BodyBuddy.Converters"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.Profile"
-    Title="Profile Page"
-    x:DataType="viewModel:ProfileViewModel">
+    x:DataType="viewModel:ProfileViewModel"
+    Shell.NavBarIsVisible="False">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!--  Other resources  -->
+            <converters:BooleanInvertConverter x:Key="BooleanInvertConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Grid Margin="20" RowSpacing="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Label
@@ -157,6 +165,19 @@
                 Style="{StaticResource MediumLabel}"
                 Text="{Binding StartupTestDto.Goal}"
                 VerticalTextAlignment="Center" />
+
+
         </Grid>
+        <Button
+            x:Name="LoginBtn"
+            Grid.Row="2"
+            Clicked="LoginOrOut_Clicked"
+            Style="{StaticResource BaseButton}"
+            Text=""
+            TextColor="#212121"
+            VerticalOptions="EndAndExpand"
+            WidthRequest="140" />
+
     </Grid>
+
 </ContentPage>

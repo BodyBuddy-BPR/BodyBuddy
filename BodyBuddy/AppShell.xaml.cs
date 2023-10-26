@@ -1,4 +1,5 @@
-﻿using BodyBuddy.Views.ExerciseViews;
+﻿using BodyBuddy.Views.Authentication;
+using BodyBuddy.Views.ExerciseViews;
 using BodyBuddy.Views.Profile;
 using BodyBuddy.Views.StartupTest;
 using BodyBuddy.Views.WorkoutViews;
@@ -11,7 +12,7 @@ public partial class AppShell : Shell
 	{
 		InitializeComponent();
 		//Profile
-		Routing.RegisterRoute(nameof(ProfilePage), typeof(ProfilePage));
+		//Routing.RegisterRoute(nameof(ProfilePage), typeof(ProfilePage));
 
 		//Exercise Pages
 		Routing.RegisterRoute(nameof(CategoryPage), typeof(CategoryPage));
@@ -25,5 +26,8 @@ public partial class AppShell : Shell
 
         //Startup Test
         Routing.RegisterRoute(nameof(StartupTestPage), typeof(StartupTestPage));
+
+        // Authentication
+        Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
     }
 }
