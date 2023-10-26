@@ -13,7 +13,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
         private IConnectivity _connectivity;
 
         [ObservableProperty]
-        private Exercise _exerciseDetails;
+        private ExerciseModel _exerciseDetails;
         public ObservableCollection<string> ExerciseImages { get; set; } = new ObservableCollection<string>();
 
 
@@ -72,7 +72,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
         }
 
         // If any values in the exercise details response from the repo is null, it converts these to empty string instead
-        private void ProcessExerciseDetails(Exercise exercise)
+        private void ProcessExerciseDetails(ExerciseModel exercise)
         {
             if (exercise == null)
                 return;

@@ -16,7 +16,7 @@ namespace BodyBuddy.ViewModels.IntakeViewmodels
 		IPopupNavigation _popupNavigation;
 
 		[ObservableProperty]
-		private Intake _intakeDetails;
+		private IntakeModel _intakeDetails;
 		[ObservableProperty]
 		private string _errorMessage;
 		[ObservableProperty]

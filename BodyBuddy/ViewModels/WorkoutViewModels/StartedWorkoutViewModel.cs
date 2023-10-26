@@ -16,12 +16,12 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         // Query field for the started workout
         [ObservableProperty]
-        private Workout _workoutDetails;
+        private WorkoutModel _workoutDetails;
 
         [ObservableProperty]
-        private Exercise _displayedExercise;
-        public ObservableCollection<ExerciseRecords> ExerciseRecords { get; set; } = new ObservableCollection<ExerciseRecords>();
-        public ObservableCollection<Exercise> Exercises { get; set; } = new ObservableCollection<Exercise>();
+        private ExerciseModel _displayedExercise;
+        public ObservableCollection<ExerciseRecordsModel> ExerciseRecords { get; set; } = new ObservableCollection<ExerciseRecordsModel>();
+        public ObservableCollection<ExerciseModel> Exercises { get; set; } = new ObservableCollection<ExerciseModel>();
               
 
         // Keep track of the index of the currently displayed exercise
@@ -91,12 +91,12 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             if (DisplayedExercise.Records == null || DisplayedExercise.Records.Count == 0)
             {
                 // Generate sets only if records are not already present
-                DisplayedExercise.Records = new List<ExerciseRecords>();
+                DisplayedExercise.Records = new List<ExerciseRecordsModel>();
 
                 // Generate sets
                 for (int i = 1; i <= DisplayedExercise.Sets; i++)
                 {
-                    var exerciseRecord = new ExerciseRecords
+                    var exerciseRecord = new ExerciseRecordsModel
                     {
                         ExerciseId = DisplayedExercise.Id,
                         Set = i,
@@ -204,7 +204,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         #region Navigation 
 
         [RelayCommand]
-        async Task ToExercise(Exercise exercise)
+        async Task ToExercise(ExerciseModel exercise)
         {
             if (exercise is null)
                 return;

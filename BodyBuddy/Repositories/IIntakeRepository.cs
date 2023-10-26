@@ -4,8 +4,8 @@ namespace BodyBuddy.Repositories
 {
     public interface IIntakeRepository
 	{
-		Task<Intake> GetIntakeAsync();
+		Task<IntakeModel> GetIntakeAsync();
 
-		Task SaveChangesAsync(Intake intakeDetails);
+		Task SaveChangesAsync(IntakeModel intakeDetails);
 	}
 }
