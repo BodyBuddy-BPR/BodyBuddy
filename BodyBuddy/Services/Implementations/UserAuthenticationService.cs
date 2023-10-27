@@ -100,6 +100,7 @@ namespace BodyBuddy.Services.Implementations
             if (signUpInfo is not null && signUpInfo.User.Role == "authenticated")
             {
                 await SignUserIn(user, password);
+                return true;
             }
 
             return false;

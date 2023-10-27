@@ -104,7 +104,7 @@ namespace BodyBuddy.ViewModels.Authentication
         {
             try
             {
-                var success = await _userAuthenticationService.SignUserIn(LoginEmail, LoginPassword);
+                var success = await _userAuthenticationService.SignUserUp(SignUpEmail, SignUpPassword);
 
                 if (success)
                 {
