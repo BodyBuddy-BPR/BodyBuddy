@@ -193,6 +193,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Reference Include="Mono.Android">
+	    <HintPath>..\..\..\..\..\..\..\Program Files\dotnet\packs\Microsoft.Android.Ref.33\33.0.46\ref\net7.0\Mono.Android.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
+	<ItemGroup>
 		<Compile Update="Views\Popups\EditIntakeGoalPopup.xaml.cs">
 			<DependentUpon>EditIntakeGoalPopup.xaml</DependentUpon>
 		</Compile>
