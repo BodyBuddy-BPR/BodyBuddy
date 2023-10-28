@@ -7,16 +7,18 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Mopups.Interfaces;
 using System.Diagnostics;
+using BodyBuddy.Dtos;
+using BodyBuddy.Services;
 
-namespace BodyBuddy.ViewModels.IntakeViewmodels
+namespace BodyBuddy.ViewModels.IntakeViewModels
 {
 	public partial class IntakeViewModel : BaseViewModel
 	{
-		private readonly IIntakeRepository _intakeRepository;
-		IPopupNavigation _popupNavigation;
+		private readonly IIntakeService _intakeService;
+        private readonly IPopupNavigation _popupNavigation;
 
 		[ObservableProperty]
-		private IntakeModel _intakeDetails;
+		private IntakeDto _intakeDetails;
 		[ObservableProperty]
 		private string _errorMessage;
 		[ObservableProperty]
@@ -24,13 +26,13 @@ namespace BodyBuddy.ViewModels.IntakeViewmodels
 		[ObservableProperty]
 		private double _waterIntakeProgress, _calorieIntakeProgress;
 
-		public IntakeViewModel(IIntakeRepository intakeRepository, IPopupNavigation popupNavigation)
+		public IntakeViewModel(IIntakeService intakeService, IPopupNavigation popupNavigation)
 		{
-			_intakeRepository = intakeRepository;
+			_intakeService = intakeService;
 			_popupNavigation = popupNavigation;
 		}
 
-		public async Task Intilialize()
+		public async Task Initialize()
 		{
 			await GetIntakeGoals();
 		}
@@ -44,7 +46,7 @@ namespace BodyBuddy.ViewModels.IntakeViewmodels
 			{
 				IsBusy = true;
 
-				var intake = await _intakeRepository.GetIntakeAsync();
+				var intake = await _intakeService.GetIntakeAsync();
 				if (intake != null)
 				{
 					IntakeDetails = intake;
@@ -57,7 +59,7 @@ namespace BodyBuddy.ViewModels.IntakeViewmodels
 				}
 				else
 				{
-					await Shell.Current.DisplayAlert("Error!", $"Intake is null", "OK");
+					await Shell.Current.DisplayAlert("Error!", "Intake is null", "OK");
 
 				}
 			}
@@ -79,7 +81,7 @@ namespace BodyBuddy.ViewModels.IntakeViewmodels
 			IntakeDetails.WaterCurrent = WaterCurrent;
 			WaterIntakeProgress = (double)WaterCurrent / (double)WaterGoal;
 			IntakeDetails.WaterProgress = WaterIntakeProgress;
-			await _intakeRepository.SaveChangesAsync(IntakeDetails);
+			await _intakeService.SaveChangesAsync(IntakeDetails);
 		}
 
 		[RelayCommand]
@@ -103,7 +105,7 @@ namespace BodyBuddy.ViewModels.IntakeViewmodels
 				IntakeDetails.CalorieCurrent = CaloriesCurrent;
 				CalorieIntakeProgress = (double)CaloriesCurrent / (double)CalorieGoal;
 				IntakeDetails.CalorieProgress = CalorieIntakeProgress;
-				await _intakeRepository.SaveChangesAsync(IntakeDetails);
+				await _intakeService.SaveChangesAsync(IntakeDetails);
 			}
 		}
 
@@ -147,7 +149,7 @@ namespace BodyBuddy.ViewModels.IntakeViewmodels
 					WaterIntakeProgress = IntakeDetails.WaterProgress;
 				}
 
-				await _intakeRepository.SaveChangesAsync(IntakeDetails);
+				await _intakeService.SaveChangesAsync(IntakeDetails);
 
 				NewIntakeGoal = 0;
 				NewCurrentIntake = 0;

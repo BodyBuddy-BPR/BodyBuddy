@@ -1,4 +1,4 @@
-using BodyBuddy.ViewModels.IntakeViewmodels;
+using BodyBuddy.ViewModels.IntakeViewModels;
 
 namespace BodyBuddy.Views.StatisticsViews;
 
@@ -16,6 +16,6 @@ public partial class IntakePage : ContentPage
 	protected override async void OnAppearing()
 	{
 		base.OnAppearing();
-		await _viewModel.Intilialize();
+		await _viewModel.Initialize();
 	}
 }

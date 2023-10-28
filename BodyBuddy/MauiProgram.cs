@@ -7,7 +7,6 @@ using BodyBuddy.Repositories;
 using BodyBuddy.Repositories.Implementations;
 using BodyBuddy.Views.ExerciseViews;
 using BodyBuddy.ViewModels.ExerciseViewModels;
-using BodyBuddy.ViewModels.IntakeViewmodels;
 using BodyBuddy.Views.WorkoutViews;
 using BodyBuddy.Views.StatisticsViews;
 using BodyBuddy.ViewModels.WorkoutViewModels;
@@ -21,6 +20,7 @@ using BodyBuddy.Mappers;
 using BodyBuddy.Services;
 using BodyBuddy.Services.Implementations;
 using BodyBuddy.ViewModels.Authentication;
+using BodyBuddy.ViewModels.IntakeViewModels;
 using BodyBuddy.Views.StartupTest;
 using BodyBuddy.Views.Profile;
 using BodyBuddy.ViewModels.StartupTest;
@@ -165,12 +165,14 @@ public static class MauiProgram
 
         #region Helpers
         builder.Services.AddSingleton<StartupTestMapper>();
+        builder.Services.AddSingleton<IntakeMapper>();
         #endregion
 
         #region Services
         builder.Services.AddSingleton<IStartupTestService, StartupTestService>();
         builder.Services.AddSingleton<IWorkoutService, WorkoutService>();
         builder.Services.AddSingleton<IQuoteService, QuoteService>();
+        builder.Services.AddSingleton<IIntakeService, IntakeService>();
         builder.Services.AddSingleton<IUserAuthenticationService, UserAuthenticationService>();
 
         builder.Services.AddSingleton<DateTimeService>(); ;
