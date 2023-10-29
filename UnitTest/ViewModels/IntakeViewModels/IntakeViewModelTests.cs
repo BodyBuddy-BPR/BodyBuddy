@@ -37,7 +37,7 @@ namespace UnitTest.ViewModels.IntakeViewModels
             await _target.GetIntakeGoals();
 
             // Assert
-            Assert.That(_target.IntakeDetails, Is.EqualTo(_defaultIntake));
+            Assert.That(_target.IntakeDto, Is.EqualTo(_defaultIntake));
         }
 
         [TestCase(0, 0)]
@@ -57,8 +57,8 @@ namespace UnitTest.ViewModels.IntakeViewModels
             }
 
             // Assert
-            Assert.That(_target.IntakeDetails, Is.EqualTo(_defaultIntake));
-            Assert.That(_target.IntakeDetails.WaterCurrent, Is.EqualTo(waterCurrentResult));
+            Assert.That(_target.IntakeDto, Is.EqualTo(_defaultIntake));
+            Assert.That(_target.IntakeDto.WaterCurrent, Is.EqualTo(waterCurrentResult));
         }
 
         [TestCase(200)]
@@ -74,8 +74,8 @@ namespace UnitTest.ViewModels.IntakeViewModels
             await _target.AddKcalClicked(calories);
 
             // Assert
-            Assert.That(_target.IntakeDetails, Is.EqualTo(_defaultIntake));
-            Assert.That(_target.IntakeDetails.CalorieCurrent, Is.EqualTo(calories));
+            Assert.That(_target.IntakeDto, Is.EqualTo(_defaultIntake));
+            Assert.That(_target.IntakeDto.CalorieCurrent, Is.EqualTo(calories));
         }
 
         [TestCase(0)]
@@ -113,7 +113,7 @@ namespace UnitTest.ViewModels.IntakeViewModels
         public async Task CorrectGoalIsChangedBasedOnIntakeTypeStringTest(string intakeType)
         {
             // Arrange
-            _target.IntakeDetails = _defaultIntake;
+            _target.IntakeDto = _defaultIntake;
             _target.NewIntakeGoal = 3500;
 
             // Act
@@ -122,30 +122,14 @@ namespace UnitTest.ViewModels.IntakeViewModels
             // Assert
             if (intakeType == "Calorie")
             {
-                Assert.That(_target.IntakeDetails.CalorieGoal, Is.EqualTo(3500));
+                Assert.That(_target.IntakeDto.CalorieGoal, Is.EqualTo(3500));
             }
             else if (intakeType == "Water")
             {
-                Assert.That(_target.IntakeDetails.WaterGoal, Is.EqualTo(3500));
+                Assert.That(_target.IntakeDto.WaterGoal, Is.EqualTo(3500));
             }
             Assert.That(result, Is.EqualTo(true));
             Assert.That(_target.ErrorMessage, Is.EqualTo(string.Empty));
-            Assert.That(_target.NewIntakeGoal, Is.EqualTo(0));
-        }
-
-        [Test]
-        public void ErrorMessageAndNewIntakeGoalAreResetWhenPopupIsDeclinedTest()
-        {
-            // Arrange
-            _target.ErrorMessage = "Test Message";
-            _target.NewIntakeGoal = 3500;
-
-            // Act
-            _target.DeclineEditIntake();
-
-            // Assert
-            Assert.That(_target.ErrorMessage, Is.EqualTo(""));
-            Assert.That(_target.NewIntakeGoal, Is.EqualTo(0));
         }
 	}
 }

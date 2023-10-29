@@ -15,10 +15,10 @@
 
         <!--  Water Section  -->
         <VerticalStackLayout Grid.Row="0" Spacing="10">
-            <!--<Label
+            <Label
                 Margin="0,20"
                 Style="{StaticResource TitleLabel}"
-                Text="Water Intake" />-->
+                Text="Water Intake" />
 
             <!--  Image Row  -->
             <HorizontalStackLayout HorizontalOptions="Center">
