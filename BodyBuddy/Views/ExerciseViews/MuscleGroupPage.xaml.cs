@@ -17,6 +17,6 @@ public partial class MuscleGroupPage : ContentPage
         await Task.Delay(50); // Add a short delay
 
         base.OnAppearing();
-		await _viewModel.GetMusclegroups();
+		await _viewModel.GetMuscleGroups();
 	}
 }

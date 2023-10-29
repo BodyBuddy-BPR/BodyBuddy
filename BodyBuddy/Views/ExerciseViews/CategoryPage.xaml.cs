@@ -4,12 +4,12 @@ namespace BodyBuddy.Views.ExerciseViews;
 
 public partial class CategoryPage : ContentPage
 {
-	private CategoryViewModel _viewmodel;
+	private CategoryViewModel _viewModel;
 
 	public CategoryPage(CategoryViewModel categoryViewModel)
 	{
 		InitializeComponent();
-		_viewmodel = categoryViewModel;
+        _viewModel = categoryViewModel;
 		BindingContext = categoryViewModel;
 	}
 
@@ -18,5 +18,7 @@ public partial class CategoryPage : ContentPage
         base.OnAppearing();
 
         await Task.Delay(50); // Add a short delay
+
+        await _viewModel.Initialize();
     }
 }

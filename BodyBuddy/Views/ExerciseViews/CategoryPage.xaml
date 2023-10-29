@@ -29,7 +29,7 @@
             Text="Categories" />
 
         <!--  Collection of Categories  -->
-        <CollectionView Grid.Row="1" ItemsSource="{Binding Categories}">
+        <CollectionView Grid.Row="1" ItemsSource="{Binding CategoriesTest}">
 
             <CollectionView.ItemsLayout>
                 <GridItemsLayout
@@ -41,7 +41,7 @@
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:ExerciseModel">
+                <DataTemplate x:DataType="x:String">
 
                     <Frame
                         HeightRequest="130"
@@ -56,14 +56,14 @@
                                 <Image
                                     Aspect="AspectFit"
                                     HeightRequest="80"
-                                    Source="{Binding Category, Converter={StaticResource CategoryImageConverter}}"
+                                    Source="{Binding ., Converter={StaticResource CategoryImageConverter}}"
                                     WidthRequest="70" />
 
                                 <Label
                                     HorizontalOptions="CenterAndExpand"
                                     LineBreakMode="TailTruncation"
                                     Style="{StaticResource LargeLabel}"
-                                    Text="{Binding Category}" />
+                                    Text="{Binding .}" />
                             </StackLayout>
                         </effectsView:SfEffectsView>
 

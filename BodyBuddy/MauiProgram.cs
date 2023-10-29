@@ -170,6 +170,7 @@ public static class MauiProgram
 
         #region Services
         builder.Services.AddSingleton<IStartupTestService, StartupTestService>();
+        builder.Services.AddSingleton<IExerciseService, ExerciseService>();
         builder.Services.AddSingleton<IWorkoutService, WorkoutService>();
         builder.Services.AddSingleton<IQuoteService, QuoteService>();
         builder.Services.AddSingleton<IIntakeService, IntakeService>();

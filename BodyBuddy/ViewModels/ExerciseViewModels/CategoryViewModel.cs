@@ -1,7 +1,9 @@
 ﻿using BodyBuddy.Models;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using BodyBuddy.Services;
 using BodyBuddy.Views.ExerciseViews;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BodyBuddy.ViewModels.ExerciseViewModels
 {
@@ -9,34 +11,30 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
     {
         public ObservableCollection<ExerciseModel> Categories { get; set; } = new();
 
-        public CategoryViewModel()
+        [ObservableProperty]
+        private List<string> _categoriesTest;
+
+        private readonly IExerciseService _exerciseService;
+
+        public CategoryViewModel(IExerciseService exerciseService)
         {
+            _exerciseService = exerciseService;
             Title = string.Empty;
-            GenerateCategories();
         }
 
         [RelayCommand]
-        async Task GoToPrimaryMusclesPage(ExerciseModel category)
+        async Task GoToPrimaryMusclesPage(string category)
         {
             if (category is null)
                 return;
 
             await Task.Delay(100); // Add a short delay
-            await Shell.Current.GoToAsync(nameof(MuscleGroupPage), true, new Dictionary<string, object>
-            {
-                { "Category", category }
-            });
+            await Shell.Current.GoToAsync($"{nameof(MuscleGroupPage)}?Category={Uri.EscapeDataString(category)}");
         }
 
-        private void GenerateCategories()
+        public async Task Initialize()
         {
-            Categories.Add(new ExerciseModel { Category = "Strength" });
-            Categories.Add(new ExerciseModel { Category = "Cardio" });
-            Categories.Add(new ExerciseModel { Category = "Stretching" });
-            Categories.Add(new ExerciseModel { Category = "Plyometrics" });
-            Categories.Add(new ExerciseModel { Category = "Strongman" });
-            Categories.Add(new ExerciseModel { Category = "Powerlifting" });
-            Categories.Add(new ExerciseModel { Category = "Olympic weightlifting" });
+            CategoriesTest = await _exerciseService.GetUniqueCategoriesAsync();
         }
     }
 }

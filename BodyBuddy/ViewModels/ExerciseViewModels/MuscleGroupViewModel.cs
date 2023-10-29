@@ -5,25 +5,24 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using BodyBuddy.Services;
 
 namespace BodyBuddy.ViewModels.ExerciseViewModels
 {
-    [QueryProperty(nameof(ExerciseCategory), "Category")]
+    [QueryProperty(nameof(Category), "Category")]
     public partial class MuscleGroupViewModel : BaseViewModel
     {
-        [ObservableProperty]
-        private ExerciseModel exerciseCategory;
+        [ObservableProperty] private string _category;
+        public ObservableCollection<Grouping<string, ExerciseModel>> MuscleGroups { get; set; } = new();
 
-        private readonly IExerciseRepository _exerciseRepository;
+        private readonly IExerciseService _exerciseService;
 
-        public ObservableCollection<Grouping<string, ExerciseModel>> MuscleGroups { get; set; } = new ObservableCollection<Grouping<string, ExerciseModel>>();
-
-        public MuscleGroupViewModel(IExerciseRepository exerciseRepository)
+        public MuscleGroupViewModel(IExerciseService exerciseService)
         {
-            _exerciseRepository = exerciseRepository;
+            _exerciseService = exerciseService;
         }
 
-        public async Task GetMusclegroups()
+        public async Task GetMuscleGroups()
         {
             if (IsBusy) return;
 
@@ -36,7 +35,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
                     MuscleGroups.Clear();
                 }
 
-                GenerateMuscleGroupsForCategory(ExerciseCategory.Category);
+                await GenerateMuscleGroupsForCategory(Category);
 
             }
             catch (Exception ex)
@@ -56,7 +55,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             if (exercise is null)
                 return;
 
-            exercise.Category = ExerciseCategory.Category;
+            //exercise.Category = ExerciseCategory.Category;
 
             await Task.Delay(100); // Add a short delay
             await Shell.Current.GoToAsync(nameof(ExercisesPage), true, new Dictionary<string, object>
@@ -66,131 +65,19 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
         }
 
 
-        private void GenerateMuscleGroupsForCategory(string category)
+        private async Task GenerateMuscleGroupsForCategory(string category)
         {
-            var muscleGroups = new List<ExerciseModel>();
+            var muscleGroups = await _exerciseService.GetMuscleGroupsForCategory(category);
 
-            if (category == "Strength")
-            {
-                var strength = new List<ExerciseModel>
-                {
-                    new ExerciseModel { PrimaryMuscles = "Shoulders", TargetArea = "Upper Body" },
-                    new ExerciseModel { PrimaryMuscles = "Chest", TargetArea = "Upper Body" },
-                    new ExerciseModel { PrimaryMuscles = "Traps", TargetArea = "Upper Body" },
-                    new ExerciseModel { PrimaryMuscles = "Neck", TargetArea = "Upper Body" },
-                    new ExerciseModel { PrimaryMuscles = "Biceps", TargetArea = "Arms" },
-                    new ExerciseModel { PrimaryMuscles = "Forearms", TargetArea = "Arms" },
-                    new ExerciseModel { PrimaryMuscles = "Triceps", TargetArea = "Arms" },
-                    new ExerciseModel { PrimaryMuscles = "Middle back", TargetArea = "Back" },
-                    new ExerciseModel { PrimaryMuscles = "Lower back", TargetArea = "Back" },
-                    new ExerciseModel { PrimaryMuscles = "Lats", TargetArea = "Back" },
-                    new ExerciseModel { PrimaryMuscles = "Abdominals", TargetArea = "Abs and Core" },
-                    new ExerciseModel { PrimaryMuscles = "Hamstrings", TargetArea = "Lower Body" },
-                    new ExerciseModel { PrimaryMuscles = "Adductors", TargetArea = "Lower Body" },
-                    new ExerciseModel { PrimaryMuscles = "Quadriceps", TargetArea = "Lower Body" },
-                    new ExerciseModel { PrimaryMuscles = "Glutes", TargetArea = "Lower Body" },
-                    new ExerciseModel { PrimaryMuscles = "Calves", TargetArea = "Lower Body" },
-                    new ExerciseModel { PrimaryMuscles = "Abductors", TargetArea = "Lower Body" }
-                };
-                muscleGroups.AddRange(strength);
-            }
-            else if (category == "Stretching")
-            {
-                var stretching = new List<ExerciseModel>
-                {
-                    new ExerciseModel { PrimaryMuscles = "Shoulders", TargetArea = "Upper Body" },
-                    new ExerciseModel { PrimaryMuscles = "Chest", TargetArea = "Upper Body" },
-                    new ExerciseModel { PrimaryMuscles = "Neck", TargetArea = "Upper Body" },
-                    new ExerciseModel { PrimaryMuscles = "Biceps", TargetArea = "Arms" },
-                    new ExerciseModel { PrimaryMuscles = "Forearms", TargetArea = "Arms" },
-                    new ExerciseModel { PrimaryMuscles = "Triceps", TargetArea = "Arms" },
-                    new ExerciseModel { PrimaryMuscles = "Middle back", TargetArea = "Back" },
-                    new ExerciseModel { PrimaryMuscles = "Lower back", TargetArea = "Back" },
-                    new ExerciseModel { PrimaryMuscles = "Lats", TargetArea = "Back" },
-                    new ExerciseModel { PrimaryMuscles = "Abdominals", TargetArea = "Abs and Core" },
-                    new ExerciseModel { PrimaryMuscles = "Hamstrings", TargetArea = "Lower Body" },
-                    new ExerciseModel { PrimaryMuscles = "Adductors", TargetArea = "Lower Body" },
-                    new ExerciseModel { PrimaryMuscles = "Quadriceps", TargetArea = "Lower Body" },
-                    new ExerciseModel { PrimaryMuscles = "Glutes", TargetArea = "Lower Body" },
-                    new ExerciseModel { PrimaryMuscles = "Calves", TargetArea = "Lower Body" },
-                    new ExerciseModel { PrimaryMuscles = "Abductors", TargetArea = "Lower Body" }
-                };
-                muscleGroups.AddRange(stretching);
-            }
-            else if (category == "Plyometrics")
-            {
-                var plyometrics = new List<ExerciseModel>
-                {
-                    new ExerciseModel { PrimaryMuscles = "Shoulders", TargetArea = "Upper Body" },
-                    new ExerciseModel { PrimaryMuscles = "Chest", TargetArea = "Upper Body" },
-                    new ExerciseModel { PrimaryMuscles = "Triceps", TargetArea = "Arms" },
-                    new ExerciseModel { PrimaryMuscles = "Lats", TargetArea = "Back" },
-                    new ExerciseModel { PrimaryMuscles = "Abdominals", TargetArea = "Abs and Core" },
-                    new ExerciseModel { PrimaryMuscles = "Hamstrings", TargetArea = "Lower Body" },
-                    new ExerciseModel { PrimaryMuscles = "Adductors", TargetArea = "Lower Body" },
-                    new ExerciseModel { PrimaryMuscles = "Quadriceps", TargetArea = "Lower Body" },
-                };
-                muscleGroups.AddRange(plyometrics);
-            }
-            else if (category == "Strongman")
-            {
-                var strongman = new List<ExerciseModel>
-                {
-                    new ExerciseModel { PrimaryMuscles = "Shoulders", TargetArea = "Upper Body" },
-                    new ExerciseModel { PrimaryMuscles = "Chest", TargetArea = "Upper Body" },
-                    new ExerciseModel { PrimaryMuscles = "Forearms", TargetArea = "Arms" },
-                    new ExerciseModel { PrimaryMuscles = "Lower back", TargetArea = "Back" },
-                    new ExerciseModel { PrimaryMuscles = "Hamstrings", TargetArea = "Lower Body" },
-                    new ExerciseModel { PrimaryMuscles = "Quadriceps", TargetArea = "Lower Body" },
-                };
-                muscleGroups.AddRange(strongman);
-            }
-            else if (category == "Powerlifting")
-            {
-                var powerlifting = new List<ExerciseModel>
-                {
-                    new ExerciseModel { PrimaryMuscles = "Chest", TargetArea = "Upper Body" },
-                    new ExerciseModel { PrimaryMuscles = "Triceps", TargetArea = "Arms" },
-                    new ExerciseModel { PrimaryMuscles = "Lower back", TargetArea = "Back" },
-                    new ExerciseModel { PrimaryMuscles = "Hamstrings", TargetArea = "Lower Body" },
-                    new ExerciseModel { PrimaryMuscles = "Quadriceps", TargetArea = "Lower Body" },
-                    new ExerciseModel { PrimaryMuscles = "Glutes", TargetArea = "Lower Body" },
-                };
-                muscleGroups.AddRange(powerlifting);
-            }
-            else if (category == "Cardio")
-            {
-                var cardio = new List<ExerciseModel>
-                {
-                    new ExerciseModel { PrimaryMuscles = "Hamstrings", TargetArea = "Lower Body" },
-                    new ExerciseModel { PrimaryMuscles = "Quadriceps", TargetArea = "Lower Body" },
-                };
-                muscleGroups.AddRange(cardio);
-            }
-            else if (category == "Olympic weightlifting")
-            {
-                var olympicWeightlifting = new List<ExerciseModel>
-                {
-                    new ExerciseModel { PrimaryMuscles = "Shoulders", TargetArea = "Upper Body" },
-                    new ExerciseModel { PrimaryMuscles = "Traps", TargetArea = "Upper Body" },
-                    new ExerciseModel { PrimaryMuscles = "Hamstrings", TargetArea = "Lower Body" },
-                    new ExerciseModel { PrimaryMuscles = "Quadriceps", TargetArea = "Lower Body" },
-                    new ExerciseModel { PrimaryMuscles = "Glutes", TargetArea = "Lower Body" },
-                };
-                muscleGroups.AddRange(olympicWeightlifting);
-            }
-
-            var groupedMusclegroups = from exercise in muscleGroups
+            var groupedMuscleGroups = from exercise in muscleGroups
                                       orderby exercise.TargetArea
-                                      group exercise by exercise.TargetArea.ToString() into targetGroup
+                                      group exercise by exercise.TargetArea into targetGroup
                                       select new Grouping<string, ExerciseModel>(targetGroup.Key, targetGroup);
 
-            foreach(var group in groupedMusclegroups)
+            foreach(var group in groupedMuscleGroups)
             {
                 MuscleGroups.Add(group);
             }
-
-            //MuscleGroups = new ObservableCollection<Grouping<string, Exercise>>(groupedMusclegroups);
         }
 
     }

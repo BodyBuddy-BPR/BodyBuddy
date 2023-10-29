@@ -15,5 +15,7 @@ namespace BodyBuddy.Repositories
         Task<List<ExerciseModel>> GetExercisesAsync(string category, string musclegroup);
 
         Task<ExerciseModel> GetExerciseDetails(int id);
+
+        Task<List<string>> GetUniqueCategoriesAsync();
     }
 }
