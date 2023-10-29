@@ -113,43 +113,42 @@ namespace BodyBuddy.ViewModels.IntakeViewModels
 		#region popup methods
 
 		public async Task<bool> SaveNewIntakeValues(string intakeType)
-		{
-			if (NewCurrentIntake < 0)
+        {
+            if (NewCurrentIntake < 0)
 			{
 				ErrorMessage = "Current intake cannot be negative.";
 				return false;
 			}
-			else if (NewIntakeGoal <= 0)
-			{
-				ErrorMessage = "New intake goal cannot be negative or zero.";
-				return false;
-			}
-			else
-			{
-				if (intakeType == "Calorie")
-				{
-					IntakeDetails.CalorieGoal = NewIntakeGoal;
-					IntakeDetails.CalorieCurrent = NewCurrentIntake;
 
-					CalorieIntakeProgress = (double)IntakeDetails.CalorieCurrent / (double)NewIntakeGoal;
-				}
-				else
-				{
-					IntakeDetails.WaterGoal = NewIntakeGoal;
-					IntakeDetails.WaterCurrent = NewCurrentIntake;
+            if (NewIntakeGoal <= 0)
+            {
+                ErrorMessage = "New intake goal cannot be negative or zero.";
+                return false;
+            }
 
-					WaterIntakeProgress = (double)IntakeDetails.WaterCurrent / (double)NewIntakeGoal;
-				}
+            if (intakeType == "Calorie")
+            {
+                IntakeDetails.CalorieGoal = NewIntakeGoal;
+                IntakeDetails.CalorieCurrent = NewCurrentIntake;
 
-				await _intakeService.SaveChangesAsync(IntakeDetails);
+                CalorieIntakeProgress = (double)IntakeDetails.CalorieCurrent / (double)NewIntakeGoal;
+            }
+            else
+            {
+                IntakeDetails.WaterGoal = NewIntakeGoal;
+                IntakeDetails.WaterCurrent = NewCurrentIntake;
 
-				NewIntakeGoal = 0;
-				NewCurrentIntake = 0;
-				ErrorMessage = string.Empty;
+                WaterIntakeProgress = (double)IntakeDetails.WaterCurrent / (double)NewIntakeGoal;
+            }
 
-				return true;
-			}
-		}
+            await _intakeService.SaveChangesAsync(IntakeDetails);
+
+            NewIntakeGoal = 0;
+            NewCurrentIntake = 0;
+            ErrorMessage = string.Empty;
+
+            return true;
+        }
 
 		[RelayCommand]
 		public void DeclineEditIntake()
