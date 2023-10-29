@@ -6,7 +6,6 @@
     xmlns:converters="clr-namespace:BodyBuddy.Converters"
     xmlns:customControls="clr-namespace:BodyBuddy.CustomControls"
     xmlns:effectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
-    xmlns:helpers="clr-namespace:BodyBuddy.Helpers"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.WorkoutViewModels"
     Title="{Binding WorkoutName}"
@@ -15,7 +14,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <!--  Other resources  -->
-            <helpers:ExerciseImageHelper x:Key="ExerciseImageHelper" />
+            <converters:ExerciseImageConverter x:Key="ExerciseImageConverter" />
             <converters:BooleanInvertConverter x:Key="BooleanInvertConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -84,7 +83,7 @@
                                             <UriImageSource
                                                 CacheValidity="2"
                                                 CachingEnabled="True"
-                                                Uri="{Binding Images, Converter={StaticResource ExerciseImageHelper}}" />
+                                                Uri="{Binding Images, Converter={StaticResource ExerciseImageConverter}}" />
                                         </Image.Source>
                                     </Image>
 

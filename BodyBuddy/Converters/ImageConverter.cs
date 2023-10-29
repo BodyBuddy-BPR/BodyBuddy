@@ -1,9 +1,9 @@
 ﻿using Imagekit.Sdk;
 using System.Globalization;
 
-namespace BodyBuddy.Helpers
+namespace BodyBuddy.Converters
 {
-    public class ImageHelper : IValueConverter
+    public class ImageConverter : IValueConverter
     {
         // TODO: FIGURE OUT HOW TO HIDE THESE KEYS
         private const string PrivateApiKey = "private_YWs786SoD61eD9kxM/Q2sktOfs0=";

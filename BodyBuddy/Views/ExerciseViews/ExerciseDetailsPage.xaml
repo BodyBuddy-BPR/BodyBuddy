@@ -3,15 +3,16 @@
     x:Class="BodyBuddy.Views.ExerciseViews.ExerciseDetailsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:helpers="clr-namespace:BodyBuddy.Helpers"
+    xmlns:converters="clr-namespace:BodyBuddy.Converters"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.ExerciseViewModels"
     Title="{Binding ExerciseDetails.Name}"
     x:DataType="viewModel:ExerciseDetailsViewModel">
 
+    <!--  Not currently used!  -->
     <ContentPage.Resources>
         <ResourceDictionary>
             <!--  Other resources  -->
-            <helpers:ImageHelper x:Key="ImageHelper" />
+            <converters:ImageConverter x:Key="ImageConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 

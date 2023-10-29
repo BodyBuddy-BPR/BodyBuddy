@@ -3,10 +3,10 @@
     x:Class="BodyBuddy.Views.WorkoutViews.StartedWorkoutPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:BodyBuddy.Converters"
     xmlns:customControls="clr-namespace:BodyBuddy.CustomControls"
     xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:effectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
-    xmlns:helpers="clr-namespace:BodyBuddy.Helpers"
     xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
@@ -17,7 +17,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <!--  Other resources  -->
-            <helpers:ExerciseImageHelper x:Key="ExerciseImageHelper" />
+            <converters:ExerciseImageConverter x:Key="ExerciseImageConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -57,7 +57,7 @@
                                 <UriImageSource
                                     CacheValidity="2"
                                     CachingEnabled="True"
-                                    Uri="{Binding DisplayedExercise.Images, Converter={StaticResource ExerciseImageHelper}}" />
+                                    Uri="{Binding DisplayedExercise.Images, Converter={StaticResource ExerciseImageConverter}}" />
                             </Image.Source>
                         </Image>
                     </Border>
