@@ -1,4 +1,6 @@
-﻿using BodyBuddy.Models;
+﻿using BodyBuddy.Enums;
+using BodyBuddy.Mappers;
+using BodyBuddy.Models;
 using BodyBuddy.Services;
 using BodyBuddy.ViewModels.StartupTest;
 using State = BodyBuddy.Enums.StartupTestStates;
@@ -101,9 +103,9 @@ namespace UnitTest.ViewModels.StartupTest
         private void TargetSetup()
         {
             target.StartupTestDto.Name = "Name";
-            target.StartupTestDto.Gender = "Gender";
-            target.StartupTestDto.ActiveAmount = "Active";
-            target.StartupTestDto.Goal = "Goal";
+            target.StartupTestDto.Gender = EnumMapper.GetDisplayString(Gender.Female);
+            target.StartupTestDto.ActiveAmount = EnumMapper.GetDisplayString(UserActivity.Active);
+            target.StartupTestDto.Goal = EnumMapper.GetDisplayString(Goal.GainMuscle);
             target.StartupTestDto.Weight = 1.0;
             target.StartupTestDto.Height = 1;
             target.StartupTestDto.PassiveCalorieBurn = 1;

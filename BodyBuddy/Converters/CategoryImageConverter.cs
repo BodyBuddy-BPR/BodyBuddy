@@ -1,8 +1,8 @@
 ﻿using System.Globalization;
 
-namespace BodyBuddy.Helpers
+namespace BodyBuddy.Converters
 {
-    public class CategoryImageHelper : IValueConverter
+    public class CategoryImageConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

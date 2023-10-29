@@ -3,15 +3,15 @@
     x:Class="BodyBuddy.Views.ExerciseViews.CategoryPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:BodyBuddy.Converters"
     xmlns:effectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
-    xmlns:imageHelper="clr-namespace:BodyBuddy.Helpers"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.ExerciseViewModels"
     x:DataType="viewModel:CategoryViewModel">
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <imageHelper:CategoryImageHelper x:Key="CategoryImageHelper" />
+            <converters:CategoryImageConverter x:Key="CategoryImageConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -56,7 +56,7 @@
                                 <Image
                                     Aspect="AspectFit"
                                     HeightRequest="80"
-                                    Source="{Binding Category, Converter={StaticResource CategoryImageHelper}}"
+                                    Source="{Binding Category, Converter={StaticResource CategoryImageConverter}}"
                                     WidthRequest="70" />
 
                                 <Label
