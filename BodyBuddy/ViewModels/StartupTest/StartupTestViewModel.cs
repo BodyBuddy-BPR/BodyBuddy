@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 using System.ComponentModel;
 using System.Windows.Input;
 using BodyBuddy.Enums;
+using BodyBuddy.Mappers;
 
 namespace BodyBuddy.ViewModels.StartupTest;
 
@@ -31,49 +32,35 @@ public partial class StartupTestViewModel : BaseViewModel
     public DateTime MinDate { get; } = new(1914, 7, 28);
     public DateTime MaxDate { get; } = DateTime.Now;
 
-    #region MultipleChoice
-    //Setting lists for multiple choice questions (Add more here, if more options become available
-    public List<string> GenderList { get; } = new()
-        { Strings.STARTUP_GENDER_FEMALE, Strings.STARTUP_GENDER_MALE, Strings.STARTUP_GENDER_NONE };
-
-    public List<string> ActivityList { get; } = new()
-    {
-        Strings.STARTUP_ACTIVITY_VERYACTIVE, Strings.STARTUP_ACTIVITY_ACTIVE,
-        Strings.STARTUP_ACTIVITY_LITTLEACTIVE, Strings.STARTUP_ACTIVITY_NOTVERYACTIVE
-    };
-
-    public List<string> GoalList { get; } = new() { Strings.STARTUP_GOAL_LOSEWEIGHT, Strings.STARTUP_GOAL_GAINMUSCLE };
-
-    public List<string> TargetList { get; } = new()
-    {
-        Strings.STARTUP_FOCUSAREA_UPPERBODY, Strings.STARTUP_FOCUSAREA_LOWERBODY,
-        Strings.STARTUP_FOCUSAREA_ABSANDCORE, Strings.STARTUP_FOCUSAREA_OTHER
-    };
-
-    public List<bool> TargetSelectedStates { get; set; } = new() { false, false, false, false };
-#endregion
+    public List<string> GenderList { get; }
+    public List<string> ActivityList { get; }
+    public List<string> GoalList { get; }
+    public List<string> FocusAreaList { get; }
+    //public List<bool> TargetSelectedStates { get; set; } = new() { false, false, false, false };
+    #endregion
 
     public ICommand RadioButtonCheckedCommand { get; }
 
     private readonly IStartupTestService _startupTestService;
-
-    #endregion
 
     public StartupTestViewModel(IStartupTestService startupTestService)
     {
         _startupTestService = startupTestService;
         StartupTestDto = new StartupTestDto();
         StartupTestDto.PropertyChanged += StartupTestDtoPropertyChanged;
+
         //Default selected birthday
         StartupTestDto.Birthday = new DateTime(2005, 1, 1);
+        GenderList = InitializeGenderList();
+        ActivityList = InitializeActivityList();
+        GoalList = InitializeGoalList();
+        FocusAreaList = InitializeFocusAreaList();
 
         //SetStateProperties Has to be first due timing
         SetStateProperties();
         UpdateVisibility();
         RadioButtonCheckedCommand = new Command<string>(OnRadioButtonChecked);
     }
-
-
 
     [RelayCommand]
     public void NextButton()
@@ -122,22 +109,22 @@ public partial class StartupTestViewModel : BaseViewModel
 
     private void StateNext()
     {
-        if (CurrentState != StartupTestStates.Done && currentStateDone())
-        {
-            CurrentState++;
-            SetStateProperties();
-            UpdateVisibility();
-        }
+        if (CurrentState == StartupTestStates.Done || !currentStateDone()) 
+            return;
+
+        CurrentState++;
+        SetStateProperties();
+        UpdateVisibility();
     }
 
     private void StatePrevious()
     {
-        if (CurrentState != StartupTestStates.NameEntry)
-        {
-            CurrentState--;
-            SetStateProperties();
-            UpdateVisibility();
-        }
+        if (CurrentState == StartupTestStates.NameEntry)
+            return;
+
+        CurrentState--;
+        SetStateProperties();
+        UpdateVisibility();
     }
 
     private void UpdateVisibility()
@@ -210,13 +197,49 @@ public partial class StartupTestViewModel : BaseViewModel
     //Whenever radiobutton changes
     private void OnRadioButtonChecked(string selectedValue)
     {
-        if (CurrentState == StartupTestStates.GenderSelection)
-            StartupTestDto.Gender = selectedValue;
-        else if (CurrentState == StartupTestStates.ActivitySelection)
-            StartupTestDto.ActiveAmount = selectedValue;
-        else if (CurrentState == StartupTestStates.GoalSelection)
-            StartupTestDto.Goal = selectedValue;
+        switch (CurrentState)
+        {
+            case StartupTestStates.GenderSelection:
+                StartupTestDto.Gender = selectedValue;
+                break;
+            case StartupTestStates.ActivitySelection:
+                StartupTestDto.ActiveAmount = selectedValue;
+                break;
+            case StartupTestStates.GoalSelection:
+                StartupTestDto.Goal = selectedValue;
+                break;
+        }
     }
 
     #endregion
+    private static List<string> InitializeGenderList()
+    {
+        return Enum.GetValues(typeof(Gender))
+            .Cast<Gender>()
+            .Select(EnumMapper.GetDisplayString)
+            .ToList();
+    }
+
+    private static List<string> InitializeActivityList()
+    {
+        return Enum.GetValues(typeof(UserActivity))
+            .Cast<UserActivity>()
+            .Select(EnumMapper.GetDisplayString)
+            .ToList();
+    }
+
+    private static List<string> InitializeGoalList()
+    {
+        return Enum.GetValues(typeof(Goal))
+            .Cast<Goal>()
+            .Select(EnumMapper.GetDisplayString)
+            .ToList();
+    }
+    private static List<string> InitializeFocusAreaList()
+    {
+        return Enum.GetValues(typeof(FocusArea))
+            .Cast<FocusArea>()
+            .Select(EnumMapper.GetDisplayString)
+            .ToList();
+    }
 }

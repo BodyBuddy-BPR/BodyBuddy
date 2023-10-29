@@ -36,6 +36,7 @@ namespace BodyBuddy.Events
             {
                 var radioButton = sender as RadioButton;
                 Command.Execute(radioButton.Content);
+                //Command.Execute(radioButton.BindingContext);
             }
         }
     }
