@@ -38,10 +38,6 @@ namespace UnitTest.ViewModels.IntakeViewModels
 
             // Assert
             Assert.That(_target.IntakeDetails, Is.EqualTo(_defaultIntake));
-            Assert.That(_target.CaloriesCurrent, Is.EqualTo(_defaultIntake.CalorieCurrent));
-            Assert.That(_target.WaterCurrent, Is.EqualTo(_defaultIntake.WaterCurrent));
-            Assert.That(_target.CalorieGoal, Is.EqualTo(_defaultIntake.CalorieGoal));
-            Assert.That(_target.WaterGoal, Is.EqualTo(_defaultIntake.WaterGoal));
         }
 
         [TestCase(0, 0)]
@@ -62,7 +58,7 @@ namespace UnitTest.ViewModels.IntakeViewModels
 
             // Assert
             Assert.That(_target.IntakeDetails, Is.EqualTo(_defaultIntake));
-            Assert.That(_target.WaterCurrent, Is.EqualTo(waterCurrentResult));
+            Assert.That(_target.IntakeDetails.WaterCurrent, Is.EqualTo(waterCurrentResult));
         }
 
         [TestCase(200)]
@@ -79,7 +75,7 @@ namespace UnitTest.ViewModels.IntakeViewModels
 
             // Assert
             Assert.That(_target.IntakeDetails, Is.EqualTo(_defaultIntake));
-            Assert.That(_target.CaloriesCurrent, Is.EqualTo(calories));
+            Assert.That(_target.IntakeDetails.CalorieCurrent, Is.EqualTo(calories));
         }
 
         [TestCase(0)]
