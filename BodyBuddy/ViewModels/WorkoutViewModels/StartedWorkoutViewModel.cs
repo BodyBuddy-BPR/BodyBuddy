@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using BodyBuddy.Dtos;
 
 namespace BodyBuddy.ViewModels.WorkoutViewModels
 {
@@ -16,7 +17,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         // Query field for the started workout
         [ObservableProperty]
-        private WorkoutModel _workoutDetails;
+        private WorkoutDto _workoutDetails;
 
         [ObservableProperty]
         private ExerciseModel _displayedExercise;

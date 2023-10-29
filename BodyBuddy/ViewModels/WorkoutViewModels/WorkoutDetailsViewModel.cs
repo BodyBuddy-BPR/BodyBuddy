@@ -9,20 +9,21 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
 using BodyBuddy.Dtos;
+using BodyBuddy.Services;
 
 namespace BodyBuddy.ViewModels.WorkoutViewModels
 {
     [QueryProperty(nameof(WorkoutDetails), "Workout")]
     public partial class WorkoutDetailsViewModel : BaseViewModel
     {
-        private readonly IWorkoutRepository _workoutRepository;
+        private readonly IWorkoutService _workoutService;
         private readonly IWorkoutExercisesRepository _workoutExercisesRepository;
 
         #region ObservableProperties
 
         // Query field
         [ObservableProperty]
-        private WorkoutModel _workoutDetails;
+        private WorkoutDto _workoutDetails;
 
         // IsPremade (used to hide edit and deletions)
         [ObservableProperty]
@@ -50,11 +51,11 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         #endregion
 
-        public ObservableCollection<ExerciseModel> Exercises { get; set; } = new ObservableCollection<ExerciseModel>();
+        public ObservableCollection<ExerciseModel> Exercises { get; set; } = new();
 
-        public WorkoutDetailsViewModel(IWorkoutRepository workoutRepository, IWorkoutExercisesRepository workoutExercisesRepository)
+        public WorkoutDetailsViewModel(IWorkoutService workoutService, IWorkoutExercisesRepository workoutExercisesRepository)
         {
-            _workoutRepository = workoutRepository;
+            _workoutService = workoutService;
             _workoutExercisesRepository = workoutExercisesRepository;
         }
 
@@ -70,23 +71,19 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
             await GetExercisesFromWorkout();
 
-            //TODO: SEBT Future --> DTO objects (IsPremade = WorkoutDetails.Premade)
-            if (WorkoutDetails.PreMade == 0)
-                IsPremade = false;
-            else
-                IsPremade = true;
+            IsPremade = WorkoutDetails.PreMade;
 
             //Setting up Visibility of small and big buttons
             if (Exercises.Count > 0)
             {
-                LargeButtonModifyIsEnabled = (false && !IsPremade);
+                LargeButtonModifyIsEnabled = (false);
                 SmallButtonModifyIsEnabled = (!IsPremade);
                 SmallButtonsIsEnabled = true;
             }
             else
             {
                 LargeButtonModifyIsEnabled = (!IsPremade);
-                SmallButtonModifyIsEnabled = (false && !IsPremade);
+                SmallButtonModifyIsEnabled = (false);
                 SmallButtonsIsEnabled = false;
             }
         }
@@ -128,18 +125,19 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         [RelayCommand]
         async Task DeleteFromWorkout(ExerciseModel exercise)
         {
+            if (exercise == null) return;
+
             bool result = await Shell.Current.DisplayAlert("Delete", $"Are you sure you want to remove {exercise.Name} from this workout?", "OK", "Cancel");
 
             if (result)
             {
-                if (exercise == null) return;
                 await _workoutExercisesRepository.DeleteExerciseFromWorkout(WorkoutDetails.Id, exercise.Id);
                 Exercises.Remove(exercise);
 
                 if (Exercises.Count == 0)
                 {
                     SmallButtonModifyIsEnabled = false;
-                    LargeButtonModifyIsEnabled = true && !IsPremade;
+                    LargeButtonModifyIsEnabled = !IsPremade;
                 }
             }
         }
@@ -149,7 +147,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         public async Task<bool> SaveWorkout()
         {
-            var exists = await _workoutRepository.DoesWorkoutAlreadyExist(PopupName);
+            var exists = await _workoutService.DoesWorkoutAlreadyExist(PopupName);
 
             if (string.IsNullOrWhiteSpace(PopupName))
             {
@@ -164,8 +162,8 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             }
             else
             {
-                WorkoutModel workout = new() { Id = WorkoutDetails.Id, Name = PopupName, Description = PopupDescription, PreMade = 0 };
-                await _workoutRepository.PostWorkoutPlanAsync(workout);
+                WorkoutDto workout = new() { Id = WorkoutDetails.Id, Name = PopupName, Description = PopupDescription, PreMade = false };
+                await _workoutService.SaveWorkoutData(workout);
 
                 WorkoutName = PopupName;
                 WorkoutDescription = PopupDescription;
@@ -181,14 +179,15 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         }
 
         [RelayCommand]
-        async Task DeleteWorkout(WorkoutModel workout)
+        async Task DeleteWorkout(WorkoutDto workout)
         {
+            if (workout == null) return;
+
             bool result = await Shell.Current.DisplayAlert("Delete", $"Are you sure you want to delete {workout.Name}?", "OK", "Cancel");
 
             if (result)
             {
-                if (workout == null) return;
-                await _workoutRepository.DeleteWorkout(workout);
+                await _workoutService.DeleteWorkout(workout);
                 await GoBackAsync();
             }
         }
@@ -285,8 +284,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         [RelayCommand]
         async Task StartWorkout()
         {
-            if (WorkoutDetails == null) return;
-
             await Task.Delay(100); // Add a short delay
             await Shell.Current.GoToAsync(nameof(StartedWorkoutPage), true, new Dictionary<string, object>
             {

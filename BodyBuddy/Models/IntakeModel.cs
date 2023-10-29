@@ -21,18 +21,12 @@ namespace BodyBuddy.Models
 		[Column("waterCurrent")]
 		public int WaterCurrent { get; set; }
 
-		[Column("calorieProgress")]
-		public double CalorieProgress { get; set; }
-		
-		[Column("waterProgress")]
-		public double WaterProgress { get; set; }
-
 		[Column("date")]
-		public int Date { get; set; }
+		public long Date { get; set; }
 
 		public IntakeModel()
 		{
-			Date = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+			Date = (long)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
 		}
 	}
 }

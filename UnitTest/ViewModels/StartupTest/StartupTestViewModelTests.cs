@@ -1,7 +1,7 @@
 ﻿using BodyBuddy.Models;
 using BodyBuddy.Services;
 using BodyBuddy.ViewModels.StartupTest;
-using State = BodyBuddy.ViewModels.StartupTest.StartupTestViewModel.State;
+using State = BodyBuddy.Enums.StartupTestStates;
 using Moq;
 
 namespace UnitTest.ViewModels.StartupTest
@@ -100,14 +100,14 @@ namespace UnitTest.ViewModels.StartupTest
 
         private void TargetSetup()
         {
-            target.Name = "Name";
-            target.Gender = "Gender";
-            target.Active = "Active";
-            target.Goal = "Goal";
-            target.Weight = 1.0;
-            target.Height = 1;
-            target.PassiveCalorieBurn = 1;
-            target.SelectedDate = new DateTime(1997, 1, 1);
+            target.StartupTestDto.Name = "Name";
+            target.StartupTestDto.Gender = "Gender";
+            target.StartupTestDto.ActiveAmount = "Active";
+            target.StartupTestDto.Goal = "Goal";
+            target.StartupTestDto.Weight = 1.0;
+            target.StartupTestDto.Height = 1;
+            target.StartupTestDto.PassiveCalorieBurn = 1;
+            target.StartupTestDto.Birthday = new DateTime(1997, 1, 1);
         }
     }
 }

@@ -7,179 +7,205 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Mopups.Interfaces;
 using System.Diagnostics;
+using BodyBuddy.Dtos;
+using BodyBuddy.Services;
+using System.ComponentModel;
 
-namespace BodyBuddy.ViewModels.IntakeViewmodels
+namespace BodyBuddy.ViewModels.IntakeViewModels
 {
-	public partial class IntakeViewModel : BaseViewModel
-	{
-		private readonly IIntakeRepository _intakeRepository;
-		IPopupNavigation _popupNavigation;
+    public partial class IntakeViewModel : BaseViewModel
+    {
+        #region properties
+        private readonly IIntakeService _intakeService;
+        private readonly IPopupNavigation _popupNavigation;
 
-		[ObservableProperty]
-		private IntakeModel _intakeDetails;
-		[ObservableProperty]
-		private string _errorMessage;
-		[ObservableProperty]
-		private int _waterCurrent, _caloriesCurrent, _calorieEntryText, _newIntakeGoal, _calorieGoal, _waterGoal, _newCurrentIntake;
-		[ObservableProperty]
-		private double _waterIntakeProgress, _calorieIntakeProgress;
+        [ObservableProperty]
+        private string _errorMessage;
+        [ObservableProperty]
+        private int _calorieEntryText, _newIntakeGoal, _newCurrentIntake;
 
-		public IntakeViewModel(IIntakeRepository intakeRepository, IPopupNavigation popupNavigation)
-		{
-			_intakeRepository = intakeRepository;
-			_popupNavigation = popupNavigation;
-		}
+        //Setting WaterProgress and CalorieProgress
+        public double WaterProgress => IntakeDto.WaterGoal != 0 ? (double)IntakeDto.WaterCurrent / IntakeDto.WaterGoal : 0;
+        public double CalorieProgress => IntakeDto.CalorieGoal != 0 ? (double)IntakeDto.CalorieCurrent / IntakeDto.CalorieGoal : 0;
 
-		public async Task Intilialize()
-		{
-			await GetIntakeGoals();
-		}
+        private IntakeDto _intakeDto;
+        public IntakeDto IntakeDto
+        {
+            get => _intakeDto;
+            set
+            {
+                if (_intakeDto != null)
+                {
+                    _intakeDto.PropertyChanged -= IntakeDtoPropertyChanged;
+                }
 
-		[RelayCommand]
-		public async Task GetIntakeGoals()
-		{
-			if (IsBusy) return;
+                if (!SetProperty(ref _intakeDto, value))
+                    return;
 
-			try
-			{
-				IsBusy = true;
+                if (_intakeDto != null)
+                {
+                    //Subscribing properties changed
+                    _intakeDto.PropertyChanged += IntakeDtoPropertyChanged;
+                }
 
-				var intake = await _intakeRepository.GetIntakeAsync();
-				if (intake != null)
-				{
-					IntakeDetails = intake;
-					CaloriesCurrent = IntakeDetails.CalorieCurrent;
-					WaterCurrent = IntakeDetails.WaterCurrent;
-					CalorieGoal = IntakeDetails.CalorieGoal;
-					WaterGoal = IntakeDetails.WaterGoal;
-					WaterIntakeProgress = IntakeDetails.WaterProgress;
-					CalorieIntakeProgress = IntakeDetails.CalorieProgress;
-				}
-				else
-				{
-					await Shell.Current.DisplayAlert("Error!", $"Intake is null", "OK");
+                //Updating both properties when IntakeDto is set
+                OnPropertyChanged(nameof(CalorieProgress));
+                OnPropertyChanged(nameof(WaterProgress));
+            }
+        }
+        #endregion
 
-				}
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex);
-				await Shell.Current.DisplayAlert("Error!", $"Unable to get intake {ex.Message}", "OK");
-			}
-			finally
-			{
-				IsBusy = false;
-			}
-		}
+        public IntakeViewModel(IIntakeService intakeService, IPopupNavigation popupNavigation)
+        {
+            _intakeService = intakeService;
+            _popupNavigation = popupNavigation;
 
-		[RelayCommand]
-		public async Task AddWaterClicked()
-		{
-			WaterCurrent += 250;
-			IntakeDetails.WaterCurrent = WaterCurrent;
-			WaterIntakeProgress = (double)WaterCurrent / (double)WaterGoal;
-			IntakeDetails.WaterProgress = WaterIntakeProgress;
-			await _intakeRepository.SaveChangesAsync(IntakeDetails);
-		}
+            IntakeDto = new IntakeDto();
+            IntakeDto.PropertyChanged += IntakeDtoPropertyChanged;
+        }
 
-		[RelayCommand]
-		public async Task AddKcalClicked(int calories)
-		{
-			if(CaloriesCurrent + calories < 0)
-			{
-				ErrorMessage = "Cannot reduce current calorie intake below zero.";
+        public async Task Initialize()
+        {
+            await GetIntakeGoals();
+        }
 
-				CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+        [RelayCommand]
+        public async Task GetIntakeGoals()
+        {
+            if (IsBusy) return;
 
-				ToastDuration duration = ToastDuration.Short;
-				double fontSize = 14;
+            try
+            {
+                IsBusy = true;
 
-				var toast = Toast.Make(ErrorMessage, duration, fontSize);
-				await toast.Show(cancellationTokenSource.Token);
-			}
-			else
-			{
-				CaloriesCurrent += calories;
-				IntakeDetails.CalorieCurrent = CaloriesCurrent;
-				CalorieIntakeProgress = (double)CaloriesCurrent / (double)CalorieGoal;
-				IntakeDetails.CalorieProgress = CalorieIntakeProgress;
-				await _intakeRepository.SaveChangesAsync(IntakeDetails);
-			}
-		}
+                var intake = await _intakeService.GetIntakeAsync();
+                if (intake != null)
+                {
+                    IntakeDto = intake;
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("Error!", "Intake is null", "OK");
 
-		public string CalorieIntakeProgressAsPercentage
-		{
-			get { return $"{CalorieIntakeProgress * 100:F1} %"; }
-		}
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("Error!", $"Unable to get intake {ex.Message}", "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
 
-		#region popup methods
+        [RelayCommand]
+        public async Task AddWaterClicked()
+        {
+            IntakeDto.WaterCurrent += 250;
 
-		public async Task<bool> SaveNewIntakeValues(string intakeType)
-		{
-			if (NewCurrentIntake < 0)
-			{
-				ErrorMessage = "Current intake cannot be negative.";
-				return false;
-			}
-			else if (NewIntakeGoal <= 0)
-			{
-				ErrorMessage = "New intake goal cannot be negative or zero.";
-				return false;
-			}
-			else
-			{
-				if (intakeType == "Calorie")
-				{
-					IntakeDetails.CalorieGoal = NewIntakeGoal;
-					CalorieGoal = IntakeDetails.CalorieGoal;
-					IntakeDetails.CalorieCurrent = NewCurrentIntake;
-					CaloriesCurrent = IntakeDetails.CalorieCurrent;
-					IntakeDetails.CalorieProgress = (double)CaloriesCurrent / (double)NewIntakeGoal;
-					CalorieIntakeProgress = IntakeDetails.CalorieProgress;
-				}
-				else
-				{
-					IntakeDetails.WaterGoal = NewIntakeGoal;
-					WaterGoal = IntakeDetails.WaterGoal;
-					IntakeDetails.WaterCurrent = NewCurrentIntake;
-					WaterCurrent = IntakeDetails.WaterCurrent;
-					IntakeDetails.WaterProgress = (double)WaterCurrent / (double)NewIntakeGoal;
-					WaterIntakeProgress = IntakeDetails.WaterProgress;
-				}
+            await _intakeService.SaveChangesAsync(IntakeDto);
+        }
 
-				await _intakeRepository.SaveChangesAsync(IntakeDetails);
+        [RelayCommand]
+        public async Task AddKcalClicked(int calories)
+        {
+            if (IntakeDto.CalorieCurrent + calories < 0)
+            {
+                ErrorMessage = "Cannot reduce current calorie intake below zero.";
 
-				NewIntakeGoal = 0;
-				NewCurrentIntake = 0;
-				ErrorMessage = string.Empty;
+                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
-				return true;
-			}
-		}
+                ToastDuration duration = ToastDuration.Short;
+                double fontSize = 14;
 
-		[RelayCommand]
-		public void DeclineEditIntake()
-		{
-			ErrorMessage = string.Empty;
-			NewIntakeGoal = 0;
-		}
+                var toast = Toast.Make(ErrorMessage, duration, fontSize);
+                await toast.Show(cancellationTokenSource.Token);
+            }
+            else
+            {
+                IntakeDto.CalorieCurrent += calories;
 
-		[RelayCommand]
-		private void ClickToShowPopup_Clicked(string intakeType)
-		{
-			if (intakeType == "Calorie")
-			{
-				NewCurrentIntake = CaloriesCurrent;
-				NewIntakeGoal = CalorieGoal;
-			}
-			else if (intakeType == "Water")
-			{
-				NewCurrentIntake = WaterCurrent;
-				NewIntakeGoal = WaterGoal;
-			}
-			_popupNavigation.PushAsync(new EditIntakeGoalPopup(this, intakeType));
-		}
+                await _intakeService.SaveChangesAsync(IntakeDto);
+            }
+        }
 
-		#endregion popup methods
-	}
+        #region popup methods
+
+        public async Task<bool> SaveNewIntakeValues(string intakeType)
+        {
+            if (NewCurrentIntake < 0)
+            {
+                ErrorMessage = "Current intake cannot be negative.";
+                return false;
+            }
+
+            if (NewIntakeGoal <= 0)
+            {
+                ErrorMessage = "New intake goal cannot be negative or zero.";
+                return false;
+            }
+
+            if (intakeType == "Calorie")
+            {
+                IntakeDto.CalorieGoal = NewIntakeGoal;
+                IntakeDto.CalorieCurrent = NewCurrentIntake;
+            }
+            else
+            {
+                IntakeDto.WaterGoal = NewIntakeGoal;
+                IntakeDto.WaterCurrent = NewCurrentIntake;
+            }
+
+            await _intakeService.SaveChangesAsync(IntakeDto);
+
+            ErrorMessage = string.Empty;
+
+            return true;
+        }
+
+        [RelayCommand]
+        public void DeclineEditIntake()
+        {
+            ErrorMessage = string.Empty;
+        }
+
+        [RelayCommand]
+        private void ClickToShowPopup_Clicked(string intakeType)
+        {
+            switch (intakeType)
+            {
+                case "Calorie":
+                    NewCurrentIntake = IntakeDto.CalorieCurrent;
+                    NewIntakeGoal = IntakeDto.CalorieGoal;
+                    break;
+                case "Water":
+                    NewCurrentIntake = IntakeDto.WaterCurrent;
+                    NewIntakeGoal = IntakeDto.WaterGoal;
+                    break;
+            }
+
+            _popupNavigation.PushAsync(new EditIntakeGoalPopup(this, intakeType));
+        }
+
+        #endregion popup methods
+
+        #region private methods
+        private void IntakeDtoPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            //If the following properties are changed, it lets the UI know that WaterProgress or CalorieProgress is changed
+            switch (e.PropertyName)
+            {
+                case nameof(IntakeDto.WaterCurrent) or nameof(IntakeDto.WaterGoal):
+                    OnPropertyChanged(nameof(WaterProgress));
+                    break;
+                case nameof(IntakeDto.CalorieCurrent) or nameof(IntakeDto.CalorieGoal):
+                    OnPropertyChanged(nameof(CalorieProgress));
+                    break;
+            }
+        }
+        #endregion
+
+    }
 }
