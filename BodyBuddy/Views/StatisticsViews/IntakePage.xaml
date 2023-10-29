@@ -48,7 +48,7 @@
                     HorizontalOptions="Center"
                     Maximum="1"
                     Minimum="0"
-                    Progress="{Binding IntakeDto.WaterProgress}"
+                    Progress="{Binding WaterProgress}"
                     ProgressFill="{StaticResource Primary}" />
                 <ImageButton
                     Grid.Column="0"
@@ -157,7 +157,7 @@
                     HorizontalOptions="Center"
                     Maximum="1"
                     Minimum="0"
-                    Progress="{Binding IntakeDto.CalorieProgress}"
+                    Progress="{Binding CalorieProgress}"
                     ProgressFill="{StaticResource Secondary}" />
                 <ImageButton
                     Grid.Column="0"
