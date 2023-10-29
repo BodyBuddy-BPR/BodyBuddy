@@ -22,8 +22,6 @@ namespace BodyBuddy.Mappers
                 WaterGoal = intakeDto.WaterGoal,
                 CalorieCurrent = intakeDto.CalorieCurrent,
                 WaterCurrent = intakeDto.WaterCurrent,
-                CalorieProgress = intakeDto.CalorieProgress,
-                WaterProgress = intakeDto.WaterProgress,
                 Date = _dateTimeService.ConvertToEpochTime(intakeDto.Date)
             };
         }
@@ -40,8 +38,6 @@ namespace BodyBuddy.Mappers
                 WaterGoal = intakeModel.WaterGoal,
                 CalorieCurrent = intakeModel.CalorieCurrent,
                 WaterCurrent = intakeModel.WaterCurrent,
-                CalorieProgress = intakeModel.CalorieProgress,
-                WaterProgress = intakeModel.WaterProgress,
                 Date = _dateTimeService.ConvertToDateTime(intakeModel.Date)
             };
         }

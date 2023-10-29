@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,22 +7,18 @@ using System.Threading.Tasks;
 
 namespace BodyBuddy.Dtos
 {
-    public class IntakeDto
+    public partial class IntakeDto : ObservableObject
     {
-        public int Id { get; set; }
+        [ObservableProperty] private int _id;
 
-        public int CalorieGoal { get; set; }
+        [ObservableProperty] private int _calorieGoal;
 
-        public int WaterGoal { get; set; }
+        [ObservableProperty] private int _waterGoal;
 
-        public int CalorieCurrent { get; set; }
+        [ObservableProperty] private int _calorieCurrent;
 
-        public int WaterCurrent { get; set; }
+        [ObservableProperty] private int _waterCurrent;
 
-        public double CalorieProgress { get; set; }
-
-        public double WaterProgress { get; set; }
-
-        public DateTime Date { get; set; }
+        [ObservableProperty] private DateTime _date;
     }
 }

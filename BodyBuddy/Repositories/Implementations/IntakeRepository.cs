@@ -44,9 +44,7 @@ namespace BodyBuddy.Repositories.Implementations
                     CalorieGoal = previousIntake?.CalorieGoal ?? DefaultCalorieGoal,
                     WaterGoal = previousIntake?.WaterGoal ?? DefaultWaterGoal,
                     CalorieCurrent = 0,
-                    WaterCurrent = 0,
-                    WaterProgress = 0,
-                    CalorieProgress = 0
+                    WaterCurrent = 0
                 };
 
                 // Insert the new entry in the database

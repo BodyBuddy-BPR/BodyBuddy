@@ -21,12 +21,6 @@ namespace BodyBuddy.Models
 		[Column("waterCurrent")]
 		public int WaterCurrent { get; set; }
 
-		[Column("calorieProgress")]
-		public double CalorieProgress { get; set; }
-		
-		[Column("waterProgress")]
-		public double WaterProgress { get; set; }
-
 		[Column("date")]
 		public long Date { get; set; }
 

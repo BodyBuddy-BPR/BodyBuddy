@@ -22,8 +22,9 @@ namespace BodyBuddy.ViewModels.IntakeViewModels
 		[ObservableProperty]
 		private string _errorMessage;
 		[ObservableProperty]
-		private int _waterCurrent, _caloriesCurrent, _calorieEntryText, _newIntakeGoal, _calorieGoal, _waterGoal, _newCurrentIntake;
-		[ObservableProperty]
+		private int _calorieEntryText, _newIntakeGoal, _newCurrentIntake;
+
+        [ObservableProperty]
 		private double _waterIntakeProgress, _calorieIntakeProgress;
 
 		public IntakeViewModel(IIntakeService intakeService, IPopupNavigation popupNavigation)
@@ -50,12 +51,9 @@ namespace BodyBuddy.ViewModels.IntakeViewModels
 				if (intake != null)
 				{
 					IntakeDetails = intake;
-					CaloriesCurrent = IntakeDetails.CalorieCurrent;
-					WaterCurrent = IntakeDetails.WaterCurrent;
-					CalorieGoal = IntakeDetails.CalorieGoal;
-					WaterGoal = IntakeDetails.WaterGoal;
-					WaterIntakeProgress = IntakeDetails.WaterProgress;
-					CalorieIntakeProgress = IntakeDetails.CalorieProgress;
+
+					WaterIntakeProgress = (double)intake.WaterCurrent / (double)intake.WaterGoal;
+					CalorieIntakeProgress = (double)intake.CalorieCurrent / (double)intake.CalorieGoal;
 				}
 				else
 				{
@@ -77,17 +75,16 @@ namespace BodyBuddy.ViewModels.IntakeViewModels
 		[RelayCommand]
 		public async Task AddWaterClicked()
 		{
-			WaterCurrent += 250;
-			IntakeDetails.WaterCurrent = WaterCurrent;
-			WaterIntakeProgress = (double)WaterCurrent / (double)WaterGoal;
-			IntakeDetails.WaterProgress = WaterIntakeProgress;
+			IntakeDetails.WaterCurrent += 250;
+			
+            WaterIntakeProgress = (double)IntakeDetails.WaterCurrent / (double)IntakeDetails.WaterGoal;
 			await _intakeService.SaveChangesAsync(IntakeDetails);
 		}
 
 		[RelayCommand]
 		public async Task AddKcalClicked(int calories)
 		{
-			if(CaloriesCurrent + calories < 0)
+			if(IntakeDetails.CalorieCurrent + calories < 0)
 			{
 				ErrorMessage = "Cannot reduce current calorie intake below zero.";
 
@@ -101,10 +98,9 @@ namespace BodyBuddy.ViewModels.IntakeViewModels
 			}
 			else
 			{
-				CaloriesCurrent += calories;
-				IntakeDetails.CalorieCurrent = CaloriesCurrent;
-				CalorieIntakeProgress = (double)CaloriesCurrent / (double)CalorieGoal;
-				IntakeDetails.CalorieProgress = CalorieIntakeProgress;
+				IntakeDetails.CalorieCurrent += calories;
+
+				CalorieIntakeProgress = (double)IntakeDetails.CalorieCurrent / (double)IntakeDetails.CalorieGoal;
 				await _intakeService.SaveChangesAsync(IntakeDetails);
 			}
 		}
@@ -133,20 +129,16 @@ namespace BodyBuddy.ViewModels.IntakeViewModels
 				if (intakeType == "Calorie")
 				{
 					IntakeDetails.CalorieGoal = NewIntakeGoal;
-					CalorieGoal = IntakeDetails.CalorieGoal;
 					IntakeDetails.CalorieCurrent = NewCurrentIntake;
-					CaloriesCurrent = IntakeDetails.CalorieCurrent;
-					IntakeDetails.CalorieProgress = (double)CaloriesCurrent / (double)NewIntakeGoal;
-					CalorieIntakeProgress = IntakeDetails.CalorieProgress;
+
+					CalorieIntakeProgress = (double)IntakeDetails.CalorieCurrent / (double)NewIntakeGoal;
 				}
 				else
 				{
 					IntakeDetails.WaterGoal = NewIntakeGoal;
-					WaterGoal = IntakeDetails.WaterGoal;
 					IntakeDetails.WaterCurrent = NewCurrentIntake;
-					WaterCurrent = IntakeDetails.WaterCurrent;
-					IntakeDetails.WaterProgress = (double)WaterCurrent / (double)NewIntakeGoal;
-					WaterIntakeProgress = IntakeDetails.WaterProgress;
+
+					WaterIntakeProgress = (double)IntakeDetails.WaterCurrent / (double)NewIntakeGoal;
 				}
 
 				await _intakeService.SaveChangesAsync(IntakeDetails);
@@ -171,13 +163,13 @@ namespace BodyBuddy.ViewModels.IntakeViewModels
 		{
 			if (intakeType == "Calorie")
 			{
-				NewCurrentIntake = CaloriesCurrent;
-				NewIntakeGoal = CalorieGoal;
+				NewCurrentIntake = IntakeDetails.CalorieCurrent;
+				NewIntakeGoal = IntakeDetails.CalorieGoal;
 			}
 			else if (intakeType == "Water")
 			{
-				NewCurrentIntake = WaterCurrent;
-				NewIntakeGoal = WaterGoal;
+				NewCurrentIntake = IntakeDetails.WaterCurrent;
+				NewIntakeGoal = IntakeDetails.WaterGoal;
 			}
 			_popupNavigation.PushAsync(new EditIntakeGoalPopup(this, intakeType));
 		}
