@@ -17,7 +17,6 @@ namespace BodyBuddy.ViewModels.Authentication
     [QueryProperty(nameof(SkipVisible), "SkipVisible")]
     public partial class LoginViewModel : BaseViewModel
     {
-        private Client _supabase;
         private IUserAuthenticationService _userAuthenticationService;
 
         [ObservableProperty]
@@ -38,10 +37,9 @@ namespace BodyBuddy.ViewModels.Authentication
 
         private readonly string _skipLoginKey = "SkipLogInKey";
 
-        public LoginViewModel(IUserAuthenticationService userAuthenticationService, Client client)
+        public LoginViewModel(IUserAuthenticationService userAuthenticationService)
         {
             _userAuthenticationService = userAuthenticationService;
-            _supabase = client;
         }
 
         public async Task Initialize()

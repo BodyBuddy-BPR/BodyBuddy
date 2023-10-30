@@ -50,7 +50,19 @@ namespace BodyBuddy.ViewModels
                 {
                     { "SkipVisible", true }
                 });
-                //await Shell.Current.Navigation.PushModalAsync(new LoginPage(new LoginViewModel(null, null)));
+
+                //var navigationParams = new Dictionary<string, object>
+                //{
+                //    { "SkipVisible", true }
+                //};
+
+                //var navigationPage = new NavigationPage(new LoginPage(new LoginViewModel(_userAuthService)))
+                //{
+                //    BarBackgroundColor = Color.Transparent,
+                //    BarTextColor = Color.White
+                //};
+
+                //await Shell.Current.Navigation.PushModalAsync(navigationPage, true);
 
             }
         }
