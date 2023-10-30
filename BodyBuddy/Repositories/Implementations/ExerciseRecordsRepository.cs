@@ -12,17 +12,15 @@ namespace BodyBuddy.Repositories.Implementations
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-
-        public async Task<int> SaveExerciseRecords(ExerciseRecordsModel exerciseRecord)
+        public async Task SaveExerciseRecords(ExerciseRecordsModel exerciseRecord)
         {
             if (exerciseRecord.Id != 0)
-                return await _context.UpdateAsync(exerciseRecord);
-            else
-            {
-                exerciseRecord.Id = await GetNextExerciseRecordsId(); // Generate a unique Id
-                return await _context.InsertAsync(exerciseRecord);
-            }
+                await _context.UpdateAsync(exerciseRecord);
+
+            exerciseRecord.Id = await GetNextExerciseRecordsId(); // Generate a unique Id
+            await _context.InsertAsync(exerciseRecord);
         }
+
         private async Task<int> GetNextExerciseRecordsId()
         {
             var lastItem = await _context.Table<ExerciseRecordsModel>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();

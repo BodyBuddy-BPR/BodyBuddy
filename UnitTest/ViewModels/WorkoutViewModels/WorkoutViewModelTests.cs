@@ -11,7 +11,7 @@ namespace UnitTest.ViewModels.WorkoutViewModels
     {
         private WorkoutViewModel target;
         private Mock<IWorkoutService> mockService;
-        private Mock<IWorkoutExercisesRepository> workoutExercisesMockRepo;
+        private Mock<IWorkoutExercisesService> workoutExercisesMockService;
         private WorkoutDto workout1, workout2;
         private List<WorkoutDto> workoutList;
 
@@ -19,8 +19,8 @@ namespace UnitTest.ViewModels.WorkoutViewModels
         public void Setup()
         {
             mockService = new Mock<IWorkoutService>();
-            workoutExercisesMockRepo = new Mock<IWorkoutExercisesRepository>();
-            target = new WorkoutViewModel(mockService.Object, workoutExercisesMockRepo.Object);
+            workoutExercisesMockService = new Mock<IWorkoutExercisesService>();
+            target = new WorkoutViewModel(mockService.Object, workoutExercisesMockService.Object);
 
             workout1 = new WorkoutDto { Id = 3, Name = "Workout3", PreMade = false };
             workout2 = new WorkoutDto { Id = 4, Name = "Workout4", PreMade = false };

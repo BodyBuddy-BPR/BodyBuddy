@@ -62,6 +62,9 @@ namespace BodyBuddy.Mappers
                 Instructions = exerciseDto.Instructions,
                 Category = exerciseDto.Category,
                 Images = exerciseDto.Images,
+                WorkoutExerciseId = exerciseDto.WorkoutExerciseId,
+                Sets = exerciseDto.Sets,
+                Reps = exerciseDto.Reps,
             };
         }
 
@@ -83,6 +86,20 @@ namespace BodyBuddy.Mappers
                 Instructions = exerciseModel.Instructions,
                 Category = exerciseModel.Category,
                 Images = exerciseModel.Images,
+                WorkoutExerciseId = exerciseModel.WorkoutExerciseId,
+                Sets = exerciseModel.Sets,
+                Reps = exerciseModel.Reps,
+            };
+        }
+
+        public WorkoutExercisesModel MapToWorkoutExerciseModel(ExerciseDto exerciseDto)
+        {
+            return new WorkoutExercisesModel()
+            {
+                Id = exerciseDto.WorkoutExerciseId,
+                ExerciseId = exerciseDto.Id,
+                Reps = exerciseDto.Reps,
+                Sets = exerciseDto.Sets
             };
         }
     }

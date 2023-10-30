@@ -4,7 +4,7 @@ namespace BodyBuddy.Repositories
 {
     public interface IExerciseRecordsRepository
     {
-        Task<int> SaveExerciseRecords(ExerciseRecordsModel exerciseRecord);
+        Task SaveExerciseRecords(ExerciseRecordsModel exerciseRecord);
 
     }
 }

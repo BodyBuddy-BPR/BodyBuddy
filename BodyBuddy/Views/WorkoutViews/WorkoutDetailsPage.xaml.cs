@@ -1,3 +1,4 @@
+using BodyBuddy.Dtos;
 using BodyBuddy.Models;
 using BodyBuddy.ViewModels.WorkoutViewModels;
 using BodyBuddy.Views.Popups;
@@ -84,7 +85,7 @@ public partial class WorkoutDetailsPage : ContentPage
 
     private void SetsAndRepsBtn_Clicked(object sender, EventArgs e)
     {
-        if (sender is ImageButton button && button.CommandParameter is ExerciseModel exercise)
+        if (sender is ImageButton button && button.CommandParameter is ExerciseDto exercise)
         {
             _viewModel.ExerciseToEdit = exercise;
             _popupNavigation.PushAsync(new EditSetsAndRepsPopup(_viewModel));

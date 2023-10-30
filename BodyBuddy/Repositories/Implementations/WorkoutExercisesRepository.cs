@@ -23,7 +23,7 @@ namespace BodyBuddy.Repositories.Implementations
                 {
                     var exercise = await _context.Table<ExerciseModel>().FirstOrDefaultAsync(x => x.Id == workout.ExerciseId);
 
-                    exercise.WorkoutId = workout.Id;
+                    exercise.WorkoutExerciseId = workout.Id;
 
                     // Check if the exercise is not null
                     if (workout.Sets != 0)
@@ -59,27 +59,25 @@ namespace BodyBuddy.Repositories.Implementations
             await _context.InsertAsync(workoutExercise);
         }
 
-        public async Task EditExerciseInWorkout(int workoutId, ExerciseModel changedExercise)
+        public async Task EditExerciseInWorkout(WorkoutExercisesModel changedWorkoutExercisesModel)
         {
             try
             {
                 WorkoutExercisesModel workoutExerciseToChange = await _context.Table<WorkoutExercisesModel>()
-                    .FirstOrDefaultAsync(x => x.WorkoutId == workoutId && x.Id == changedExercise.WorkoutId);
+                    .FirstOrDefaultAsync(x => x.Id == changedWorkoutExercisesModel.Id);
 
                 if (workoutExerciseToChange != null)
                 {
                     // Only updating the Sets and Reps values
-                    workoutExerciseToChange.Sets = changedExercise.Sets;
-                    workoutExerciseToChange.Reps = changedExercise.Reps;
+                    workoutExerciseToChange.Sets = changedWorkoutExercisesModel.Sets;
+                    workoutExerciseToChange.Reps = changedWorkoutExercisesModel.Reps;
 
                     await _context.UpdateAsync(workoutExerciseToChange);
                 }
-                else return;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in EditExerciseInWorkout: {ex}");
-                return;
             }
 
         }
@@ -93,7 +91,6 @@ namespace BodyBuddy.Repositories.Implementations
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in EditExerciseInWorkout: {ex}");
-                return;
             }
         }
     }
