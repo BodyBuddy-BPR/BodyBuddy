@@ -58,7 +58,7 @@
                     Margin="20,0"
                     HorizontalOptions="Center"
                     Style="{StaticResource TitleLabel}"
-                    Text="{Binding ExerciseToEdit.Sets}"
+                    Text="{Binding EditSets}"
                     TextColor="Black"
                     VerticalOptions="Center" />
                 <ImageButton
@@ -83,7 +83,7 @@
                     Margin="20,0"
                     HorizontalOptions="Center"
                     Style="{StaticResource TitleLabel}"
-                    Text="{Binding ExerciseToEdit.Reps}"
+                    Text="{Binding EditReps}"
                     TextColor="Black"
                     VerticalOptions="Center" />
                 <ImageButton

@@ -16,42 +16,31 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
     [QueryProperty(nameof(WorkoutDetails), "Workout")]
     public partial class WorkoutDetailsViewModel : BaseViewModel
     {
-        private readonly IWorkoutService _workoutService;
-        private readonly IWorkoutExercisesService _workoutExercisesService;
-
         #region ObservableProperties
 
         // Query field
         [ObservableProperty]
         private WorkoutDto _workoutDetails;
 
-        // IsPremade (used to hide edit and deletions)
-        [ObservableProperty]
-        private bool _isPremade;
-
-        // Displayed Fields
-        [ObservableProperty]
-        public string workoutName, workoutDescription;
-
         // Workout Popup fields
         [ObservableProperty]
-        public string popupName, popupDescription, errorMessage;
+        private string _popupName, _popupDescription, _errorMessage;
 
         // Exercise Popup fields
         [ObservableProperty]
-        public int sets, reps;
+        private int _editSets, _editReps, _editWorkoutExerciseId;
 
         [ObservableProperty]
-        public ExerciseDto exerciseToEdit;
-
+        private bool _smallButtonsIsEnabled; // This is the small Add Exercise & Start Workout buttons
         [ObservableProperty]
-        private bool smallButtonsIsEnabled; // This is the small Add Exercise & Start Workout buttons
-        [ObservableProperty]
-        private bool largeButtonModifyIsEnabled, smallButtonModifyIsEnabled; // For the AddExercisesCommand 
+        private bool _largeButtonModifyIsEnabled, _smallButtonModifyIsEnabled; // For the AddExercisesCommand 
 
         #endregion
 
         public ObservableCollection<ExerciseDto> Exercises { get; set; } = new();
+        
+        private readonly IWorkoutService _workoutService;
+        private readonly IWorkoutExercisesService _workoutExercisesService;
 
         public WorkoutDetailsViewModel(IWorkoutService workoutService, IWorkoutExercisesService workoutExercisesService)
         {
@@ -62,27 +51,23 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         public async Task Initialize()
         {
-            WorkoutName = WorkoutDetails.Name;
             if (string.IsNullOrWhiteSpace(WorkoutDetails.Description))
             {
                 WorkoutDetails.Description = "Try giving this workout a description";
             }
-            WorkoutDescription = WorkoutDetails.Description;
 
             await GetExercisesFromWorkout();
-
-            IsPremade = WorkoutDetails.PreMade;
 
             //Setting up Visibility of small and big buttons
             if (Exercises.Count > 0)
             {
                 LargeButtonModifyIsEnabled = (false);
-                SmallButtonModifyIsEnabled = (!IsPremade);
+                SmallButtonModifyIsEnabled = (!WorkoutDetails.PreMade);
                 SmallButtonsIsEnabled = true;
             }
             else
             {
-                LargeButtonModifyIsEnabled = (!IsPremade);
+                LargeButtonModifyIsEnabled = (!WorkoutDetails.PreMade);
                 SmallButtonModifyIsEnabled = (false);
                 SmallButtonsIsEnabled = false;
             }
@@ -137,7 +122,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 if (Exercises.Count == 0)
                 {
                     SmallButtonModifyIsEnabled = false;
-                    LargeButtonModifyIsEnabled = !IsPremade;
+                    LargeButtonModifyIsEnabled = !WorkoutDetails.PreMade;
                 }
             }
         }
@@ -155,21 +140,20 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 ErrorMessage = "Workout name cannot be empty.";
                 return false;
             }
-            else if (exists && PopupName != WorkoutName)
+
+            if (exists && PopupName != WorkoutDetails.Name)
             {
                 ErrorMessage = $"A workoutplan with the name \"{PopupName}\" already exists.";
                 return false;
             }
-            else
-            {
-                WorkoutDto workout = new() { Id = WorkoutDetails.Id, Name = PopupName, Description = PopupDescription, PreMade = false };
-                await _workoutService.SaveWorkoutData(workout);
 
-                WorkoutName = PopupName;
-                WorkoutDescription = PopupDescription;
+            WorkoutDto workout = new() { Id = WorkoutDetails.Id, Name = PopupName, Description = PopupDescription, PreMade = false };
+            await _workoutService.SaveWorkoutData(workout);
 
-                return true;
-            }
+            WorkoutDetails.Name = PopupName;
+            WorkoutDetails.Description = PopupDescription;
+
+            return true;
         }
 
         [RelayCommand]
@@ -208,25 +192,31 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 IsBusy = true;
 
-                var existingExercise = Exercises.FirstOrDefault(e => e.WorkoutExerciseId == ExerciseToEdit.WorkoutExerciseId);
-
+                var existingExercise = Exercises.FirstOrDefault(e => e.WorkoutExerciseId == EditWorkoutExerciseId);
                 if (existingExercise != null)
                 {
-                    int index = Exercises.IndexOf(existingExercise);
+                    existingExercise.Sets = EditSets;
+                    existingExercise.Reps = EditReps;
 
-                    // Remove the existing exercise from the list
-                    Exercises.Remove(existingExercise);
-
-                    // Modify the exercise
-                    existingExercise.Sets = ExerciseToEdit.Sets;
-                    existingExercise.Reps = ExerciseToEdit.Reps;
-
-                    // Add the modified exercise back at the correct index
-                    Exercises.Insert(index, existingExercise);
+                    await _workoutExercisesService.EditExerciseInWorkout(existingExercise);
                 }
 
+                //if (existingExercise != null)
+                //{
+                //    int index = Exercises.IndexOf(existingExercise);
+
+                //    // Remove the existing exercise from the list
+                //    Exercises.Remove(existingExercise);
+
+                //    // Modify the exercise
+                //    existingExercise.Sets = ExerciseToEdit.Sets;
+                //    existingExercise.Reps = ExerciseToEdit.Reps;
+
+                //    // Add the modified exercise back at the correct index
+                //    Exercises.Insert(index, existingExercise);
+                //}
+
                 // Edit the exercise in the repository
-                await _workoutExercisesService.EditExerciseInWorkout(ExerciseToEdit);
 
             }
             catch (Exception ex)

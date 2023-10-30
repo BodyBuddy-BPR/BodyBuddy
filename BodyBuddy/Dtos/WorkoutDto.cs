@@ -1,10 +1,12 @@
-﻿namespace BodyBuddy.Dtos
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace BodyBuddy.Dtos
 {
-    public class WorkoutDto
+    public partial class WorkoutDto : ObservableObject
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        [ObservableProperty] private string _name;
+        [ObservableProperty] private string _description;
         public bool PreMade { get; set; }
     }
 }
