@@ -3,23 +3,25 @@ using BodyBuddy.Repositories;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using BodyBuddy.Dtos;
+using BodyBuddy.Services;
 
 namespace BodyBuddy.ViewModels.ExerciseViewModels
 {
     [QueryProperty(nameof(ExerciseDetails), "Exercise")]
     public partial class ExerciseDetailsViewModel : BaseViewModel
     {
-        private readonly IExerciseRepository _exerciseRepository;
-        private IConnectivity _connectivity;
+        private readonly IExerciseService _exerciseService;
+        private readonly IConnectivity _connectivity;
 
         [ObservableProperty]
-        private ExerciseModel _exerciseDetails;
-        public ObservableCollection<string> ExerciseImages { get; set; } = new ObservableCollection<string>();
+        private ExerciseDto _exerciseDetails;
+        public ObservableCollection<string> ExerciseImages { get; set; } = new();
 
 
-        public ExerciseDetailsViewModel(IExerciseRepository exerciseRepository, IConnectivity connectivity)
+        public ExerciseDetailsViewModel(IExerciseService exerciseService, IConnectivity connectivity)
         {
-            _exerciseRepository = exerciseRepository;
+            _exerciseService = exerciseService;
             _connectivity = connectivity;
         }
 
@@ -36,7 +38,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
                 }
                 IsBusy = true;
 
-                var exercise = await _exerciseRepository.GetExerciseDetails(ExerciseDetails.Id);
+                var exercise = await _exerciseService.GetExerciseDetails(ExerciseDetails.Id);
                 ProcessExerciseDetails(exercise);
                 ExerciseDetails = exercise;
 
@@ -72,7 +74,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
         }
 
         // If any values in the exercise details response from the repo is null, it converts these to empty string instead
-        private void ProcessExerciseDetails(ExerciseModel exercise)
+        private void ProcessExerciseDetails(ExerciseDto exercise)
         {
             if (exercise == null)
                 return;

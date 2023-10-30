@@ -50,12 +50,12 @@ namespace BodyBuddy.Repositories.Implementations
             }
         }
 
-        public async Task AddExerciseToWorkout(int workoutId, ExerciseModel exercise)
+        public async Task AddExerciseToWorkout(int workoutId, int exerciseId)
         {
             var lastItem = await _context.Table<WorkoutExercisesModel>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
             var newId = lastItem?.Id + 1 ?? 1;
 
-            WorkoutExercisesModel workoutExercise = new() { Id = newId, WorkoutId = workoutId, ExerciseId = exercise.Id, Sets = exercise.Sets, Reps = exercise.Reps };
+            WorkoutExercisesModel workoutExercise = new() { Id = newId, WorkoutId = workoutId, ExerciseId = exerciseId };
             await _context.InsertAsync(workoutExercise);
         }
 

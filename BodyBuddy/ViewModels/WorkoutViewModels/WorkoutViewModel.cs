@@ -191,7 +191,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
                 foreach (var exercise in Exercises)
                 {
-                    await _workoutExercisesRepository.AddExerciseToWorkout(workout.Id, exercise);
+                    await _workoutExercisesRepository.AddExerciseToWorkout(workout.Id, exercise.Id);
                 }
             }
             catch (Exception ex)

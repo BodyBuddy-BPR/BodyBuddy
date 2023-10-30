@@ -6,7 +6,7 @@
     xmlns:effectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.ExerciseViewModels"
-    Title="{Binding ExerciseCategory.Category}">
+    Title="{Binding Category}">
 
     <ContentPage.Resources>
         <DataTemplate x:Key="GroupHeaderTemplate">

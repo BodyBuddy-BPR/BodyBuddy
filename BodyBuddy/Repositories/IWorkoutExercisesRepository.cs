@@ -6,7 +6,7 @@ namespace BodyBuddy.Repositories
     {
         Task<List<ExerciseModel>> GetExercisesInWorkout(int workoutId);
 
-        Task AddExerciseToWorkout(int workoutId, ExerciseModel exerciseId);
+        Task AddExerciseToWorkout(int workoutId, int exerciseId);
 
         Task EditExerciseInWorkout(int workoutId, ExerciseModel changedExercise);
 

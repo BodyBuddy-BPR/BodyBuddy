@@ -16,32 +16,32 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
     {
         #region Injections
 
-        private readonly IExerciseRepository _exerciseRepository;
+        private readonly IExerciseService _exerciseService;
         private readonly IWorkoutService _workoutService;
-        private readonly IWorkoutExercisesRepository _workoutExercisesRepository;
+        private readonly IWorkoutExercisesService _workoutExercisesService;
 
         #endregion
 
         #region ObservableProperties
 
         [ObservableProperty]
-        private ExerciseModel _queryDetails; //Category and Musclegroup selected in the previous pages
+        private ExerciseDto _queryDetails; //Category and Musclegroup selected in the previous pages
 
         [ObservableProperty]
         private WorkoutDto _selectedWorkout;
 
         #endregion
 
-        public ObservableCollection<ExerciseModel> ExercisesList { get; set; } = new();
+        public ObservableCollection<ExerciseDto> ExercisesList { get; set; } = new();
         public ObservableCollection<WorkoutDto> WorkoutsList { get; set; } = new();
 
-        public ExercisesViewModel(IExerciseRepository exerciseRepository, IWorkoutService workoutService, IWorkoutExercisesRepository workoutExercisesRepository)
+        public ExercisesViewModel(IExerciseService exerciseService, IWorkoutService workoutService, IWorkoutExercisesService workoutExercisesService)
         {
             Title = string.Empty;
 
-            _exerciseRepository = exerciseRepository;
+            _exerciseService = exerciseService;
             _workoutService = workoutService;
-            _workoutExercisesRepository = workoutExercisesRepository;
+            _workoutExercisesService = workoutExercisesService;
         }
 
         public async Task Initialize()
@@ -61,7 +61,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             {
                 IsBusy = true;
 
-                var exercises = await _exerciseRepository.GetExercisesAsync(QueryDetails.Category, QueryDetails.PrimaryMuscles);
+                var exercises = await _exerciseService.GetExercisesAsync(QueryDetails.Category, QueryDetails.PrimaryMuscles);
 
                 if (ExercisesList.Count != 0)
                 {
@@ -138,18 +138,16 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             }
             else
             {
-                //SelectedWorkout = null;
                 SelectedWorkout = new WorkoutDto { Name = "Select a workout" };
-                //return;
             }
         }
 
         [RelayCommand]
-        async Task AddExerciseToWorkout(ExerciseModel exercise)
+        async Task AddExerciseToWorkout(ExerciseDto exercise)
         {
             if(SelectedWorkout.Id != 0)
             {
-                await _workoutExercisesRepository.AddExerciseToWorkout(SelectedWorkout.Id, exercise);
+                await _workoutExercisesService.AddExerciseToWorkout(SelectedWorkout.Id, exercise.Id);
                 await Shell.Current.DisplaySnackbar($"{exercise.Name} added to {SelectedWorkout.Name}");
             }
             else
@@ -162,7 +160,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
 
         // Navigation to exercise details
         [RelayCommand]
-        async Task GoToExerciseDetails(ExerciseModel exercise)
+        async Task GoToExerciseDetails(ExerciseDto exercise)
         {
             if (exercise is null)
                 return;
