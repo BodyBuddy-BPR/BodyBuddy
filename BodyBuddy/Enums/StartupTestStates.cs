@@ -8,6 +8,7 @@ namespace BodyBuddy.Enums
 {
     public enum StartupTestStates
     {
+        Welcome,
         NameEntry,
         GenderSelection,
         WeightEntry,
