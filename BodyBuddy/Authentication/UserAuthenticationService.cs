@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BodyBuddy.Dtos;
 using Supabase;
 
-namespace BodyBuddy.Services.Implementations
+namespace BodyBuddy.Authentication
 {
     public class UserAuthenticationService : IUserAuthenticationService
     {
@@ -17,21 +18,43 @@ namespace BodyBuddy.Services.Implementations
         private const string UserPasswordKey = "UserPassword";
 
         // Used for Preferences
-        private readonly string _skipLoginKey = "SkipLogInKey"; 
+        private readonly string _skipLoginKey = "SkipLogInKey";
+
+
 
         public UserAuthenticationService(Client client)
         {
             _supabase = client;
         }
 
+        public UserDto GetCurrentUser()
+        {
+            var supabaseUser = _supabase.Auth.CurrentUser;
+
+            if (supabaseUser is null)
+            {
+                var guestUser = new UserDto
+                {
+                    UserUid = null,
+                    Role = "guest"
+                };
+                return guestUser;
+            }
+
+            var user = new UserDto
+            {
+                UserUid = supabaseUser.Id,
+                Role = supabaseUser.Role
+            };
+
+            return user;
+        }
+
         public bool IsUserLoggedIn()
         {
-            var user = _supabase.Auth.CurrentUser;
-            if (user is not null && user.Role == "authenticated")
-            {
-                return true;
-            }
-            return false;
+            var user = GetCurrentUser();
+
+            return user is not null && user.Role == "authenticated";
         }
 
         public async Task<bool> SignUserIn(string user, string password)
@@ -52,7 +75,6 @@ namespace BodyBuddy.Services.Implementations
 
         public async Task<bool> TryAutoSignIn()
         {
-            // Check if there is a saved user ID
             //var savedUserId = SecureStorage.GetAsync(UserIdKey).Result;
             var savedUserEmail = SecureStorage.GetAsync(UserEmailKey).Result;
             var savedUserPassword = SecureStorage.GetAsync(UserPasswordKey).Result;
@@ -80,10 +102,6 @@ namespace BodyBuddy.Services.Implementations
                 SecureStorage.Remove(UserEmailKey);
                 SecureStorage.Remove(UserPasswordKey);
 
-                //Preferences.Set(_skipLoginKey, false);
-
-                var user = _supabase.Auth.CurrentUser;
-
                 return true;
             }
             catch (Exception ex)
@@ -100,19 +118,14 @@ namespace BodyBuddy.Services.Implementations
             if (signUpInfo is not null && signUpInfo.User.Role == "authenticated")
             {
                 await SignUserIn(user, password);
+                return true;
             }
 
             return false;
         }
 
-        public string GetSavedUserId()
-        {
-            return SecureStorage.GetAsync(UserIdKey).Result;
-        }
 
-        //public Task<bool> UserSkippedLogin()
-        //{
 
-        //}
+
     }
 }
