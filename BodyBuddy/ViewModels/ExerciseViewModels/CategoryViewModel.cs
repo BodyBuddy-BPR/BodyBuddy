@@ -9,10 +9,8 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
 {
     public partial class CategoryViewModel : BaseViewModel
     {
-        public ObservableCollection<ExerciseModel> Categories { get; set; } = new();
-
         [ObservableProperty]
-        private List<string> _categoriesTest;
+        private List<string> _categories;
 
         private readonly IExerciseService _exerciseService;
 
@@ -28,13 +26,13 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             if (category is null)
                 return;
 
-            await Task.Delay(100); // Add a short delay
-            await Shell.Current.GoToAsync($"{nameof(MuscleGroupPage)}?Category={Uri.EscapeDataString(category)}");
+            await Task.Delay(250); // Add a short delay
+            await Shell.Current.GoToAsync($"{nameof(MuscleGroupPage)}?Category={Uri.EscapeDataString(category)}",true);
         }
 
         public async Task Initialize()
         {
-            CategoriesTest = await _exerciseService.GetUniqueCategoriesAsync();
+            Categories = await _exerciseService.GetUniqueCategoriesAsync();
         }
     }
 }

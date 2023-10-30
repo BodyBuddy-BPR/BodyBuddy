@@ -29,7 +29,7 @@
             Text="Categories" />
 
         <!--  Collection of Categories  -->
-        <CollectionView Grid.Row="1" ItemsSource="{Binding CategoriesTest}">
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Categories}">
 
             <CollectionView.ItemsLayout>
                 <GridItemsLayout

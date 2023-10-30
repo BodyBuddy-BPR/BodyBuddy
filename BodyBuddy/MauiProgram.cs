@@ -105,7 +105,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<StartedWorkoutPage>();
 
         // Exercise
-        builder.Services.AddTransient<CategoryPage>();
+        builder.Services.AddSingleton<CategoryPage>();
         builder.Services.AddTransient<MuscleGroupPage>();
         builder.Services.AddTransient<ExercisesPage>();
         builder.Services.AddTransient<ExerciseDetailsPage>();
@@ -136,7 +136,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<StartedWorkoutViewModel>();
 
         // Exercise
-        builder.Services.AddTransient<CategoryViewModel>();
+        builder.Services.AddSingleton<CategoryViewModel>();
         builder.Services.AddTransient<MuscleGroupViewModel>();
         builder.Services.AddTransient<ExercisesViewModel>();
         builder.Services.AddTransient<ExerciseDetailsViewModel>();

@@ -12,7 +12,7 @@ namespace BodyBuddy.Mappers
     {
         private readonly Dictionary<string, string> _primaryMuscleToTargetAreaMap = new(StringComparer.OrdinalIgnoreCase)
         {
-            //{ "Shoulders", "Upper Body" },
+            { "Shoulders", "Upper Body" },
             { "Chest", "Upper Body" },
             { "Traps", "Upper Body" },
             { "Neck", "Upper Body" },
@@ -33,6 +33,11 @@ namespace BodyBuddy.Mappers
 
 
 
+        /// <summary>
+        /// Used to map primary muscles into target areas, to provide grouping
+        /// </summary>
+        /// <param name="primaryMuscle"></param>
+        /// <returns>Target Area and "Unknown" if there is no mapping</returns>
         public string MapPrimaryMuscleToTargetArea(string primaryMuscle)
         {
             if (_primaryMuscleToTargetAreaMap.TryGetValue(primaryMuscle, out var targetArea))
