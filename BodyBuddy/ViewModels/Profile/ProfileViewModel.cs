@@ -6,11 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BodyBuddy.Authentication;
 using BodyBuddy.Views.Authentication;
 using CommunityToolkit.Mvvm.Input;
 using Supabase;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
+
 
 namespace BodyBuddy.ViewModels.Profile
 {

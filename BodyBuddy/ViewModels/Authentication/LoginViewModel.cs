@@ -9,8 +9,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BodyBuddy.Services;
 using static Supabase.Gotrue.Constants;
+using BodyBuddy.Authentication;
 
 namespace BodyBuddy.ViewModels.Authentication
 {
@@ -104,7 +104,7 @@ namespace BodyBuddy.ViewModels.Authentication
         {
             try
             {
-                var success = await _userAuthenticationService.SignUserIn(LoginEmail, LoginPassword);
+                var success = await _userAuthenticationService.SignUserUp(SignUpEmail, SignUpPassword);
 
                 if (success)
                 {

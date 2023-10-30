@@ -27,6 +27,7 @@ using BodyBuddy.ViewModels.StartupTest;
 using BodyBuddy.ViewModels.Profile;
 using BodyBuddy.Views.Authentication;
 using BodyBuddy.Helpers;
+using BodyBuddy.Authentication;
 
 namespace BodyBuddy;
 
