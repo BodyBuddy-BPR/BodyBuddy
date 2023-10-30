@@ -59,24 +59,20 @@ namespace BodyBuddy.Services.Implementations
             return categories2;
         }
 
-        public async Task<List<ExerciseModel>> GetMuscleGroupsForCategory(string category)
+        public async Task<List<ExerciseDto>> GetMuscleGroupsForCategory(string category)
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var exerciseDtoList = new List<ExerciseModel>();
-
             var primaryMuscleGroups = await _exerciseRepository.GetMuscleGroupsForCategory(category);
-            
-            foreach (var primaryMuscle in primaryMuscleGroups.Distinct())
-            {
-                exerciseDtoList.Add(new ExerciseModel()
+
+            var exerciseDtoList = primaryMuscleGroups.Distinct().Select(primaryMuscle =>
+                new ExerciseDto()
                 {
-                    Category = category,
-                    PrimaryMuscles = primaryMuscle,
+                    Category = category, 
+                    PrimaryMuscles = primaryMuscle, 
                     TargetArea = _mapper.MapPrimaryMuscleToTargetArea(primaryMuscle),
-                });
-            }
+                }).ToList();
 
             stopwatch.Stop();
             Console.WriteLine($"GetMuscleGroupsForCategory took {stopwatch.ElapsedMilliseconds} ms with DB Call");

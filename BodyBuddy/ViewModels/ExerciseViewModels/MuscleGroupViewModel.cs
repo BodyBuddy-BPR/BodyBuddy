@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using BodyBuddy.Dtos;
 using BodyBuddy.Services;
 
 namespace BodyBuddy.ViewModels.ExerciseViewModels
@@ -13,7 +14,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
     public partial class MuscleGroupViewModel : BaseViewModel
     {
         [ObservableProperty] private string _category;
-        public ObservableCollection<Grouping<string, ExerciseModel>> MuscleGroups { get; set; } = new();
+        public ObservableCollection<Grouping<string, ExerciseDto>> MuscleGroups { get; set; } = new();
 
         private readonly IExerciseService _exerciseService;
 
@@ -50,7 +51,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
         }
 
         [RelayCommand]
-        public async Task GoToExercisesPage(ExerciseModel exercise)
+        public async Task GoToExercisesPage(ExerciseDto exercise)
         {
             if (exercise is null)
                 return;
@@ -70,7 +71,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             var groupedMuscleGroups = from exercise in muscleGroups
                                       orderby exercise.TargetArea
                                       group exercise by exercise.TargetArea into targetGroup
-                                      select new Grouping<string, ExerciseModel>(targetGroup.Key, targetGroup);
+                                      select new Grouping<string, ExerciseDto>(targetGroup.Key, targetGroup);
 
             foreach(var group in groupedMuscleGroups)
             {

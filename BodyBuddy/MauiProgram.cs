@@ -96,12 +96,13 @@ public static class MauiProgram
         // MainPage
         builder.Services.AddSingleton<MainPage>();
 
-        // Workout
+        // Startup Test
         builder.Services.AddSingleton<StartupTestPage>();
         builder.Services.AddSingleton<ProfilePage>();
+
+        // Workout
         builder.Services.AddTransient<WorkoutsPage>();
         builder.Services.AddTransient<WorkoutDetailsPage>();
-
         builder.Services.AddSingleton<StartedWorkoutPage>();
 
         // Exercise
@@ -112,9 +113,6 @@ public static class MauiProgram
 
         // Statistics
         builder.Services.AddSingleton<IntakePage>();
-
-        // Profile
-        builder.Services.AddSingleton<ProfilePage>();
 
         // Authentication
         builder.Services.AddSingleton<LoginPage>();
@@ -127,12 +125,13 @@ public static class MauiProgram
         // MainPage
         builder.Services.AddSingleton<MainPageViewModel>();
 
-        // Workout
+        // Startup Test
         builder.Services.AddSingleton<StartupTestViewModel>();
         builder.Services.AddSingleton<ProfileViewModel>();
+
+        // Workout
         builder.Services.AddTransient<WorkoutViewModel>();
         builder.Services.AddTransient<WorkoutDetailsViewModel>();
-
         builder.Services.AddSingleton<StartedWorkoutViewModel>();
 
         // Exercise
@@ -144,49 +143,66 @@ public static class MauiProgram
         // Statistics
         builder.Services.AddSingleton<IntakeViewModel>();
 
-        // Profile
-        builder.Services.AddSingleton<ProfileViewModel>();
-
         // Authentication
         builder.Services.AddSingleton<LoginViewModel>();
         #endregion
 
 
         #region Repositories
+
+        // Startup Test
         builder.Services.AddSingleton<IStartupTestRepository, StartupTestRepository>();
-        builder.Services.AddSingleton<IExerciseRepository, ExerciseRepository>();
+
+        // Workout
         builder.Services.AddSingleton<IWorkoutRepository, WorkoutRepository>();
         builder.Services.AddSingleton<IWorkoutExercisesRepository, WorkoutExercisesRepository>();
-        builder.Services.AddSingleton<IIntakeRepository, IntakeRepository>();
+
+        // Exercise
+        builder.Services.AddSingleton<IExerciseRepository, ExerciseRepository>();
         builder.Services.AddSingleton<IExerciseRecordsRepository, ExerciseRecordsRepository>();
+
+        // Statistics
+        builder.Services.AddSingleton<IIntakeRepository, IntakeRepository>();
+
+        // Quote
         builder.Services.AddSingleton<IQuoteRepository, QuoteRepository>();
 
         #endregion
 
+
         #region Helpers
+        // FIXME: Are these needed?
         builder.Services.AddSingleton<StartupTestMapper>();
         builder.Services.AddSingleton<IntakeMapper>();
+        builder.Services.AddSingleton<QuoteMapper>();
         #endregion
 
         #region Services
+
+        // Startup Test
         builder.Services.AddSingleton<IStartupTestService, StartupTestService>();
-        builder.Services.AddSingleton<IExerciseService, ExerciseService>();
+
+        // Workout
         builder.Services.AddSingleton<IWorkoutService, WorkoutService>();
-        builder.Services.AddSingleton<IQuoteService, QuoteService>();
+        builder.Services.AddSingleton<IWorkoutExercisesService, WorkoutExercisesService>();
+
+        // Exercise
+        builder.Services.AddSingleton<IExerciseService, ExerciseService>();
+
+        // Statistics
         builder.Services.AddSingleton<IIntakeService, IntakeService>();
+
+        // Authentication
         builder.Services.AddSingleton<IUserAuthenticationService, UserAuthenticationService>();
 
+        // Quote
+        builder.Services.AddSingleton<IQuoteService, QuoteService>();
+
+        // Extra
         builder.Services.AddSingleton<DateTimeService>(); ;
 
         builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
         builder.Services.AddSingleton<IPopupNavigation>(MopupService.Instance);
-        #endregion
-
-
-        #region Helpers
-
-        builder.Services.AddSingleton<QuoteMapper>();
-
         #endregion
 
         #endregion
