@@ -50,12 +50,12 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
         }
 
         [RelayCommand]
-        async Task GoToExercisesPage(ExerciseModel exercise)
+        public async Task GoToExercisesPage(ExerciseModel exercise)
         {
             if (exercise is null)
                 return;
 
-            await Task.Delay(250); // Add a short delay
+            await Task.Delay(150); // Add a short delay
             await Shell.Current.GoToAsync(nameof(ExercisesPage), true, new Dictionary<string, object>
             {
                 { "Exercise", exercise }
@@ -66,7 +66,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
         private async Task GenerateMuscleGroupsForCategory(string category)
         {
             var muscleGroups = await _exerciseService.GetMuscleGroupsForCategory(category);
-
+            
             var groupedMuscleGroups = from exercise in muscleGroups
                                       orderby exercise.TargetArea
                                       group exercise by exercise.TargetArea into targetGroup

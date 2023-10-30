@@ -10,14 +10,14 @@ public partial class MuscleGroupPage : ContentPage
 		InitializeComponent();
 		_viewModel = muscleGroupViewModel;
 		BindingContext = muscleGroupViewModel;
-	}
+    }
 
 	protected override async void OnAppearing()
 	{
         base.OnAppearing();
         
-        await Task.Delay(250); // Add a short delay
-		
+        await Task.Delay(100); // Add a short delay
+
         await _viewModel.GetMuscleGroups();
-	}
+    }
 }
