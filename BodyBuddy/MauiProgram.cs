@@ -192,6 +192,7 @@ public static class MauiProgram
 
         // Exercise
         builder.Services.AddSingleton<IExerciseService, ExerciseService>();
+        builder.Services.AddSingleton<IExerciseRecordsService, ExerciseRecordsService>();
 
         // Statistics
         builder.Services.AddSingleton<IIntakeService, IntakeService>();
