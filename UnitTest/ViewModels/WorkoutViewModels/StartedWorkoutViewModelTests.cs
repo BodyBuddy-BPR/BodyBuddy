@@ -3,6 +3,7 @@ using BodyBuddy.Repositories;
 using BodyBuddy.ViewModels.WorkoutViewModels;
 using Moq;
 using System.Collections.ObjectModel;
+using BodyBuddy.Dtos;
 
 namespace UnitTest.ViewModels.WorkoutViewModels
 {
@@ -12,7 +13,7 @@ namespace UnitTest.ViewModels.WorkoutViewModels
         private Mock<IExerciseRecordsRepository> exerciseRecordsMockRepo;
         private Mock<IWorkoutExercisesRepository> workoutExercisesMockRepo;
 
-        private WorkoutModel workout;
+        private WorkoutDto workout;
         private ObservableCollection<ExerciseModel> exercises;
 
         [SetUp]
@@ -23,12 +24,12 @@ namespace UnitTest.ViewModels.WorkoutViewModels
 
             target = new StartedWorkoutViewModel(workoutExercisesMockRepo.Object, exerciseRecordsMockRepo.Object);
 
-            workout = new WorkoutModel() { Id = 1, Name = "Workout1", PreMade = 0 };
-            exercises = new ObservableCollection<ExerciseModel>()
+            workout = new WorkoutDto() { Id = 1, Name = "Workout1", PreMade = false };
+            exercises = new ObservableCollection<ExerciseModel>
             {
-                new ExerciseModel() { Id = 1},
-                new ExerciseModel() { Id = 2},
-                new ExerciseModel() { Id = 3}
+                new () { Id = 1},
+                new () { Id = 2},
+                new () { Id = 3}
             };
         }
 
@@ -41,10 +42,10 @@ namespace UnitTest.ViewModels.WorkoutViewModels
             var returnExercises = new List<ExerciseModel>()
             {
                 displayedExercise,
-                new ExerciseModel() { Id = 5},
-                new ExerciseModel() { Id = 6},
-                new ExerciseModel() { Id = 7},
-                new ExerciseModel() { Id = 8}
+                new() { Id = 5},
+                new() { Id = 6},
+                new() { Id = 7},
+                new() { Id = 8}
             };
 
             target.IsBusy = false;

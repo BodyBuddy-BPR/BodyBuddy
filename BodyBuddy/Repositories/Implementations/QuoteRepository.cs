@@ -1,6 +1,6 @@
 ﻿using BodyBuddy.Database;
 using BodyBuddy.Models;
-using BodyBuddy.Services;
+using BodyBuddy.Services.Implementations;
 using Newtonsoft.Json;
 using Supabase;
 using System;

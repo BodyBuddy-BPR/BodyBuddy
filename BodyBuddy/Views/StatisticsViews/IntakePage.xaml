@@ -4,9 +4,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:effectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
-    xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:progressBar="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
-    xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.IntakeViewmodels"
+    xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.IntakeViewModels"
     x:DataType="viewModel:IntakeViewModel"
     Shell.NavBarIsVisible="True">
     <Grid
@@ -49,7 +48,7 @@
                     HorizontalOptions="Center"
                     Maximum="1"
                     Minimum="0"
-                    Progress="{Binding WaterIntakeProgress}"
+                    Progress="{Binding WaterProgress}"
                     ProgressFill="{StaticResource Primary}" />
                 <ImageButton
                     Grid.Column="0"
@@ -73,7 +72,7 @@
                         Grid.Column="0"
                         HorizontalOptions="Center"
                         Style="{StaticResource LargeLabel}"
-                        Text="{Binding WaterCurrent}"
+                        Text="{Binding IntakeDto.WaterCurrent}"
                         TextColor="White"
                         VerticalOptions="Center" />
                     <Label
@@ -87,7 +86,7 @@
                         Grid.Column="2"
                         HorizontalOptions="Center"
                         Style="{StaticResource LargeLabel}"
-                        Text="{Binding WaterGoal, StringFormat=' {0} ml'}"
+                        Text="{Binding IntakeDto.WaterGoal, StringFormat=' {0} ml'}"
                         TextColor="White"
                         VerticalOptions="Center" />
                 </Grid>
@@ -158,7 +157,7 @@
                     HorizontalOptions="Center"
                     Maximum="1"
                     Minimum="0"
-                    Progress="{Binding CalorieIntakeProgress}"
+                    Progress="{Binding CalorieProgress}"
                     ProgressFill="{StaticResource Secondary}" />
                 <ImageButton
                     Grid.Column="0"
@@ -183,7 +182,7 @@
                         Grid.Column="0"
                         HorizontalOptions="Center"
                         Style="{StaticResource LargeLabel}"
-                        Text="{Binding CaloriesCurrent}"
+                        Text="{Binding IntakeDto.CalorieCurrent}"
                         TextColor="White"
                         VerticalOptions="Center" />
                     <Label
@@ -197,7 +196,7 @@
                         Grid.Column="2"
                         HorizontalOptions="Center"
                         Style="{StaticResource LargeLabel}"
-                        Text="{Binding CalorieGoal, StringFormat=' {0} kcal'}"
+                        Text="{Binding IntakeDto.CalorieGoal, StringFormat=' {0} kcal'}"
                         TextColor="White"
                         VerticalOptions="Center" />
                 </Grid>

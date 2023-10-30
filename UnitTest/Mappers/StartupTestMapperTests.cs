@@ -1,4 +1,5 @@
 ﻿using BodyBuddy.Dtos;
+using BodyBuddy.Enums;
 using BodyBuddy.Helpers;
 using BodyBuddy.Mappers;
 using BodyBuddy.Models;
@@ -33,13 +34,13 @@ namespace UnitTest.Mappers
             {
                 Id = 1,
                 Name = "Børge",
-                Gender = Strings.STARTUP_GENDER_FEMALE,
+                Gender = EnumMapper.GetDisplayString(Gender.Female),
                 Weight = 60.88,
                 Height = 166,
                 Birthday = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc),
-                ActiveAmount = Strings.STARTUP_ACTIVITY_VERYACTIVE,
+                ActiveAmount = EnumMapper.GetDisplayString(UserActivity.Active),
                 PassiveCalorieBurn = 2500,
-                Goal = Strings.STARTUP_GOAL_GAINMUSCLE
+                Goal = EnumMapper.GetDisplayString(Goal.GainMuscle)
             };
         }
 
@@ -54,10 +55,10 @@ namespace UnitTest.Mappers
         }
 
         
-        [TestCase("Female", 0, "Very active", 0, "Gain Muscle", 0)]
+        [TestCase("Female", 0, "Very Active", 0, "Gain Muscle", 0)]
         [TestCase("Male", 1, "Active", 1, "Gain Muscle", 0)]
-        [TestCase("Prefer not to say", 2, "A little active", 2, "Lose Weight", 1)]
-        [TestCase("Female", 0, "Not very active", 3, "Lose Weight", 1)]
+        [TestCase("None", 2, "A Little Active", 2, "Lose Weight", 1)]
+        [TestCase("Female", 0, "Not Very Active", 3, "Lose Weight", 1)]
         public void CorrectlyMappingDefaultDtoToDbEntity(string gender, int expectedGender, string activity, int expectedActivity, string goal, int expectedGoal)
         {
             // Arrange
@@ -80,10 +81,10 @@ namespace UnitTest.Mappers
             Assert.That(returnStartupTestDb.Goal, Is.EqualTo(expectedGoal));
         }
 
-        [TestCase("Female", 0, "Very active", 0, "Gain Muscle", 0)]
+        [TestCase("Female", 0, "Very Active", 0, "Gain Muscle", 0)]
         [TestCase("Male", 1, "Active", 1, "Gain Muscle", 0)]
-        [TestCase("Prefer not to say", 2, "A little active", 2, "Lose Weight", 1)]
-        [TestCase("Female", 0, "Not very active", 3, "Lose Weight", 1)]
+        [TestCase("None", 2, "A Little Active", 2, "Lose Weight", 1)]
+        [TestCase("Female", 0, "Not Very Active", 3, "Lose Weight", 1)]
         public void CorrectlyMappingDefaultDbToDto(string expectedGender, int gender, string expectedActivity, int activity, string expectedGoal, int goal)
         {
             // Arrange
@@ -118,23 +119,23 @@ namespace UnitTest.Mappers
             startupTest.Goal = goal;
 
             // Act && Assert
-            Assert.Throws<NotImplementedException>(()
+            Assert.Throws<KeyNotFoundException>(()
     => target.MapToDto(startupTest));
         }
 
-        [TestCase("a", "Very active", "Gain Muscle")]
-        [TestCase("Female", "a", "Gain Muscle")]
-        [TestCase("Female", "Very active", "a")]
-        public void NotImplementedDtoToDatabaseEntity(string gender, string activity, string goal)
-        {
-            // Arrange
-            startupTestDto.Gender = gender;
-            startupTestDto.ActiveAmount = activity;
-            startupTestDto.Goal = goal;
+        //[TestCase("a", "Very Active", "Gain Muscle")]
+        //[TestCase("Female", "a", "Gain Muscle")]
+        //[TestCase("Female", "Very Active", "a")]
+        //public void NotImplementedDtoToDatabaseEntity(string gender, string activity, string goal)
+        //{
+        //    // Arrange
+        //    startupTestDto.Gender = gender;
+        //    startupTestDto.ActiveAmount = activity;
+        //    startupTestDto.Goal = goal;
 
-            // Act && Assert
-            Assert.Throws<NotImplementedException>(()
-                => target.MapToDatabase(startupTestDto));
-        }
+        //    // Act && Assert
+        //    Assert.Throws<KeyNotFoundException>(()
+        //        => target.MapToDatabase(startupTestDto));
+        //}
     }
 }

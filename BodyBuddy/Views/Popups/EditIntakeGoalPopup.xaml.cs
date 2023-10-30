@@ -1,4 +1,4 @@
-using BodyBuddy.ViewModels.IntakeViewmodels;
+using BodyBuddy.ViewModels.IntakeViewModels;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using Mopups.Services;

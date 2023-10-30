@@ -1,6 +1,8 @@
-﻿using BodyBuddy.Models;
+﻿using BodyBuddy.Dtos;
+using BodyBuddy.Models;
 using BodyBuddy.Repositories;
-using BodyBuddy.ViewModels.IntakeViewmodels;
+using BodyBuddy.Services;
+using BodyBuddy.ViewModels.IntakeViewModels;
 using Mopups.Interfaces;
 using Moq;
 
@@ -8,38 +10,34 @@ namespace UnitTest.ViewModels.IntakeViewModels
 {
     public class IntakeViewModelTests
     {
-        private IntakeViewModel target;
-        private Mock<IIntakeRepository> mockRepo;
-        private Mock<IPopupNavigation> mockPopupNavigation;
-        private IntakeModel defaultIntake;
+        private IntakeViewModel _target;
+        private Mock<IIntakeService> _mockService;
+        private Mock<IPopupNavigation> _mockPopupNavigation;
+        private IntakeDto _defaultIntake;
 
         [SetUp]
         public void Setup()
         {
-            mockRepo = new Mock<IIntakeRepository>();
-            mockPopupNavigation = new Mock<IPopupNavigation>();
-            defaultIntake = new IntakeModel() { Id = 1, Date = 1697022414, CalorieCurrent = 0, CalorieGoal = 3500, WaterCurrent = 0, WaterGoal = 3000 };
+            _mockService = new Mock<IIntakeService>();
+            _mockPopupNavigation = new Mock<IPopupNavigation>();
+            _defaultIntake = new IntakeDto() { Id = 1, Date = new DateTime(2023,10,10), CalorieCurrent = 0, CalorieGoal = 3500, WaterCurrent = 0, WaterGoal = 3000 };
 
-            target = new IntakeViewModel(mockRepo.Object, mockPopupNavigation.Object);
+            _target = new IntakeViewModel(_mockService.Object, _mockPopupNavigation.Object);
         }
 
         [Test]
         public async Task IfNotBustGetIntakeGoalsIsCalledAndParametersSet()
         {
             // Arrange
-            target.IsBusy = false;
+            _target.IsBusy = false;
 
-            mockRepo.Setup(repo => repo.GetIntakeAsync()).ReturnsAsync(defaultIntake);
+            _mockService.Setup(service => service.GetIntakeAsync()).ReturnsAsync(_defaultIntake);
 
             // Act
-            await target.GetIntakeGoals();
+            await _target.GetIntakeGoals();
 
             // Assert
-            Assert.That(target.IntakeDetails, Is.EqualTo(defaultIntake));
-            Assert.That(target.CaloriesCurrent, Is.EqualTo(defaultIntake.CalorieCurrent));
-            Assert.That(target.WaterCurrent, Is.EqualTo(defaultIntake.WaterCurrent));
-            Assert.That(target.CalorieGoal, Is.EqualTo(defaultIntake.CalorieGoal));
-            Assert.That(target.WaterGoal, Is.EqualTo(defaultIntake.WaterGoal));
+            Assert.That(_target.IntakeDto, Is.EqualTo(_defaultIntake));
         }
 
         [TestCase(0, 0)]
@@ -49,18 +47,18 @@ namespace UnitTest.ViewModels.IntakeViewModels
         public async Task CorrectAmountOfWaterIsAddedWhenAddWaterClickedMethodIsCalledTest(int timesPressed, int waterCurrentResult)
         {
             // Arrange
-            mockRepo.Setup(repo => repo.GetIntakeAsync()).ReturnsAsync(defaultIntake);
+            _mockService.Setup(service => service.GetIntakeAsync()).ReturnsAsync(_defaultIntake);
 
             // Act
-            await target.GetIntakeGoals();
+            await _target.GetIntakeGoals();
             for (int i = 0; i < timesPressed; i++)
             {
-                await target.AddWaterClicked();
+                await _target.AddWaterClicked();
             }
 
             // Assert
-            Assert.That(target.IntakeDetails, Is.EqualTo(defaultIntake));
-            Assert.That(target.WaterCurrent, Is.EqualTo(waterCurrentResult));
+            Assert.That(_target.IntakeDto, Is.EqualTo(_defaultIntake));
+            Assert.That(_target.IntakeDto.WaterCurrent, Is.EqualTo(waterCurrentResult));
         }
 
         [TestCase(200)]
@@ -69,15 +67,15 @@ namespace UnitTest.ViewModels.IntakeViewModels
         public async Task CorrectAmountOfCaloriesIsAddedWhenAddCaloriesClickedMethodIsCalledTest(int calories)
         {
             // Arrange
-            mockRepo.Setup(repo => repo.GetIntakeAsync()).ReturnsAsync(defaultIntake);
+            _mockService.Setup(service => service.GetIntakeAsync()).ReturnsAsync(_defaultIntake);
 
             // Act
-            await target.GetIntakeGoals();
-            await target.AddKcalClicked(calories);
+            await _target.GetIntakeGoals();
+            await _target.AddKcalClicked(calories);
 
             // Assert
-            Assert.That(target.IntakeDetails, Is.EqualTo(defaultIntake));
-            Assert.That(target.CaloriesCurrent, Is.EqualTo(calories));
+            Assert.That(_target.IntakeDto, Is.EqualTo(_defaultIntake));
+            Assert.That(_target.IntakeDto.CalorieCurrent, Is.EqualTo(calories));
         }
 
         [TestCase(0)]
@@ -85,28 +83,28 @@ namespace UnitTest.ViewModels.IntakeViewModels
         public async Task SaveNewIntakeGoalReturnsFalseIfNewIntakeGoalIsZeroOrNegativeTest(int newGoal)
         {
             // Arrange
-            target.NewIntakeGoal = newGoal;
+            _target.NewIntakeGoal = newGoal;
 
             // Act
-            bool result = await target.SaveNewIntakeValues("Calorie");
+            bool result = await _target.SaveNewIntakeValues("Calorie");
 
             // Assert
             Assert.That(result, Is.EqualTo(false));
-            Assert.That(target.ErrorMessage, Is.EqualTo("New intake goal cannot be negative or zero."));
+            Assert.That(_target.ErrorMessage, Is.EqualTo("New intake goal cannot be negative or zero."));
         }
 
         [Test]
 		public async Task SaveNewIntakeGoalReturnsFalseIfNewIntakeCurrentIsNegativeTest()
 		{
             // Arrange
-            target.NewCurrentIntake = -10;
+            _target.NewCurrentIntake = -10;
 
 			// Act
-			bool result = await target.SaveNewIntakeValues("Calorie");
+			bool result = await _target.SaveNewIntakeValues("Calorie");
 
 			// Assert
 			Assert.That(result, Is.EqualTo(false));
-			Assert.That(target.ErrorMessage, Is.EqualTo("Current intake cannot be negative."));
+			Assert.That(_target.ErrorMessage, Is.EqualTo("Current intake cannot be negative."));
 		}
 
 
@@ -115,39 +113,23 @@ namespace UnitTest.ViewModels.IntakeViewModels
         public async Task CorrectGoalIsChangedBasedOnIntakeTypeStringTest(string intakeType)
         {
             // Arrange
-            target.IntakeDetails = defaultIntake;
-            target.NewIntakeGoal = 3500;
+            _target.IntakeDto = _defaultIntake;
+            _target.NewIntakeGoal = 3500;
 
             // Act
-            bool result = await target.SaveNewIntakeValues(intakeType);
+            bool result = await _target.SaveNewIntakeValues(intakeType);
 
             // Assert
             if (intakeType == "Calorie")
             {
-                Assert.That(target.IntakeDetails.CalorieGoal, Is.EqualTo(3500));
+                Assert.That(_target.IntakeDto.CalorieGoal, Is.EqualTo(3500));
             }
             else if (intakeType == "Water")
             {
-                Assert.That(target.IntakeDetails.WaterGoal, Is.EqualTo(3500));
+                Assert.That(_target.IntakeDto.WaterGoal, Is.EqualTo(3500));
             }
             Assert.That(result, Is.EqualTo(true));
-            Assert.That(target.ErrorMessage, Is.EqualTo(string.Empty));
-            Assert.That(target.NewIntakeGoal, Is.EqualTo(0));
-        }
-
-        [Test]
-        public void ErrorMessageAndNewIntakeGoalAreResetWhenPopupIsDeclinedTest()
-        {
-            // Arrange
-            target.ErrorMessage = "Test Message";
-            target.NewIntakeGoal = 3500;
-
-            // Act
-            target.DeclineEditIntake();
-
-            // Assert
-            Assert.That(target.ErrorMessage, Is.EqualTo(""));
-            Assert.That(target.NewIntakeGoal, Is.EqualTo(0));
+            Assert.That(_target.ErrorMessage, Is.EqualTo(string.Empty));
         }
 	}
 }

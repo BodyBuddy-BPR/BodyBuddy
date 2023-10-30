@@ -3,28 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BodyBuddy.Enums;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BodyBuddy.Dtos
 {
-    public class StartupTestDto
+    public partial class StartupTestDto : ObservableObject
     {
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        [ObservableProperty] private string _name;
 
-        public string Gender { get; set; }
+        [ObservableProperty] private string _gender;
 
-        public double Weight { get; set; }
+        [ObservableProperty] private double _weight;
 
-        public int Height { get; set; }
+        [ObservableProperty] private int _height;
 
-        public DateTime Birthday { get; set; }
+        [ObservableProperty] private DateTime _birthday;
 
-        public string ActiveAmount { get; set; }
+        [ObservableProperty] private string _activeAmount;
 
-        public int PassiveCalorieBurn { get; set; }
+        [ObservableProperty] private int _passiveCalorieBurn;
 
-        public string Goal { get; set; }
+        [ObservableProperty] private string _goal;
 
         public List<string> FocusAreas { get; set; } = new();
     }
