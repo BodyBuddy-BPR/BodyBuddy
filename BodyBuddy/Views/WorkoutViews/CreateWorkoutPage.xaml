@@ -98,7 +98,7 @@
                     TextColor="Black" />
                 <camera:CameraView
                     x:Name="cameraView"
-                    BarCodeDetectionEnabled="True"
+                    BarCodeDetectionEnabled="True" 
                     CamerasLoaded="cameraView_CamerasLoaded"
                     HeightRequest="300"
                     WidthRequest="330" />

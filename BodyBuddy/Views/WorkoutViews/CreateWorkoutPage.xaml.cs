@@ -48,7 +48,6 @@ public partial class CreateWorkoutPage
     private async void CreateFromCodeBtn_Clicked(object sender, EventArgs e)
     {
         var valid = await _viewModel.CreateWorkout();
-        
 
         if (valid)
         {
@@ -104,13 +103,8 @@ public partial class CreateWorkoutPage
             codeScannedPopupView.IsVisible = true;
 
         });
-
-        // Unsubsribing after first detected barcode
-        await Task.Delay(500);
         cameraView.BarcodeDetected -= HandleBarCodeDetected;
     }
-
-    
 
 
     private void cameraView_CamerasLoaded(object sender, EventArgs e)
