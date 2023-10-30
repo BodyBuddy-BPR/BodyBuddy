@@ -26,6 +26,7 @@ using BodyBuddy.Views.Profile;
 using BodyBuddy.ViewModels.StartupTest;
 using BodyBuddy.ViewModels.Profile;
 using BodyBuddy.Views.Authentication;
+using BodyBuddy.Helpers;
 
 namespace BodyBuddy;
 
@@ -175,7 +176,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IIntakeService, IntakeService>();
         builder.Services.AddSingleton<IUserAuthenticationService, UserAuthenticationService>();
 
-        builder.Services.AddSingleton<DateTimeService>(); ;
+        builder.Services.AddSingleton<DateHelper>(); ;
 
         builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
         builder.Services.AddSingleton<IPopupNavigation>(MopupService.Instance);
