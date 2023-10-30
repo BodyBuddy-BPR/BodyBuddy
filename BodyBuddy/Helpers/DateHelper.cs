@@ -4,15 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BodyBuddy.Services.Implementations
+namespace BodyBuddy.Helpers
 {
-    public class DateTimeService
+    public class DateHelper
     {
+        private readonly string _datePreferencesKey = "LastFetchedDate";
         public DateTime Today => DateTime.Today;
 
-        public bool IsNewDay(DateTime lastCheckedDate)
+        public bool IsNewDay()
         {
-            return Today > lastCheckedDate.Date;
+            var lastFetchedDate = GetLastFetchedDate();
+
+            if (!(Today > lastFetchedDate.Date)) return false;
+
+            UpdateDate();
+
+            return true;
         }
 
         public DateTime ConvertToDateTime(long epoch)
@@ -25,6 +32,16 @@ namespace BodyBuddy.Services.Implementations
         {
             DateTime epochStart = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return (long)(dateTime.ToUniversalTime() - epochStart).TotalSeconds;
+        }
+
+        private DateTime GetLastFetchedDate()
+        {
+            return Preferences.Get(_datePreferencesKey, DateTime.MinValue);
+        }
+
+        private void UpdateDate()
+        {
+            Preferences.Set(_datePreferencesKey, Today);
         }
     }
 }

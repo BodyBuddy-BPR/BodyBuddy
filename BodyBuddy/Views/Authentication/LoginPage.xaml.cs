@@ -18,7 +18,21 @@ public partial class LoginPage : ContentPage
     {
         base.OnAppearing();
         await _viewModel.Initialize();
+
+
+        // Sets Login Page as "Fullscreen" if first time opening the app
+        if (_viewModel.SkipVisible)
+        {
+            Shell.SetNavBarIsVisible(this, false);
+            Shell.SetTabBarIsVisible(this, false);
+        }
+        else
+        {
+            Shell.SetNavBarIsVisible(this, true);
+            Shell.SetTabBarIsVisible(this, true);
+        }
     }
+
 
     #region Sign In
 
