@@ -200,24 +200,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
                     await _workoutExercisesService.EditExerciseInWorkout(existingExercise);
                 }
-
-                //if (existingExercise != null)
-                //{
-                //    int index = Exercises.IndexOf(existingExercise);
-
-                //    // Remove the existing exercise from the list
-                //    Exercises.Remove(existingExercise);
-
-                //    // Modify the exercise
-                //    existingExercise.Sets = ExerciseToEdit.Sets;
-                //    existingExercise.Reps = ExerciseToEdit.Reps;
-
-                //    // Add the modified exercise back at the correct index
-                //    Exercises.Insert(index, existingExercise);
-                //}
-
-                // Edit the exercise in the repository
-
             }
             catch (Exception ex)
             {
