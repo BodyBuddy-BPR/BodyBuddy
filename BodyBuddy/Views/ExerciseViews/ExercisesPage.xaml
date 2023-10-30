@@ -35,7 +35,7 @@
                 ClearButtonIconColor="Black"
                 DisplayMemberPath="Name"
                 FontSize="16"
-                ItemsSource="{Binding WorkoutsList}"
+                ItemsSource="{Binding WorkoutList}"
                 SelectedItem="{Binding SelectedWorkout}"
                 Stroke="Transparent"
                 TextMemberPath="Name" />
@@ -45,7 +45,7 @@
         <CollectionView
             Grid.Row="1"
             BackgroundColor="Transparent"
-            ItemsSource="{Binding ExercisesList}"
+            ItemsSource="{Binding ExerciseList}"
             VerticalOptions="FillAndExpand">
 
             <CollectionView.ItemTemplate>
