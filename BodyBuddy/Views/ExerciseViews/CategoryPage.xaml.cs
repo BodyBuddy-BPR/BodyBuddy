@@ -4,14 +4,16 @@ namespace BodyBuddy.Views.ExerciseViews;
 
 public partial class CategoryPage : ContentPage
 {
-	private CategoryViewModel _viewmodel;
+	private CategoryViewModel _viewModel;
 
 	public CategoryPage(CategoryViewModel categoryViewModel)
 	{
 		InitializeComponent();
-		_viewmodel = categoryViewModel;
+        _viewModel = categoryViewModel;
 		BindingContext = categoryViewModel;
-	}
+
+        _viewModel.Initialize();
+    }
 
     protected override async void OnAppearing()
     {

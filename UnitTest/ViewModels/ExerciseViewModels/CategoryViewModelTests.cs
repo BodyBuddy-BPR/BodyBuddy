@@ -1,25 +1,19 @@
 ﻿using BodyBuddy.ViewModels.ExerciseViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BodyBuddy.Services;
+using Moq;
 
 namespace UnitTest.ViewModels.ExerciseViewModels
 {
     public class CategoryViewModelTests
     {
-        private CategoryViewModel target;
+        private CategoryViewModel _target;
+        private IMock<IExerciseService> _mockExerciseService;
+
         [SetUp]
         public void Setup()
         {
-            target = new CategoryViewModel();
-        }
-
-        [Test]
-        public void CorrectAmountOfCatagories()
-        {
-            Assert.That(target.Categories.Count, Is.EqualTo(7));
+            _mockExerciseService = new Mock<IExerciseService>();
+            _target = new CategoryViewModel(_mockExerciseService.Object);
         }
     }
 }

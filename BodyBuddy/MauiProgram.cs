@@ -98,25 +98,23 @@ public static class MauiProgram
         // MainPage
         builder.Services.AddSingleton<MainPage>();
 
-        // Workout
+        // Startup Test
         builder.Services.AddSingleton<StartupTestPage>();
         builder.Services.AddSingleton<ProfilePage>();
+
+        // Workout
         builder.Services.AddTransient<WorkoutsPage>();
         builder.Services.AddTransient<WorkoutDetailsPage>();
-
         builder.Services.AddSingleton<StartedWorkoutPage>();
 
         // Exercise
-        builder.Services.AddTransient<CategoryPage>();
+        builder.Services.AddSingleton<CategoryPage>();
         builder.Services.AddTransient<MuscleGroupPage>();
         builder.Services.AddTransient<ExercisesPage>();
         builder.Services.AddTransient<ExerciseDetailsPage>();
 
         // Statistics
         builder.Services.AddSingleton<IntakePage>();
-
-        // Profile
-        builder.Services.AddSingleton<ProfilePage>();
 
         // Authentication
         builder.Services.AddSingleton<LoginPage>();
@@ -129,16 +127,17 @@ public static class MauiProgram
         // MainPage
         builder.Services.AddSingleton<MainPageViewModel>();
 
-        // Workout
+        // Startup Test
         builder.Services.AddSingleton<StartupTestViewModel>();
         builder.Services.AddSingleton<ProfileViewModel>();
+
+        // Workout
         builder.Services.AddTransient<WorkoutViewModel>();
         builder.Services.AddTransient<WorkoutDetailsViewModel>();
-
         builder.Services.AddSingleton<StartedWorkoutViewModel>();
 
         // Exercise
-        builder.Services.AddTransient<CategoryViewModel>();
+        builder.Services.AddSingleton<CategoryViewModel>();
         builder.Services.AddTransient<MuscleGroupViewModel>();
         builder.Services.AddTransient<ExercisesViewModel>();
         builder.Services.AddTransient<ExerciseDetailsViewModel>();
@@ -146,48 +145,67 @@ public static class MauiProgram
         // Statistics
         builder.Services.AddSingleton<IntakeViewModel>();
 
-        // Profile
-        builder.Services.AddSingleton<ProfileViewModel>();
-
         // Authentication
         builder.Services.AddSingleton<LoginViewModel>();
         #endregion
 
 
         #region Repositories
+
+        // Startup Test
         builder.Services.AddSingleton<IStartupTestRepository, StartupTestRepository>();
-        builder.Services.AddSingleton<IExerciseRepository, ExerciseRepository>();
+
+        // Workout
         builder.Services.AddSingleton<IWorkoutRepository, WorkoutRepository>();
         builder.Services.AddSingleton<IWorkoutExercisesRepository, WorkoutExercisesRepository>();
-        builder.Services.AddSingleton<IIntakeRepository, IntakeRepository>();
+
+        // Exercise
+        builder.Services.AddSingleton<IExerciseRepository, ExerciseRepository>();
         builder.Services.AddSingleton<IExerciseRecordsRepository, ExerciseRecordsRepository>();
+
+        // Statistics
+        builder.Services.AddSingleton<IIntakeRepository, IntakeRepository>();
+
+        // Quote
         builder.Services.AddSingleton<IQuoteRepository, QuoteRepository>();
 
         #endregion
 
+
         #region Helpers
+        builder.Services.AddSingleton<DateHelper>();
+
+        // FIXME: Are these needed?
         builder.Services.AddSingleton<StartupTestMapper>();
         builder.Services.AddSingleton<IntakeMapper>();
+        builder.Services.AddSingleton<QuoteMapper>();
         #endregion
 
         #region Services
+
+        // Startup Test
         builder.Services.AddSingleton<IStartupTestService, StartupTestService>();
+
+        // Workout
         builder.Services.AddSingleton<IWorkoutService, WorkoutService>();
-        builder.Services.AddSingleton<IQuoteService, QuoteService>();
+        builder.Services.AddSingleton<IWorkoutExercisesService, WorkoutExercisesService>();
+
+        // Exercise
+        builder.Services.AddSingleton<IExerciseService, ExerciseService>();
+
+        // Statistics
         builder.Services.AddSingleton<IIntakeService, IntakeService>();
+
+        // Authentication
         builder.Services.AddSingleton<IUserAuthenticationService, UserAuthenticationService>();
 
-        builder.Services.AddSingleton<DateHelper>(); ;
+        
+        // Quote
+        builder.Services.AddSingleton<IQuoteService, QuoteService>();
+
 
         builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
         builder.Services.AddSingleton<IPopupNavigation>(MopupService.Instance);
-        #endregion
-
-
-        #region Helpers
-
-        builder.Services.AddSingleton<QuoteMapper>();
-
         #endregion
 
         #endregion

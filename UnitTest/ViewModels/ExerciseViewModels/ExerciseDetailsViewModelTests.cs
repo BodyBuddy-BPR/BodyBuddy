@@ -1,5 +1,7 @@
-﻿using BodyBuddy.Models;
+﻿using BodyBuddy.Dtos;
+using BodyBuddy.Models;
 using BodyBuddy.Repositories;
+using BodyBuddy.Services;
 using BodyBuddy.ViewModels.ExerciseViewModels;
 using Moq;
 
@@ -7,24 +9,24 @@ namespace UnitTest.ViewModels.ExerciseViewModels
 {
     public class ExerciseDetailsViewModelTests
     {
-        private Mock<IExerciseRepository> _exerciseRepoMock;
+        private Mock<IExerciseService> _mock;
         private Mock<IConnectivity> _connectivityMock;
         private ExerciseDetailsViewModel target;
 
         [SetUp]
         public void Setup()
         {
-            _exerciseRepoMock = new Mock<IExerciseRepository>();
+            _mock = new Mock<IExerciseService>();
             _connectivityMock = new Mock<IConnectivity>();
-            target = new ExerciseDetailsViewModel(_exerciseRepoMock.Object, _connectivityMock.Object);
-            target.ExerciseDetails = new ExerciseModel() { Id = 1 };
+            target = new ExerciseDetailsViewModel(_mock.Object, _connectivityMock.Object);
+            target.ExerciseDetails = new ExerciseDto() { Id = 1 };
         }
 
         [Test]
         public async Task GetExerciseDetails_WithValidExercise_ReturnsDetails()
         {
             // Arrange
-            var mockExercise = new ExerciseModel
+            var mockExercise = new ExerciseDto
             {
                 Id = 1,
                 Name = "Squat",
@@ -33,7 +35,7 @@ namespace UnitTest.ViewModels.ExerciseViewModels
             };
 
             _connectivityMock.Setup(c => c.NetworkAccess).Returns(NetworkAccess.Internet);
-            _exerciseRepoMock.Setup(repo => repo.GetExerciseDetails(It.IsAny<int>())).ReturnsAsync(mockExercise);
+            _mock.Setup(repo => repo.GetExerciseDetails(It.IsAny<int>())).ReturnsAsync(mockExercise);
 
             // Act
             await target.GetExerciseDetails();
@@ -48,12 +50,12 @@ namespace UnitTest.ViewModels.ExerciseViewModels
         public async Task ProcessExerciseDetails_WithNullProperties_ConvertsToEmptyString()
         {
             // Arrange
-            var exercise = new ExerciseModel
+            var exercise = new ExerciseDto
             {
                 Id=1
             };
             _connectivityMock.Setup(c => c.NetworkAccess).Returns(NetworkAccess.Internet);
-            _exerciseRepoMock.Setup(repo => repo.GetExerciseDetails(It.IsAny<int>())).ReturnsAsync(exercise);
+            _mock.Setup(repo => repo.GetExerciseDetails(It.IsAny<int>())).ReturnsAsync(exercise);
 
             // Act
             await target.GetExerciseDetails();
@@ -79,7 +81,7 @@ namespace UnitTest.ViewModels.ExerciseViewModels
         public async Task PopulateExerciseImagesList_WithValidImages_AddsImages(string imagePath, int amountOfImages)
         {
             // Arrange
-            var mockExercise = new ExerciseModel
+            var mockExercise = new ExerciseDto
             {
                 Id = 1,
                 Name = "Squat",
@@ -87,7 +89,7 @@ namespace UnitTest.ViewModels.ExerciseViewModels
                 Images = imagePath
             };
             _connectivityMock.Setup(c => c.NetworkAccess).Returns(NetworkAccess.Internet);
-            _exerciseRepoMock.Setup(repo => repo.GetExerciseDetails(It.IsAny<int>())).ReturnsAsync(mockExercise);
+            _mock.Setup(repo => repo.GetExerciseDetails(It.IsAny<int>())).ReturnsAsync(mockExercise);
 
 
             // Act

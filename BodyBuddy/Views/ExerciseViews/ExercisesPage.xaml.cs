@@ -16,7 +16,7 @@ public partial class ExercisesPage : ContentPage
     {
         base.OnAppearing();
 
-        await Task.Delay(50); // Add a short delay
+        await Task.Delay(250); // Add a short delay
 
         await _viewModel.Initialize();
     }

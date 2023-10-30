@@ -58,6 +58,17 @@ namespace BodyBuddy.Repositories.Implementations
         }
 
 
+        public async Task<List<string>> GetUniqueCategoriesAsync()
+        {
+            var sql = "SELECT DISTINCT category FROM Exercise";
+
+            var distinctCategories = await _context.QueryAsync<ExerciseModel>(sql);
+
+            var categories = distinctCategories.Select(x => x.Category).ToList();
+
+            return categories;
+        }
+
         public async Task<ExerciseModel> GetExerciseDetails(int id)
         {
             var exercise = await _context.Table<ExerciseModel>().FirstOrDefaultAsync(x => x.Id == id);
