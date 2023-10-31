@@ -50,7 +50,7 @@ namespace UnitTest.ViewModels.WorkoutViewModels
             target.IsBusy = false;
             target.IsPreMadeWorkout = preMade;
             mockService.Setup(service => service.GetWorkoutPlans(preMade)).ReturnsAsync(workoutList);
-            target.Workouts.Add(workout2);
+            target.WorkoutList.Add(workout2);
 
             //Act
             await target.GetWorkoutPlans();
@@ -58,8 +58,8 @@ namespace UnitTest.ViewModels.WorkoutViewModels
             //Assert
             mockService.Verify(service => service.GetWorkoutPlans(preMade), Times.Exactly(1));
             mockService.Verify(service => service.GetWorkoutPlans(It.IsAny<bool>()), Times.Exactly(1));
-            Assert.That(target.Workouts, Is.EqualTo(workoutList));
-            Assert.That(target.Workouts.Count, Is.EqualTo(2));
+            Assert.That(target.WorkoutList, Is.EqualTo(workoutList));
+            Assert.That(target.WorkoutList.Count, Is.EqualTo(2));
         }
     }
 }

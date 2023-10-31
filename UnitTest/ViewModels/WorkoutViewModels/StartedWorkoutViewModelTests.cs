@@ -15,7 +15,7 @@ namespace UnitTest.ViewModels.WorkoutViewModels
         private Mock<IWorkoutExercisesService> workoutExercisesMockService;
 
         private WorkoutDto workout;
-        private ObservableCollection<ExerciseDto> exercises;
+        private List<ExerciseDto> exercises;
 
         [SetUp]
         public void Setup()
@@ -26,7 +26,7 @@ namespace UnitTest.ViewModels.WorkoutViewModels
             target = new StartedWorkoutViewModel(workoutExercisesMockService.Object, exerciseRecordsMockService.Object);
 
             workout = new WorkoutDto() { Id = 1, Name = "Workout1", PreMade = false };
-            exercises = new ObservableCollection<ExerciseDto>
+            exercises = new List<ExerciseDto>
             {
                 new () { Id = 1},
                 new () { Id = 2},
