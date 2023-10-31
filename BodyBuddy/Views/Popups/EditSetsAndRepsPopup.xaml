@@ -52,6 +52,7 @@
                     Clicked="MinusSetsBtn_Clicked"
                     HeightRequest="40"
                     Source="minus_sign.png"
+                    Style="{StaticResource ImageButtonVisualState}"
                     WidthRequest="40" />
                 <Label
                     x:Name="SetsLabel"
@@ -65,6 +66,7 @@
                     Clicked="PlusSetsBtn_Clicked"
                     HeightRequest="40"
                     Source="plus_sign.png"
+                    Style="{StaticResource ImageButtonVisualState}"
                     WidthRequest="40" />
             </HorizontalStackLayout>
 
@@ -77,6 +79,7 @@
                     Clicked="MinusRepsBtn_Clicked"
                     HeightRequest="40"
                     Source="minus_sign.png"
+                    Style="{StaticResource ImageButtonVisualState}"
                     WidthRequest="40" />
                 <Label
                     x:Name="RepsLabel"
@@ -90,6 +93,7 @@
                     Clicked="PlusRepsBtn_Clicked"
                     HeightRequest="40"
                     Source="plus_sign.png"
+                    Style="{StaticResource ImageButtonVisualState}"
                     WidthRequest="40" />
             </HorizontalStackLayout>
 
