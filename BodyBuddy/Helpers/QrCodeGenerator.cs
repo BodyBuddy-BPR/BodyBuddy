@@ -12,7 +12,7 @@ namespace BodyBuddy.Helpers
 
         #region Workout
 
-        public static string GenerateWorkoutCode(WorkoutDto workoutDetails, List<ExerciseModel> exercises)
+        public static string GenerateWorkoutCode(WorkoutDto workoutDetails, List<ExerciseDto> exercises)
         {
             StringBuilder qrCodeData = new StringBuilder();
 
@@ -31,7 +31,7 @@ namespace BodyBuddy.Helpers
             return qrCodeData.ToString();
         }
 
-        public static void ReadWorkoutCode2(string qrCodeData, Action<string, string> setPropertyValue)
+        public static List<ExerciseDto> ReadWorkoutCode(string qrCodeData, Action<string, string> setPropertyValue)
         {
             // Unescape the values before splitting
             qrCodeData = Unescape(qrCodeData);
@@ -40,31 +40,9 @@ namespace BodyBuddy.Helpers
             string[] parts = qrCodeData.Split(';');
 
             // Extract details
-            foreach (var part in parts)
-            {
-                string[] keyValue = part.Split(':');
-                if (keyValue.Length == 2)
-                {
-                    string key = keyValue[0];
-                    string value = keyValue[1];
+            List<ExerciseDto> exercises = new List<ExerciseDto>();
 
-                    setPropertyValue?.Invoke(key, Unescape(value));
-                }
-            }
-        }
-
-        public static List<ExerciseModel> ReadWorkoutCode(string qrCodeData, Action<string, string> setPropertyValue)
-        {
-            // Unescape the values before splitting
-            qrCodeData = Unescape(qrCodeData);
-
-            // Split the data into separate parts based on the delimiter ';'
-            string[] parts = qrCodeData.Split(';');
-
-            // Extract details
-            List<ExerciseModel> exercises = new List<ExerciseModel>();
-
-            ExerciseModel currentExercise = null;
+            ExerciseDto currentExercise = null;
 
             foreach (var part in parts)
             {
@@ -80,11 +58,11 @@ namespace BodyBuddy.Helpers
                         if (int.TryParse(value, out exerciseId))
                         {
                             // Create a new exercise model for each ExerciseId
-                            currentExercise = new ExerciseModel
+                            currentExercise = new ExerciseDto
                             {
                                 Id = exerciseId,
-                                Sets = 0, // Default value
-                                Reps = 0   // Default value
+                                Sets = 3, // Default value
+                                Reps = 12   // Default value
                             };
 
                             exercises.Add(currentExercise);

@@ -18,7 +18,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         private readonly IWorkoutExercisesService _workoutExercisesService;
 
         [ObservableProperty] private List<WorkoutDto> _workoutList = new();
-        private List<ExerciseDto> Exercises { get; set; } = new();
+        private List<ExerciseDto> Exercises { get; set; } = new(); // Used for adding exercises from scanned workouts
 
         [ObservableProperty]
         private bool _isPreMadeWorkout;
