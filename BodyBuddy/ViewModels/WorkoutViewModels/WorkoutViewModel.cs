@@ -13,9 +13,10 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
     public partial class WorkoutViewModel : BaseViewModel
     {
         private readonly IWorkoutService _workoutService;
-        private readonly IWorkoutExercisesRepository _workoutExercisesRepository;
+        private readonly IWorkoutExercisesService _workoutExercisesService;
 
         public ObservableCollection<WorkoutDto> Workouts { get; set; } = new();
+        public List<ExerciseDto> Exercises { get; set; } = new();
 
         [ObservableProperty]
         private bool _isPreMadeWorkout;
@@ -26,12 +27,12 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         [ObservableProperty]
         public string errorMessage;
 
-        public WorkoutViewModel(IWorkoutService workoutService, IWorkoutExercisesRepository workoutExercisesRepository)
+        public WorkoutViewModel(IWorkoutService workoutService, IWorkoutExercisesService workoutExercisesService)
         {
             Title = string.Empty;
 
             _workoutService = workoutService;
-            _workoutExercisesRepository = workoutExercisesRepository;
+            _workoutExercisesService = workoutExercisesService;
         }
 
 
@@ -134,7 +135,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         }
 
         // This method is used to read qr code data and create usable objects from it
-        public List<ExerciseModel> Exercises { get; set; } = new List<ExerciseModel>();
         public void ReadQrCodeData(string qrCodeData)
         {
             // Unescape the values before splitting
@@ -165,7 +165,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                     int reps;
                     int.TryParse(exerciseParts[2].Split(':')[1], out reps);
 
-                    Exercises.Add(new ExerciseModel
+                    Exercises.Add(new ExerciseDto()
                     {
                         Id = exerciseId,
                         Sets = sets,
@@ -191,7 +191,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
                 foreach (var exercise in Exercises)
                 {
-                    await _workoutExercisesRepository.AddExerciseToWorkout(workout.Id, exercise.Id);
+                    await _workoutExercisesService.AddExerciseToWorkout(workout.Id, exercise.Id);
                 }
             }
             catch (Exception ex)

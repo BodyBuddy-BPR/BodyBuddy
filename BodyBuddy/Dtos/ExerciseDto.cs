@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,11 @@ namespace BodyBuddy.Dtos
 
         //Based on PrimaryMuscles
         public string TargetArea { get; set; }
+
+        public int WorkoutExerciseId { get; set; }
+        public int Sets { get; set; }
+        public int Reps { get; set; }
+        public List<ExerciseRecordsDto> Records { get; set; } = new();
     }
 
 }

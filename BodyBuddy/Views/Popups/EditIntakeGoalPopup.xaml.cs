@@ -7,7 +7,7 @@ namespace BodyBuddy.Views.Popups;
 
 public partial class EditIntakeGoalPopup
 {
-    private IntakeViewModel _viewModel;
+    private readonly IntakeViewModel _viewModel;
     private string _intakeType;
 
     public EditIntakeGoalPopup(IntakeViewModel intakeViewModel, string intakeType)

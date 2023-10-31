@@ -17,7 +17,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
     public partial class WorkoutDetailsViewModel : BaseViewModel
     {
         private readonly IWorkoutService _workoutService;
-        private readonly IWorkoutExercisesRepository _workoutExercisesRepository;
+        private readonly IWorkoutExercisesService _workoutExercisesService;
 
         #region ObservableProperties
 
@@ -42,7 +42,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         public int sets, reps;
 
         [ObservableProperty]
-        public ExerciseModel exerciseToEdit;
+        public ExerciseDto exerciseToEdit;
 
         [ObservableProperty]
         private bool smallButtonsIsEnabled; // This is the small Add Exercise & Start Workout buttons
@@ -51,12 +51,12 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         #endregion
 
-        public ObservableCollection<ExerciseModel> Exercises { get; set; } = new();
+        public ObservableCollection<ExerciseDto> Exercises { get; set; } = new();
 
-        public WorkoutDetailsViewModel(IWorkoutService workoutService, IWorkoutExercisesRepository workoutExercisesRepository)
+        public WorkoutDetailsViewModel(IWorkoutService workoutService, IWorkoutExercisesService workoutExercisesService)
         {
             _workoutService = workoutService;
-            _workoutExercisesRepository = workoutExercisesRepository;
+            _workoutExercisesService = workoutExercisesService;
         }
 
 
@@ -98,7 +98,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 IsBusy = true;
 
 
-                var workoutPlan = await _workoutExercisesRepository.GetExercisesInWorkout(WorkoutDetails.Id);
+                var workoutPlan = await _workoutExercisesService.GetExercisesInWorkout(WorkoutDetails.Id);
 
                 if (Exercises.Count != 0)
                 {
@@ -123,7 +123,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
 
         [RelayCommand]
-        async Task DeleteFromWorkout(ExerciseModel exercise)
+        async Task DeleteFromWorkout(ExerciseDto exercise)
         {
             if (exercise == null) return;
 
@@ -131,7 +131,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
             if (result)
             {
-                await _workoutExercisesRepository.DeleteExerciseFromWorkout(WorkoutDetails.Id, exercise.Id);
+                await _workoutExercisesService.DeleteExerciseFromWorkout(WorkoutDetails.Id, exercise.Id);
                 Exercises.Remove(exercise);
 
                 if (Exercises.Count == 0)
@@ -208,7 +208,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 IsBusy = true;
 
-                var existingExercise = Exercises.FirstOrDefault(e => e.WorkoutId == ExerciseToEdit.WorkoutId);
+                var existingExercise = Exercises.FirstOrDefault(e => e.WorkoutExerciseId == ExerciseToEdit.WorkoutExerciseId);
 
                 if (existingExercise != null)
                 {
@@ -226,7 +226,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 }
 
                 // Edit the exercise in the repository
-                await _workoutExercisesRepository.EditExerciseInWorkout(WorkoutDetails.Id, ExerciseToEdit);
+                await _workoutExercisesService.EditExerciseInWorkout(ExerciseToEdit);
 
             }
             catch (Exception ex)
@@ -292,7 +292,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         }
 
         [RelayCommand]
-        async Task ToExerciseDetails(ExerciseModel exercise)
+        async Task ToExerciseDetails(ExerciseDto exercise)
         {
             if (exercise is null)
                 return;

@@ -4,28 +4,29 @@ using BodyBuddy.ViewModels.WorkoutViewModels;
 using Moq;
 using System.Collections.ObjectModel;
 using BodyBuddy.Dtos;
+using BodyBuddy.Services;
 
 namespace UnitTest.ViewModels.WorkoutViewModels
 {
     public class StartedWorkoutViewModelTests
     {
         private StartedWorkoutViewModel target;
-        private Mock<IExerciseRecordsRepository> exerciseRecordsMockRepo;
-        private Mock<IWorkoutExercisesRepository> workoutExercisesMockRepo;
+        private Mock<IExerciseRecordsService> exerciseRecordsMockService;
+        private Mock<IWorkoutExercisesService> workoutExercisesMockService;
 
         private WorkoutDto workout;
-        private ObservableCollection<ExerciseModel> exercises;
+        private ObservableCollection<ExerciseDto> exercises;
 
         [SetUp]
         public void Setup()
         {
-            exerciseRecordsMockRepo = new Mock<IExerciseRecordsRepository>();
-            workoutExercisesMockRepo = new Mock<IWorkoutExercisesRepository>();
+            exerciseRecordsMockService = new Mock<IExerciseRecordsService>();
+            workoutExercisesMockService = new Mock<IWorkoutExercisesService>();
 
-            target = new StartedWorkoutViewModel(workoutExercisesMockRepo.Object, exerciseRecordsMockRepo.Object);
+            target = new StartedWorkoutViewModel(workoutExercisesMockService.Object, exerciseRecordsMockService.Object);
 
             workout = new WorkoutDto() { Id = 1, Name = "Workout1", PreMade = false };
-            exercises = new ObservableCollection<ExerciseModel>
+            exercises = new ObservableCollection<ExerciseDto>
             {
                 new () { Id = 1},
                 new () { Id = 2},
@@ -36,10 +37,10 @@ namespace UnitTest.ViewModels.WorkoutViewModels
         [Test]
         public async Task ClearExercisesIfNotEmptyTest()
         {
-            var displayedExercise = new ExerciseModel() { Id = 4 };
+            var displayedExercise = new ExerciseDto() { Id = 4 };
 
             // Arrange
-            var returnExercises = new List<ExerciseModel>()
+            var returnExercises = new List<ExerciseDto>()
             {
                 displayedExercise,
                 new() { Id = 5},
@@ -51,7 +52,7 @@ namespace UnitTest.ViewModels.WorkoutViewModels
             target.IsBusy = false;
             target.Exercises = exercises;
             target.WorkoutDetails = workout;
-            workoutExercisesMockRepo.Setup(repo => repo.GetExercisesInWorkout(It.IsAny<int>()))
+            workoutExercisesMockService.Setup(service => service.GetExercisesInWorkout(It.IsAny<int>()))
                 .ReturnsAsync(returnExercises);
 
             // Act 
