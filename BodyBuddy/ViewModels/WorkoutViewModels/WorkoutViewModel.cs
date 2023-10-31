@@ -6,7 +6,9 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using BodyBuddy.Dtos;
+using BodyBuddy.Helpers;
 using BodyBuddy.Services;
+using ZXing.QrCode;
 
 namespace BodyBuddy.ViewModels.WorkoutViewModels
 {
@@ -84,6 +86,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             }
         }
 
+
         #region Create Workout Popup
 
         public async Task<bool> CreateWorkout()
@@ -137,50 +140,20 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         public List<ExerciseModel> Exercises { get; set; } = new List<ExerciseModel>();
         public void ReadQrCodeData(string qrCodeData)
         {
-            // Unescape the values before splitting
-            qrCodeData = Unescape(qrCodeData);
-
-            // Split the data into separate parts based on the delimiter ';'
-            string[] parts = qrCodeData.Split(';');
-
-            // Extract workout details
-            string workoutNamePart = parts.FirstOrDefault(p => p.StartsWith("WorkoutName:", StringComparison.OrdinalIgnoreCase));
-            string workoutDescriptionPart = parts.FirstOrDefault(p => p.StartsWith("WorkoutDescription:", StringComparison.OrdinalIgnoreCase));
-
-            string workoutName = workoutNamePart?.Split(':')[1];
-            string workoutDescription = workoutDescriptionPart?.Split(':')[1];
-
-            foreach (var part in parts)
-            {
-                if (part.StartsWith("ExerciseId:", StringComparison.OrdinalIgnoreCase))
-                {
-                    string[] exerciseParts = part.Split(',');
-
-                    int exerciseId;
-                    int.TryParse(exerciseParts[0].Split(':')[1], out exerciseId);
-
-                    int sets;
-                    int.TryParse(exerciseParts[1].Split(':')[1], out sets);
-
-                    int reps;
-                    int.TryParse(exerciseParts[2].Split(':')[1], out reps);
-
-                    Exercises.Add(new ExerciseModel
-                    {
-                        Id = exerciseId,
-                        Sets = sets,
-                        Reps = reps
-                    });
-                }
-            }
-
-            WorkoutName = workoutName;
-            WorkoutDescription = workoutDescription;
+            var exercisesInWorkout = QrCodeGenerator.ReadWorkoutCode(qrCodeData, SetPropertyValues);
+            Exercises.AddRange(exercisesInWorkout);
         }
-        private string Unescape(string value)
+        private void SetPropertyValues(string key, string value)
         {
-            // Replace the placeholder with ';'
-            return value?.Replace("##semicolon##", ";") ?? "";
+            switch (key)
+            {
+                case QrCodeConstants.WorkoutName:
+                    WorkoutName = value;
+                    break;
+                case QrCodeConstants.WorkoutDescription:
+                    WorkoutDescription = value;
+                    break;
+            }
         }
 
         public async Task AddExercisesToWorkout()

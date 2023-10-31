@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Text;
 using BodyBuddy.Dtos;
 using BodyBuddy.Services;
+using BodyBuddy.Helpers;
 
 namespace BodyBuddy.ViewModels.WorkoutViewModels
 {
@@ -247,26 +248,8 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         public string GenerateQrCodeData()
         {
-            StringBuilder qrCodeData = new StringBuilder();
-
-            // Append WorkoutDetails.Id
-            qrCodeData.Append($"WorkoutName:{Escape(WorkoutDetails.Name)};");
-            qrCodeData.Append($"WorkoutDescription:{Escape(WorkoutDetails.Description)};");
-
-            // Append exercise details
-            foreach (var exercise in Exercises)
-            {
-                qrCodeData.Append($"ExerciseId:{exercise.Id},Sets:{exercise.Sets},Reps:{exercise.Reps};");
-            }
-
-            return qrCodeData.ToString();
+            return QrCodeGenerator.GenerateWorkoutCode(WorkoutDetails, Exercises.ToList());
         }
-        private string Escape(string value)
-        {
-            // Replace any ';' in the value with a placeholder 
-            return value?.Replace(";", "##semicolon##") ?? "";
-        }
-
 
         #endregion
 
