@@ -23,7 +23,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         [ObservableProperty]
         private ExerciseDto _displayedExercise;
         public ObservableCollection<ExerciseRecordsDto> ExerciseRecords { get; set; } = new();
-        public ObservableCollection<ExerciseDto> Exercises { get; set; } = new();
+        [ObservableProperty] private List<ExerciseDto> _exercises = new();
               
 
         // Keep track of the index of the currently displayed exercise
@@ -56,17 +56,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 IsBusy = true;
 
-                var workoutPlan = await _workoutExercisesService.GetExercisesInWorkout(WorkoutDetails.Id);
-
-                if (Exercises.Count != 0)
-                {
-                    Exercises.Clear();
-                }
-
-                foreach (var exercise in workoutPlan)
-                {
-                    Exercises.Add(exercise);
-                }
+                Exercises = await _workoutExercisesService.GetExercisesInWorkout(WorkoutDetails.Id);
             }
             catch (Exception ex)
             {

@@ -19,8 +19,10 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         #region ObservableProperties
 
         // Query field
-        [ObservableProperty]
-        private WorkoutDto _workoutDetails;
+        [ObservableProperty] private WorkoutDto _workoutDetails;
+
+        // Exercises to show
+        [ObservableProperty] private List<ExerciseDto> _exercises = new();
 
         // Workout Popup fields
         [ObservableProperty]
@@ -30,6 +32,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         [ObservableProperty]
         private int _editSets, _editReps, _editWorkoutExerciseId;
 
+        // Visibility
         [ObservableProperty]
         private bool _smallButtonsIsEnabled; // This is the small Add Exercise & Start Workout buttons
         [ObservableProperty]
@@ -37,8 +40,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         #endregion
 
-        public ObservableCollection<ExerciseDto> Exercises { get; set; } = new();
-        
+
         private readonly IWorkoutService _workoutService;
         private readonly IWorkoutExercisesService _workoutExercisesService;
 
@@ -47,7 +49,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             _workoutService = workoutService;
             _workoutExercisesService = workoutExercisesService;
         }
-
 
         public async Task Initialize()
         {
@@ -73,7 +74,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             }
         }
 
-
         public async Task GetExercisesFromWorkout()
         {
             if (IsBusy) return;
@@ -82,18 +82,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 IsBusy = true;
 
-
-                var workoutPlan = await _workoutExercisesService.GetExercisesInWorkout(WorkoutDetails.Id);
-
-                if (Exercises.Count != 0)
-                {
-                    Exercises.Clear();
-                }
-
-                foreach (var exercise in workoutPlan)
-                {
-                    Exercises.Add(exercise);
-                }
+                Exercises = await _workoutExercisesService.GetExercisesInWorkout(WorkoutDetails.Id);
             }
             catch (Exception ex)
             {
@@ -105,7 +94,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 IsBusy = false;
             }
         }
-
 
         [RelayCommand]
         async Task DeleteFromWorkout(ExerciseDto exercise)
@@ -126,7 +114,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 }
             }
         }
-
 
         #region Workout Popup
 
