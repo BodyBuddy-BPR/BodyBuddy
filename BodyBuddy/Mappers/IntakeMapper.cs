@@ -11,7 +11,7 @@ namespace BodyBuddy.Mappers
 {
     public class IntakeMapper
     {
-        private readonly DateHelper _dateTimeService = new DateHelper();
+        private readonly DateHelper _dateTimeService = new();
 
         public IntakeModel MapToDatabase(IntakeDto intakeDto)
         {

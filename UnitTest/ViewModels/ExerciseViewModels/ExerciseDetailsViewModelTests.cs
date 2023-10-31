@@ -18,8 +18,10 @@ namespace UnitTest.ViewModels.ExerciseViewModels
         {
             _mock = new Mock<IExerciseService>();
             _connectivityMock = new Mock<IConnectivity>();
-            target = new ExerciseDetailsViewModel(_mock.Object, _connectivityMock.Object);
-            target.ExerciseDetails = new ExerciseDto() { Id = 1 };
+            target = new ExerciseDetailsViewModel(_mock.Object, _connectivityMock.Object)
+            {
+                ExerciseDetails = new ExerciseDto() { Id = 1 }
+            };
         }
 
         [Test]
@@ -41,9 +43,9 @@ namespace UnitTest.ViewModels.ExerciseViewModels
             await target.GetExerciseDetails();
 
             // Assert
-            Assert.That(mockExercise.Name, Is.EqualTo(target.ExerciseDetails.Name));
-            Assert.That(mockExercise.Level, Is.EqualTo(target.ExerciseDetails.Level));
-            Assert.That(2, Is.EqualTo(target.ExerciseImages.Count));
+            Assert.That(target.ExerciseDetails.Name, Is.EqualTo(mockExercise.Name));
+            Assert.That(target.ExerciseDetails.Level, Is.EqualTo(mockExercise.Level));
+            Assert.That(target.ExerciseImages.Count, Is.EqualTo(2));
         }
 
         [Test]

@@ -17,7 +17,7 @@ namespace BodyBuddy.ViewModels.Authentication
     [QueryProperty(nameof(SkipVisible), "SkipVisible")]
     public partial class LoginViewModel : BaseViewModel
     {
-        private IUserAuthenticationService _userAuthenticationService;
+        private readonly IUserAuthenticationService _userAuthenticationService;
 
         [ObservableProperty]
         public bool isLogin = true;
@@ -78,21 +78,21 @@ namespace BodyBuddy.ViewModels.Authentication
             await Shell.Current.GoToAsync($"//{nameof(MainPage)}", true);
         }
 
-        [RelayCommand] // Currently this does not work
-        public async Task LoginUsingThirdParty(string passedProvider)
-        {
-            if (string.IsNullOrEmpty(passedProvider)) return;
+        //[RelayCommand] // Currently this does not work
+        //public async Task LoginUsingThirdParty(string passedProvider)
+        //{
+        //    if (string.IsNullOrEmpty(passedProvider)) return;
 
-            // Convert the string to the corresponding Provider enum value
-            if (Enum.TryParse<Provider>(passedProvider, out var provider))
-            {
-                //var signInUrl = await _supabase.Auth.SignIn(provider);
-            }
-            else
-            {
-                return;
-            }
-        }
+        //    // Convert the string to the corresponding Provider enum value
+        //    if (Enum.TryParse<Provider>(passedProvider, out var provider))
+        //    {
+        //        //var signInUrl = await _supabase.Auth.SignIn(provider);
+        //    }
+        //    else
+        //    {
+        //        return;
+        //    }
+        //}
 
         #endregion
 
@@ -123,7 +123,7 @@ namespace BodyBuddy.ViewModels.Authentication
 
         private async Task MakeToast(string displayText)
         {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new();
 
             string text = displayText;
             ToastDuration duration = ToastDuration.Short;

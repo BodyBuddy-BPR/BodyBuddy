@@ -8,8 +8,8 @@ namespace BodyBuddy.Views.WorkoutViews;
 
 public partial class WorkoutDetailsPage : ContentPage
 {
-	private WorkoutDetailsViewModel _viewModel;
-    IPopupNavigation _popupNavigation;
+	private readonly WorkoutDetailsViewModel _viewModel;
+    private readonly IPopupNavigation _popupNavigation;
 
 
     public WorkoutDetailsPage(WorkoutDetailsViewModel workoutDetailsViewModel, IPopupNavigation popupNavigation)

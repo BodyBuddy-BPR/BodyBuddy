@@ -219,7 +219,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         public string GenerateQrCodeData()
         {
-            StringBuilder qrCodeData = new StringBuilder();
+            StringBuilder qrCodeData = new();
 
             // Append WorkoutDetails.Id
             qrCodeData.Append($"WorkoutName:{Escape(WorkoutDetails.Name)};");

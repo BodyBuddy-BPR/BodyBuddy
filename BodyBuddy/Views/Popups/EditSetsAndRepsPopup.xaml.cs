@@ -4,7 +4,7 @@ namespace BodyBuddy.Views.Popups;
 
 public partial class EditSetsAndRepsPopup
 {
-    private WorkoutDetailsViewModel _viewModel;
+    private readonly WorkoutDetailsViewModel _viewModel;
 
     public EditSetsAndRepsPopup(WorkoutDetailsViewModel workoutDetailsViewModel)
 	{

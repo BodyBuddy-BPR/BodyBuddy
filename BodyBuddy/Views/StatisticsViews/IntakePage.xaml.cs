@@ -4,7 +4,7 @@ namespace BodyBuddy.Views.StatisticsViews;
 
 public partial class IntakePage : ContentPage
 {
-	private IntakeViewModel _viewModel;
+	private readonly IntakeViewModel _viewModel;
 	public IntakePage(IntakeViewModel intakeViewModel)
 	{
 		InitializeComponent();
