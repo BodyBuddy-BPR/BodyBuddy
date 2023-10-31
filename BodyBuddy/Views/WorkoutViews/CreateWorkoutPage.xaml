@@ -78,7 +78,7 @@
                     <ImageButton
                         Padding="2"
                         BackgroundColor="{StaticResource Secondary}"
-                        Clicked="ScanCodeBtn_Clicked"
+                        Clicked="OpenCameraBtn_Clicked"
                         CornerRadius="10"
                         HeightRequest="45"
                         Source="camera_white.png"
@@ -91,6 +91,7 @@
             <VerticalStackLayout
                 x:Name="cameraPopupView"
                 Padding="15,15"
+                IsVisible="False"
                 Spacing="10">
                 <Label
                     Style="{StaticResource LargeLabel}"
@@ -101,6 +102,7 @@
                     BarCodeDetectionEnabled="True"
                     CamerasLoaded="cameraView_CamerasLoaded"
                     HeightRequest="300"
+                    IsEnabled="False"
                     WidthRequest="330" />
             </VerticalStackLayout>
 
@@ -109,6 +111,7 @@
             <VerticalStackLayout
                 x:Name="codeScannedPopupView"
                 Padding="15,15"
+                IsVisible="False"
                 Spacing="5">
                 <Label
                     Margin="0,0,0,10"

@@ -11,17 +11,16 @@ public partial class CreateWorkoutPage
 {
     private readonly WorkoutViewModel _viewModel;
 
+    private bool isCameraStarted = false;
+
     public CreateWorkoutPage(WorkoutViewModel workoutsViewModel)
     {
         InitializeComponent();
         _viewModel = workoutsViewModel;
         BindingContext = workoutsViewModel;
-
-        // Disabling views
-        cameraPopupView.IsVisible = false;
-        codeScannedPopupView.IsVisible = false;
     }
 
+    // Normal Create Workout btn
     private async void CreateBtn_Clicked(object sender, EventArgs e)
     {
         var valid = await _viewModel.CreateWorkout();
@@ -45,10 +44,11 @@ public partial class CreateWorkoutPage
         }
     }
 
+
+    // When a QR Code has been scanned, this is the Create Workout btn
     private async void CreateFromCodeBtn_Clicked(object sender, EventArgs e)
     {
         var valid = await _viewModel.CreateWorkout();
-        
 
         if (valid)
         {
@@ -71,18 +71,35 @@ public partial class CreateWorkoutPage
         }
     }
 
-    private void ScanCodeBtn_Clicked(object sender, EventArgs e)
+    // Opens the Camera Popup
+    private async void OpenCameraBtn_Clicked(object sender, EventArgs e)
     {
         try
         {
-            // Disabling/Enabling the correct views of the popup
+            // Delay the initialization of the camera until the user clicks the button
+            await Task.Delay(200);
+
+            // Disabling/Enabling the correct views of the popup    
             normalPopupView.IsVisible = false; // Disable the entire normal view
             popupBorder.HeightRequest = 375; // Set a new height of the popup
+
+            cameraPopupView.IsEnabled = true;
             cameraPopupView.IsVisible = true; // Make Camera visible
 
+            // Initialize the camera after a short delay
+            await Task.Delay(200);
 
-            // Subscribing to HandleBarCodeDetected
-            cameraView.BarcodeDetected += HandleBarCodeDetected;
+            // Check if the camera is not already started
+            if (!isCameraStarted)
+            {
+                // Subscribing to HandleBarCodeDetected
+                cameraView.BarcodeDetected += HandleBarCodeDetected;
+
+                // Initialize the camera
+                await cameraView.StartCameraAsync();
+
+                isCameraStarted = true;
+            }
         }
         catch (Exception ex)
         {
@@ -90,41 +107,33 @@ public partial class CreateWorkoutPage
         }
     }
 
+    // The event that happens when a QR Code is detected
     private async void HandleBarCodeDetected(object sender, BarcodeEventArgs args)
     {
         // Process the scanned QR code data
         _viewModel.ReadQrCodeData(args.Result[0].Text);
 
-        // Delay execution for a short period
         MainThread.BeginInvokeOnMainThread(() =>
         {
             // Disabling Camera view
             cameraPopupView.IsVisible = false;
+            cameraPopupView.IsEnabled = false;
+
             popupBorder.HeightRequest = 235; // Set a new height of the popup
             codeScannedPopupView.IsVisible = true;
 
         });
-
-        // Unsubsribing after first detected barcode
-        await Task.Delay(500);
         cameraView.BarcodeDetected -= HandleBarCodeDetected;
     }
 
-    
 
 
+    // Loads the specidic camera on the phone to use
     private void cameraView_CamerasLoaded(object sender, EventArgs e)
     {
         if (cameraView.Cameras.Count > 0)
         {
             cameraView.Camera = cameraView.Cameras.First();
-
-            MainThread.BeginInvokeOnMainThread(async () =>
-            {
-                await cameraView.StopCameraAsync();
-                await cameraView.StartCameraAsync();
-            });
         }
     }
-
 }
