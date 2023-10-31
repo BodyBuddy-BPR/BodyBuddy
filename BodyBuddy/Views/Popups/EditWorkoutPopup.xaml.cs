@@ -7,7 +7,7 @@ namespace BodyBuddy.Views.Popups;
 
 public partial class EditWorkoutPopup
 {
-    private WorkoutDetailsViewModel _viewModel;
+    private readonly WorkoutDetailsViewModel _viewModel;
 
     public EditWorkoutPopup(WorkoutDetailsViewModel workoutDetailsViewModel)
 	{
@@ -26,7 +26,7 @@ public partial class EditWorkoutPopup
         }
         else
         {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new();
 
             ToastDuration duration = ToastDuration.Short;
             double fontSize = 14;

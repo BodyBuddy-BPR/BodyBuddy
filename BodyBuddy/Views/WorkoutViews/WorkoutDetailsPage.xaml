@@ -8,7 +8,7 @@
     xmlns:effectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.WorkoutViewModels"
-    Title="{Binding WorkoutName}"
+    Title="{Binding WorkoutDetails.Name}"
     x:DataType="viewModel:WorkoutDetailsViewModel">
 
     <ContentPage.Resources>
@@ -32,7 +32,7 @@
             <Label
                 FontAttributes="Bold"
                 Style="{StaticResource MediumLabel}"
-                Text="{Binding WorkoutDescription}"
+                Text="{Binding WorkoutDetails.Description}"
                 TextColor="{StaticResource LightText}" />
             <BoxView BackgroundColor="{StaticResource Primary}" HeightRequest="2" />
         </VerticalStackLayout>

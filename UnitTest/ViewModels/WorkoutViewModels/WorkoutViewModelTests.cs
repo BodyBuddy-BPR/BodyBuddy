@@ -11,7 +11,7 @@ namespace UnitTest.ViewModels.WorkoutViewModels
     {
         private WorkoutViewModel target;
         private Mock<IWorkoutService> mockService;
-        private Mock<IWorkoutExercisesRepository> workoutExercisesMockRepo;
+        private Mock<IWorkoutExercisesService> workoutExercisesMockService;
         private WorkoutDto workout1, workout2;
         private List<WorkoutDto> workoutList;
 
@@ -19,8 +19,8 @@ namespace UnitTest.ViewModels.WorkoutViewModels
         public void Setup()
         {
             mockService = new Mock<IWorkoutService>();
-            workoutExercisesMockRepo = new Mock<IWorkoutExercisesRepository>();
-            target = new WorkoutViewModel(mockService.Object, workoutExercisesMockRepo.Object);
+            workoutExercisesMockService = new Mock<IWorkoutExercisesService>();
+            target = new WorkoutViewModel(mockService.Object, workoutExercisesMockService.Object);
 
             workout1 = new WorkoutDto { Id = 3, Name = "Workout3", PreMade = false };
             workout2 = new WorkoutDto { Id = 4, Name = "Workout4", PreMade = false };
@@ -50,7 +50,7 @@ namespace UnitTest.ViewModels.WorkoutViewModels
             target.IsBusy = false;
             target.IsPreMadeWorkout = preMade;
             mockService.Setup(service => service.GetWorkoutPlans(preMade)).ReturnsAsync(workoutList);
-            target.Workouts.Add(workout2);
+            target.WorkoutList.Add(workout2);
 
             //Act
             await target.GetWorkoutPlans();
@@ -58,8 +58,8 @@ namespace UnitTest.ViewModels.WorkoutViewModels
             //Assert
             mockService.Verify(service => service.GetWorkoutPlans(preMade), Times.Exactly(1));
             mockService.Verify(service => service.GetWorkoutPlans(It.IsAny<bool>()), Times.Exactly(1));
-            Assert.That(target.Workouts, Is.EqualTo(workoutList));
-            Assert.That(target.Workouts.Count, Is.EqualTo(2));
+            Assert.That(target.WorkoutList, Is.EqualTo(workoutList));
+            Assert.That(target.WorkoutList.Count, Is.EqualTo(2));
         }
     }
 }

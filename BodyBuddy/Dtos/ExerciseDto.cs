@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,32 +8,38 @@ using System.Threading.Tasks;
 
 namespace BodyBuddy.Dtos
 {
-    public class ExerciseDto
+    public partial class ExerciseDto : ObservableObject
     {
         public int Id { get; set; }
+        public int WorkoutExerciseId { get; set; }
 
-        public string Name { get; set; }
+        [ObservableProperty] private string _name;
 
-        public string Force { get; set; }
+        [ObservableProperty] private string _force;
 
-        public string Level { get; set; }
+        [ObservableProperty] private string _level;
 
-        public string Mechanic { get; set; }
+        [ObservableProperty] private string _mechanic;
 
-        public string Equipment { get; set; }
+        [ObservableProperty] private string _equipment;
 
-        public string PrimaryMuscles { get; set; }
+        [ObservableProperty] private string _primaryMuscles;
 
-        public string SecondaryMuscles { get; set; }
+        [ObservableProperty] private string _secondaryMuscles;
 
-        public string Instructions { get; set; }
+        [ObservableProperty] private string _instructions;
 
-        public string Category { get; set; }
+        [ObservableProperty] private string _category;
 
-        public string Images { get; set; }
+        [ObservableProperty] private string _images;
 
         //Based on PrimaryMuscles
-        public string TargetArea { get; set; }
+        [ObservableProperty] private string _targetArea;
+
+        [ObservableProperty] private int _sets;
+
+        [ObservableProperty] private int _reps;
+        public List<ExerciseRecordsDto> Records { get; set; } = new();
     }
 
 }

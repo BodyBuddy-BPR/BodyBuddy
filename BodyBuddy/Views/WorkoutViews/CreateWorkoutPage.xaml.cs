@@ -9,7 +9,7 @@ namespace BodyBuddy.Views.WorkoutViews;
 
 public partial class CreateWorkoutPage
 {
-    private WorkoutViewModel _viewModel;
+    private readonly WorkoutViewModel _viewModel;
 
     private bool isCameraStarted = false;
 
@@ -34,7 +34,7 @@ public partial class CreateWorkoutPage
         }
         else
         {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new();
 
             ToastDuration duration = ToastDuration.Short;
             double fontSize = 14;
@@ -61,7 +61,7 @@ public partial class CreateWorkoutPage
         }
         else
         {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new();
 
             ToastDuration duration = ToastDuration.Short;
             double fontSize = 14;

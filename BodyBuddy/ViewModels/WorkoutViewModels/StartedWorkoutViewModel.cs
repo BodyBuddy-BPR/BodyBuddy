@@ -6,23 +6,24 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using BodyBuddy.Dtos;
+using BodyBuddy.Services;
 
 namespace BodyBuddy.ViewModels.WorkoutViewModels
 {
     [QueryProperty(nameof(WorkoutDetails), "Workout")]
     public partial class StartedWorkoutViewModel : BaseViewModel
     {
-        private readonly IWorkoutExercisesRepository _workoutExercisesRepository;
-        private readonly IExerciseRecordsRepository _exerciseRecordsRepository;
+        private readonly IWorkoutExercisesService _workoutExercisesService;
+        private readonly IExerciseRecordsService _exerciseRecordsService;
 
         // Query field for the started workout
         [ObservableProperty]
         private WorkoutDto _workoutDetails;
 
         [ObservableProperty]
-        private ExerciseModel _displayedExercise;
-        public ObservableCollection<ExerciseRecordsModel> ExerciseRecords { get; set; } = new ObservableCollection<ExerciseRecordsModel>();
-        public ObservableCollection<ExerciseModel> Exercises { get; set; } = new ObservableCollection<ExerciseModel>();
+        private ExerciseDto _displayedExercise;
+        public ObservableCollection<ExerciseRecordsDto> ExerciseRecords { get; set; } = new();
+        [ObservableProperty] private List<ExerciseDto> _exercises = new();
               
 
         // Keep track of the index of the currently displayed exercise
@@ -36,10 +37,10 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         public bool finishWorkoutButtonIsEnabled = false;
 
 
-        public StartedWorkoutViewModel(IWorkoutExercisesRepository workoutExercisesRepository, IExerciseRecordsRepository exerciseRecordsRepository)
+        public StartedWorkoutViewModel(IWorkoutExercisesService workoutExercisesService, IExerciseRecordsService exerciseRecordsService)
         {
-            _workoutExercisesRepository = workoutExercisesRepository;
-            _exerciseRecordsRepository = exerciseRecordsRepository;
+            _workoutExercisesService = workoutExercisesService;
+            _exerciseRecordsService = exerciseRecordsService;
         }
 
         public async Task Initialize()
@@ -55,17 +56,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 IsBusy = true;
 
-                var workoutPlan = await _workoutExercisesRepository.GetExercisesInWorkout(WorkoutDetails.Id);
-
-                if (Exercises.Count != 0)
-                {
-                    Exercises.Clear();
-                }
-
-                foreach (var exercise in workoutPlan)
-                {
-                    Exercises.Add(exercise);
-                }
+                Exercises = await _workoutExercisesService.GetExercisesInWorkout(WorkoutDetails.Id);
             }
             catch (Exception ex)
             {
@@ -92,12 +83,12 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             if (DisplayedExercise.Records == null || DisplayedExercise.Records.Count == 0)
             {
                 // Generate sets only if records are not already present
-                DisplayedExercise.Records = new List<ExerciseRecordsModel>();
+                DisplayedExercise.Records = new List<ExerciseRecordsDto>();
 
                 // Generate sets
                 for (int i = 1; i <= DisplayedExercise.Sets; i++)
                 {
-                    var exerciseRecord = new ExerciseRecordsModel
+                    var exerciseRecord = new ExerciseRecordsDto()
                     {
                         ExerciseId = DisplayedExercise.Id,
                         Set = i,
@@ -129,7 +120,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 foreach (var record in exercise.Records)
                 {
-                    await _exerciseRecordsRepository.SaveExerciseRecords(record);
+                    await _exerciseRecordsService.SaveExerciseRecords(record);
                 }
             }
 
@@ -205,7 +196,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         #region Navigation 
 
         [RelayCommand]
-        async Task ToExercise(ExerciseModel exercise)
+        async Task ToExercise(ExerciseDto exercise)
         {
             if (exercise is null)
                 return;

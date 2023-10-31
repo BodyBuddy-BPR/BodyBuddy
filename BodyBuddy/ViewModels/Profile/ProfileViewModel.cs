@@ -18,9 +18,9 @@ namespace BodyBuddy.ViewModels.Profile
 {
     public partial class ProfileViewModel : BaseViewModel
     {
-        private IStartupTestService _startupTestService;
+        private readonly IStartupTestService _startupTestService;
 
-        private IUserAuthenticationService _userAuthenticationService;
+        private readonly IUserAuthenticationService _userAuthenticationService;
 
         #region ObservableProperties
 
@@ -70,7 +70,7 @@ namespace BodyBuddy.ViewModels.Profile
 
         private async Task MakeToast(string displayText)
         {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new();
 
             string text = displayText;
             ToastDuration duration = ToastDuration.Short;

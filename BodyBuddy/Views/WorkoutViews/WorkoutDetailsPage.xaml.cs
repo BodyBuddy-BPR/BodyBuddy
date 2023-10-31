@@ -1,3 +1,4 @@
+using BodyBuddy.Dtos;
 using BodyBuddy.Models;
 using BodyBuddy.ViewModels.WorkoutViewModels;
 using BodyBuddy.Views.Popups;
@@ -7,8 +8,8 @@ namespace BodyBuddy.Views.WorkoutViews;
 
 public partial class WorkoutDetailsPage : ContentPage
 {
-	private WorkoutDetailsViewModel _viewModel;
-    IPopupNavigation _popupNavigation;
+	private readonly WorkoutDetailsViewModel _viewModel;
+    private readonly IPopupNavigation _popupNavigation;
 
 
     public WorkoutDetailsPage(WorkoutDetailsViewModel workoutDetailsViewModel, IPopupNavigation popupNavigation)
@@ -21,6 +22,16 @@ public partial class WorkoutDetailsPage : ContentPage
         _popupNavigation = popupNavigation;
     }
 
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        await Task.Delay(50); // Add a short delay
+
+        await _viewModel.Initialize();
+        UpdateToolbarItemsVisibility();
+    }
+
     //When !IsPremade --> Allow edit, share and deletion of workouts
     //IsVisible is not a part of ToolbarItem, so had to be added through codebehind,
     //based on viewmodel properties
@@ -28,7 +39,7 @@ public partial class WorkoutDetailsPage : ContentPage
     {
         var toolbarItems = new List<ToolbarItem>();
 
-        if (!_viewModel.IsPremade)
+        if (!_viewModel.WorkoutDetails.PreMade)
         {
             toolbarItems.Add(new ToolbarItem
             {
@@ -58,21 +69,10 @@ public partial class WorkoutDetailsPage : ContentPage
         }
     }
 
-   
-    protected override async void OnAppearing()
-	{
-		base.OnAppearing();
-
-        await Task.Delay(50); // Add a short delay
-
-        await _viewModel.Initialize();
-        UpdateToolbarItemsVisibility();
-    }
-
     private void EditBtn_Clicked()
     {
-		_viewModel.PopupName = _viewModel.WorkoutName;
-		_viewModel.PopupDescription = _viewModel.WorkoutDescription;
+		_viewModel.PopupName = _viewModel.WorkoutDetails.Name;
+		_viewModel.PopupDescription = _viewModel.WorkoutDetails.Description;
 
         _popupNavigation.PushAsync(new EditWorkoutPopup(_viewModel));
     }
@@ -84,9 +84,12 @@ public partial class WorkoutDetailsPage : ContentPage
 
     private void SetsAndRepsBtn_Clicked(object sender, EventArgs e)
     {
-        if (sender is ImageButton button && button.CommandParameter is ExerciseModel exercise)
+        if (sender is ImageButton button && button.CommandParameter is ExerciseDto exercise)
         {
-            _viewModel.ExerciseToEdit = exercise;
+            _viewModel.EditWorkoutExerciseId = exercise.WorkoutExerciseId;
+            _viewModel.EditSets = exercise.Sets;
+            _viewModel.EditReps = exercise.Reps;
+
             _popupNavigation.PushAsync(new EditSetsAndRepsPopup(_viewModel));
             // Now 'exercise' holds the Exercise object associated with the clicked button.
             // You can use it as needed.

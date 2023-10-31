@@ -30,7 +30,7 @@
             Text="{Binding Title}" />
 
         <!--  Workouts to show  -->
-        <CollectionView Grid.Row="1" ItemsSource="{Binding Workouts}">
+        <CollectionView Grid.Row="1" ItemsSource="{Binding WorkoutList}">
 
             <!--<CollectionView.EmptyView>
                 <ContentView>
