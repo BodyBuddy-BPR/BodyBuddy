@@ -10,7 +10,7 @@ namespace BodyBuddy.Authentication
 {
     public class UserAuthenticationService : IUserAuthenticationService
     {
-        private Client _supabase;
+        private readonly Client _supabase;
 
         // Used for Secure Storage
         private const string UserIdKey = "UserId";

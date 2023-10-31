@@ -38,12 +38,10 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
                 }
                 IsBusy = true;
 
-                var exercise = await _exerciseService.GetExerciseDetails(ExerciseDetails.Id);
-                ProcessExerciseDetails(exercise);
-                ExerciseDetails = exercise;
+                ExerciseDetails = await _exerciseService.GetExerciseDetails(ExerciseDetails.Id);
 
                 // Populate ExerciseImages
-                PopulateExerciseImagesList(exercise.Images);
+                PopulateExerciseImagesList(ExerciseDetails.Images);
             }
             catch (Exception ex)
             {
@@ -55,7 +53,6 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
                 IsBusy = false;
             }
         }
-
 
         #region Helper methods
 
@@ -71,24 +68,6 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
                     ExerciseImages.Add(path.Trim()); // Trim to remove any leading/trailing whitespace
                 }
             }
-        }
-
-        // If any values in the exercise details response from the repo is null, it converts these to empty string instead
-        private void ProcessExerciseDetails(ExerciseDto exercise)
-        {
-            if (exercise == null)
-                return;
-
-            // Check and convert any null properties to empty strings
-            exercise.Name ??= string.Empty;
-            exercise.Level ??= string.Empty;
-            exercise.Category ??= string.Empty;
-            exercise.PrimaryMuscles ??= string.Empty;
-            exercise.SecondaryMuscles ??= string.Empty;
-            exercise.Equipment ??= string.Empty;
-            exercise.Force ??= string.Empty;
-            exercise.Mechanic ??= string.Empty;
-            exercise.Instructions ??= string.Empty;
         }
 
         #endregion

@@ -52,19 +52,21 @@
                     Clicked="MinusSetsBtn_Clicked"
                     HeightRequest="40"
                     Source="minus_sign.png"
+                    Style="{StaticResource ImageButtonVisualState}"
                     WidthRequest="40" />
                 <Label
                     x:Name="SetsLabel"
                     Margin="20,0"
                     HorizontalOptions="Center"
                     Style="{StaticResource TitleLabel}"
-                    Text="{Binding ExerciseToEdit.Sets}"
+                    Text="{Binding EditSets}"
                     TextColor="Black"
                     VerticalOptions="Center" />
                 <ImageButton
                     Clicked="PlusSetsBtn_Clicked"
                     HeightRequest="40"
                     Source="plus_sign.png"
+                    Style="{StaticResource ImageButtonVisualState}"
                     WidthRequest="40" />
             </HorizontalStackLayout>
 
@@ -77,19 +79,21 @@
                     Clicked="MinusRepsBtn_Clicked"
                     HeightRequest="40"
                     Source="minus_sign.png"
+                    Style="{StaticResource ImageButtonVisualState}"
                     WidthRequest="40" />
                 <Label
                     x:Name="RepsLabel"
                     Margin="20,0"
                     HorizontalOptions="Center"
                     Style="{StaticResource TitleLabel}"
-                    Text="{Binding ExerciseToEdit.Reps}"
+                    Text="{Binding EditReps}"
                     TextColor="Black"
                     VerticalOptions="Center" />
                 <ImageButton
                     Clicked="PlusRepsBtn_Clicked"
                     HeightRequest="40"
                     Source="plus_sign.png"
+                    Style="{StaticResource ImageButtonVisualState}"
                     WidthRequest="40" />
             </HorizontalStackLayout>
 

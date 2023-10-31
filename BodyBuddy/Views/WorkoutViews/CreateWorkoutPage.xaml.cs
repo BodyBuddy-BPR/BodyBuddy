@@ -9,7 +9,7 @@ namespace BodyBuddy.Views.WorkoutViews;
 
 public partial class CreateWorkoutPage
 {
-    private WorkoutViewModel _viewModel;
+    private readonly WorkoutViewModel _viewModel;
 
     public CreateWorkoutPage(WorkoutViewModel workoutsViewModel)
     {
@@ -35,7 +35,7 @@ public partial class CreateWorkoutPage
         }
         else
         {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new();
 
             ToastDuration duration = ToastDuration.Short;
             double fontSize = 14;
@@ -61,7 +61,7 @@ public partial class CreateWorkoutPage
         }
         else
         {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new();
 
             ToastDuration duration = ToastDuration.Short;
             double fontSize = 14;
@@ -71,7 +71,7 @@ public partial class CreateWorkoutPage
         }
     }
 
-    private async void ScanCodeBtn_Clicked(object sender, EventArgs e)
+    private void ScanCodeBtn_Clicked(object sender, EventArgs e)
     {
         try
         {

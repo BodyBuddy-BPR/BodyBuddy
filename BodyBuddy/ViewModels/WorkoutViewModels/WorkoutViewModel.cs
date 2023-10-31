@@ -15,8 +15,8 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         private readonly IWorkoutService _workoutService;
         private readonly IWorkoutExercisesService _workoutExercisesService;
 
-        public ObservableCollection<WorkoutDto> Workouts { get; set; } = new();
-        public List<ExerciseDto> Exercises { get; set; } = new();
+        [ObservableProperty] private List<WorkoutDto> _workoutList = new();
+        private List<ExerciseDto> Exercises { get; set; } = new();
 
         [ObservableProperty]
         private bool _isPreMadeWorkout;
@@ -45,17 +45,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 IsBusy = true;
 
-                var workoutPlans = await _workoutService.GetWorkoutPlans(IsPreMadeWorkout);
-
-                if (Workouts.Count != 0)
-                {
-                    Workouts.Clear();
-                }
-                foreach (var workoutPlan in workoutPlans)
-                {
-                    Workouts.Add(workoutPlan);
-                }
-
+                WorkoutList = await _workoutService.GetWorkoutPlans(IsPreMadeWorkout);
             }
             catch (Exception ex)
             {
@@ -80,7 +70,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 bool deleted = await _workoutService.DeleteWorkout(workout);
                 if (deleted)
                 {
-                    Workouts.Remove(workout);
+                    WorkoutList.Remove(workout);
                 }
             }
         }
@@ -97,7 +87,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 WorkoutDto workout = new() { Name = WorkoutName, Description = WorkoutDescription, PreMade = false };
                 await _workoutService.SaveWorkoutData(workout);
-                Workouts.Add(workout);
+                WorkoutList.Add(workout);
 
                 return true;
             }

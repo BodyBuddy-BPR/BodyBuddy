@@ -18,19 +18,19 @@ namespace BodyBuddy.Repositories.Implementations
             List<ExerciseModel> exercises = new();
             try
             {
-                var workoutIds = await _context.Table<WorkoutExercisesModel>().Where(x => x.WorkoutId == workoutId).ToListAsync();
-                foreach (var workout in workoutIds)
+                var workoutExercises = await _context.Table<WorkoutExercisesModel>().Where(x => x.WorkoutId == workoutId).ToListAsync();
+                foreach (var workoutExerciseModel in workoutExercises)
                 {
-                    var exercise = await _context.Table<ExerciseModel>().FirstOrDefaultAsync(x => x.Id == workout.ExerciseId);
+                    var exercise = await _context.Table<ExerciseModel>().FirstOrDefaultAsync(x => x.Id == workoutExerciseModel.ExerciseId);
 
-                    exercise.WorkoutExerciseId = workout.Id;
+                    exercise.WorkoutExerciseId = workoutExerciseModel.Id;
 
                     // Check if the exercise is not null
-                    if (workout.Sets != 0)
+                    if (workoutExerciseModel.Sets != 0)
                     {
                         // Update the Sets and Reps properties
-                        exercise.Sets = workout.Sets;
-                        exercise.Reps = workout.Reps;
+                        exercise.Sets = workoutExerciseModel.Sets;
+                        exercise.Reps = workoutExerciseModel.Reps;
                         exercises.Add(exercise);
                     }
                     else

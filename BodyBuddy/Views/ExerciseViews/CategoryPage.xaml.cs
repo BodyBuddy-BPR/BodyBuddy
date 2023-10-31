@@ -4,7 +4,7 @@ namespace BodyBuddy.Views.ExerciseViews;
 
 public partial class CategoryPage : ContentPage
 {
-	private CategoryViewModel _viewModel;
+	private readonly CategoryViewModel _viewModel;
 
 	public CategoryPage(CategoryViewModel categoryViewModel)
 	{
