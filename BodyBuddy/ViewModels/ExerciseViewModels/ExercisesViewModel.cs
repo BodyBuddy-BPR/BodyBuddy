@@ -32,8 +32,8 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
 
         #endregion
 
-        public ObservableCollection<ExerciseDto> ExercisesList { get; set; } = new();
-        public ObservableCollection<WorkoutDto> WorkoutsList { get; set; } = new();
+        [ObservableProperty] private List<ExerciseDto> _exerciseList = new();
+        [ObservableProperty] private List<WorkoutDto> _workoutList = new();
 
         public ExercisesViewModel(IExerciseService exerciseService, IWorkoutService workoutService, IWorkoutExercisesService workoutExercisesService)
         {
@@ -61,22 +61,9 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             {
                 IsBusy = true;
 
-                var exercises = await _exerciseService.GetExercisesAsync(QueryDetails.Category, QueryDetails.PrimaryMuscles);
+                ExerciseList = await _exerciseService.GetExercisesAsync(QueryDetails.Category, QueryDetails.PrimaryMuscles);
 
-                if (ExercisesList.Count != 0)
-                {
-                    ExercisesList.Clear();
-                }
-
-                if (exercises != null)
-                {
-                    foreach (var exercise in exercises)
-                    {
-                        //await Task.Delay(50);
-                        ExercisesList.Add(exercise);
-                    }
-                }
-                else
+                if(ExerciseList.Count==0)
                 {
                     // Log or handle the case where exercises is null
                     await Shell.Current.DisplayAlert("Error!", $"Exercises is null", "OK");
@@ -102,17 +89,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             {
                 IsBusy = true;
 
-                var workouts = await _workoutService.GetWorkoutPlans(false);
-
-                if (WorkoutsList.Count != 0)
-                {
-                    WorkoutsList.Clear();
-                }
-
-                foreach (var workout in workouts)
-                {
-                    WorkoutsList.Add(workout);
-                }
+                WorkoutList = await _workoutService.GetWorkoutPlans(false);
 
                 SetSelectedWorkout();
                 
@@ -132,7 +109,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
 
         private void SetSelectedWorkout()
         {
-            if (CachedData.SharedWorkout != null && WorkoutsList.Any(x => x.Id == CachedData.SharedWorkout.Id))
+            if (CachedData.SharedWorkout != null && WorkoutList.Any(x => x.Id == CachedData.SharedWorkout.Id))
             {
                 SelectedWorkout = CachedData.SharedWorkout;
             }

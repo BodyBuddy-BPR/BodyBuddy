@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BodyBuddy.Dtos;
+using BodyBuddy.Helpers;
 using BodyBuddy.Models;
-using BodyBuddy.Services.Implementations;
 
 namespace BodyBuddy.Mappers
 {
     public class IntakeMapper
     {
-        private readonly DateTimeService _dateTimeService = new DateTimeService();
+        private readonly DateHelper _dateTimeService = new();
 
         public IntakeModel MapToDatabase(IntakeDto intakeDto)
         {

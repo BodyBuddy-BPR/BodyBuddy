@@ -33,14 +33,14 @@ namespace BodyBuddy.Services.Implementations
 
         public async Task<List<string>> GetUniqueCategoriesAsync()
         {
-            Stopwatch stopwatch = new Stopwatch();
+            Stopwatch stopwatch = new();
             stopwatch.Start();
 
             var categories = await _exerciseRepository.GetUniqueCategoriesAsync();
 
             stopwatch.Stop();
             Console.WriteLine($"GetUniqueCategoriesAsync took {stopwatch.ElapsedMilliseconds} ms with DB Call");
-            Stopwatch stopwatch2 = new Stopwatch();
+            Stopwatch stopwatch2 = new();
             stopwatch2.Start();
             var categories2 = new List<string>()
             {
@@ -61,7 +61,7 @@ namespace BodyBuddy.Services.Implementations
 
         public async Task<List<ExerciseDto>> GetMuscleGroupsForCategory(string category)
         {
-            Stopwatch stopwatch = new Stopwatch();
+            Stopwatch stopwatch = new();
             stopwatch.Start();
 
             var primaryMuscleGroups = await _exerciseRepository.GetMuscleGroupsForCategory(category);

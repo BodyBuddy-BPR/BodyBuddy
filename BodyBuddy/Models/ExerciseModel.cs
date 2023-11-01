@@ -43,21 +43,16 @@ namespace BodyBuddy.Models
         [Column("name_id")]
         public string NameId { get; set; }
 
-        // Used for MuscleGroupViewModel, not to be used in the database
-        [Ignore]
-        public string TargetArea { get; set; }
-
 
         // Used in WorkoutDetailsViewModel
-
         [Ignore]
-        public int WorkoutId { get; set; }
+        public int WorkoutExerciseId { get; set; }
 
         [Ignore]
         public int Sets { get; set; }
         [Ignore]
         public int Reps { get; set; }
 
-        public List<ExerciseRecordsModel> Records { get; set; } = new List<ExerciseRecordsModel>();
+        public List<ExerciseRecordsModel> Records { get; set; } = new();
     }
 }

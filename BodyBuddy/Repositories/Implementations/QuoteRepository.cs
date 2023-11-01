@@ -14,10 +14,8 @@ namespace BodyBuddy.Repositories.Implementations
 {
     public class QuoteRepository : IQuoteRepository
     {
-        private DateTimeService _dateTimeService;
         private readonly Client _supabaseClient;
 
-        private readonly string datePreferencesKey = "LastFetchedDate";
         private readonly string quotePreferencesKey = "LastFetchedQuote";
         private readonly string authorPreferencesKey = "LastFetchedAuthor";
 
@@ -29,40 +27,36 @@ namespace BodyBuddy.Repositories.Implementations
         string key = AppSettingKeys.SUPABASE_KEY;
 #endif
 
-        public QuoteRepository(DateTimeService dateTimeService, Client supabaseClient)
+        public QuoteRepository(Client supabaseClient)
         {
-            _dateTimeService = dateTimeService;
             _supabaseClient = supabaseClient;
         }
 
         public async Task<QuoteModel> FetchNewQuote()
         {
-            DateTime lastFetchedDate = Preferences.Get(datePreferencesKey, DateTime.MinValue);
+            using var httpClient = new HttpClient();
+            var apiUrl = $"{url}/rest/v1/random_quote?apikey={key}&limit=1";
+            var response = await httpClient.GetStringAsync(apiUrl);
 
-            // Check if new day using the DateTimeService
-            if (_dateTimeService.IsNewDay(lastFetchedDate))
-            {
-                using var httpClient = new HttpClient();
-                string apiUrl = $"{url}/rest/v1/random_quote?apikey={key}&limit=1";
-                var response = await httpClient.GetStringAsync(apiUrl);
+            // Deserialize the JSON response
+            var quote = JsonConvert.DeserializeObject<QuoteModel[]>(response)[0];
 
-                // Deserialize the JSON response
-                var quote = JsonConvert.DeserializeObject<QuoteModel[]>(response)[0];
+            // Save the new quote and update the last fetched date in SharedPreferences
+            Preferences.Set(quotePreferencesKey, quote.Quote);
+            Preferences.Set(authorPreferencesKey, quote.Author);
 
-                // Save the new quote and update the last fetched date in SharedPreferences
-                Preferences.Set(datePreferencesKey, _dateTimeService.Today);
-                Preferences.Set(quotePreferencesKey, quote.Quote);
-                Preferences.Set(authorPreferencesKey, quote.Author);
+            return quote;
+        }
 
-                return quote;
-            }
-
-            // Return the previously fetched quote
-            return new QuoteModel
+        public QuoteModel GetSavedQuote()
+        {
+            var savedQuote = new QuoteModel
             {
                 Quote = Preferences.Get(quotePreferencesKey, "To enjoy the glow of good health, you must exercise."),
                 Author = Preferences.Get(authorPreferencesKey, "Gene Tunney")
             };
+
+            return savedQuote;
         }
     }
 }

@@ -9,16 +9,13 @@
     x:DataType="viewModel:IntakeViewModel"
     Shell.NavBarIsVisible="True">
     <Grid
-        Margin="20,10"
+        Margin="20,20"
         RowDefinitions="Auto, Auto"
-        RowSpacing="10">
+        RowSpacing="20">
 
         <!--  Water Section  -->
-        <VerticalStackLayout Grid.Row="0" Spacing="10">
-            <Label
-                Margin="0,20"
-                Style="{StaticResource TitleLabel}"
-                Text="Water Intake" />
+        <VerticalStackLayout Grid.Row="0" Spacing="20">
+            <Label Style="{StaticResource TitleLabel}" Text="Water Intake" />
 
             <!--  Image Row  -->
             <HorizontalStackLayout HorizontalOptions="Center">
@@ -36,7 +33,7 @@
             </HorizontalStackLayout>
 
             <!--  Input Row  -->
-            <Grid Margin="0,20">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="18.5*" />
                     <!--  If you want a space between progress bar and button, change this width to 22.5  -->
@@ -93,7 +90,6 @@
 
                 <ImageButton
                     Grid.Column="2"
-                    Margin="0,20"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:IntakeViewModel}}, Path=ClickToShowPopup_ClickedCommand}"
                     CommandParameter="Water"
                     CornerRadius="15"
@@ -107,11 +103,8 @@
 
 
         <!--  Calorie Section  -->
-        <VerticalStackLayout Grid.Row="1" Spacing="10">
-            <Label
-                Margin="0,20"
-                Style="{StaticResource TitleLabel}"
-                Text="Calorie Intake" />
+        <VerticalStackLayout Grid.Row="1" Spacing="20">
+            <Label Style="{StaticResource TitleLabel}" Text="Calorie Intake" />
 
             <!--  Image and Calorie Entry Row  -->
             <HorizontalStackLayout HorizontalOptions="Center">
@@ -133,7 +126,7 @@
                             Keyboard="Numeric"
                             MaxLength="4"
                             MinimumWidthRequest="50"
-                            Style="{StaticResource MediumEntry}"
+                            Style="{StaticResource MediumLabel}"
                             Text="{Binding CalorieEntryText}"
                             TextColor="White"
                             VerticalOptions="Center" />
@@ -146,7 +139,7 @@
                 </Frame>
             </HorizontalStackLayout>
             <!--  Input Row  -->
-            <Grid Margin="0,20">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20*" />
                     <ColumnDefinition Width="80*" />
@@ -203,7 +196,6 @@
 
                 <ImageButton
                     Grid.Column="2"
-                    Margin="0,20"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:IntakeViewModel}}, Path=ClickToShowPopup_ClickedCommand}"
                     CommandParameter="Calorie"
                     CornerRadius="15"

@@ -6,16 +6,19 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using BodyBuddy.Dtos;
+using BodyBuddy.Helpers;
 using BodyBuddy.Services;
+using ZXing.QrCode;
 
 namespace BodyBuddy.ViewModels.WorkoutViewModels
 {
     public partial class WorkoutViewModel : BaseViewModel
     {
         private readonly IWorkoutService _workoutService;
-        private readonly IWorkoutExercisesRepository _workoutExercisesRepository;
+        private readonly IWorkoutExercisesService _workoutExercisesService;
 
-        public ObservableCollection<WorkoutDto> Workouts { get; set; } = new();
+        [ObservableProperty] private List<WorkoutDto> _workoutList = new();
+        private List<ExerciseDto> Exercises { get; set; } = new(); // Used for adding exercises from scanned workouts
 
         [ObservableProperty]
         private bool _isPreMadeWorkout;
@@ -26,12 +29,12 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         [ObservableProperty]
         public string errorMessage;
 
-        public WorkoutViewModel(IWorkoutService workoutService, IWorkoutExercisesRepository workoutExercisesRepository)
+        public WorkoutViewModel(IWorkoutService workoutService, IWorkoutExercisesService workoutExercisesService)
         {
             Title = string.Empty;
 
             _workoutService = workoutService;
-            _workoutExercisesRepository = workoutExercisesRepository;
+            _workoutExercisesService = workoutExercisesService;
         }
 
 
@@ -44,17 +47,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 IsBusy = true;
 
-                var workoutPlans = await _workoutService.GetWorkoutPlans(IsPreMadeWorkout);
-
-                if (Workouts.Count != 0)
-                {
-                    Workouts.Clear();
-                }
-                foreach (var workoutPlan in workoutPlans)
-                {
-                    Workouts.Add(workoutPlan);
-                }
-
+                WorkoutList = await _workoutService.GetWorkoutPlans(IsPreMadeWorkout);
             }
             catch (Exception ex)
             {
@@ -79,10 +72,11 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 bool deleted = await _workoutService.DeleteWorkout(workout);
                 if (deleted)
                 {
-                    Workouts.Remove(workout);
+                    WorkoutList.Remove(workout);
                 }
             }
         }
+
 
         #region Create Workout Popup
 
@@ -96,7 +90,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 WorkoutDto workout = new() { Name = WorkoutName, Description = WorkoutDescription, PreMade = false };
                 await _workoutService.SaveWorkoutData(workout);
-                Workouts.Add(workout);
+                WorkoutList.Add(workout);
 
                 return true;
             }
@@ -134,53 +128,22 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         }
 
         // This method is used to read qr code data and create usable objects from it
-        public List<ExerciseModel> Exercises { get; set; } = new List<ExerciseModel>();
         public void ReadQrCodeData(string qrCodeData)
         {
-            // Unescape the values before splitting
-            qrCodeData = Unescape(qrCodeData);
-
-            // Split the data into separate parts based on the delimiter ';'
-            string[] parts = qrCodeData.Split(';');
-
-            // Extract workout details
-            string workoutNamePart = parts.FirstOrDefault(p => p.StartsWith("WorkoutName:", StringComparison.OrdinalIgnoreCase));
-            string workoutDescriptionPart = parts.FirstOrDefault(p => p.StartsWith("WorkoutDescription:", StringComparison.OrdinalIgnoreCase));
-
-            string workoutName = workoutNamePart?.Split(':')[1];
-            string workoutDescription = workoutDescriptionPart?.Split(':')[1];
-
-            foreach (var part in parts)
-            {
-                if (part.StartsWith("ExerciseId:", StringComparison.OrdinalIgnoreCase))
-                {
-                    string[] exerciseParts = part.Split(',');
-
-                    int exerciseId;
-                    int.TryParse(exerciseParts[0].Split(':')[1], out exerciseId);
-
-                    int sets;
-                    int.TryParse(exerciseParts[1].Split(':')[1], out sets);
-
-                    int reps;
-                    int.TryParse(exerciseParts[2].Split(':')[1], out reps);
-
-                    Exercises.Add(new ExerciseModel
-                    {
-                        Id = exerciseId,
-                        Sets = sets,
-                        Reps = reps
-                    });
-                }
-            }
-
-            WorkoutName = workoutName;
-            WorkoutDescription = workoutDescription;
+            var exercisesInWorkout = QrCodeGenerator.ReadWorkoutCode(qrCodeData, SetPropertyValues);
+            Exercises.AddRange(exercisesInWorkout);
         }
-        private string Unescape(string value)
+        private void SetPropertyValues(string key, string value)
         {
-            // Replace the placeholder with ';'
-            return value?.Replace("##semicolon##", ";") ?? "";
+            switch (key)
+            {
+                case QrCodeConstants.WorkoutName:
+                    WorkoutName = value;
+                    break;
+                case QrCodeConstants.WorkoutDescription:
+                    WorkoutDescription = value;
+                    break;
+            }
         }
 
         public async Task AddExercisesToWorkout()
@@ -191,7 +154,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
                 foreach (var exercise in Exercises)
                 {
-                    await _workoutExercisesRepository.AddExerciseToWorkout(workout.Id, exercise.Id);
+                    await _workoutExercisesService.AddExerciseToWorkout(workout.Id, exercise.Id);
                 }
             }
             catch (Exception ex)

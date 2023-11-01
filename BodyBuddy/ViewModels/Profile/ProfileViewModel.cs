@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BodyBuddy.Authentication;
 using BodyBuddy.Views.Authentication;
 using CommunityToolkit.Mvvm.Input;
 using Supabase;
@@ -14,14 +15,14 @@ using CommunityToolkit.Maui.Core;
 using Syncfusion.Maui.GridCommon.Collections;
 using System.Runtime.CompilerServices;
 
+
 namespace BodyBuddy.ViewModels.Profile
 {
     public partial class ProfileViewModel : BaseViewModel
     {
         private IStartupTestService _startupTestService;
         private IIntakeService _intakeService;
-
-        private IUserAuthenticationService _userAuthenticationService;
+        private readonly IUserAuthenticationService _userAuthenticationService;
 
 		private static int secondsInADay = 86400;
 		private int currentDayOfWeek;
@@ -112,6 +113,9 @@ namespace BodyBuddy.ViewModels.Profile
 			int dayOfWeek = (int)DateTime.UtcNow.DayOfWeek;
 
 			currentDayOfWeek = dayOfWeek;
+        private async Task MakeToast(string displayText)
+        {
+            CancellationTokenSource cancellationTokenSource = new();
 
 			CurrentSelectedDate = currentDayOfWeek;
 

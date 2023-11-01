@@ -4,7 +4,7 @@ namespace BodyBuddy.Views.ExerciseViews;
 
 public partial class MuscleGroupPage : ContentPage
 {
-	private MuscleGroupViewModel _viewModel;
+	private readonly MuscleGroupViewModel _viewModel;
 	public MuscleGroupPage(MuscleGroupViewModel muscleGroupViewModel) 
 	{
 		InitializeComponent();

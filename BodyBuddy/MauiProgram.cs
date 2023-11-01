@@ -26,6 +26,8 @@ using BodyBuddy.Views.Profile;
 using BodyBuddy.ViewModels.StartupTest;
 using BodyBuddy.ViewModels.Profile;
 using BodyBuddy.Views.Authentication;
+using BodyBuddy.Helpers;
+using BodyBuddy.Authentication;
 
 namespace BodyBuddy;
 
@@ -171,6 +173,8 @@ public static class MauiProgram
 
 
         #region Helpers
+        builder.Services.AddSingleton<DateHelper>();
+
         // FIXME: Are these needed?
         builder.Services.AddSingleton<StartupTestMapper>();
         builder.Services.AddSingleton<IntakeMapper>();
@@ -188,6 +192,7 @@ public static class MauiProgram
 
         // Exercise
         builder.Services.AddSingleton<IExerciseService, ExerciseService>();
+        builder.Services.AddSingleton<IExerciseRecordsService, ExerciseRecordsService>();
 
         // Statistics
         builder.Services.AddSingleton<IIntakeService, IntakeService>();
@@ -195,11 +200,10 @@ public static class MauiProgram
         // Authentication
         builder.Services.AddSingleton<IUserAuthenticationService, UserAuthenticationService>();
 
+        
         // Quote
         builder.Services.AddSingleton<IQuoteService, QuoteService>();
 
-        // Extra
-        builder.Services.AddSingleton<DateTimeService>(); ;
 
         builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
         builder.Services.AddSingleton<IPopupNavigation>(MopupService.Instance);

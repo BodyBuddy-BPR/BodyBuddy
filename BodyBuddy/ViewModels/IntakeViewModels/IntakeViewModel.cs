@@ -115,7 +115,7 @@ namespace BodyBuddy.ViewModels.IntakeViewModels
             {
                 ErrorMessage = "Cannot reduce current calorie intake below zero.";
 
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+                CancellationTokenSource cancellationTokenSource = new();
 
                 ToastDuration duration = ToastDuration.Short;
                 double fontSize = 14;

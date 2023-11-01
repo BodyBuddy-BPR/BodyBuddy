@@ -7,8 +7,8 @@ namespace BodyBuddy.Views.Popups;
 
 public partial class EditIntakeGoalPopup
 {
-    private IntakeViewModel _viewModel;
-    private string _intakeType;
+    private readonly IntakeViewModel _viewModel;
+    private readonly string _intakeType;
 
     public EditIntakeGoalPopup(IntakeViewModel intakeViewModel, string intakeType)
 	{
@@ -28,7 +28,7 @@ public partial class EditIntakeGoalPopup
 		}
 		else
 		{
-			CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+			CancellationTokenSource cancellationTokenSource = new();
 
 			ToastDuration duration = ToastDuration.Short;
 			double fontSize = 14;

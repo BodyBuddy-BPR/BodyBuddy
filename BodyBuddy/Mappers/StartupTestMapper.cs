@@ -9,13 +9,12 @@ using System.Runtime.InteropServices.JavaScript;
 using System.Text;
 using System.Threading.Tasks;
 using BodyBuddy.Enums;
-using BodyBuddy.Services.Implementations;
 
 namespace BodyBuddy.Mappers
 {
     public class StartupTestMapper
     {
-        private readonly DateTimeService _dateTimeService = new();
+        private readonly DateHelper _dateTimeService = new();
 
         public StartupTestModel MapToDatabase(StartupTestDto startupTestDto)
         {

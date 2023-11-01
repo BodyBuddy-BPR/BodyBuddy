@@ -9,16 +9,15 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BodyBuddy.Services;
 using static Supabase.Gotrue.Constants;
+using BodyBuddy.Authentication;
 
 namespace BodyBuddy.ViewModels.Authentication
 {
     [QueryProperty(nameof(SkipVisible), "SkipVisible")]
     public partial class LoginViewModel : BaseViewModel
     {
-        private Client _supabase;
-        private IUserAuthenticationService _userAuthenticationService;
+        private readonly IUserAuthenticationService _userAuthenticationService;
 
         [ObservableProperty]
         public bool isLogin = true;
@@ -38,10 +37,9 @@ namespace BodyBuddy.ViewModels.Authentication
 
         private readonly string _skipLoginKey = "SkipLogInKey";
 
-        public LoginViewModel(IUserAuthenticationService userAuthenticationService, Client client)
+        public LoginViewModel(IUserAuthenticationService userAuthenticationService)
         {
             _userAuthenticationService = userAuthenticationService;
-            _supabase = client;
         }
 
         public async Task Initialize()
@@ -80,21 +78,21 @@ namespace BodyBuddy.ViewModels.Authentication
             await Shell.Current.GoToAsync($"//{nameof(MainPage)}", true);
         }
 
-        [RelayCommand] // Currently this does not work
-        public async Task LoginUsingThirdParty(string passedProvider)
-        {
-            if (string.IsNullOrEmpty(passedProvider)) return;
+        //[RelayCommand] // Currently this does not work
+        //public async Task LoginUsingThirdParty(string passedProvider)
+        //{
+        //    if (string.IsNullOrEmpty(passedProvider)) return;
 
-            // Convert the string to the corresponding Provider enum value
-            if (Enum.TryParse<Provider>(passedProvider, out var provider))
-            {
-                //var signInUrl = await _supabase.Auth.SignIn(provider);
-            }
-            else
-            {
-                return;
-            }
-        }
+        //    // Convert the string to the corresponding Provider enum value
+        //    if (Enum.TryParse<Provider>(passedProvider, out var provider))
+        //    {
+        //        //var signInUrl = await _supabase.Auth.SignIn(provider);
+        //    }
+        //    else
+        //    {
+        //        return;
+        //    }
+        //}
 
         #endregion
 
@@ -104,7 +102,7 @@ namespace BodyBuddy.ViewModels.Authentication
         {
             try
             {
-                var success = await _userAuthenticationService.SignUserIn(LoginEmail, LoginPassword);
+                var success = await _userAuthenticationService.SignUserUp(SignUpEmail, SignUpPassword);
 
                 if (success)
                 {
@@ -125,7 +123,7 @@ namespace BodyBuddy.ViewModels.Authentication
 
         private async Task MakeToast(string displayText)
         {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new();
 
             string text = displayText;
             ToastDuration duration = ToastDuration.Short;
