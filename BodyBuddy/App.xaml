@@ -10,6 +10,7 @@
 
             <!--  Primary Colors  -->
             <Color x:Key="Primary">#5297B7</Color>
+            <Color x:Key="PrimaryDark">#065A82</Color>
             <Color x:Key="Secondary">#278F65</Color>
 
             <!--  Other Colors  -->

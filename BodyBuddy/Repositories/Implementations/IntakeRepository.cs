@@ -28,7 +28,7 @@ namespace BodyBuddy.Repositories.Implementations
                     .Where(x => x.Date == currentDateTimestamp)
                     .FirstOrDefaultAsync();
 
-                if (existingIntake != null) 
+                if (existingIntake != null)
                     return existingIntake;
 
 
@@ -68,6 +68,23 @@ namespace BodyBuddy.Repositories.Implementations
         public async Task SaveChangesAsync(IntakeModel intakeDetails)
         {
             await _context.UpdateAsync(intakeDetails);
+        }
+
+        public async Task<IntakeModel> GetIntakeForDateAsync(int dateTimeUTC)
+        {
+            try
+            {
+                var Intake = await _context.Table<IntakeModel>()
+                    .Where(x => x.Date == dateTimeUTC)
+                    .FirstOrDefaultAsync();
+
+                return Intake;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetIntakeForDateAsync: {ex}");
+                return new IntakeModel();
+            }
         }
     }
 }

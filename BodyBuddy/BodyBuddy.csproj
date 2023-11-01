@@ -76,6 +76,7 @@
 		<None Remove="Resources\Images\Icons\pencil.svg" />
 		<None Remove="Resources\Images\Icons\plus_circle.svg" />
 		<None Remove="Resources\Images\Icons\previous_circle.svg" />
+		<None Remove="Resources\Images\Icons\profile_circle.svg" />
 		<None Remove="Resources\Images\Icons\share_white.svg" />
 		<None Remove="Resources\Images\Icons\trashcan_white.svg" />
 		<None Remove="Resources\Images\Icons\water_glass.svg" />
@@ -85,6 +86,7 @@
 		<None Remove="Resources\Images\pencil.svg" />
 		<None Remove="Resources\Images\plus_sign.svg" />
 		<None Remove="Resources\Images\trashcan.svg" />
+		<None Remove="Resources\Images\profile-circle.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -176,6 +178,7 @@
 		<MauiImage Include="Resources\Images\Icons\google.svg" />
 		<MauiImage Include="Resources\Images\Icons\home.svg" />
 		<MauiImage Include="Resources\Images\Icons\knifeandfork.svg" />
+		<MauiImage Include="Resources\Images\Icons\profile_circle.svg" />
 		<MauiImage Include="Resources\Images\Icons\profile.svg" />
 		<MauiImage Include="Resources\Images\Icons\questionmark.svg" />
 		<MauiImage Include="Resources\Images\Icons\list.svg" />

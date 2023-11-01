@@ -23,7 +23,12 @@ namespace BodyBuddy.Services.Implementations
             return _mapper.MapToDto(await _repo.GetIntakeAsync());
         }
 
-        public async Task SaveChangesAsync(IntakeDto intakeDetails)
+		public async Task<IntakeDto> GetIntakeForDateAsync(int dateTimeUTC)
+		{
+			return _mapper.MapToDto(await _repo.GetIntakeForDateAsync(dateTimeUTC));
+		}
+
+		public async Task SaveChangesAsync(IntakeDto intakeDetails)
         {
             await _repo.SaveChangesAsync(_mapper.MapToDatabase(intakeDetails));
         }

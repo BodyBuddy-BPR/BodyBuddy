@@ -11,191 +11,411 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <!--  Other resources  -->
             <converters:BooleanInvertConverter x:Key="BooleanInvertConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid Margin="20" RowSpacing="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <Grid RowDefinitions="47.5*, 5*, 47.5*">
 
-        <Label
+        <!--  Profile Statistics Holder  -->
+        <Border
             Grid.Row="0"
-            FontAttributes="Bold"
-            FontSize="28"
-            HorizontalOptions="Center"
-            Style="{StaticResource TitleLabel}"
-            Text="Your Profile"
-            TextColor="{StaticResource LightText}" />
+            Margin="20"
+            BackgroundColor="{StaticResource Secondary}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="25,25,25,25" />
+            </Border.StrokeShape>
+            <Grid Margin="6" RowDefinitions="60*,40*">
+                <Ellipse
+                    Fill="#D9D9D9"
+                    HeightRequest="100"
+                    VerticalOptions="Start"
+                    WidthRequest="100" />
+                <Image
+                    HeightRequest="100"
+                    Source="profile_circle.png"
+                    VerticalOptions="Start"
+                    WidthRequest="100" />
+                <Label
+                    Grid.Row="0"
+                    Margin="20"
+                    HorizontalOptions="Center"
+                    Style="{StaticResource TitleLabel}"
+                    Text="{Binding StartupTestDto.Name}"
+                    VerticalOptions="End" />
+                <Grid
+                    Grid.Row="1"
+                    ColumnDefinitions="*,*,*"
+                    RowDefinitions="20*,80*">
+                    <Label
+                        Grid.Row="0"
+                        FontAttributes="Bold"
+                        HorizontalOptions="CenterAndExpand"
+                        Style="{StaticResource MediumLabel}"
+                        Text="Weight"
+                        TextColor="White" />
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        HorizontalOptions="CenterAndExpand"
+                        Style="{StaticResource MediumLabel}"
+                        Text="Height"
+                        TextColor="White" />
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        FontAttributes="Bold"
+                        HorizontalOptions="CenterAndExpand"
+                        Style="{StaticResource MediumLabel}"
+                        Text="BMI"
+                        TextColor="White" />
+                    <Label
+                        Grid.Row="1"
+                        HorizontalOptions="CenterAndExpand"
+                        Style="{StaticResource MediumLabel}"
+                        Text="{Binding StartupTestDto.Weight, StringFormat='{0} kg'}"
+                        TextColor="White"
+                        VerticalOptions="Start" />
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        HorizontalOptions="Center"
+                        Style="{StaticResource MediumLabel}"
+                        Text="{Binding StartupTestDto.Height, StringFormat='{0} cm'}"
+                        TextColor="White"
+                        VerticalOptions="Start" />
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        HorizontalOptions="CenterAndExpand"
+                        Style="{StaticResource MediumLabel}"
+                        Text="{Binding BMI}"
+                        TextColor="White"
+                        VerticalOptions="Start" />
+                </Grid>
+            </Grid>
+        </Border>
 
-        <Grid Grid.Row="1" RowSpacing="15">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <Label
-                Grid.Row="0"
-                Grid.Column="0"
-                HorizontalTextAlignment="Start"
-                Style="{StaticResource MediumLabel}"
-                Text="Name:"
-                TextColor="{StaticResource LightText}"
-                VerticalTextAlignment="Center" />
-            <Label
-                Grid.Row="0"
-                Grid.Column="1"
-                HorizontalTextAlignment="Start"
-                Style="{StaticResource MediumLabel}"
-                Text="{Binding StartupTestDto.Name}"
-                TextColor="{StaticResource LightText}"
-                VerticalTextAlignment="Center" />
-
-            <Label
-                Grid.Row="1"
-                Grid.Column="0"
-                HorizontalTextAlignment="Start"
-                Style="{StaticResource MediumLabel}"
-                Text="Gender:"
-                TextColor="{StaticResource LightText}"
-                VerticalTextAlignment="Center" />
-            <Label
-                Grid.Row="1"
-                Grid.Column="1"
-                HorizontalTextAlignment="Start"
-                Style="{StaticResource MediumLabel}"
-                Text="{Binding StartupTestDto.Gender}"
-                TextColor="{StaticResource LightText}"
-                VerticalTextAlignment="Center" />
-
-            <Label
-                Grid.Row="2"
-                Grid.Column="0"
-                HorizontalTextAlignment="Start"
-                Style="{StaticResource MediumLabel}"
-                Text="Weight:"
-                TextColor="{StaticResource LightText}"
-                VerticalTextAlignment="Center" />
-            <Label
-                Grid.Row="2"
-                Grid.Column="1"
-                HorizontalTextAlignment="Start"
-                Style="{StaticResource MediumLabel}"
-                Text="{Binding StartupTestDto.Weight, StringFormat='{0} kg'}"
-                TextColor="{StaticResource LightText}"
-                VerticalTextAlignment="Center" />
-
-            <Label
-                Grid.Row="3"
-                Grid.Column="0"
-                HorizontalTextAlignment="Start"
-                Style="{StaticResource MediumLabel}"
-                Text="Height:"
-                TextColor="{StaticResource LightText}"
-                VerticalTextAlignment="Center" />
-            <Label
-                Grid.Row="3"
-                Grid.Column="1"
-                HorizontalTextAlignment="Start"
-                Style="{StaticResource MediumLabel}"
-                Text="{Binding StartupTestDto.Height, StringFormat='{0} cm'}"
-                TextColor="{StaticResource LightText}"
-                VerticalTextAlignment="Center" />
-
-            <Label
-                Grid.Row="4"
-                Grid.Column="0"
-                HorizontalTextAlignment="Start"
-                Style="{StaticResource MediumLabel}"
-                Text="Birthday:"
-                TextColor="{StaticResource LightText}"
-                VerticalTextAlignment="Center" />
-            <Label
-                Grid.Row="4"
-                Grid.Column="1"
-                HorizontalTextAlignment="Start"
-                Style="{StaticResource MediumLabel}"
-                Text="{Binding StartupTestDto.Birthday}"
-                TextColor="{StaticResource LightText}"
-                VerticalTextAlignment="Center" />
-
-            <Label
-                Grid.Row="5"
-                Grid.Column="0"
-                HorizontalTextAlignment="Start"
-                Style="{StaticResource MediumLabel}"
-                Text="Activity Level:"
-                TextColor="{StaticResource LightText}"
-                VerticalTextAlignment="Center" />
-            <Label
-                Grid.Row="5"
-                Grid.Column="1"
-                HorizontalTextAlignment="Start"
-                Style="{StaticResource MediumLabel}"
-                Text="{Binding StartupTestDto.ActiveAmount}"
-                TextColor="{StaticResource LightText}"
-                VerticalTextAlignment="Center" />
-
-            <Label
-                Grid.Row="6"
-                Grid.Column="0"
-                HorizontalTextAlignment="Start"
-                Style="{StaticResource MediumLabel}"
-                Text="Passive Calorie Burn:"
-                TextColor="{StaticResource LightText}"
-                VerticalTextAlignment="Center" />
-            <Label
-                Grid.Row="6"
-                Grid.Column="1"
-                HorizontalTextAlignment="Start"
-                Style="{StaticResource MediumLabel}"
-                Text="{Binding StartupTestDto.PassiveCalorieBurn}"
-                TextColor="{StaticResource LightText}"
-                VerticalTextAlignment="Center" />
-
-            <Label
-                Grid.Row="7"
-                Grid.Column="0"
-                HorizontalTextAlignment="Start"
-                Style="{StaticResource MediumLabel}"
-                Text="Workout Goal:"
-                TextColor="{StaticResource LightText}"
-                VerticalTextAlignment="Center" />
-            <Label
-                Grid.Row="7"
-                Grid.Column="1"
-                HorizontalTextAlignment="Start"
-                Style="{StaticResource MediumLabel}"
-                Text="{Binding StartupTestDto.Goal}"
-                TextColor="{StaticResource LightText}"
-                VerticalTextAlignment="Center" />
-
-
+        <!--  PCB Ellipse  -->
+        <Grid
+            Grid.Row="0"
+            Margin="30,0,0,-40"
+            HorizontalOptions="Start"
+            VerticalOptions="End">
+            <Ellipse
+                Fill="#B0D478"
+                HeightRequest="110"
+                Stroke="White"
+                StrokeThickness="3"
+                WidthRequest="110" />
+            <Grid
+                HorizontalOptions="Center"
+                RowDefinitions="*,*"
+                VerticalOptions="Center">
+                <Label
+                    Grid.Row="0"
+                    FontAttributes="Bold"
+                    Style="{StaticResource LargeLabel}"
+                    Text="PCB"
+                    TextColor="White" />
+                <Label
+                    Grid.Row="1"
+                    FontAttributes="None"
+                    Style="{StaticResource LargeLabel}"
+                    Text="{Binding StartupTestDto.PassiveCalorieBurn}"
+                    TextColor="White" />
+            </Grid>
         </Grid>
+
+        <!--  Goal Ellipse  -->
+        <Grid
+            Grid.Row="2"
+            Margin="0,-40,30,0"
+            HorizontalOptions="End"
+            VerticalOptions="Start"
+            ZIndex="1">
+            <Ellipse
+                Fill="{StaticResource PrimaryDark}"
+                HeightRequest="110"
+                Stroke="White"
+                StrokeThickness="3"
+                WidthRequest="110" />
+            <Label
+                Grid.Row="1"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Style="{StaticResource LargeLabel}"
+                Text="{Binding StartupTestDto.Goal}"
+                TextColor="White"
+                VerticalOptions="Center"
+                WidthRequest="110" />
+        </Grid>
+
+        <!--  Activities Holder  -->
+        <Border
+            Grid.Row="2"
+            Margin="20"
+            BackgroundColor="{StaticResource Primary}"
+            ZIndex="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="25,25,25,25" />
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="75*,25*" RowDefinitions="*, *, *, *">
+                <Label
+                    Grid.Row="0"
+                    Margin="40,10"
+                    FontAttributes="Bold"
+                    FontSize="26"
+                    HorizontalOptions="Start"
+                    Style="{StaticResource TitleLabel}"
+                    Text="Activities"
+                    VerticalOptions="Start" />
+
+                <!--  Calorie stats  -->
+                <VerticalStackLayout
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="30,0">
+                    <HorizontalStackLayout>
+                        <Label
+                            Style="{StaticResource LargeLabel}"
+                            Text="{Binding UserIntakeForDate.CalorieCurrent}"
+                            TextColor="White" />
+                        <Label
+                            FontAttributes="None"
+                            Style="{StaticResource LargeLabel}"
+                            Text=" Kcal"
+                            TextColor="White" />
+                    </HorizontalStackLayout>
+                    <Label
+                        FontAttributes="None"
+                        Style="{StaticResource LargeLabel}"
+                        Text="Calories Consumed"
+                        TextColor="White" />
+                </VerticalStackLayout>
+
+                <!--  Water stats  -->
+                <VerticalStackLayout
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Margin="30,0">
+                    <HorizontalStackLayout>
+                        <Label
+                            Style="{StaticResource LargeLabel}"
+                            Text="{Binding UserIntakeForDate.WaterCurrent}"
+                            TextColor="White" />
+                        <Label
+                            FontAttributes="None"
+                            Style="{StaticResource LargeLabel}"
+                            Text=" ml"
+                            TextColor="White" />
+                    </HorizontalStackLayout>
+                    <Label
+                        FontAttributes="None"
+                        Style="{StaticResource LargeLabel}"
+                        Text="Water Consumed"
+                        TextColor="White" />
+                </VerticalStackLayout>
+
+                <!--  Apple and Glass images  -->
+                <Image
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    HeightRequest="40"
+                    Source="apple.png"
+                    WidthRequest="40" />
+                <Image
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    HeightRequest="40"
+                    Source="water_glass.png"
+                    WidthRequest="40" />
+
+                <!--  Weekday buttons  -->
+                <HorizontalStackLayout
+                    Grid.Row="3"
+                    Grid.ColumnSpan="2"
+                    Margin="0,0,0,20"
+                    HorizontalOptions="Center"
+                    VerticalOptions="End">
+                    <VerticalStackLayout VerticalOptions="Start">
+                        <Button
+                            BackgroundColor="{StaticResource Primary}"
+                            Clicked="WeekdayButtonClicked"
+                            CommandParameter="1"
+                            Text="M"
+                            TextColor="White"
+                            VerticalOptions="Start">
+                            <Button.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsMondaySelected}"
+                                    TargetType="Button"
+                                    Value="true">
+                                    <Setter Property="FontAttributes" Value="Bold" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                        <Ellipse
+                            Fill="White"
+                            HeightRequest="5"
+                            IsVisible="{Binding IsMondaySelected}"
+                            Stroke="White"
+                            WidthRequest="5" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout VerticalOptions="Start">
+                        <Button
+                            BackgroundColor="{StaticResource Primary}"
+                            Clicked="WeekdayButtonClicked"
+                            CommandParameter="2"
+                            Text="T"
+                            TextColor="White">
+                            <Button.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsTuesdaySelected}"
+                                    TargetType="Button"
+                                    Value="true">
+                                    <Setter Property="FontAttributes" Value="Bold" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                        <Ellipse
+                            Fill="White"
+                            HeightRequest="5"
+                            IsVisible="{Binding IsTuesdaySelected}"
+                            Stroke="White"
+                            WidthRequest="5" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout VerticalOptions="Start">
+                        <Button
+                            BackgroundColor="{StaticResource Primary}"
+                            Clicked="WeekdayButtonClicked"
+                            CommandParameter="3"
+                            Text="W"
+                            TextColor="White">
+                            <Button.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsWednesdaySelected}"
+                                    TargetType="Button"
+                                    Value="true">
+                                    <Setter Property="FontAttributes" Value="Bold" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                        <Ellipse
+                            Fill="White"
+                            HeightRequest="5"
+                            IsVisible="{Binding IsWednesdaySelected}"
+                            Stroke="White"
+                            WidthRequest="5" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout VerticalOptions="Start">
+                        <Button
+                            BackgroundColor="{StaticResource Primary}"
+                            Clicked="WeekdayButtonClicked"
+                            CommandParameter="4"
+                            Text="T"
+                            TextColor="White">
+                            <Button.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsThursdaySelected}"
+                                    TargetType="Button"
+                                    Value="true">
+                                    <Setter Property="FontAttributes" Value="Bold" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                        <Ellipse
+                            Fill="White"
+                            HeightRequest="5"
+                            IsVisible="{Binding IsThursdaySelected}"
+                            Stroke="White"
+                            WidthRequest="5" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout VerticalOptions="Start">
+                        <Button
+                            BackgroundColor="{StaticResource Primary}"
+                            Clicked="WeekdayButtonClicked"
+                            CommandParameter="5"
+                            Text="F"
+                            TextColor="White">
+                            <Button.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsFridaySelected}"
+                                    TargetType="Button"
+                                    Value="true">
+                                    <Setter Property="FontAttributes" Value="Bold" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                        <Ellipse
+                            Fill="White"
+                            HeightRequest="5"
+                            IsVisible="{Binding IsFridaySelected}"
+                            Stroke="White"
+                            WidthRequest="5" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout VerticalOptions="Start">
+                        <Button
+                            BackgroundColor="{StaticResource Primary}"
+                            Clicked="WeekdayButtonClicked"
+                            CommandParameter="6"
+                            Text="S"
+                            TextColor="White">
+                            <Button.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsSaturdaySelected}"
+                                    TargetType="Button"
+                                    Value="true">
+                                    <Setter Property="FontAttributes" Value="Bold" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                        <Ellipse
+                            Fill="White"
+                            HeightRequest="5"
+                            IsVisible="{Binding IsSaturdaySelected}"
+                            Stroke="White"
+                            WidthRequest="5" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout VerticalOptions="Start">
+                        <Button
+                            BackgroundColor="{StaticResource Primary}"
+                            Clicked="WeekdayButtonClicked"
+                            CommandParameter="7"
+                            Text="S"
+                            TextColor="White">
+                            <Button.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsSundaySelected}"
+                                    TargetType="Button"
+                                    Value="true">
+                                    <Setter Property="FontAttributes" Value="Bold" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                        <Ellipse
+                            Fill="White"
+                            HeightRequest="5"
+                            IsVisible="{Binding IsSundaySelected}"
+                            Stroke="White"
+                            WidthRequest="5" />
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+            </Grid>
+        </Border>
+
+        <!--  Login Button  -->
         <Button
             x:Name="LoginBtn"
-            Grid.Row="2"
+            Grid.Row="1"
+            Padding="5"
             Clicked="LoginOrOut_Clicked"
             Style="{StaticResource BaseButton}"
-            Text=""
+            Text="Login"
             TextColor="#212121"
             VerticalOptions="EndAndExpand"
             WidthRequest="140" />
-
     </Grid>
-
 </ContentPage>
