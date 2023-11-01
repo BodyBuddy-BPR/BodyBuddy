@@ -113,9 +113,6 @@ namespace BodyBuddy.ViewModels.Profile
 			int dayOfWeek = (int)DateTime.UtcNow.DayOfWeek;
 
 			currentDayOfWeek = dayOfWeek;
-        private async Task MakeToast(string displayText)
-        {
-            CancellationTokenSource cancellationTokenSource = new();
 
 			CurrentSelectedDate = currentDayOfWeek;
 
