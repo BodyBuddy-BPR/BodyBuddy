@@ -70,6 +70,9 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             }
         }
 
+
+
+
         #endregion
     }
 }
