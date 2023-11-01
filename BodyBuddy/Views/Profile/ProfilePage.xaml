@@ -11,7 +11,6 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <!--  Other resources  -->
             <converters:BooleanInvertConverter x:Key="BooleanInvertConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -75,7 +74,7 @@
                         Grid.Row="1"
                         HorizontalOptions="CenterAndExpand"
                         Style="{StaticResource MediumLabel}"
-                        Text="{Binding StartupTestDto.Weight}"
+                        Text="{Binding StartupTestDto.Weight, StringFormat='{0} kg'}"
                         TextColor="White"
                         VerticalOptions="Start" />
                     <Label
@@ -83,7 +82,7 @@
                         Grid.Column="1"
                         HorizontalOptions="Center"
                         Style="{StaticResource MediumLabel}"
-                        Text="{Binding StartupTestDto.Height}"
+                        Text="{Binding StartupTestDto.Height, StringFormat='{0} cm'}"
                         TextColor="White"
                         VerticalOptions="Start" />
                     <Label
@@ -407,6 +406,7 @@
             </Grid>
         </Border>
 
+        <!--  Login Button  -->
         <Button
             x:Name="LoginBtn"
             Grid.Row="1"
@@ -418,6 +418,4 @@
             VerticalOptions="EndAndExpand"
             WidthRequest="140" />
     </Grid>
-
-
 </ContentPage>

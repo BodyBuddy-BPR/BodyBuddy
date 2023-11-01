@@ -24,7 +24,8 @@ namespace BodyBuddy.ViewModels.Profile
         private IUserAuthenticationService _userAuthenticationService;
 
 		private static int secondsInADay = 86400;
-		private int currentDate;
+		private int currentDayOfWeek;
+		private int currentAndSelectedDayDifference;
 
 		#region ObservableProperties
 
@@ -110,9 +111,9 @@ namespace BodyBuddy.ViewModels.Profile
 		{
 			int dayOfWeek = (int)DateTime.UtcNow.DayOfWeek;
 
-			currentDate = dayOfWeek;
+			currentDayOfWeek = dayOfWeek;
 
-			CurrentSelectedDate = currentDate;
+			CurrentSelectedDate = currentDayOfWeek;
 
 			SetSelectedWeekday();
 		}
@@ -152,8 +153,9 @@ namespace BodyBuddy.ViewModels.Profile
         {
 			CurrentSelectedDate = buttonNumber;
             SetSelectedWeekday();
-            int dateDifference = CurrentSelectedDate - currentDate;
-			UserIntakeForDate = await _intakeService.GetIntakeForDateAsync((int)(DateTime.UtcNow.Date.Subtract((new DateTime(1970, 1, 1))).TotalSeconds) - (dateDifference * 86400));
+            currentAndSelectedDayDifference = CurrentSelectedDate - currentDayOfWeek;
+			int currentDateTimestamp = (int)(DateTime.UtcNow.Date.Subtract((new DateTime(1970, 1, 1))).TotalSeconds);
+			UserIntakeForDate = await _intakeService.GetIntakeForDateAsync(currentDateTimestamp - (currentAndSelectedDayDifference * 86400));
 		}
 		#endregion
 	}
