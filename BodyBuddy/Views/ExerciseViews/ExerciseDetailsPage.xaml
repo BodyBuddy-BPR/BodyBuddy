@@ -23,10 +23,6 @@
                 BackgroundColor="{StaticResource Primary}"
                 HorizontalOptions="Fill"
                 VerticalOptions="Fill" />
-            <!--<Image
-                Aspect="AspectFill"
-                HeightRequest="260"
-                Source="{Binding ExerciseDetails.Images, Converter={StaticResource ImageHelper}}" />-->
             <CarouselView HeightRequest="260" ItemsSource="{Binding ExerciseImages}">
                 <CarouselView.ItemTemplate>
                     <DataTemplate>
