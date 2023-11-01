@@ -20,16 +20,17 @@ namespace UnitTest.ViewModels.StartupTest
             target = new StartupTestViewModel(_serviceMock.Object);
         }
 
-        [TestCase(0, true, false, false, false, false, false, false, false)]
-        [TestCase(1, false, true, false, false, false, false, false, false)]
-        [TestCase(2, false, false, true, false, false, false, false, false)]
-        [TestCase(3, false, false, false, true, false, false, false, false)]
-        [TestCase(4, false, false, false, false, true, false, false, false)]
-        [TestCase(5, false, false, false, false, false, true, false, false)]
-        [TestCase(6, false, false, false, false, false, false, true, false)]
-        [TestCase(7, false, false, false, false, false, false, false, true)]
-        [TestCase(8, false, false, false, false, false, false, false, false)]
-        public void Test_StateNext_Progression_AndPropertyVisibility(int stateNumber, bool nameVisible, bool genderVisible, bool weightVisible, bool heightVisible,
+        [TestCase(0, true, false, false, false, false, false, false, false, false)]
+        [TestCase(1, false, true, false, false, false, false, false, false, false)]
+        [TestCase(2, false, false, true, false, false, false, false, false, false)]
+        [TestCase(3, false, false, false, true, false, false, false, false, false)]
+        [TestCase(4, false, false, false, false, true, false, false, false, false)]
+        [TestCase(5, false, false, false, false, false, true, false, false, false)]
+        [TestCase(6, false, false, false, false, false, false, true, false, false)]
+        [TestCase(7, false, false, false, false, false, false, false, true, false)]
+        [TestCase(8, false, false, false, false, false, false, false, false, true)]
+        [TestCase(9, false, false, false, false, false, false, false, false, false)]
+        public void Test_StateNext_Progression_AndPropertyVisibility(int stateNumber, bool welcomeVisible, bool nameVisible, bool genderVisible, bool weightVisible, bool heightVisible,
             bool birthdayVisible, bool activeVisible, bool passiveCalorieVisible, bool goalVisible)
         {
             // Arrange
@@ -39,6 +40,7 @@ namespace UnitTest.ViewModels.StartupTest
             GoToState(stateNumber);
 
             // Assert
+            Assert.That(target.IsWelcomeVisible, Is.EqualTo(welcomeVisible));
             Assert.That(target.IsNameVisible, Is.EqualTo(nameVisible));
             Assert.That(target.IsGenderVisible, Is.EqualTo(genderVisible));
             Assert.That(target.IsWeightVisible, Is.EqualTo(weightVisible));
@@ -49,15 +51,16 @@ namespace UnitTest.ViewModels.StartupTest
             Assert.That(target.IsGoalVisible, Is.EqualTo(goalVisible));
         }
 
-        [TestCase(0, "What is your name?")]
-        [TestCase(1, "What is your gender?")]
-        [TestCase(2, "What is your weight?")]
-        [TestCase(3, "When is your height?")]
-        [TestCase(4, "When is your birthday?")]
-        [TestCase(5, "How active are you?")]
-        [TestCase(6, "What is your passive calorie burn?")]
-        [TestCase(7, "What are your workout goals?")]
-        [TestCase(8, "You're done!")]
+        [TestCase(0, "")]
+        [TestCase(1, "What is your name?")]
+        [TestCase(2, "What is your gender?")]
+        [TestCase(3, "What do you weigh?")]
+        [TestCase(4, "How tall are you?")]
+        [TestCase(5, "When is your birthday?")]
+        [TestCase(6, "How active are you?")]
+        [TestCase(7, "Passive Calorie Burn")]
+        [TestCase(8, "What are your goals?")]
+        [TestCase(9, "You're all set!")]
         public void ProgressingThroughStates_UpdatesQuestionnaireTextCorrectly(int stateNumber, string expectedQuestionnaireText)
         {
             // Arrange
@@ -78,7 +81,8 @@ namespace UnitTest.ViewModels.StartupTest
         [TestCase(5,false)]
         [TestCase(6,false)]
         [TestCase(7,false)]
-        [TestCase(8,true)]
+        [TestCase(8,false)]
+        [TestCase(9,true)]
         public void Verify_SubmitIsVisible_OnlyOnDoneState(int stateNumber, bool expectedSubmitVisible)
         {
             // Arrange

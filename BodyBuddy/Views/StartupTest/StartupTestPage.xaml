@@ -40,7 +40,7 @@
                 IsVisible="{Binding IsWelcomeVisible}"
                 WidthRequest="250" />
             <Label
-                Margin="20,70,0,0"
+                Margin="20,60,0,0"
                 IsVisible="{Binding IsWelcomeVisible}"
                 Style="{StaticResource LargeLabel}"
                 Text="BodyBuddy is your personal fitness assistant that will help you reach you goals."
@@ -58,7 +58,7 @@
                 IsVisible="{Binding IsWelcomeVisible}"
                 WidthRequest="250" />
             <Label
-                Margin="30,60,0,0"
+                Margin="20,60,0,0"
                 FontSize="30"
                 IsVisible="{Binding IsWelcomeVisible}"
                 Style="{StaticResource LargeLabel}"
@@ -116,6 +116,7 @@
                         FontFamily="Montserrat"
                         GroupName="GenderGroup"
                         HorizontalOptions="Center"
+                        TextColor="White"
                         WidthRequest="180">
                         <RadioButton.Behaviors>
                             <local:RadioButtonCheckChangedBehavior Command="{Binding Source={x:Reference GenderListView}, Path=BindingContext.RadioButtonCheckedCommand}" />
@@ -143,7 +144,7 @@
                         TargetType="Entry"
                         Value="0">
                         <Setter Property="Text" Value="{x:Null}" />
-                        <Setter Property="WidthRequest" Value="140" />
+                        <Setter Property="WidthRequest" Value="160" />
                     </DataTrigger>
                 </Entry.Triggers>
             </customControls:CustomEntry>
@@ -173,7 +174,7 @@
                         TargetType="Entry"
                         Value="0">
                         <Setter Property="Text" Value="{x:Null}" />
-                        <Setter Property="WidthRequest" Value="140" />
+                        <Setter Property="WidthRequest" Value="160" />
                     </DataTrigger>
                 </Entry.Triggers>
             </customControls:CustomEntry>
@@ -195,6 +196,7 @@
             IsVisible="{Binding IsBirthdayVisible}"
             MaximumDate="{Binding MaxDate}"
             MinimumDate="{Binding MinDate}"
+            TextColor="White"
             VerticalOptions="Center" />
 
         <!--  Active  -->
@@ -212,6 +214,7 @@
                         FontFamily="Montserrat"
                         GroupName="GenderGroup"
                         HorizontalOptions="Center"
+                        TextColor="White"
                         WidthRequest="140">
                         <RadioButton.Behaviors>
                             <local:RadioButtonCheckChangedBehavior Command="{Binding Source={x:Reference ActiveListView}, Path=BindingContext.RadioButtonCheckedCommand}" />
@@ -292,7 +295,8 @@
                         FontFamily="Montserrat"
                         GroupName="GoalGroup"
                         HorizontalOptions="Center"
-                        WidthRequest="125">
+                        TextColor="White"
+                        WidthRequest="150">
                         <RadioButton.Behaviors>
                             <local:RadioButtonCheckChangedBehavior Command="{Binding Source={x:Reference GoalListView}, Path=BindingContext.RadioButtonCheckedCommand}" />
                         </RadioButton.Behaviors>
