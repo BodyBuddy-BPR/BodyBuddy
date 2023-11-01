@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Moq;
 using BodyBuddy.Models;
 using BodyBuddy.Mappers;
+using BodyBuddy.Authentication;
 
 namespace UnitTest.ViewModels.ProfileViewModels
 {
