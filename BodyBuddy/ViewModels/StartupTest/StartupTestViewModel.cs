@@ -15,12 +15,13 @@ public partial class StartupTestViewModel : BaseViewModel
 {
     #region ObservableProperties
     //IsVisible
+    [ObservableProperty] private bool _isNameVisible, _isGenderVisible, _isWeightVisible, _isHeightVisible;
+
     [ObservableProperty]
-    private bool _isNameVisible, _isGenderVisible, _isWeightVisible, _isHeightVisible, _isNextButtonVisible = true;
+    private bool _isBirthdayVisible, _isActiveVisible, _isPassiveCalorieBurnVisible, _isGoalVisible;
+
     [ObservableProperty]
-    private bool _isBirthdayVisible, _isActiveVisible, _isPassiveCalorieBurnVisible, _isGoalVisible, _isWelcomeVisible;
-    [ObservableProperty]
-    private bool _submitDataIsVisible, _nextIsEnabled, _backIsVisible = false;
+    private bool _submitDataIsVisible, _nextIsEnabled, _backIsVisible, _isNextButtonVisible, _isWelcomeVisible;
 
     //Saved Properties
     [ObservableProperty] private StartupTestDto _startupTestDto;
@@ -28,8 +29,9 @@ public partial class StartupTestViewModel : BaseViewModel
     //Others
     [ObservableProperty]
     private string _questionnaireText;
-    [ObservableProperty]
-    private double _startupTestProgress;
+
+    //-1 used to avoid Welcome being a part of the progress
+    public double StartupTestProgress => (int)CurrentState > 1 ? ((double)CurrentState - 1) / 8 : 0;
 
     public DateTime MinDate { get; } = new(1914, 7, 28);
     public DateTime MaxDate { get; } = DateTime.Now;
@@ -117,6 +119,7 @@ public partial class StartupTestViewModel : BaseViewModel
         CurrentState++;
         SetStateProperties();
         UpdateVisibility();
+        OnPropertyChanged(nameof(StartupTestProgress));
     }
 
     private void StatePrevious()
@@ -127,6 +130,7 @@ public partial class StartupTestViewModel : BaseViewModel
         CurrentState--;
         SetStateProperties();
         UpdateVisibility();
+        OnPropertyChanged(nameof(StartupTestProgress));
     }
 
     private void UpdateVisibility()
@@ -145,9 +149,12 @@ public partial class StartupTestViewModel : BaseViewModel
 
     private void UpdateActionButtonsVisibility()
     {
+        IsNextButtonVisible = CurrentState != StartupTestStates.Done;
         BackIsVisible = CurrentState != StartupTestStates.Welcome;
+
         NextIsEnabled = CurrentState != StartupTestStates.Done && currentStateDone();
         SubmitDataIsVisible = CurrentState == StartupTestStates.Done && currentStateDone();
+
     }
 
     private void SetStateProperties()
@@ -156,61 +163,44 @@ public partial class StartupTestViewModel : BaseViewModel
         {
             case StartupTestStates.Welcome:
                 QuestionnaireText = "";
-                StartupTestProgress = (double)0 / 8;
                 currentStateDone = () => true;
-                BackIsVisible = false;
-                IsWelcomeVisible = true;
                 break;
             case StartupTestStates.NameEntry:
                 QuestionnaireText = "What is your name?";
-                StartupTestProgress = (double)0 / 8;
-                BackIsVisible = true;
-                IsWelcomeVisible = false;
                 currentStateDone = () => !string.IsNullOrEmpty(StartupTestDto.Name);
                 break;
             case StartupTestStates.GenderSelection:
                 QuestionnaireText = "What is your gender?";
-                StartupTestProgress = (double)1 / 8;
                 currentStateDone = () => !string.IsNullOrEmpty(StartupTestDto.Gender);
                 break;
             case StartupTestStates.WeightEntry:
                 QuestionnaireText = "What do you weigh?";
-                StartupTestProgress = (double)2 / 8;
                 currentStateDone = () => StartupTestDto.Weight > 0;
                 break;
             case StartupTestStates.HeightEntry:
                 QuestionnaireText = "How tall are you?";
-                StartupTestProgress = (double)3 / 8;
                 currentStateDone = () => StartupTestDto.Height > 0;
                 break;
             case StartupTestStates.BirthdaySelection:
                 QuestionnaireText = "When is your birthday?";
-                StartupTestProgress = (double)4 / 8;
                 currentStateDone = () => true;
                 break;
             case StartupTestStates.ActivitySelection:
                 QuestionnaireText = "How active are you?";
-                StartupTestProgress = (double)5 / 8;
                 currentStateDone = () => !string.IsNullOrEmpty(StartupTestDto.ActiveAmount);
                 break;
             case StartupTestStates.PassiveCalorieBurnEntry:
                 QuestionnaireText = "Passive Calorie Burn";
                 StartupTestDto.PassiveCalorieBurn = CalculatePCB();
-                StartupTestProgress = (double)6 / 8;
                 currentStateDone = () => StartupTestDto.PassiveCalorieBurn > 0;
                 break;
             case StartupTestStates.GoalSelection:
                 QuestionnaireText = "What are your goals?";
-                StartupTestProgress = (double)7 / 8;
                 currentStateDone = () => !string.IsNullOrEmpty(StartupTestDto.Goal);
-                IsNextButtonVisible = true;
                 break;
             case StartupTestStates.Done:
                 QuestionnaireText = "You're all set!";
-                StartupTestProgress = (double)8 / 8;
                 currentStateDone = () => true;
-                SubmitDataIsVisible = true;
-                IsNextButtonVisible = false;
                 break;
             default:
                 throw new InvalidOperationException($"Unexpected state: {CurrentState}");
@@ -282,20 +272,13 @@ public partial class StartupTestViewModel : BaseViewModel
             pcb = (int)(66.0 + (13.75 * StartupTestDto.Weight) + (5.003 * StartupTestDto.Height) - (6.755 * age));
         }
 
-        double activityFactor = 1.2;
-
-        switch (StartupTestDto.ActiveAmount)
+        double activityFactor = StartupTestDto.ActiveAmount switch
         {
-            case "A Little Active":
-                activityFactor = 1.375;
-                break;
-            case "Active":
-                activityFactor = 1.55;
-                break;
-            case "Very Active":
-                activityFactor = 1.725;
-                break;
-        }
+            "A Little Active" => 1.375,
+            "Active" => 1.55,
+            "Very Active" => 1.725,
+            _ => 1.2
+        };
 
         return (int)(pcb * activityFactor);
     }
