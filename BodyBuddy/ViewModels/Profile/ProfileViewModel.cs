@@ -25,8 +25,8 @@ namespace BodyBuddy.ViewModels.Profile
         private readonly IUserAuthenticationService _userAuthenticationService;
 
 		private static int secondsInADay = 86400;
-		private int currentDayOfWeek;
-		private int currentAndSelectedDayDifference;
+		public int currentDayOfWeek;
+		public int currentAndSelectedDayDifference;
 
 		#region ObservableProperties
 

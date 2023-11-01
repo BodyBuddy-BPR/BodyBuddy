@@ -39,14 +39,14 @@ namespace UnitTest.ViewModels.ProfileViewModels
 		public async Task Test_That_Correct_CurrentSelectedDate_Is_Set_And_DateDifference_Is_Correct_Based_On_Button_Clicked(int buttonNumber)
 		{
 			// Arrange
-			target.CurrentDayOfWeek = (int)DateTime.UtcNow.DayOfWeek;
+			target.currentDayOfWeek = (int)DateTime.UtcNow.DayOfWeek;
 
 			// Act
 			await target.WeekdayButtonClicked(buttonNumber);
 
 			// Assert
 			Assert.That(target.CurrentSelectedDate, Is.EqualTo(buttonNumber));
-			Assert.That(target.CurrentAndSelectedDayDifference, Is.EqualTo(target.CurrentSelectedDate - target.CurrentDayOfWeek));
+			Assert.That(target.currentAndSelectedDayDifference, Is.EqualTo(target.CurrentSelectedDate - target.currentDayOfWeek));
 		}
 
 	}
