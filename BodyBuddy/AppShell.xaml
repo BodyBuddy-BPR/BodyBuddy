@@ -3,6 +3,7 @@
     x:Class="BodyBuddy.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:chart="clr-namespace:BodyBuddy.Views"
     xmlns:exerciseViews="clr-namespace:BodyBuddy.Views.ExerciseViews"
     xmlns:helpers="clr-namespace:BodyBuddy.Helpers"
     xmlns:local="clr-namespace:BodyBuddy"
@@ -71,6 +72,11 @@
         <ShellContent
             Title="Startup"
             ContentTemplate="{DataTemplate startup:StartupTestPage}"
+            Icon="questionmark.png" />
+
+        <ShellContent
+            Title="Graphs"
+            ContentTemplate="{DataTemplate chart:ChartPage}"
             Icon="questionmark.png" />
     </TabBar>
 

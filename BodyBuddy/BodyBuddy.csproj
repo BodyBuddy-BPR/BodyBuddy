@@ -95,25 +95,29 @@
 
 	<ItemGroup>
 		<PackageReference Include="Camera.MAUI" Version="1.4.4" />
-		<PackageReference Include="CommunityToolkit.Maui" Version="5.2.0" />
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="6.0.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Imagekit" Version="4.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-		<PackageReference Include="Mopups" Version="1.1.1" />
+		<PackageReference Include="Mopups" Version="1.2.0" />
 		<PackageReference Include="PureWeen.Maui.FixesAndWorkarounds" Version="1.4.9" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
 		<PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
-		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.5" />
-		<PackageReference Include="supabase-csharp" Version="0.12.1" />
-		<PackageReference Include="Syncfusion.Licensing" Version="23.1.36" />
-		<PackageReference Include="Syncfusion.Maui.Inputs" Version="23.1.36" />
-		<PackageReference Include="Syncfusion.Maui.Popup" Version="23.1.36" />
-		<PackageReference Include="Syncfusion.Maui.ProgressBar" Version="23.1.36" />
+		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.6" />
+		<PackageReference Include="supabase-csharp" Version="0.13.6" />
+		<PackageReference Include="Syncfusion.Licensing" Version="23.1.43" />
+		<PackageReference Include="Syncfusion.Maui.Charts" Version="23.1.43" />
+		<PackageReference Include="Syncfusion.Maui.Inputs" Version="23.1.43" />
+		<PackageReference Include="Syncfusion.Maui.Popup" Version="23.1.43" />
+		<PackageReference Include="Syncfusion.Maui.ProgressBar" Version="23.1.43" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<MauiXaml Update="Views\Authentication\LoginPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\ChartPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\StartupTest\StartupTestPage.xaml">
 			<Generator>MSBuild:Compile</Generator>

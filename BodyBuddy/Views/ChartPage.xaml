@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BodyBuddy.Views.ChartPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+    xmlns:viewModels="clr-namespace:BodyBuddy.ViewModels"
+    Title="ChartPage">
+
+    <ContentPage.BindingContext>
+        <viewModels:ChartViewModel />
+    </ContentPage.BindingContext>
+
+    <chart:SfCartesianChart>
+        <chart:SfCartesianChart.XAxes>
+            <chart:DateTimeAxis />
+        </chart:SfCartesianChart.XAxes>
+
+        <chart:SfCartesianChart.YAxes>
+            <chart:NumericalAxis />
+        </chart:SfCartesianChart.YAxes>
+
+        <chart:SfCartesianChart.Series>
+            <chart:LineSeries
+                ItemsSource="{Binding Data}"
+                XBindingPath="XValue"
+                YBindingPath="YValue" />
+        </chart:SfCartesianChart.Series>
+    </chart:SfCartesianChart>
+
+</ContentPage>
