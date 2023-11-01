@@ -9,6 +9,7 @@
     xmlns:profile="clr-namespace:BodyBuddy.Views.Profile"
     xmlns:startup="clr-namespace:BodyBuddy.Views.StartupTest"
     xmlns:statisticsViews="clr-namespace:BodyBuddy.Views.StatisticsViews"
+    xmlns:userViews="clr-namespace:BodyBuddy.Views.User"
     xmlns:workoutViews="clr-namespace:BodyBuddy.Views.WorkoutViews"
     FlyoutBackgroundColor="{StaticResource NavigationBarColor}"
     Shell.FlyoutBehavior="Flyout">
@@ -37,6 +38,10 @@
 
         </ResourceDictionary>
     </Shell.Resources>
+
+
+    <!--<ShellContent Title="Friends" ContentTemplate="{DataTemplate userViews:FriendsPage}" />-->
+
 
     <TabBar>
         <ShellContent
@@ -71,6 +76,11 @@
         <ShellContent
             Title="Startup"
             ContentTemplate="{DataTemplate startup:StartupTestPage}"
+            Icon="questionmark.png" />
+
+        <ShellContent
+            Title="Friends"
+            ContentTemplate="{DataTemplate userViews:FriendsPage}"
             Icon="questionmark.png" />
     </TabBar>
 

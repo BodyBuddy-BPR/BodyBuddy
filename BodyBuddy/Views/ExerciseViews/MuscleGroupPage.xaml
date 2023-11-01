@@ -40,11 +40,7 @@
 
                     <Frame HeightRequest="70" Style="{StaticResource CardView}">
 
-                        <effectsView:SfEffectsView
-                            Padding="15,0"
-                            Style="{StaticResource CardRippleEffect}"
-                            TouchDownCommand="{Binding Source={RelativeSource AncestorType={x:Type viewModel:MuscleGroupViewModel}}, Path=GoToExercisesPageCommand}"
-                            TouchDownCommandParameter="{Binding .}">
+                        <effectsView:SfEffectsView Padding="15,0" Style="{StaticResource CardRippleEffect}">
                             <Label
                                 FontAttributes="Bold"
                                 FontSize="18"
@@ -52,6 +48,10 @@
                                 Style="{StaticResource MediumLabel}"
                                 Text="{Binding PrimaryMuscles}"
                                 VerticalOptions="Center" />
+
+                            <effectsView:SfEffectsView.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:MuscleGroupViewModel}}, Path=GoToExercisesPageCommand}" CommandParameter="{Binding .}" />
+                            </effectsView:SfEffectsView.GestureRecognizers>
 
                         </effectsView:SfEffectsView>
                     </Frame>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BodyBuddy.Views.User.FriendsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.User"
+    Title="FriendsPage"
+    x:DataType="viewModel:FriendsViewModel">
+
+
+    <VerticalStackLayout>
+        <Entry Text="{Binding SearchQuery}" />
+        <Button Command="{Binding AddNewFriendCommand}" Text="Add Friend" />
+    </VerticalStackLayout>
+
+
+</ContentPage>

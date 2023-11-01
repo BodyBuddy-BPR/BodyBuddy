@@ -148,6 +148,9 @@
 		<MauiXaml Update="Views\StatisticsViews\IntakePage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Views\User\FriendsPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\WorkoutViews\CreateWorkoutPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>

@@ -28,6 +28,8 @@ using BodyBuddy.ViewModels.Profile;
 using BodyBuddy.Views.Authentication;
 using BodyBuddy.Helpers;
 using BodyBuddy.Authentication;
+using BodyBuddy.ViewModels.User;
+using BodyBuddy.Views.User;
 
 namespace BodyBuddy;
 
@@ -119,6 +121,9 @@ public static class MauiProgram
         // Authentication
         builder.Services.AddSingleton<LoginPage>();
 
+        // User
+        builder.Services.AddSingleton<FriendsPage>();
+
         #endregion
 
 
@@ -147,6 +152,10 @@ public static class MauiProgram
 
         // Authentication
         builder.Services.AddSingleton<LoginViewModel>();
+
+        // User
+        builder.Services.AddSingleton<FriendsViewModel>();
+
         #endregion
 
 
@@ -169,6 +178,9 @@ public static class MauiProgram
         // Quote
         builder.Services.AddSingleton<IQuoteRepository, QuoteRepository>();
 
+        // User
+        builder.Services.AddSingleton<IUserRepository, UserRepository>();
+
         #endregion
 
 
@@ -179,6 +191,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<StartupTestMapper>();
         builder.Services.AddSingleton<IntakeMapper>();
         builder.Services.AddSingleton<QuoteMapper>();
+
         #endregion
 
         #region Services
@@ -200,10 +213,11 @@ public static class MauiProgram
         // Authentication
         builder.Services.AddSingleton<IUserAuthenticationService, UserAuthenticationService>();
 
-        
         // Quote
         builder.Services.AddSingleton<IQuoteService, QuoteService>();
 
+        // User
+        builder.Services.AddSingleton<IUserService, UserService>();
 
         builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
         builder.Services.AddSingleton<IPopupNavigation>(MopupService.Instance);
