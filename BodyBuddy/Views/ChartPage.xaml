@@ -11,7 +11,8 @@
         <viewModels:ChartViewModel />
     </ContentPage.BindingContext>
 
-    <chart:SfCartesianChart>
+    <chart:SfCartesianChart BackgroundColor="{StaticResource Primary}">
+        <!--  Defining the type of axis  -->
         <chart:SfCartesianChart.XAxes>
             <chart:DateTimeAxis />
         </chart:SfCartesianChart.XAxes>
@@ -20,11 +21,43 @@
             <chart:NumericalAxis />
         </chart:SfCartesianChart.YAxes>
 
+        <!--  Enabling the legend  -->
+        <chart:SfCartesianChart.Legend>
+            <chart:ChartLegend IsVisible="True" />
+        </chart:SfCartesianChart.Legend>
+
+        <!--  Tooltip Behaviour  -->
+        <chart:SfCartesianChart.TooltipBehavior>
+            <chart:ChartTooltipBehavior Duration="5" />
+        </chart:SfCartesianChart.TooltipBehavior>
+
         <chart:SfCartesianChart.Series>
+            <!--  Max Weight Series  -->
             <chart:LineSeries
+                x:Name="MaxWeightSeries"
+                EnableTooltip="True"
                 ItemsSource="{Binding Data}"
-                XBindingPath="XValue"
-                YBindingPath="YValue" />
+                Label="Max Weight"
+                XBindingPath="Date"
+                YBindingPath="MaxWeight" />
+
+            <!--  Min Weight Series  -->
+            <chart:LineSeries
+                x:Name="MinWeightSeries"
+                EnableTooltip="True"
+                ItemsSource="{Binding Data}"
+                Label="Min Weight"
+                XBindingPath="Date"
+                YBindingPath="MinWeight" />
+
+            <!--  Average Weight Series  -->
+            <chart:LineSeries
+                x:Name="AverageWeightSeries"
+                EnableTooltip="True"
+                ItemsSource="{Binding Data}"
+                Label="Average Weight"
+                XBindingPath="Date"
+                YBindingPath="AverageWeight" />
         </chart:SfCartesianChart.Series>
     </chart:SfCartesianChart>
 

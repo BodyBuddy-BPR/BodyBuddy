@@ -8,7 +8,9 @@ namespace BodyBuddy.Dtos
 {
     public class ChartData
     {
-        public DateTime XValue { get; set; }
-        public double YValue { get; set; }
+        public DateTime Date { get; set; }
+        public double MaxWeight { get; set; }
+        public double MinWeight { get; set; }
+        public double AverageWeight { get; set; }
     }
 }
