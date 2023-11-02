@@ -13,7 +13,7 @@
         RowSpacing="15">
 
         <!--  Title  -->
-        <Label
+        <Label 
             Grid.Row="0"
             Style="{StaticResource TitleLabel}"
             Text="Friends" />
