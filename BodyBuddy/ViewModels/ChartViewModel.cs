@@ -18,7 +18,7 @@ namespace BodyBuddy.ViewModels
         public ChartViewModel()
         {
             //Random data simulation
-            GeneratedDataSimulation(3, 2);
+            GeneratedDataSimulation(3, 1);
             //HardcodeDataSimulation();
 
             Data = CalculateStats();
@@ -37,8 +37,9 @@ namespace BodyBuddy.ViewModels
                 var max = group.Max(d => d.Weight);
                 var min = group.Min(d => d.Weight);
                 var avg = group.Average(d => d.Weight);
+                var totalReps = group.Sum(d => d.Reps);
 
-                stats.Add(new ChartData { Date = group.Key, MaxWeight = max, MinWeight = min, AverageWeight = avg });
+                stats.Add(new ChartData { Date = group.Key, MaxWeight = max, MinWeight = min, AverageWeight = avg, TotalReps = totalReps });
             }
 
             return stats;

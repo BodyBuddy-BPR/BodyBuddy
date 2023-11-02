@@ -12,5 +12,6 @@ namespace BodyBuddy.Dtos
         public double MaxWeight { get; set; }
         public double MinWeight { get; set; }
         public double AverageWeight { get; set; }
+        public int TotalReps { get; set; }
     }
 }
