@@ -7,11 +7,25 @@
     Title="FriendsPage"
     x:DataType="viewModel:FriendsViewModel">
 
+    <Grid
+        Margin="20,10,20,15"
+        RowDefinitions="Auto, *, Auto"
+        RowSpacing="15">
 
-    <VerticalStackLayout>
-        <Entry Text="{Binding SearchQuery}" />
-        <Button Command="{Binding AddNewFriendCommand}" Text="Add Friend" />
-    </VerticalStackLayout>
+        <!--  Title  -->
+        <Label
+            Grid.Row="0"
+            Style="{StaticResource TitleLabel}"
+            Text="Friends" />
+
+
+
+
+    </Grid>
+
+
+    <!--<Entry Text="{Binding SearchQuery}" />
+        <Button Command="{Binding AddNewFriendCommand}" Text="Add Friend" />-->
 
 
 </ContentPage>

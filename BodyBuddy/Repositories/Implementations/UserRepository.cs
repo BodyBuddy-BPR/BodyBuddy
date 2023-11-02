@@ -22,20 +22,12 @@ namespace BodyBuddy.Repositories.Implementations
 
         public async Task<List<UserModel>> GetFriends(int userId)
         {
-            var userList = new List<UserModel>();
+            var friendListModels = await _supabaseClient.From<FriendListModel>()
+                .Where(x => x.UserId == userId && x.Type =="friend").Get();
 
-            var response = await _supabaseClient.From<FriendListModel>().Select("friendId")
-                .Where(x => x.UserId == userId).Get();
+            var friends = friendListModels.Models;
 
-            var friends = response.Models;
-
-            foreach (var friendId in friends)
-            {
-                var userResponse = await _supabaseClient.From<UserModel>().Where(x => x.Id == friendId.FriendId).Get();
-                var user = userResponse.Model;
-                userList.Add(user);
-            }
-            return userList;
+            return friends.Select(user => user.User).ToList();
         }
 
         public async Task AddNewUser(string email)
@@ -61,7 +53,8 @@ namespace BodyBuddy.Repositories.Implementations
             var friend = new FriendListModel
             {
                 UserId = friends.UserId,
-                FriendId = friends.FriendId
+                FriendId = friends.FriendId,
+                Type = "pending"
             };
             await _supabaseClient.From<FriendListModel>().Insert(friend);
         }

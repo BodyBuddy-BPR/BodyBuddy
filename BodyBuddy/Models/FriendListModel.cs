@@ -11,13 +11,17 @@ namespace BodyBuddy.Models
     [Table("FriendList")]
     public class FriendListModel : BaseModel
     {
-        [PrimaryKey("id")]
-        public int Id { get; set; }
+        [PrimaryKey("userId")]
+        public int? UserId { get; set; }
 
-        [Column("userId")]
-        public int UserId { get; set; }
+        [PrimaryKey("friendId")]
+        public int? FriendId { get; set; }
 
-        [Column("friendId")]
-        public int FriendId { get; set; }
+        [Column("type")]
+        public string Type { get; set; }
+
+        [Reference(typeof(UserModel))]
+        public UserModel User { get; set; }
+
     }
 }

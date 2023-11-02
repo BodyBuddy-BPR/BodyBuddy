@@ -19,7 +19,7 @@ namespace BodyBuddy.ViewModels.User
         private string searchQuery; // Used to search for friend
 
         [ObservableProperty]
-        private List<UserDto> _friends = new ();
+        private List<UserDto> _friends = new();
 
         public FriendsViewModel(IUserService userService)
         {
@@ -51,7 +51,7 @@ namespace BodyBuddy.ViewModels.User
             {
                 IsBusy = false;
             }
-          
+
         }
 
         [RelayCommand]
@@ -62,7 +62,7 @@ namespace BodyBuddy.ViewModels.User
                 await Shell.Current.DisplayAlert("Error", "No User with that email found, try again", "OK");
                 return;
             }
-            
+
             await Shell.Current.DisplayAlert("Success", "Friend Added", "OK");
 
         }

@@ -16,8 +16,5 @@ namespace BodyBuddy.Models
 
         [Column("email")]
         public string Email { get; set; }
-
-        public List<FriendListModel> Friends { get; set; }
-
     }
 }
