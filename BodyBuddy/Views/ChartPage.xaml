@@ -23,7 +23,7 @@
 
         <!--  Enabling the legend  -->
         <chart:SfCartesianChart.Legend>
-            <chart:ChartLegend IsVisible="True" />
+            <chart:ChartLegend IsVisible="True" ToggleSeriesVisibility="True" />
         </chart:SfCartesianChart.Legend>
 
         <!--  Tooltip Behaviour  -->
@@ -38,8 +38,24 @@
                 EnableTooltip="True"
                 ItemsSource="{Binding Data}"
                 Label="Max Weight"
+                ShowMarkers="True"
                 XBindingPath="Date"
-                YBindingPath="MaxWeight" />
+                YBindingPath="MaxWeight">
+                <chart:LineSeries.Fill>
+                    <Color>
+                        Black
+                    </Color>
+                </chart:LineSeries.Fill>
+                <chart:LineSeries.MarkerSettings>
+                    <chart:ChartMarkerSettings
+                        Width="6"
+                        Height="6"
+                        Fill="Brown"
+                        Stroke="Black"
+                        StrokeWidth="1"
+                        Type="Diamond" />
+                </chart:LineSeries.MarkerSettings>
+            </chart:LineSeries>
 
             <!--  Min Weight Series  -->
             <chart:LineSeries
@@ -47,8 +63,24 @@
                 EnableTooltip="True"
                 ItemsSource="{Binding Data}"
                 Label="Min Weight"
+                ShowMarkers="True"
                 XBindingPath="Date"
-                YBindingPath="MinWeight" />
+                YBindingPath="MinWeight">
+                <chart:LineSeries.Fill>
+                    <Color>
+                        Purple
+                    </Color>
+                </chart:LineSeries.Fill>
+                <chart:LineSeries.MarkerSettings>
+                    <chart:ChartMarkerSettings
+                        Width="6"
+                        Height="6"
+                        Fill="Brown"
+                        Stroke="Black"
+                        StrokeWidth="1"
+                        Type="Diamond" />
+                </chart:LineSeries.MarkerSettings>
+            </chart:LineSeries>
 
             <!--  Average Weight Series  -->
             <chart:LineSeries
@@ -56,8 +88,24 @@
                 EnableTooltip="True"
                 ItemsSource="{Binding Data}"
                 Label="Average Weight"
+                ShowMarkers="True"
                 XBindingPath="Date"
-                YBindingPath="AverageWeight" />
+                YBindingPath="AverageWeight">
+                <chart:LineSeries.Fill>
+                    <Color>
+                        Red
+                    </Color>
+                </chart:LineSeries.Fill>
+                <chart:LineSeries.MarkerSettings>
+                    <chart:ChartMarkerSettings
+                        Width="6"
+                        Height="6"
+                        Fill="Brown"
+                        Stroke="Black"
+                        StrokeWidth="1"
+                        Type="Diamond" />
+                </chart:LineSeries.MarkerSettings>
+            </chart:LineSeries>
         </chart:SfCartesianChart.Series>
     </chart:SfCartesianChart>
 
