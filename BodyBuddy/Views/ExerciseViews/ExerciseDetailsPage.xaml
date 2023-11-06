@@ -150,7 +150,7 @@
                             FontFamily="Montserrat"
                             FontSize="16"
                             Text="Equipment" />
-                        <Labelme 
+                        <Label
                             FontFamily="Montserrat"
                             FontSize="16"
                             Text="{Binding ExerciseDetails.Equipment}" />
