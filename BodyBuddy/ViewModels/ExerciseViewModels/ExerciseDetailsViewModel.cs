@@ -40,6 +40,8 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
 
                 ExerciseDetails = await _exerciseService.GetExerciseDetails(ExerciseDetails.Id);
 
+                FormatExerciseDetailStrings();
+
                 // Populate ExerciseImages
                 PopulateExerciseImagesList(ExerciseDetails.Images);
             }
@@ -52,6 +54,21 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             {
                 IsBusy = false;
             }
+        }
+
+        private void FormatExerciseDetailStrings()
+        {
+            // Make sure the secondary muscles fit in the ellipse to show these
+            if (ExerciseDetails.SecondaryMuscles != null && ExerciseDetails.SecondaryMuscles.Length >= 16)
+            {
+                ExerciseDetails.SecondaryMuscles = ExerciseDetails.SecondaryMuscles.Substring(0, ExerciseDetails.SecondaryMuscles.LastIndexOf(',', 16));
+            }
+
+            // Set null values to have some value to make it look nicer in the view
+            if (ExerciseDetails.Level == null) ExerciseDetails.Level = "---";
+            if (ExerciseDetails.Mechanic == null) ExerciseDetails.Mechanic = "---";
+            if (ExerciseDetails.Equipment == null) ExerciseDetails.Equipment = "---";
+            if (ExerciseDetails.Force == null) ExerciseDetails.Force = "---";
         }
 
         #region Helper methods

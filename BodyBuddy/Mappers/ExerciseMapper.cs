@@ -23,12 +23,12 @@ namespace BodyBuddy.Mappers
             { "Lower back", "Back" },
             { "Lats", "Back" },
             { "Abdominals", "Abs and Core" },
-            { "Hamstrings", "Abs and Core" },
-            { "Adductors", "Abs and Core" },
-            { "Quadriceps", "Abs and Core" },
-            { "Glutes", "Abs and Core" },
-            { "Calves", "Abs and Core" },
-            { "Abductors", "Abs and Core" },
+            { "Hamstrings", "Lower Body" },
+            { "Adductors", "Lower Body" },
+            { "Quadriceps", "Lower Body" },
+            { "Glutes", "Lower Body" },
+            { "Calves", "Lower Body" },
+            { "Abductors", "Lower Body" },
         };
 
 

@@ -16,13 +16,10 @@ namespace BodyBuddy.Repositories.Implementations
 
         public async Task<List<ExerciseModel>> GetExercisesAsync(string category, string musclegroup)
         {
-            string lowerCategory = category.ToLower();
-            string lowerMusclegroup = musclegroup.ToLower();
-
             try
             {
                 var exercises = await _context.Table<ExerciseModel>()
-                    .Where(x => x.Category == lowerCategory && x.PrimaryMuscles == lowerMusclegroup).ToListAsync();
+                    .Where(x => x.Category == category && x.PrimaryMuscles == musclegroup).ToListAsync();
 
                 return exercises;
             }
@@ -38,9 +35,7 @@ namespace BodyBuddy.Repositories.Implementations
         {
             try
             {
-                string lowerCategory = category.ToLower();
-
-                var sql = $"SELECT DISTINCT primaryMuscles FROM Exercise WHERE category = '{lowerCategory}'";
+                var sql = $"SELECT DISTINCT primaryMuscles FROM Exercise WHERE category = '{category}'";
 
                 var distinctMuscleGroupsObjects = await _context.QueryAsync<ExerciseModel>(sql);
 
