@@ -40,6 +40,12 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
 
                 ExerciseDetails = await _exerciseService.GetExerciseDetails(ExerciseDetails.Id);
 
+                // Make sure the secondary muscles fit in the ellipse to show these
+                if(ExerciseDetails.SecondaryMuscles.Length >= 16)
+                {
+                    ExerciseDetails.SecondaryMuscles = ExerciseDetails.SecondaryMuscles.Substring(0, ExerciseDetails.SecondaryMuscles.LastIndexOf(',', 16));
+                }
+
                 // Populate ExerciseImages
                 PopulateExerciseImagesList(ExerciseDetails.Images);
             }

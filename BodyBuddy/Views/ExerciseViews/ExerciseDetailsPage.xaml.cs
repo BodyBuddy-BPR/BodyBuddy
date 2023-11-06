@@ -19,5 +19,15 @@ public partial class ExerciseDetailsPage : ContentPage
         await Task.Delay(50); // Add a short delay
 
         await _viewModel.GetExerciseDetails();
+
+        SetExerciseDetailsValueTexts();
+    }
+
+    private void SetExerciseDetailsValueTexts()
+    {
+        if (_viewModel.ExerciseDetails.Level == null) LevelValue.Text = "---";
+        if (_viewModel.ExerciseDetails.Mechanic == null) MechanicValue.Text = "---";
+        if (_viewModel.ExerciseDetails.Equipment == null) EquipmentValue.Text = "---";
+        if (_viewModel.ExerciseDetails.Force == null) ForceValue.Text = "---";
     }
 }
