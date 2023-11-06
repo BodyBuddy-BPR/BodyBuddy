@@ -4,29 +4,272 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:BodyBuddy.Converters"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.ExerciseViewModels"
     Title="{Binding ExerciseDetails.Name}"
     x:DataType="viewModel:ExerciseDetailsViewModel">
 
-    <!--  Not currently used!  -->
     <ContentPage.Resources>
         <ResourceDictionary>
-            <!--  Other resources  -->
             <converters:ImageConverter x:Key="ImageConverter" />
+            <converters:StringLengthGreaterThan16Converter x:Key="StringLengthConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <ScrollView>
+        <Grid RowDefinitions="35*, 30*, 35*">
+
+            <!--  Image Carousel  -->
+            <Grid Grid.Row="0">
+                <Border
+                    Margin="20,20,20,0"
+                    BackgroundColor="{StaticResource Secondary}"
+                    HorizontalOptions="Center">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="25,25,25,25" />
+                    </Border.StrokeShape>
+                    <CarouselView IndicatorView="indicatorView" ItemsSource="{Binding ExerciseImages}">
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <Image Aspect="AspectFill" Source="{Binding ., StringFormat='https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/{0}'}" />
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                </Border>
+                <IndicatorView
+                    x:Name="indicatorView"
+                    Margin="0,0,0,30"
+                    HorizontalOptions="Center"
+                    IndicatorColor="DarkGray"
+                    SelectedIndicatorColor="White"
+                    VerticalOptions="End" />
+            </Grid>
+
+            <!--  Category Ellipse  -->
+            <Grid
+                Grid.Row="1"
+                Margin="0,-60,30,0"
+                HorizontalOptions="End"
+                VerticalOptions="Start"
+                ZIndex="1">
+                <Ellipse
+                    Fill="#2F2F2F"
+                    HeightRequest="130"
+                    Stroke="White"
+                    StrokeThickness="3"
+                    WidthRequest="130" />
+                <Grid
+                    HorizontalOptions="Center"
+                    RowDefinitions="*,*,*"
+                    VerticalOptions="Center">
+                    <Label
+                        Grid.Row="0"
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource LargeLabel}"
+                        Text="{Binding ExerciseDetails.Category}"
+                        TextColor="White" />
+                    <Label
+                        Grid.Row="1"
+                        FontAttributes="Bold"
+                        FontSize="14"
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource LargeLabel}"
+                        Text="{Binding ExerciseDetails.PrimaryMuscles}"
+                        TextColor="White" />
+                    <Label
+                        Grid.Row="2"
+                        FontAttributes="None"
+                        FontSize="14"
+                        HorizontalTextAlignment="Center"
+                        IsVisible="{Binding ExerciseDetails.SecondaryMuscles, Converter={StaticResource StringLengthConverter}}"
+                        Style="{StaticResource LargeLabel}"
+                        Text="{Binding ExerciseDetails.SecondaryMuscles}"
+                        TextColor="White" />
+                </Grid>
+            </Grid>
+
+            <!--  Info Holder  -->
+            <Border
+                Grid.Row="1"
+                Margin="20,20,20,0"
+                BackgroundColor="{StaticResource Primary}"
+                ZIndex="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="25,25,25,25" />
+                </Border.StrokeShape>
+                <Grid ColumnDefinitions="70*,30*" RowDefinitions="*, *, *">
+                    <Label
+                        Margin="20"
+                        FontSize="16"
+                        HeightRequest="40"
+                        Style="{StaticResource TitleLabel}"
+                        Text="{Binding ExerciseDetails.Name}" />
+                    <VerticalStackLayout Grid.Row="1" Margin="20,0">
+                        <Label
+                            FontAttributes="Bold"
+                            FontFamily="Montserrat"
+                            FontSize="16"
+                            Text="Level">
+                            <Label.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding ExerciseDetails.Level}"
+                                    TargetType="Label"
+                                    Value="">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <Label
+                            FontFamily="Montserrat"
+                            FontSize="16"
+                            Text="{Binding ExerciseDetails.Level}">
+                            <Label.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding ExerciseDetails.Level}"
+                                    TargetType="Label"
+                                    Value="">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="-40,0">
+                        <Label
+                            FontAttributes="Bold"
+                            FontFamily="Montserrat"
+                            FontSize="16"
+                            Text="Mechanic">
+                            <Label.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding ExerciseDetails.Mechanic}"
+                                    TargetType="Label"
+                                    Value="">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <Label
+                            FontFamily="Montserrat"
+                            FontSize="16"
+                            Text="{Binding ExerciseDetails.Mechanic}">
+                            <Label.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding ExerciseDetails.Mechanic}"
+                                    TargetType="Label"
+                                    Value="">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Row="2" Margin="20,0">
+                        <Label
+                            FontAttributes="Bold"
+                            FontFamily="Montserrat"
+                            FontSize="16"
+                            Text="Force">
+                            <Label.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding ExerciseDetails.Force}"
+                                    TargetType="Label"
+                                    Value="">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <Label
+                            FontFamily="Montserrat"
+                            FontSize="16"
+                            Text="{Binding ExerciseDetails.Force}">
+                            <Label.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding ExerciseDetails.Force}"
+                                    TargetType="Label"
+                                    Value="">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Margin="-40,0">
+                        <Label
+                            FontAttributes="Bold"
+                            FontFamily="Montserrat"
+                            FontSize="16"
+                            Text="Equipment">
+                            <Label.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding ExerciseDetails.Equipment}"
+                                    TargetType="Label"
+                                    Value="">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <Label
+                            FontFamily="Montserrat"
+                            FontSize="16"
+                            Text="{Binding ExerciseDetails.Equipment}">
+                            <Label.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding ExerciseDetails.Equipment}"
+                                    TargetType="Label"
+                                    Value="">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <!--  Instruction Holder  -->
+            <Border
+                Grid.Row="2"
+                Margin="20,20"
+                BackgroundColor="{StaticResource Primary}"
+                ZIndex="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="25,25,25,25" />
+                </Border.StrokeShape>
+                <Grid Margin="20,10">
+                    <VerticalStackLayout Spacing="0">
+                        <Label Style="{StaticResource TitleLabel}" Text="Instructions" />
+                        <Grid RowDefinitions="120">
+                            <ScrollView>
+                                <Label
+                                    Style="{StaticResource MediumLabel}"
+                                    Text="{Binding ExerciseDetails.Instructions}"
+                                    TextColor="White" />
+                            </ScrollView>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+        </Grid>
+    </ScrollView>
+
+    <!--<ScrollView>
         <Grid RowDefinitions="Auto,Auto,*">
             <BoxView
                 Grid.RowSpan="2"
                 BackgroundColor="{StaticResource Primary}"
                 HorizontalOptions="Fill"
                 VerticalOptions="Fill" />
-            <!--<Image
+    -->
+    <!--<Image
                 Aspect="AspectFill"
                 HeightRequest="260"
                 Source="{Binding ExerciseDetails.Images, Converter={StaticResource ImageHelper}}" />-->
+    <!--
             <CarouselView HeightRequest="260" ItemsSource="{Binding ExerciseImages}">
                 <CarouselView.ItemTemplate>
                     <DataTemplate>
@@ -59,7 +302,9 @@
                 Padding="10"
                 Spacing="5">
 
-                <!--  Musclegroups  -->
+    -->
+    <!--  Musclegroups  -->
+    <!--
                 <Label Style="{StaticResource LargeLabel}" Text="Musclegroups" />
                 <BoxView BackgroundColor="{StaticResource Primary}" HeightRequest="1" />
                 <Label
@@ -77,7 +322,9 @@
                     </Label.Triggers>
                 </Label>
 
-                <!--  Info  -->
+    -->
+    <!--  Info  -->
+    <!--
                 <Label
                     Margin="0,10,0,0"
                     Style="{StaticResource LargeLabel}"
@@ -124,7 +371,9 @@
                 </Label>
 
 
-                <!--  Instructions  -->
+    -->
+    <!--  Instructions  -->
+    <!--
                 <Label
                     Margin="0,10,0,0"
                     Style="{StaticResource LargeLabel}"
@@ -134,5 +383,5 @@
 
             </VerticalStackLayout>
         </Grid>
-    </ScrollView>
+    </ScrollView>-->
 </ContentPage>
