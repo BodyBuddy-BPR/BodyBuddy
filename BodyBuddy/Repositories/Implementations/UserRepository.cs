@@ -27,12 +27,11 @@ namespace BodyBuddy.Repositories.Implementations
                 .Where(x => x.UserId == userId && x.Type == "friend").Get();
             var friends = friendListModels.Models;
 
-            //return friends.Select(user => user.User).ToList();
-
             return friends;
         }
 
         // Gets a list of pending friend requests a user has
+        // TODO: FIX --- Får den forkerte user med op. Man får user der er i friendId men skal bruge den anden
         public async Task<List<UserRelationsModel>> GetFriendRequests(string userId)
         {
             var friendListModels = await _supabaseClient.From<UserRelationsModel>()
@@ -40,14 +39,6 @@ namespace BodyBuddy.Repositories.Implementations
             var friendRequests = friendListModels.Models;
 
             return friendRequests;
-        }
-
-        public async Task<UserModel> DoesUserExist(string email)
-        {
-            var response = await _supabaseClient.From<UserModel>().Select(x => new object[] { x.Id }).Where(x => x.Email == email).Get();
-            var user = response.Model;
-
-            return user;
         }
 
         public async Task AddNewFriend(string userId, string friendId)
@@ -61,12 +52,22 @@ namespace BodyBuddy.Repositories.Implementations
             await _supabaseClient.From<UserRelationsModel>().Insert(relations);
         }
 
+
+        //TODO: FIX --- Skal bruge både x.UserId og x.FriendId får at kunne opdatere begge rows uden at komme til at røre andre
         public async Task AcceptFriendRequest(string userId)
         {
             await _supabaseClient.From<UserRelationsModel>()
                 .Where(x => x.FriendId == userId)
                 .Set(x => x.Type, "friend")
                 .Update();
+        }
+
+        public async Task<UserModel> DoesUserExist(string email)
+        {
+            var response = await _supabaseClient.From<UserModel>().Select(x => new object[] { x.Id }).Where(x => x.Email == email).Get();
+            var user = response.Model;
+
+            return user;
         }
     }
 }
