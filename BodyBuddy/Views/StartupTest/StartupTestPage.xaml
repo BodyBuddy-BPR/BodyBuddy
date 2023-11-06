@@ -7,6 +7,8 @@
     xmlns:customControls="clr-namespace:BodyBuddy.CustomControls"
     xmlns:local="clr-namespace:BodyBuddy.Events"
     xmlns:model="clr-namespace:BodyBuddy.Models"
+    xmlns:progressBar="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.StartupTest"
     Title="StartupTest"
     x:DataType="viewModel:StartupTestViewModel">
@@ -15,155 +17,349 @@
             <converters:StringToDoubleConverter x:Key="StringToDoubleConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
+
     <Grid
         Margin="20,10"
-        RowDefinitions="Auto, *, Auto, Auto"
+        RowDefinitions="10*, 80*, 10*"
         RowSpacing="15">
         <Label
             Grid.Row="0"
-            Padding="0,40,0,0"
             HorizontalOptions="Center"
             Style="{StaticResource TitleLabel}"
-            Text="{Binding QuestionnaireText}" />
+            Text="{Binding QuestionnaireText}"
+            VerticalOptions="End" />
 
-        <VerticalStackLayout
+        <!--  Ellipses to show welcome text  -->
+        <Grid
+            Grid.Row="1"
+            HorizontalOptions="Start"
+            VerticalOptions="Start">
+            <Ellipse
+                Fill="{StaticResource PrimaryDark}"
+                HeightRequest="250"
+                IsVisible="{Binding IsWelcomeVisible}"
+                WidthRequest="250" />
+            <Label
+                Margin="20,60,0,0"
+                IsVisible="{Binding IsWelcomeVisible}"
+                Style="{StaticResource LargeLabel}"
+                Text="BodyBuddy is your personal fitness assistant that will help you reach you goals."
+                TextColor="White"
+                WidthRequest="200" />
+        </Grid>
+        <Grid
+            Grid.Row="1"
+            Margin="0,0,0,40"
+            HorizontalOptions="End"
+            VerticalOptions="End">
+            <Ellipse
+                Fill="{StaticResource PrimaryDark}"
+                HeightRequest="250"
+                IsVisible="{Binding IsWelcomeVisible}"
+                WidthRequest="250" />
+            <Label
+                Margin="20,60,0,0"
+                FontSize="30"
+                IsVisible="{Binding IsWelcomeVisible}"
+                Style="{StaticResource LargeLabel}"
+                Text="Lets get to know you a little better."
+                TextColor="White"
+                WidthRequest="200" />
+        </Grid>
+
+
+        <!--  Ellipse to show entries  -->
+        <Ellipse
+            Grid.Row="1"
+            Fill="{StaticResource PrimaryDark}"
+            HeightRequest="250"
+            IsVisible="{Binding BackIsVisible}"
+            WidthRequest="250" />
+        <progressBar:SfCircularProgressBar
+            Grid.Row="1"
+            HeightRequest="280"
+            IsVisible="{Binding BackIsVisible}"
+            Maximum="1"
+            Minimum="0"
+            Progress="{Binding StartupTestProgress}"
+            ProgressFill="{StaticResource Primary}"
+            ProgressThickness="5"
+            TrackThickness="5"
+            WidthRequest="280" />
+
+        <!--  Name  -->
+        <customControls:CustomEntry
+            x:Name="NameEditor"
+            Grid.Row="1"
+            Completed="OnEditorCompleted"
+            HorizontalTextAlignment="Center"
+            IsVisible="{Binding IsNameVisible}"
+            MaxLength="16"
+            MaximumWidthRequest="230"
+            MinimumWidthRequest="50"
+            Placeholder="Enter Name"
+            Style="{StaticResource StartupInputField}"
+            Text="{Binding StartupTestDto.Name}" />
+
+        <!--  Gender  -->
+        <CollectionView
+            x:Name="GenderListView"
+            Grid.Row="1"
+            IsVisible="{Binding IsGenderVisible}"
+            ItemsSource="{Binding GenderList}"
+            VerticalOptions="Center">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <RadioButton
+                        BackgroundColor="Transparent"
+                        Content="{Binding .}"
+                        FontFamily="Montserrat"
+                        GroupName="GenderGroup"
+                        HorizontalOptions="Center"
+                        TextColor="White"
+                        WidthRequest="180">
+                        <RadioButton.Behaviors>
+                            <local:RadioButtonCheckChangedBehavior Command="{Binding Source={x:Reference GenderListView}, Path=BindingContext.RadioButtonCheckedCommand}" />
+                        </RadioButton.Behaviors>
+                    </RadioButton>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!--  Weight  -->
+        <HorizontalStackLayout
             Grid.Row="1"
             HorizontalOptions="Center"
-            VerticalOptions="Center">
-
-            <!--  Name  -->
+            IsVisible="{Binding IsWeightVisible}">
             <customControls:CustomEntry
-                IsVisible="{Binding IsNameVisible}"
-                Placeholder="Enter Name"
-                Style="{StaticResource StartupInputField}"
-                Text="{Binding StartupTestDto.Name}" />
-
-            <!--  Gender  -->
-            <CollectionView
-                x:Name="GenderListView"
-                IsVisible="{Binding IsGenderVisible}"
-                ItemsSource="{Binding GenderList}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <RadioButton
-                            BackgroundColor="Transparent"
-                            Content="{Binding .}"
-                            GroupName="GenderGroup"
-                            HorizontalOptions="Center"
-                            WidthRequest="125">
-                            <RadioButton.Behaviors>
-                                <local:RadioButtonCheckChangedBehavior Command="{Binding Source={x:Reference GenderListView}, Path=BindingContext.RadioButtonCheckedCommand}" />
-                            </RadioButton.Behaviors>
-                        </RadioButton>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-
-            <!--  Weight  -->
-            <customControls:CustomEntry
-                HorizontalOptions="Center"
-                IsVisible="{Binding IsWeightVisible}"
+                HorizontalTextAlignment="Center"
                 Keyboard="Numeric"
                 Placeholder="Enter Weight"
                 Style="{StaticResource StartupInputField}"
-                Text="{Binding StartupTestDto.Weight, Converter={StaticResource StringToDoubleConverter}}" />
+                Text="{Binding StartupTestDto.Weight, Converter={StaticResource StringToDoubleConverter}}"
+                WidthRequest="40">
+                <Entry.Triggers>
+                    <DataTrigger
+                        Binding="{Binding StartupTestDto.Weight}"
+                        TargetType="Entry"
+                        Value="0">
+                        <Setter Property="Text" Value="{x:Null}" />
+                        <Setter Property="WidthRequest" Value="160" />
+                    </DataTrigger>
+                </Entry.Triggers>
+            </customControls:CustomEntry>
+            <Label
+                Style="{StaticResource LargeLabel}"
+                Text="kg"
+                TextColor="White"
+                VerticalOptions="Center" />
+        </HorizontalStackLayout>
 
-
-            <!--  Height  -->
+        <!--  Height  -->
+        <HorizontalStackLayout
+            Grid.Row="1"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsHeightVisible}">
             <customControls:CustomEntry
-                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
                 IsVisible="{Binding IsHeightVisible}"
                 Keyboard="Numeric"
                 Placeholder="Enter Height"
                 Style="{StaticResource StartupInputField}"
-                Text="{Binding StartupTestDto.Height, Converter={StaticResource StringToDoubleConverter}}" />
-
-
-            <!--  Birthday  -->
-            <DatePicker
-                Date="{Binding StartupTestDto.Birthday}"
-                HorizontalOptions="Center"
-                IsVisible="{Binding IsBirthdayVisible}"
-                MaximumDate="{Binding MaxDate}"
-                MinimumDate="{Binding MinDate}"
+                Text="{Binding StartupTestDto.Height, Converter={StaticResource StringToDoubleConverter}}"
+                WidthRequest="40">
+                <Entry.Triggers>
+                    <DataTrigger
+                        Binding="{Binding StartupTestDto.Height}"
+                        TargetType="Entry"
+                        Value="0">
+                        <Setter Property="Text" Value="{x:Null}" />
+                        <Setter Property="WidthRequest" Value="160" />
+                    </DataTrigger>
+                </Entry.Triggers>
+            </customControls:CustomEntry>
+            <Label
+                Style="{StaticResource LargeLabel}"
+                Text="cm"
+                TextColor="White"
                 VerticalOptions="Center" />
+        </HorizontalStackLayout>
 
-            <!--  Active  -->
-            <CollectionView
-                x:Name="ActiveListView"
-                HorizontalOptions="Center"
-                IsVisible="{Binding IsActiveVisible}"
-                ItemsSource="{Binding ActivityList}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <RadioButton
-                            BackgroundColor="Transparent"
-                            Content="{Binding .}"
-                            GroupName="GenderGroup"
-                            HorizontalOptions="Center"
-                            WidthRequest="125">
-                            <RadioButton.Behaviors>
-                                <local:RadioButtonCheckChangedBehavior Command="{Binding Source={x:Reference ActiveListView}, Path=BindingContext.RadioButtonCheckedCommand}" />
-                            </RadioButton.Behaviors>
-                        </RadioButton>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            <!--  Padding 25?  -->
+        <!--  Birthday  -->
+        <DatePicker
+            Grid.Row="1"
+            Date="{Binding StartupTestDto.Birthday}"
+            FontAttributes="Bold"
+            FontFamily="Montserrat"
+            FontSize="24"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsBirthdayVisible}"
+            MaximumDate="{Binding MaxDate}"
+            MinimumDate="{Binding MinDate}"
+            TextColor="White"
+            VerticalOptions="Center" />
 
-            <!--  Passive Calorie Burn  -->
+        <!--  Active  -->
+        <CollectionView
+            x:Name="ActiveListView"
+            Grid.Row="1"
+            IsVisible="{Binding IsActiveVisible}"
+            ItemsSource="{Binding ActivityList}"
+            VerticalOptions="Center">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <RadioButton
+                        BackgroundColor="Transparent"
+                        Content="{Binding .}"
+                        FontFamily="Montserrat"
+                        GroupName="GenderGroup"
+                        HorizontalOptions="Center"
+                        TextColor="White"
+                        WidthRequest="140">
+                        <RadioButton.Behaviors>
+                            <local:RadioButtonCheckChangedBehavior Command="{Binding Source={x:Reference ActiveListView}, Path=BindingContext.RadioButtonCheckedCommand}" />
+                        </RadioButton.Behaviors>
+                    </RadioButton>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!--  Passive Calorie Burn  -->
+        <Label
+            Grid.Row="1"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            IsVisible="{Binding IsPassiveCalorieBurnVisible}"
+            Style="{StaticResource MediumLabel}"
+            Text="PCB is an estimate of the calories you burn every day without any exercise."
+            TextColor="White"
+            VerticalOptions="Start"
+            WidthRequest="290" />
+        <Label
+            Grid.Row="1"
+            Margin="0,0,0,60"
+            FontAttributes="Bold"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            IsVisible="{Binding IsPassiveCalorieBurnVisible}"
+            Style="{StaticResource MediumLabel}"
+            Text="We have used your previous data to calculate an estimate."
+            TextColor="White"
+            VerticalOptions="End"
+            WidthRequest="290" />
+        <Label
+            Grid.Row="1"
+            Margin="0,0,0,20"
+            FontSize="14"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            IsVisible="{Binding IsPassiveCalorieBurnVisible}"
+            Style="{StaticResource MediumLabel}"
+            Text="Does this look correct?"
+            TextColor="White"
+            VerticalOptions="End"
+            WidthRequest="290" />
+
+        <VerticalStackLayout
+            Grid.Row="1"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsPassiveCalorieBurnVisible}"
+            VerticalOptions="Center">
             <customControls:CustomEntry
                 HorizontalOptions="Center"
-                IsVisible="{Binding IsPassiveCalorieBurnVisible}"
+                HorizontalTextAlignment="Center"
                 Keyboard="Numeric"
-                Placeholder="Enter Passive Calorie Burn"
+                Placeholder="Enter PCB"
                 Style="{StaticResource StartupInputField}"
-                Text="{Binding StartupTestDto.PassiveCalorieBurn, Converter={StaticResource StringToDoubleConverter}}"
-                VerticalOptions="Center" />
-
-
-            <!--  Goal  -->
-            <CollectionView
-                x:Name="GoalListView"
-                IsVisible="{Binding IsGoalVisible}"
-                ItemsSource="{Binding GoalList}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <RadioButton
-                            BackgroundColor="Transparent"
-                            Content="{Binding .}"
-                            GroupName="GoalGroup"
-                            HorizontalOptions="Center"
-                            WidthRequest="125">
-                            <RadioButton.Behaviors>
-                                <local:RadioButtonCheckChangedBehavior Command="{Binding Source={x:Reference GoalListView}, Path=BindingContext.RadioButtonCheckedCommand}" />
-                            </RadioButton.Behaviors>
-                        </RadioButton>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                Text="{Binding StartupTestDto.PassiveCalorieBurn, Converter={StaticResource StringToDoubleConverter}}" />
+            <Label
+                HorizontalOptions="Center"
+                Style="{StaticResource LargeLabel}"
+                Text="Kcal/Day"
+                TextColor="White" />
         </VerticalStackLayout>
 
-        <!--  Buttons  -->
-        <Button
-            Grid.Row="2"
-            Command="{Binding NextButtonCommand}"
-            IsVisible="{Binding NextIsVisible}"
-            Style="{StaticResource AddButton}"
-            Text="Next Question!" />
+        <!--  Goal  -->
+        <CollectionView
+            x:Name="GoalListView"
+            Grid.Row="1"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsGoalVisible}"
+            ItemsSource="{Binding GoalList}"
+            VerticalOptions="Center">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <RadioButton
+                        BackgroundColor="Transparent"
+                        Content="{Binding .}"
+                        FontFamily="Montserrat"
+                        GroupName="GoalGroup"
+                        HorizontalOptions="Center"
+                        TextColor="White"
+                        WidthRequest="150">
+                        <RadioButton.Behaviors>
+                            <local:RadioButtonCheckChangedBehavior Command="{Binding Source={x:Reference GoalListView}, Path=BindingContext.RadioButtonCheckedCommand}" />
+                        </RadioButton.Behaviors>
+                    </RadioButton>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
-        <Button
-            Grid.Row="2"
-            Command="{Binding SubmitDataCommand}"
+        <!--  Done With Test Label  -->
+        <Label
+            Grid.Row="1"
+            FontAttributes="Bold"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
             IsVisible="{Binding SubmitDataIsVisible}"
-            Style="{StaticResource AddButton}"
-            Text="Submit Data!" />
+            Style="{StaticResource TitleLabel}"
+            Text="Good luck reaching  your goals!"
+            VerticalOptions="Center"
+            WidthRequest="200" />
 
-        <Button
-            Grid.Row="3"
-            Command="{Binding BackButtonCommand}"
-            IsVisible="{Binding BackIsVisible}"
-            Style="{StaticResource AddButton}"
-            Text="Previous Question!" />
+        <!--  Buttons  -->
+        <HorizontalStackLayout
+            Grid.Row="2"
+            HorizontalOptions="Center"
+            VerticalOptions="End">
+            <ImageButton
+                Margin="9,0"
+                Padding="4"
+                BackgroundColor="{StaticResource Secondary}"
+                Command="{Binding BackButtonCommand}"
+                CornerRadius="22"
+                HeightRequest="55"
+                IsVisible="{Binding BackIsVisible}"
+                Source="previous_circle.png"
+                Style="{StaticResource ImageButtonVisualState}"
+                WidthRequest="55">
+                <ImageButton.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="#D7E4E5" />
+                </ImageButton.Behaviors>
+            </ImageButton>
+            <ImageButton
+                Margin="9,0"
+                Padding="4"
+                BackgroundColor="{StaticResource Secondary}"
+                Command="{Binding NextButtonCommand}"
+                CornerRadius="22"
+                HeightRequest="55"
+                IsEnabled="{Binding NextIsEnabled}"
+                IsVisible="{Binding IsNextButtonVisible}"
+                Source="next_circle.png"
+                Style="{StaticResource ImageButtonVisualState}"
+                WidthRequest="55">
+                <ImageButton.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="#D7E4E5" />
+                </ImageButton.Behaviors>
+            </ImageButton>
+            <Button
+                Command="{Binding SubmitDataCommand}"
+                IsVisible="{Binding SubmitDataIsVisible}"
+                Style="{StaticResource AddButton}"
+                Text="Submit!"
+                VerticalOptions="Center"
+                WidthRequest="100" />
+        </HorizontalStackLayout>
     </Grid>
 </ContentPage>

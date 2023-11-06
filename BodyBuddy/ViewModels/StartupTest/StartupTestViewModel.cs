@@ -15,12 +15,13 @@ public partial class StartupTestViewModel : BaseViewModel
 {
     #region ObservableProperties
     //IsVisible
-    [ObservableProperty]
-    private bool _isNameVisible, _isGenderVisible, _isWeightVisible, _isHeightVisible;
+    [ObservableProperty] private bool _isNameVisible, _isGenderVisible, _isWeightVisible, _isHeightVisible;
+
     [ObservableProperty]
     private bool _isBirthdayVisible, _isActiveVisible, _isPassiveCalorieBurnVisible, _isGoalVisible;
+
     [ObservableProperty]
-    private bool _submitDataIsVisible, _nextIsVisible, _backIsVisible;
+    private bool _submitDataIsVisible, _nextIsEnabled, _backIsVisible, _isNextButtonVisible, _isWelcomeVisible;
 
     //Saved Properties
     [ObservableProperty] private StartupTestDto _startupTestDto;
@@ -28,6 +29,9 @@ public partial class StartupTestViewModel : BaseViewModel
     //Others
     [ObservableProperty]
     private string _questionnaireText;
+
+    //-1 used to avoid Welcome being a part of the progress
+    public double StartupTestProgress => (int)CurrentState > 1 ? ((double)CurrentState - 1) / 8 : 0;
 
     public DateTime MinDate { get; } = new(1914, 7, 28);
     public DateTime MaxDate { get; } = DateTime.Now;
@@ -100,7 +104,7 @@ public partial class StartupTestViewModel : BaseViewModel
     }
 
     #region State Machine
-    private StartupTestStates CurrentState { get; set; } = StartupTestStates.NameEntry;
+    private StartupTestStates CurrentState { get; set; } = StartupTestStates.Welcome;
 
     //Returning a bool depending on the CurrentState and the state properties
     private delegate bool CurrentStateDone();
@@ -109,26 +113,29 @@ public partial class StartupTestViewModel : BaseViewModel
 
     private void StateNext()
     {
-        if (CurrentState == StartupTestStates.Done || !currentStateDone()) 
+        if (CurrentState == StartupTestStates.Done || !currentStateDone())
             return;
 
         CurrentState++;
         SetStateProperties();
         UpdateVisibility();
+        OnPropertyChanged(nameof(StartupTestProgress));
     }
 
     private void StatePrevious()
     {
-        if (CurrentState == StartupTestStates.NameEntry)
+        if (CurrentState == StartupTestStates.Welcome)
             return;
 
         CurrentState--;
         SetStateProperties();
         UpdateVisibility();
+        OnPropertyChanged(nameof(StartupTestProgress));
     }
 
     private void UpdateVisibility()
     {
+        IsWelcomeVisible = CurrentState == StartupTestStates.Welcome;
         IsNameVisible = CurrentState == StartupTestStates.NameEntry;
         IsGenderVisible = CurrentState == StartupTestStates.GenderSelection;
         IsWeightVisible = CurrentState == StartupTestStates.WeightEntry;
@@ -142,15 +149,22 @@ public partial class StartupTestViewModel : BaseViewModel
 
     private void UpdateActionButtonsVisibility()
     {
-        BackIsVisible = CurrentState != StartupTestStates.NameEntry;
-        NextIsVisible = CurrentState != StartupTestStates.Done && currentStateDone();
+        IsNextButtonVisible = CurrentState != StartupTestStates.Done;
+        BackIsVisible = CurrentState != StartupTestStates.Welcome;
+
+        NextIsEnabled = CurrentState != StartupTestStates.Done && currentStateDone();
         SubmitDataIsVisible = CurrentState == StartupTestStates.Done && currentStateDone();
+
     }
 
     private void SetStateProperties()
     {
         switch (CurrentState)
         {
+            case StartupTestStates.Welcome:
+                QuestionnaireText = "";
+                currentStateDone = () => true;
+                break;
             case StartupTestStates.NameEntry:
                 QuestionnaireText = "What is your name?";
                 currentStateDone = () => !string.IsNullOrEmpty(StartupTestDto.Name);
@@ -160,11 +174,11 @@ public partial class StartupTestViewModel : BaseViewModel
                 currentStateDone = () => !string.IsNullOrEmpty(StartupTestDto.Gender);
                 break;
             case StartupTestStates.WeightEntry:
-                QuestionnaireText = "What is your weight?";
+                QuestionnaireText = "What do you weigh?";
                 currentStateDone = () => StartupTestDto.Weight > 0;
                 break;
             case StartupTestStates.HeightEntry:
-                QuestionnaireText = "When is your height?";
+                QuestionnaireText = "How tall are you?";
                 currentStateDone = () => StartupTestDto.Height > 0;
                 break;
             case StartupTestStates.BirthdaySelection:
@@ -176,17 +190,17 @@ public partial class StartupTestViewModel : BaseViewModel
                 currentStateDone = () => !string.IsNullOrEmpty(StartupTestDto.ActiveAmount);
                 break;
             case StartupTestStates.PassiveCalorieBurnEntry:
-                QuestionnaireText = "What is your passive calorie burn?";
+                QuestionnaireText = "Passive Calorie Burn";
+                StartupTestDto.PassiveCalorieBurn = CalculatePCB();
                 currentStateDone = () => StartupTestDto.PassiveCalorieBurn > 0;
                 break;
             case StartupTestStates.GoalSelection:
-                QuestionnaireText = "What are your workout goals?";
+                QuestionnaireText = "What are your goals?";
                 currentStateDone = () => !string.IsNullOrEmpty(StartupTestDto.Goal);
                 break;
             case StartupTestStates.Done:
-                QuestionnaireText = "You're done!";
+                QuestionnaireText = "You're all set!";
                 currentStateDone = () => true;
-                SubmitDataIsVisible = true;
                 break;
             default:
                 throw new InvalidOperationException($"Unexpected state: {CurrentState}");
@@ -241,5 +255,31 @@ public partial class StartupTestViewModel : BaseViewModel
             .Cast<FocusArea>()
             .Select(EnumMapper.GetDisplayString)
             .ToList();
+    }
+
+    private int CalculatePCB()
+    {
+        int age = DateTime.Now.Year - StartupTestDto.Birthday.Year;
+
+        double pcb;
+
+        if (StartupTestDto.Gender == "Female")
+        {
+            pcb = (655.1 + (9.247 * StartupTestDto.Weight) + (3.098 * StartupTestDto.Height) - (4.330 * age));
+        }
+        else
+        {
+            pcb = (int)(66.0 + (13.75 * StartupTestDto.Weight) + (5.003 * StartupTestDto.Height) - (6.755 * age));
+        }
+
+        double activityFactor = StartupTestDto.ActiveAmount switch
+        {
+            "A Little Active" => 1.375,
+            "Active" => 1.55,
+            "Very Active" => 1.725,
+            _ => 1.2
+        };
+
+        return (int)(pcb * activityFactor);
     }
 }

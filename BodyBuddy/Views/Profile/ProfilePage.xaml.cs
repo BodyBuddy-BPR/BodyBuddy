@@ -1,5 +1,6 @@
 using BodyBuddy.ViewModels.Profile;
 using BodyBuddy.Views.Authentication;
+using Microsoft.Maui.Controls.Shapes;
 using Mopups.Interfaces;
 
 namespace BodyBuddy.Views.Profile;
@@ -39,4 +40,11 @@ public partial class ProfilePage : ContentPage
             await _viewModel.LogOut();
         }
     }
+
+    private void WeekdayButtonClicked(object sender, EventArgs e)
+    {
+		Button clickedButton = (Button)sender;
+		_viewModel.WeekdayButtonClicked(int.Parse(clickedButton.CommandParameter.ToString()));
+    }
+
 }

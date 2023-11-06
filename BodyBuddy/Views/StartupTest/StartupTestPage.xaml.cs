@@ -8,5 +8,12 @@ public partial class StartupTestPage : ContentPage
     {
         InitializeComponent();
         BindingContext = viewModel;
-    }
+	}
+
+
+	private void OnEditorCompleted(object sender, EventArgs e)
+	{
+		NameEditor.Unfocus();
+	}
+
 }
