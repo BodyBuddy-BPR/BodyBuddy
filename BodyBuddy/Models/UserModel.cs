@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Java.Util;
 using Postgrest.Attributes;
 using Postgrest.Models;
 
@@ -12,7 +13,7 @@ namespace BodyBuddy.Models
     public class UserModel : BaseModel
     {
         [PrimaryKey("id")]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Column("email")]
         public string Email { get; set; }

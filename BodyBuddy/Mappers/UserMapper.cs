@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BodyBuddy.Dtos;
 using BodyBuddy.Models;
+using Java.Util;
 
 namespace BodyBuddy.Mappers
 {
@@ -24,9 +25,8 @@ namespace BodyBuddy.Mappers
         {
             return new UserDto
             {
-                Id = userModel.Id,
+                Id = userModel.Id.ToString(),
                 Email = userModel.Email,
-                UserUid = null,
                 Role = null
             };
         }

@@ -8,6 +8,7 @@ using BodyBuddy.Dtos;
 using BodyBuddy.Mappers;
 using BodyBuddy.Models;
 using BodyBuddy.Repositories;
+using Java.Util;
 
 namespace BodyBuddy.Services.Implementations
 {
@@ -16,7 +17,9 @@ namespace BodyBuddy.Services.Implementations
         private IUserRepository _userRepository;
         private IUserAuthenticationService _userAuthenticationService;
         private readonly UserMapper _mapper = new();
-        private const string UserIdKey = "UserId";
+        //private const string UserIdKey = "UserId";
+        private const string UserUIDKey = "UserUID";
+
 
         public UserService(IUserRepository userRepository, IUserAuthenticationService userAuthenticationService)
         {
@@ -26,8 +29,9 @@ namespace BodyBuddy.Services.Implementations
 
         public async Task<List<UserDto>> GetFriends()
         {
-            var userId = SecureStorage.GetAsync(UserIdKey).Result;
-            var friendsList = await _userRepository.GetFriends(int.Parse(userId));
+            //var userId = SecureStorage.GetAsync(UserIdKey).Result;
+            var userId = SecureStorage.GetAsync(UserUIDKey).Result;
+            var friendsList = await _userRepository.GetFriends(userId);
 
             return friendsList.Select(userModel => _mapper.MapToDto(userModel)).ToList();
         }
@@ -40,13 +44,7 @@ namespace BodyBuddy.Services.Implementations
 
             var currentUserId = _userAuthenticationService.GetCurrentUser().Id;
 
-            var friends = new FriendListModel()
-            {
-                UserId = currentUserId,
-                FriendId = friend.Id
-            };
-
-            await _userRepository.AddNewFriend(friends);
+            await _userRepository.AddNewFriend(currentUserId, friend.Id.ToString());
             return true;
         }
 

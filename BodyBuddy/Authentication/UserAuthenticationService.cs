@@ -16,7 +16,7 @@ namespace BodyBuddy.Authentication
         private IUserRepository _userRepository;
 
         // Used for Secure Storage
-        private const string UserIdKey = "UserId";
+        //private const string UserIdKey = "UserId";
         private const string UserUIDKey = "UserUID";
         private const string UserEmailKey = "UserEmail";
         private const string UserPasswordKey = "UserPassword";
@@ -36,26 +36,24 @@ namespace BodyBuddy.Authentication
         {
             var supabaseUser = _supabase.Auth.CurrentUser;
 
-            var userId = SecureStorage.GetAsync(UserIdKey).Result;
+            //var userId = SecureStorage.GetAsync(UserIdKey).Result;
 
             if (supabaseUser is null)
             {
                 var guestUser = new UserDto
                 {
-                    UserUid = null,
                     Role = "guest",
                     Email = null,
-                    Id = 0
+                    Id = null
                 };
                 return guestUser;
             }
 
             var user = new UserDto
             {
-                UserUid = supabaseUser.Id,
                 Role = supabaseUser.Role,
                 Email = supabaseUser.Email,
-                Id = int.Parse(userId)
+                Id = supabaseUser.Id,
             };
 
             return user;
@@ -73,14 +71,14 @@ namespace BodyBuddy.Authentication
             var loginInfo = await _supabase.Auth.SignIn(user, password);
             var success = loginInfo is not null && loginInfo.User.Role == "authenticated";
 
-            var response = await _supabase.From<UserModel>().Select(x => new object[] { x.Id }).Where(x => x.Email == user)
-                .Get();
-            var userId = response.Model.Id;
+            //var response = await _supabase.From<UserModel>().Select(x => new object[] { x.Id }).Where(x => x.Email == user)
+            //    .Get();
+            //var userId = response.Model.Id;
 
             if (success)
             {
-                await SecureStorage.SetAsync(UserIdKey, userId.ToString());
-                await SecureStorage.SetAsync(UserUIDKey, loginInfo.User.Id);
+                //await SecureStorage.SetAsync(UserIdKey, userId.ToString());
+                await SecureStorage.SetAsync(UserUIDKey, (string)loginInfo.User.Id);
                 await SecureStorage.SetAsync(UserEmailKey, loginInfo.User.Email);
                 await SecureStorage.SetAsync(UserPasswordKey, password);
             }
@@ -113,7 +111,7 @@ namespace BodyBuddy.Authentication
                 await _supabase.Auth.SignOut();
 
                 // Clear user info on sign-out
-                SecureStorage.Remove(UserIdKey);
+                //SecureStorage.Remove(UserIdKey);
                 SecureStorage.Remove(UserUIDKey);
                 SecureStorage.Remove(UserEmailKey);
                 SecureStorage.Remove(UserPasswordKey);
@@ -133,7 +131,7 @@ namespace BodyBuddy.Authentication
 
             if (signUpInfo is null || signUpInfo.User.Role != "authenticated") return false;
 
-            await _userRepository.AddNewUser(user);
+            //await _userRepository.AddNewUser(user);
 
             return await SignUserIn(user, password);
         }

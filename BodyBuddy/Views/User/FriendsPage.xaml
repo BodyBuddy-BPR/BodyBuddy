@@ -13,19 +13,19 @@
         RowSpacing="15">
 
         <!--  Title  -->
-        <Label 
+        <Label
             Grid.Row="0"
             Style="{StaticResource TitleLabel}"
             Text="Friends" />
 
 
-
+        <Entry Grid.Row="1" Text="{Binding SearchQuery}" />
+        <Button Grid.Row="2" Command="{Binding AddNewFriendCommand}" Text="Add Friend" />
 
     </Grid>
 
 
-    <!--<Entry Text="{Binding SearchQuery}" />
-        <Button Command="{Binding AddNewFriendCommand}" Text="Add Friend" />-->
+
 
 
 </ContentPage>

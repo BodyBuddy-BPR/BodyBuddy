@@ -64,7 +64,7 @@ namespace BodyBuddy.ViewModels.User
             }
 
             await Shell.Current.DisplayAlert("Success", "Friend Added", "OK");
-
+            SearchQuery = "";
         }
     }
 }
