@@ -8,7 +8,6 @@ using BodyBuddy.Dtos;
 using BodyBuddy.Mappers;
 using BodyBuddy.Models;
 using BodyBuddy.Repositories;
-using Java.Util;
 
 namespace BodyBuddy.Services.Implementations
 {
@@ -54,5 +53,9 @@ namespace BodyBuddy.Services.Implementations
             return true;
         }
 
+        public async Task AcceptFriendRequest(string userId)
+        {
+            await _userRepository.AcceptFriendRequest(userId);
+        }
     }
 }

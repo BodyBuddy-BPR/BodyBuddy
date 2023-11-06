@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BodyBuddy.Models;
-using Java.Util;
 
 namespace BodyBuddy.Repositories
 {
@@ -17,5 +16,6 @@ namespace BodyBuddy.Repositories
 
         Task AddNewFriend(string userId, string friendId);
 
+        Task AcceptFriendRequest(string userId);
     }
 }

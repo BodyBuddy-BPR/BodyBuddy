@@ -36,7 +36,7 @@
                         Background="transparent"
                         HeightRequest="60"
                         Style="{StaticResource CardView}">
-                        <Grid ColumnDefinitions="*, *">
+                        <Grid ColumnDefinitions="*">
                             <Label
                                 Grid.Column="0"
                                 FontAttributes="Bold"
@@ -53,7 +53,7 @@
 
 
         <!--  Pending Requests  -->
-        <!--<CollectionView
+        <CollectionView
             Grid.Row="1"
             BackgroundColor="Transparent"
             ItemsSource="{Binding PendingRequests}">
@@ -79,7 +79,6 @@
                             <HorizontalStackLayout Grid.Column="1" Spacing="10">
                                 <ImageButton
                                     BackgroundColor="Green"
-
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:FriendsViewModel}}, Path=AcceptFriendRequestCommand}"
                                     CommandParameter="{Binding .}"
                                     HeightRequest="40"
@@ -96,7 +95,7 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
 
-        </CollectionView>-->
+        </CollectionView>
 
         <VerticalStackLayout Grid.Row="2">
             <Entry Text="{Binding SearchQuery}" />

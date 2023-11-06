@@ -49,7 +49,7 @@ namespace BodyBuddy.ViewModels.User
             {
                 IsBusy = true;
 
-                var users = await _userService.GetFriends();
+                var friends = await _userService.GetFriends();
                 var friendRequests = await _userService.GetFriendRquests();
 
                 // Clear existing lists
@@ -57,17 +57,14 @@ namespace BodyBuddy.ViewModels.User
                 PendingRequests.Clear();
 
                 // Categorize users based on type
-                foreach (var user in users)
+                foreach (var user in friends)
                 {
-                    switch (user.Type)
-                    {
-                        case "friend":
-                            Friends.Add(user);
-                            break;
-                        case "pending":
-                            PendingRequests.Add(user);
-                            break;
-                    }
+                   Friends.Add(user);;
+                }
+
+                foreach (var request in friendRequests)
+                {
+                    PendingRequests.Add(request);
                 }
             }
             catch (Exception ex)
@@ -97,9 +94,9 @@ namespace BodyBuddy.ViewModels.User
         }
 
         [RelayCommand]
-        public async Task AcceptFriendRequest()
+        public async Task AcceptFriendRequest(UserDto user)
         {
-
+            await _userService.AcceptFriendRequest(user.Id);
         }
 
     }
