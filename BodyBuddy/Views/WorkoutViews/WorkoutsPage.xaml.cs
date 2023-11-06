@@ -9,6 +9,8 @@ public partial class WorkoutsPage : ContentPage
 {
     private WorkoutViewModel _viewModel;
     private IPopupNavigation _popupNavigation;
+    private bool _isFirstTime = true;
+
 
     public WorkoutsPage(WorkoutViewModel workoutsViewModel, IPopupNavigation popupNavigation)
     {
@@ -25,10 +27,12 @@ public partial class WorkoutsPage : ContentPage
         base.OnAppearing();
 
         await Task.Delay(100); // Add a short delay
-
-        PageDetector();
-
-        await _viewModel.GetWorkoutPlans();
+        if (_isFirstTime)
+        {
+            PageDetector();
+            await _viewModel.GetWorkoutPlans();
+            _isFirstTime = false;
+        }
     }
 
 
@@ -45,14 +49,7 @@ public partial class WorkoutsPage : ContentPage
     {
         string title = Shell.Current.CurrentItem?.CurrentItem?.CurrentItem?.Title;
 
-        if (title == Strings.PremadeWorkOuts)
-        {
-            _viewModel.IsPreMadeWorkout = true;
-        }
-        else
-        {
-            _viewModel.IsPreMadeWorkout = false;
-        }
+        _viewModel.IsPreMadeWorkout = title == Strings.PremadeWorkOuts;
 
         _viewModel.Title = title;
     }
