@@ -19,7 +19,14 @@ namespace BodyBuddy.ViewModels.User
         private string searchQuery; // Used to search for friend
 
         [ObservableProperty]
-        private List<UserDto> _friends = new();
+        private ObservableCollection<UserDto> _friends = new();
+        [ObservableProperty]
+        private ObservableCollection<UserDto> _pendingRequests = new();
+
+        private const string UserUIDKey = "UserUID";
+
+        [ObservableProperty]
+        public bool isAcceptButtonVisible = false;
 
         public FriendsViewModel(IUserService userService)
         {
@@ -28,18 +35,40 @@ namespace BodyBuddy.ViewModels.User
 
         public async Task Initialize()
         {
-            //Does nothing for now
+            // Hvis det her id matcher det i Pending Requests så skal accept button vises, ellers viser det hvem man har sendt den til
+            var userId = SecureStorage.GetAsync(UserUIDKey).Result;
+
             await GetFriends();
         }
 
         public async Task GetFriends()
         {
             if (IsBusy) return;
+
             try
             {
                 IsBusy = true;
 
-                Friends = await _userService.GetFriends();
+                var users = await _userService.GetFriends();
+                var friendRequests = await _userService.GetFriendRquests();
+
+                // Clear existing lists
+                Friends.Clear();
+                PendingRequests.Clear();
+
+                // Categorize users based on type
+                foreach (var user in users)
+                {
+                    switch (user.Type)
+                    {
+                        case "friend":
+                            Friends.Add(user);
+                            break;
+                        case "pending":
+                            PendingRequests.Add(user);
+                            break;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -63,8 +92,15 @@ namespace BodyBuddy.ViewModels.User
                 return;
             }
 
-            await Shell.Current.DisplayAlert("Success", "Friend Added", "OK");
+            await Shell.Current.DisplayAlert("Success", "Friend Request Sent", "OK");
             SearchQuery = "";
         }
+
+        [RelayCommand]
+        public async Task AcceptFriendRequest()
+        {
+
+        }
+
     }
 }

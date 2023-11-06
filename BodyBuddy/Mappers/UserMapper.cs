@@ -21,13 +21,14 @@ namespace BodyBuddy.Mappers
         }
 
 
-        public UserDto MapToDto(UserModel userModel)
+        public UserDto MapUserRelationsToDto(UserRelationsModel relationModel)
         {
             return new UserDto
             {
-                Id = userModel.Id.ToString(),
-                Email = userModel.Email,
-                Role = null
+                Id = relationModel.FriendId,
+                Email = relationModel.User.Email,
+                Role = null,
+                Type = relationModel.Type
             };
         }
 

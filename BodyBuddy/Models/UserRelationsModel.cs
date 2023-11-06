@@ -21,8 +21,8 @@ namespace BodyBuddy.Models
         [Column("type")]
         public string Type { get; set; }
 
-        //[Reference(typeof(UserModel))]
-        //public UserModel User { get; set; }
+        [Reference(typeof(UserModel))]
+        public UserModel User { get; set; }
 
     }
 }

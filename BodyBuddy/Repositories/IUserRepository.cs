@@ -10,9 +10,8 @@ namespace BodyBuddy.Repositories
 {
     public interface IUserRepository
     {
-        Task<List<UserModel>> GetFriends(string userId);
-
-        //Task AddNewUser(string email);
+        Task<List<UserRelationsModel>> GetFriends(string userId);
+        Task<List<UserRelationsModel>> GetFriendRequests(string userId);
 
         Task<UserModel> DoesUserExist(string email);
 

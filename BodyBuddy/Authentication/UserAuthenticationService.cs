@@ -71,13 +71,9 @@ namespace BodyBuddy.Authentication
             var loginInfo = await _supabase.Auth.SignIn(user, password);
             var success = loginInfo is not null && loginInfo.User.Role == "authenticated";
 
-            //var response = await _supabase.From<UserModel>().Select(x => new object[] { x.Id }).Where(x => x.Email == user)
-            //    .Get();
-            //var userId = response.Model.Id;
 
             if (success)
             {
-                //await SecureStorage.SetAsync(UserIdKey, userId.ToString());
                 await SecureStorage.SetAsync(UserUIDKey, (string)loginInfo.User.Id);
                 await SecureStorage.SetAsync(UserEmailKey, loginInfo.User.Email);
                 await SecureStorage.SetAsync(UserPasswordKey, password);
@@ -111,7 +107,6 @@ namespace BodyBuddy.Authentication
                 await _supabase.Auth.SignOut();
 
                 // Clear user info on sign-out
-                //SecureStorage.Remove(UserIdKey);
                 SecureStorage.Remove(UserUIDKey);
                 SecureStorage.Remove(UserEmailKey);
                 SecureStorage.Remove(UserPasswordKey);
@@ -130,8 +125,6 @@ namespace BodyBuddy.Authentication
             var signUpInfo = await _supabase.Auth.SignUp(user, password);
 
             if (signUpInfo is null || signUpInfo.User.Role != "authenticated") return false;
-
-            //await _userRepository.AddNewUser(user);
 
             return await SignUserIn(user, password);
         }

@@ -16,5 +16,6 @@ public partial class FriendsPage : ContentPage
     {
         base.OnAppearing();
         await _viewModel.Initialize();
+
     }
 }

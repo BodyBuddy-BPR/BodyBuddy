@@ -11,6 +11,8 @@ namespace BodyBuddy.Services
     {
         Task<List<UserDto>> GetFriends();
 
+        Task<List<UserDto>> GetFriendRquests();
+
         Task<bool> AddNewFriend(string email);
 
     }

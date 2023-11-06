@@ -3,24 +3,107 @@
     x:Class="BodyBuddy.Views.User.FriendsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:BodyBuddy.Dtos"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.User"
     Title="FriendsPage"
     x:DataType="viewModel:FriendsViewModel">
 
     <Grid
         Margin="20,10,20,15"
-        RowDefinitions="Auto, *, Auto"
-        RowSpacing="15">
+        RowDefinitions="Auto, Auto, Auto"
+        RowSpacing="25">
 
         <!--  Title  -->
-        <Label
+        <!--<Label
             Grid.Row="0"
             Style="{StaticResource TitleLabel}"
-            Text="Friends" />
+            Text="Friends" />-->
+
+        <!--  Friends  -->
+        <CollectionView
+            Grid.Row="0"
+            BackgroundColor="Transparent"
+            ItemsSource="{Binding Friends}">
+
+            <CollectionView.Header>
+                <Label Style="{StaticResource TitleLabel}" Text="Friends" />
+            </CollectionView.Header>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:UserDto">
+                    <Frame
+                        Background="transparent"
+                        HeightRequest="60"
+                        Style="{StaticResource CardView}">
+                        <Grid ColumnDefinitions="*, *">
+                            <Label
+                                Grid.Column="0"
+                                FontAttributes="Bold"
+                                Style="{StaticResource MediumLabel}"
+                                Text="{Binding Email}"
+                                TextColor="{StaticResource LightText}"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
 
 
-        <Entry Grid.Row="1" Text="{Binding SearchQuery}" />
-        <Button Grid.Row="2" Command="{Binding AddNewFriendCommand}" Text="Add Friend" />
+        <!--  Pending Requests  -->
+        <!--<CollectionView
+            Grid.Row="1"
+            BackgroundColor="Transparent"
+            ItemsSource="{Binding PendingRequests}">
+
+            <CollectionView.Header>
+                <Label Style="{StaticResource TitleLabel}" Text="Pending Requests" />
+            </CollectionView.Header>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:UserDto">
+                    <Frame
+                        Background="transparent"
+                        HeightRequest="60"
+                        Style="{StaticResource CardView}">
+                        <Grid ColumnDefinitions="*, *">
+                            <Label
+                                Grid.Column="0"
+                                FontAttributes="Bold"
+                                Style="{StaticResource MediumLabel}"
+                                Text="{Binding Email}"
+                                TextColor="{StaticResource LightText}"
+                                VerticalOptions="Center" />
+                            <HorizontalStackLayout Grid.Column="1" Spacing="10">
+                                <ImageButton
+                                    BackgroundColor="Green"
+
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:FriendsViewModel}}, Path=AcceptFriendRequestCommand}"
+                                    CommandParameter="{Binding .}"
+                                    HeightRequest="40"
+                                    Source="plus_sign.png"
+                                    WidthRequest="40" />
+                                <ImageButton
+                                    BackgroundColor="red"
+                                    HeightRequest="40"
+                                    Source="no_image.png"
+                                    WidthRequest="40" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>-->
+
+        <VerticalStackLayout Grid.Row="2">
+            <Entry Text="{Binding SearchQuery}" />
+            <Button Command="{Binding AddNewFriendCommand}" Text="Add Friend" />
+        </VerticalStackLayout>
+
+
 
     </Grid>
 

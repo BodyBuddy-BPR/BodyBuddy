@@ -21,30 +21,25 @@ namespace BodyBuddy.Repositories.Implementations
             _supabaseClient = client;
         }
 
-        public async Task<List<UserModel>> GetFriends(string userId)
+        public async Task<List<UserRelationsModel>> GetFriends(string userId)
         {
-            var users = new List<UserModel>();  
-
-            //var friendListModels = await _supabaseClient.From<UserRelationsModel>()
-            //    .Where(x => x.UserId == userId && x.Type == "friend").Get();
-
-            //var friends = friendListModels.Models;
+            var friendListModels = await _supabaseClient.From<UserRelationsModel>().Where(x => x.UserId == userId).Get();
+            var friends = friendListModels.Models;
 
             //return friends.Select(user => user.User).ToList();
-            return users;
+
+            return friends;
         }
 
-        //public async Task AddNewUser(string email)
-        //{
-        //    var user = new UserModel()
-        //    {
-        //        Email = email,
-        //    };
+        public async Task<List<UserRelationsModel>> GetFriendRequests(string userId)
+        {
+            var friendListModels = await _supabaseClient.From<UserRelationsModel>().Where(x => x.FriendId == userId).Get();
+            var friendRequests = friendListModels.Models;
 
-        //    var result = await _supabaseClient.From<UserModel>().Insert(user, new QueryOptions { Returning = QueryOptions.ReturnType.Representation });
-        //    await SecureStorage.SetAsync(UserIdKey, result.Model.Id.ToString());
+            //return friends.Select(user => user.User).ToList();
 
-        //}
+            return friendRequests;
+        }
 
         public async Task<UserModel> DoesUserExist(string email)
         {
