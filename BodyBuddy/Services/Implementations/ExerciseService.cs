@@ -40,23 +40,8 @@ namespace BodyBuddy.Services.Implementations
 
             stopwatch.Stop();
             Console.WriteLine($"GetUniqueCategoriesAsync took {stopwatch.ElapsedMilliseconds} ms with DB Call");
-            Stopwatch stopwatch2 = new();
-            stopwatch2.Start();
-            var categories2 = new List<string>()
-            {
-                "Strength",
-                "Cardio",
-                "Stretching",
-                "Plyometrics",
-                "Strongman",
-                "Powerlifting",
-                "Olympic weightlifting",
-            };
-            stopwatch2.Stop();
-            Console.WriteLine($"GetUniqueCategoriesAsync took {stopwatch2.ElapsedMilliseconds} ms with list generated ourselves {categories2}");
 
-
-            return categories2;
+            return categories;
         }
 
         public async Task<List<ExerciseDto>> GetMuscleGroupsForCategory(string category)

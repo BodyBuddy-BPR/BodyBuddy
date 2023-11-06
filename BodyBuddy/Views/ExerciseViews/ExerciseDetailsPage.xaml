@@ -12,7 +12,6 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:ImageConverter x:Key="ImageConverter" />
-            <converters:StringLengthGreaterThan16Converter x:Key="StringLengthConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -111,29 +110,11 @@
                             FontAttributes="Bold"
                             FontFamily="Montserrat"
                             FontSize="16"
-                            Text="Level">
-                            <Label.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding ExerciseDetails.Level}"
-                                    TargetType="Label"
-                                    Value="">
-                                    <Setter Property="IsVisible" Value="False" />
-                                </DataTrigger>
-                            </Label.Triggers>
-                        </Label>
+                            Text="Level" />
                         <Label
                             FontFamily="Montserrat"
                             FontSize="16"
-                            Text="{Binding ExerciseDetails.Level}">
-                            <Label.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding ExerciseDetails.Level}"
-                                    TargetType="Label"
-                                    Value="">
-                                    <Setter Property="IsVisible" Value="False" />
-                                </DataTrigger>
-                            </Label.Triggers>
-                        </Label>
+                            Text="{Binding ExerciseDetails.Level}" />
                     </VerticalStackLayout>
                     <VerticalStackLayout
                         Grid.Row="1"
@@ -143,58 +124,22 @@
                             FontAttributes="Bold"
                             FontFamily="Montserrat"
                             FontSize="16"
-                            Text="Mechanic">
-                            <Label.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding ExerciseDetails.Mechanic}"
-                                    TargetType="Label"
-                                    Value="">
-                                    <Setter Property="IsVisible" Value="False" />
-                                </DataTrigger>
-                            </Label.Triggers>
-                        </Label>
+                            Text="Mechanic" />
                         <Label
                             FontFamily="Montserrat"
                             FontSize="16"
-                            Text="{Binding ExerciseDetails.Mechanic}">
-                            <Label.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding ExerciseDetails.Mechanic}"
-                                    TargetType="Label"
-                                    Value="">
-                                    <Setter Property="IsVisible" Value="False" />
-                                </DataTrigger>
-                            </Label.Triggers>
-                        </Label>
+                            Text="{Binding ExerciseDetails.Mechanic}" />
                     </VerticalStackLayout>
                     <VerticalStackLayout Grid.Row="2" Margin="20,0">
                         <Label
                             FontAttributes="Bold"
                             FontFamily="Montserrat"
                             FontSize="16"
-                            Text="Force">
-                            <Label.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding ExerciseDetails.Force}"
-                                    TargetType="Label"
-                                    Value="">
-                                    <Setter Property="IsVisible" Value="False" />
-                                </DataTrigger>
-                            </Label.Triggers>
-                        </Label>
+                            Text="Force" />
                         <Label
                             FontFamily="Montserrat"
                             FontSize="16"
-                            Text="{Binding ExerciseDetails.Force}">
-                            <Label.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding ExerciseDetails.Force}"
-                                    TargetType="Label"
-                                    Value="">
-                                    <Setter Property="IsVisible" Value="False" />
-                                </DataTrigger>
-                            </Label.Triggers>
-                        </Label>
+                            Text="{Binding ExerciseDetails.Force}" />
                     </VerticalStackLayout>
                     <VerticalStackLayout
                         Grid.Row="2"
@@ -204,29 +149,11 @@
                             FontAttributes="Bold"
                             FontFamily="Montserrat"
                             FontSize="16"
-                            Text="Equipment">
-                            <Label.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding ExerciseDetails.Equipment}"
-                                    TargetType="Label"
-                                    Value="">
-                                    <Setter Property="IsVisible" Value="False" />
-                                </DataTrigger>
-                            </Label.Triggers>
-                        </Label>
+                            Text="Equipment" />
                         <Label
                             FontFamily="Montserrat"
                             FontSize="16"
-                            Text="{Binding ExerciseDetails.Equipment}">
-                            <Label.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding ExerciseDetails.Equipment}"
-                                    TargetType="Label"
-                                    Value="">
-                                    <Setter Property="IsVisible" Value="False" />
-                                </DataTrigger>
-                            </Label.Triggers>
-                        </Label>
+                            Text="{Binding ExerciseDetails.Equipment}" />
                     </VerticalStackLayout>
                 </Grid>
             </Border>

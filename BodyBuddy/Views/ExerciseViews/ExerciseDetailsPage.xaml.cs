@@ -20,4 +20,5 @@ public partial class ExerciseDetailsPage : ContentPage
 
         await _viewModel.GetExerciseDetails();
     }
+
 }
