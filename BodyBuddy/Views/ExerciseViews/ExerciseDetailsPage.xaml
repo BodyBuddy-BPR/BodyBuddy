@@ -12,7 +12,6 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:ImageConverter x:Key="ImageConverter" />
-            <converters:StringLengthGreaterThan16Converter x:Key="StringLengthConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -113,7 +112,6 @@
                             FontSize="16"
                             Text="Level" />
                         <Label
-                            x:Name="LevelValue"
                             FontFamily="Montserrat"
                             FontSize="16"
                             Text="{Binding ExerciseDetails.Level}" />
@@ -128,7 +126,6 @@
                             FontSize="16"
                             Text="Mechanic" />
                         <Label
-                            x:Name="MechanicValue"
                             FontFamily="Montserrat"
                             FontSize="16"
                             Text="{Binding ExerciseDetails.Mechanic}" />
@@ -140,7 +137,6 @@
                             FontSize="16"
                             Text="Force" />
                         <Label
-                            x:Name="ForceValue"
                             FontFamily="Montserrat"
                             FontSize="16"
                             Text="{Binding ExerciseDetails.Force}" />
@@ -154,8 +150,7 @@
                             FontFamily="Montserrat"
                             FontSize="16"
                             Text="Equipment" />
-                        <Label
-                            x:Name="EquipmentValue"
+                        <Labelme 
                             FontFamily="Montserrat"
                             FontSize="16"
                             Text="{Binding ExerciseDetails.Equipment}" />
