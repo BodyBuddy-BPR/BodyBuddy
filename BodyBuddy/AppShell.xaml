@@ -12,7 +12,7 @@
     xmlns:userViews="clr-namespace:BodyBuddy.Views.User"
     xmlns:workoutViews="clr-namespace:BodyBuddy.Views.WorkoutViews"
     FlyoutBackgroundColor="{StaticResource NavigationBarColor}"
-    Shell.FlyoutBehavior="Flyout">
+    Shell.FlyoutBehavior="Disabled">
 
     <Shell.Resources>
         <ResourceDictionary>
@@ -43,6 +43,7 @@
     <!--<ShellContent Title="Friends" ContentTemplate="{DataTemplate userViews:FriendsPage}" />-->
 
 
+
     <TabBar>
         <ShellContent
             Title="Home"
@@ -67,10 +68,11 @@
             ContentTemplate="{DataTemplate exerciseViews:CategoryPage}"
             Icon="dumbbell.png" />
 
-        <ShellContent
-            Title="Profile"
-            ContentTemplate="{DataTemplate profile:ProfilePage}"
-            Icon="profile.png" />
+        <Tab Title="Profile" Icon="profile.png">
+            <ShellContent Title="Profile" ContentTemplate="{DataTemplate profile:ProfilePage}" />
+
+            <ShellContent Title="Friends" ContentTemplate="{DataTemplate userViews:FriendsPage}" />
+        </Tab>
 
         <!--  StartupTest Temp, until found another place  -->
         <ShellContent
@@ -78,10 +80,6 @@
             ContentTemplate="{DataTemplate startup:StartupTestPage}"
             Icon="questionmark.png" />
 
-        <ShellContent
-            Title="Friends"
-            ContentTemplate="{DataTemplate userViews:FriendsPage}"
-            Icon="questionmark.png" />
     </TabBar>
 
 </Shell>
