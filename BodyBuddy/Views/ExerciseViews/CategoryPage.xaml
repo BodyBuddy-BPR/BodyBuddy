@@ -8,13 +8,19 @@
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.ExerciseViewModels"
     x:DataType="viewModel:CategoryViewModel">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding GoToProfileCommand}"
+            IconImageSource="profile.png"
+            Order="Primary"
+            Text="Profile" />
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:CategoryImageConverter x:Key="CategoryImageConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
-
-
 
     <Grid
         Margin="20,10"

@@ -8,6 +8,15 @@
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.IntakeViewModels"
     x:DataType="viewModel:IntakeViewModel"
     Shell.NavBarIsVisible="True">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding GoToProfileCommand}"
+            IconImageSource="profile.png"
+            Order="Primary"
+            Text="Profile" />
+    </ContentPage.ToolbarItems>
+
     <Grid
         Margin="20,20"
         RowDefinitions="Auto, Auto"

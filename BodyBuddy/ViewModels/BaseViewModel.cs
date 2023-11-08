@@ -1,4 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using BodyBuddy.Views.Profile;
+using BodyBuddy.Views.User;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace BodyBuddy.ViewModels
 {
@@ -15,14 +18,19 @@ namespace BodyBuddy.ViewModels
 
         public BaseViewModel()
         {
-
+            
         }
 
         public static async Task GoBackAsync()
         {
-            //await Shell.Current.GoToAsync("..");
             await Shell.Current.Navigation.PopAsync();
-
         }
+
+        [RelayCommand]
+        public static async Task GoToProfile()
+        {
+            await Shell.Current.GoToAsync(nameof(ProfilePage), true);
+        }
+
     }
 }

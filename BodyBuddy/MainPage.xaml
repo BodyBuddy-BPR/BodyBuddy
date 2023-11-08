@@ -13,6 +13,14 @@
         <mct:StatusBarBehavior StatusBarColor="{StaticResource StatusBarColor}" />
     </ContentPage.Behaviors>
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding GoToProfileCommand}"
+            IconImageSource="profile.png"
+            Order="Primary"
+            Text="Profile" />
+    </ContentPage.ToolbarItems>
+
     <!--  Entire Page  -->
     <Grid
         Margin="15,15"

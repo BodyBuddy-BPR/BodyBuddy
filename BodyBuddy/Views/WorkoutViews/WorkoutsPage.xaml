@@ -12,6 +12,14 @@
     x:DataType="viewModel:WorkoutViewModel"
     Shell.NavBarIsVisible="True">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding GoToProfileCommand}"
+            IconImageSource="profile.png"
+            Order="Primary"
+            Text="Profile" />
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:BooleanInvertConverter x:Key="BooleanInvertConverter" />

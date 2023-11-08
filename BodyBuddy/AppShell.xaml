@@ -40,10 +40,6 @@
     </Shell.Resources>
 
 
-    <!--<ShellContent Title="Friends" ContentTemplate="{DataTemplate userViews:FriendsPage}" />-->
-
-
-
     <TabBar>
         <ShellContent
             Title="Home"
@@ -68,11 +64,11 @@
             ContentTemplate="{DataTemplate exerciseViews:CategoryPage}"
             Icon="dumbbell.png" />
 
-        <Tab Title="Profile" Icon="profile.png">
-            <ShellContent Title="Profile" ContentTemplate="{DataTemplate profile:ProfilePage}" />
+        <ShellContent
+            Title="Friends"
+            ContentTemplate="{DataTemplate userViews:FriendsPage}"
+            Icon="questionmark.png" />
 
-            <ShellContent Title="Friends" ContentTemplate="{DataTemplate userViews:FriendsPage}" />
-        </Tab>
 
         <!--  StartupTest Temp, until found another place  -->
         <ShellContent

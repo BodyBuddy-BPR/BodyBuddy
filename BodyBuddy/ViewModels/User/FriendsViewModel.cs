@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BodyBuddy.Dtos;
 using BodyBuddy.Services;
+using BodyBuddy.Views.Authentication;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -25,6 +26,9 @@ namespace BodyBuddy.ViewModels.User
 
         private const string UserUIDKey = "UserUID";
 
+        [ObservableProperty]
+        public bool isLoggedIn = false;
+
         public FriendsViewModel(IUserService userService)
         {
             _userService = userService;
@@ -32,10 +36,22 @@ namespace BodyBuddy.ViewModels.User
 
         public async Task Initialize()
         {
-            // Hvis det her id matcher det i Pending Requests så skal accept button vises, ellers viser det hvem man har sendt den til
+            IsLoggedIn = CheckIfUserLoggedIn();
+
+            if (IsLoggedIn)
+            {
+                await GetFriends();
+            }
+
+        }
+
+        private bool CheckIfUserLoggedIn()
+        {
+            // Retrieve the user ID from SecureStorage
             var userId = SecureStorage.GetAsync(UserUIDKey).Result;
 
-            await GetFriends();
+            // If the user ID is not null, the user is logged in
+            return !string.IsNullOrEmpty(userId);
         }
 
         public async Task GetFriends()
@@ -85,5 +101,18 @@ namespace BodyBuddy.ViewModels.User
             Friends.Add(friend);
         }
 
+
+        #region Navigation
+
+        [RelayCommand]
+        public async Task GoToLoginPage()
+        {
+            await Shell.Current.GoToAsync($"{nameof(LoginPage)}", true, new Dictionary<string, object>
+            {
+                { "SkipVisible", false }
+            });
+        }
+
+        #endregion
     }
 }
