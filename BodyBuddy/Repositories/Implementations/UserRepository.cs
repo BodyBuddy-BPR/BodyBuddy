@@ -12,8 +12,6 @@ namespace BodyBuddy.Repositories.Implementations
     public class UserRepository : IUserRepository
     {
         private readonly Client _supabaseClient;
-        private const string UserIdKey = "UserId";
-
 
         public UserRepository(Client client)
         {
@@ -44,28 +42,40 @@ namespace BodyBuddy.Repositories.Implementations
         {
             var relation = new UserRelationsModel()
             {
-                UserId = friendId, FriendId = userId, Type = "pending" ,
+                UserId = friendId,
+                FriendId = userId,
+                Type = "pending",
             };
 
             await _supabaseClient.From<UserRelationsModel>().Insert(relation);
         }
 
 
-        public async Task AcceptFriendRequest(string userId, string friendId)
+        public async Task<bool> AcceptFriendRequest(string userId, string friendId)
         {
-            await _supabaseClient.From<UserRelationsModel>()
-                .Where(x => x.UserId == userId && x.FriendId == friendId)
-                .Set(x => x.Type, "friend")
-                .Update();
-
-            var relation = new UserRelationsModel()
+            try
             {
-                UserId = friendId,
-                FriendId = userId,
-                Type = "friend",
-            };
+                await _supabaseClient.From<UserRelationsModel>()
+                    .Where(x => x.UserId == userId && x.FriendId == friendId)
+                    .Set(x => x.Type, "friend")
+                    .Update();
 
-            await _supabaseClient.From<UserRelationsModel>().Insert(relation);
+                var relation = new UserRelationsModel()
+                {
+                    UserId = friendId,
+                    FriendId = userId,
+                    Type = "friend",
+                };
+
+                await _supabaseClient.From<UserRelationsModel>().Insert(relation);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+
         }
 
         public async Task<UserModel> DoesUserExist(string email)

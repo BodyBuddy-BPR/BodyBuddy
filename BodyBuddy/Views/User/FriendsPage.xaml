@@ -83,6 +83,7 @@
                                     CommandParameter="{Binding .}"
                                     HeightRequest="40"
                                     Source="plus_sign.png"
+                                    Style="{StaticResource ImageButtonVisualState}"
                                     WidthRequest="40" />
                                 <ImageButton
                                     BackgroundColor="red"
@@ -97,9 +98,27 @@
 
         </CollectionView>
 
-        <VerticalStackLayout Grid.Row="2">
-            <Entry Text="{Binding SearchQuery}" />
-            <Button Command="{Binding AddNewFriendCommand}" Text="Add Friend" />
+        <VerticalStackLayout Grid.Row="2" Spacing="5">
+            <Border
+                Opacity="0.7"
+                Style="{StaticResource CardView}"
+                WidthRequest="300">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5" />
+                </Border.StrokeShape>
+                <Entry
+                    Margin="10,0"
+                    BackgroundColor="Transparent"
+                    FontSize="16"
+                    Placeholder="Enter email"
+                    PlaceholderColor="#2F2F2F"
+                    Style="{StaticResource BaseEntry}"
+                    Text="{Binding SearchQuery}" />
+            </Border>
+            <Button
+                Command="{Binding AddNewFriendCommand}"
+                Style="{StaticResource AddButton}"
+                Text="Add Friend" />
         </VerticalStackLayout>
 
 

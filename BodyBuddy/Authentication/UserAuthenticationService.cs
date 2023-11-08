@@ -13,7 +13,6 @@ namespace BodyBuddy.Authentication
     public class UserAuthenticationService : IUserAuthenticationService
     {
         private readonly Client _supabase;
-        private IUserRepository _userRepository;
 
         // Used for Secure Storage
         //private const string UserIdKey = "UserId";
@@ -25,11 +24,9 @@ namespace BodyBuddy.Authentication
         private readonly string _skipLoginKey = "SkipLogInKey";
 
 
-
-        public UserAuthenticationService(Client client, IUserRepository userRepository)
+        public UserAuthenticationService(Client client)
         {
             _supabase = client;
-            _userRepository = userRepository;
         }
 
         public UserDto GetCurrentUser()

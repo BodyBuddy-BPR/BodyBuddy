@@ -13,8 +13,8 @@ namespace BodyBuddy.Services.Implementations
 {
     public class UserService : IUserService
     {
-        private IUserRepository _userRepository;
-        private IUserAuthenticationService _userAuthenticationService;
+        private readonly IUserRepository _userRepository;
+        private readonly IUserAuthenticationService _userAuthenticationService;
         private readonly UserMapper _mapper = new();
 
         private const string UserUIDKey = "UserUID";
@@ -28,6 +28,7 @@ namespace BodyBuddy.Services.Implementations
         public async Task<List<UserDto>> GetFriends()
         {
             var userId = SecureStorage.GetAsync(UserUIDKey).Result;
+
             var relations = await _userRepository.GetFriends(userId);
 
             return relations.Select(model => _mapper.MapUserRelationsToDto(model)).ToList();
@@ -53,10 +54,11 @@ namespace BodyBuddy.Services.Implementations
             return true;
         }
 
-        public async Task AcceptFriendRequest(string friendId)
+        public async Task<bool> AcceptFriendRequest(string friendId)
         {
             var userId = SecureStorage.GetAsync(UserUIDKey).Result;
-            await _userRepository.AcceptFriendRequest(userId, friendId);
+
+            return await _userRepository.AcceptFriendRequest(userId, friendId);
         }
     }
 }

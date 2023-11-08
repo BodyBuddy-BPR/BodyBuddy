@@ -16,6 +16,6 @@ namespace BodyBuddy.Repositories
 
         Task AddNewFriend(string userId, string friendId);
 
-        Task AcceptFriendRequest(string userId, string friendId);
+        Task<bool> AcceptFriendRequest(string userId, string friendId);
     }
 }

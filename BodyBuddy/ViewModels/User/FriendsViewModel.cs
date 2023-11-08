@@ -25,9 +25,6 @@ namespace BodyBuddy.ViewModels.User
 
         private const string UserUIDKey = "UserUID";
 
-        [ObservableProperty]
-        public bool isAcceptButtonVisible = false;
-
         public FriendsViewModel(IUserService userService)
         {
             _userService = userService;
@@ -49,23 +46,9 @@ namespace BodyBuddy.ViewModels.User
             {
                 IsBusy = true;
 
-                var friends = await _userService.GetFriends();
-                var friendRequests = await _userService.GetFriendRquests();
+                Friends = new ObservableCollection<UserDto>(await _userService.GetFriends());
+                PendingRequests = new ObservableCollection<UserDto>(await _userService.GetFriendRquests());
 
-                // Clear existing lists
-                Friends.Clear();
-                PendingRequests.Clear();
-
-                // Categorize users based on type
-                foreach (var user in friends)
-                {
-                   Friends.Add(user);;
-                }
-
-                foreach (var request in friendRequests)
-                {
-                    PendingRequests.Add(request);
-                }
             }
             catch (Exception ex)
             {
@@ -96,7 +79,10 @@ namespace BodyBuddy.ViewModels.User
         [RelayCommand]
         public async Task AcceptFriendRequest(UserDto friend)
         {
-            await _userService.AcceptFriendRequest(friend.Id);
+            if (!await _userService.AcceptFriendRequest(friend.Id)) return;
+
+            PendingRequests.Remove(friend);
+            Friends.Add(friend);
         }
 
     }
