@@ -53,9 +53,10 @@ namespace BodyBuddy.Services.Implementations
             return true;
         }
 
-        public async Task AcceptFriendRequest(string userId)
+        public async Task AcceptFriendRequest(string friendId)
         {
-            await _userRepository.AcceptFriendRequest(userId);
+            var userId = SecureStorage.GetAsync(UserUIDKey).Result;
+            await _userRepository.AcceptFriendRequest(userId, friendId);
         }
     }
 }

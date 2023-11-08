@@ -31,11 +31,10 @@ namespace BodyBuddy.Repositories.Implementations
         }
 
         // Gets a list of pending friend requests a user has
-        // TODO: FIX --- Får den forkerte user med op. Man får user der er i friendId men skal bruge den anden
         public async Task<List<UserRelationsModel>> GetFriendRequests(string userId)
         {
             var friendListModels = await _supabaseClient.From<UserRelationsModel>()
-                .Where(x => x.FriendId == userId && x.Type == "pending").Get();
+                .Where(x => x.UserId == userId && x.Type == "pending").Get();
             var friendRequests = friendListModels.Models;
 
             return friendRequests;
@@ -43,23 +42,30 @@ namespace BodyBuddy.Repositories.Implementations
 
         public async Task AddNewFriend(string userId, string friendId)
         {
-            var relations = new List<UserRelationsModel>
+            var relation = new UserRelationsModel()
             {
-                new() { UserId = userId, FriendId = friendId, Type = "pending" },
-                new() { UserId = friendId, FriendId = userId, Type = "pending" },
+                UserId = friendId, FriendId = userId, Type = "pending" ,
             };
 
-            await _supabaseClient.From<UserRelationsModel>().Insert(relations);
+            await _supabaseClient.From<UserRelationsModel>().Insert(relation);
         }
 
 
-        //TODO: FIX --- Skal bruge både x.UserId og x.FriendId får at kunne opdatere begge rows uden at komme til at røre andre
-        public async Task AcceptFriendRequest(string userId)
+        public async Task AcceptFriendRequest(string userId, string friendId)
         {
             await _supabaseClient.From<UserRelationsModel>()
-                .Where(x => x.FriendId == userId)
+                .Where(x => x.UserId == userId && x.FriendId == friendId)
                 .Set(x => x.Type, "friend")
                 .Update();
+
+            var relation = new UserRelationsModel()
+            {
+                UserId = friendId,
+                FriendId = userId,
+                Type = "friend",
+            };
+
+            await _supabaseClient.From<UserRelationsModel>().Insert(relation);
         }
 
         public async Task<UserModel> DoesUserExist(string email)

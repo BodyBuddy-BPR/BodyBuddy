@@ -94,9 +94,9 @@ namespace BodyBuddy.ViewModels.User
         }
 
         [RelayCommand]
-        public async Task AcceptFriendRequest(UserDto user)
+        public async Task AcceptFriendRequest(UserDto friend)
         {
-            await _userService.AcceptFriendRequest(user.Id);
+            await _userService.AcceptFriendRequest(friend.Id);
         }
 
     }

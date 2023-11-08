@@ -15,6 +15,6 @@ namespace BodyBuddy.Services
 
         Task<bool> AddNewFriend(string email);
 
-        Task AcceptFriendRequest(string userId);
+        Task AcceptFriendRequest(string friendId);
     }
 }
