@@ -82,7 +82,7 @@
                         FontAttributes="None"
                         FontSize="14"
                         HorizontalTextAlignment="Center"
-                        IsVisible="{Binding ExerciseDetails.SecondaryMuscles, Converter={StaticResource StringLengthConverter}}"
+                        IsVisible="{Binding ExerciseDetails.SecondaryMuscles}"
                         Style="{StaticResource LargeLabel}"
                         Text="{Binding ExerciseDetails.SecondaryMuscles}"
                         TextColor="White" />
