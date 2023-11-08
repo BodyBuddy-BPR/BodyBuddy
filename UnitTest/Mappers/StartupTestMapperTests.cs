@@ -57,7 +57,7 @@ namespace UnitTest.Mappers
         
         [TestCase("Female", 0, "Very Active", 0, "Gain Muscle", 0)]
         [TestCase("Male", 1, "Active", 1, "Gain Muscle", 0)]
-        [TestCase("None", 2, "A Little Active", 2, "Lose Weight", 1)]
+        [TestCase("Prefer not to say", 2, "A Little Active", 2, "Lose Weight", 1)]
         [TestCase("Female", 0, "Not Very Active", 3, "Lose Weight", 1)]
         public void CorrectlyMappingDefaultDtoToDbEntity(string gender, int expectedGender, string activity, int expectedActivity, string goal, int expectedGoal)
         {
@@ -83,7 +83,7 @@ namespace UnitTest.Mappers
 
         [TestCase("Female", 0, "Very Active", 0, "Gain Muscle", 0)]
         [TestCase("Male", 1, "Active", 1, "Gain Muscle", 0)]
-        [TestCase("None", 2, "A Little Active", 2, "Lose Weight", 1)]
+        [TestCase("Prefer not to say", 2, "A Little Active", 2, "Lose Weight", 1)]
         [TestCase("Female", 0, "Not Very Active", 3, "Lose Weight", 1)]
         public void CorrectlyMappingDefaultDbToDto(string expectedGender, int gender, string expectedActivity, int activity, string expectedGoal, int goal)
         {

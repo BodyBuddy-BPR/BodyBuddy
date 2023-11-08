@@ -141,7 +141,7 @@
             <!--  Input Row  -->
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="18.5*" />
                     <ColumnDefinition Width="80*" />
                     <ColumnDefinition Width="10*" />
                 </Grid.ColumnDefinitions>

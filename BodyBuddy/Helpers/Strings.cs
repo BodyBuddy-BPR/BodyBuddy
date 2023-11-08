@@ -13,7 +13,7 @@ namespace BodyBuddy.Helpers
 
         public static string STARTUP_GENDER_FEMALE = "Female";
         public static string STARTUP_GENDER_MALE = "Male";
-        public static string STARTUP_GENDER_NONE = "None";
+        public static string STARTUP_GENDER_NONE = "Prefer not to say";
 
         public static string STARTUP_GOAL_LOSEWEIGHT = "Lose Weight";
         public static string STARTUP_GOAL_GAINMUSCLE = "Gain Muscle";

@@ -17,7 +17,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         private readonly IWorkoutService _workoutService;
         private readonly IWorkoutExercisesService _workoutExercisesService;
 
-        [ObservableProperty] private List<WorkoutDto> _workoutList = new();
+        [ObservableProperty] private ObservableCollection<WorkoutDto> _workoutList = new();
         private List<ExerciseDto> Exercises { get; set; } = new(); // Used for adding exercises from scanned workouts
 
         [ObservableProperty]
@@ -47,7 +47,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 IsBusy = true;
 
-                WorkoutList = await _workoutService.GetWorkoutPlans(IsPreMadeWorkout);
+                WorkoutList = new ObservableCollection<WorkoutDto>(await _workoutService.GetWorkoutPlans(IsPreMadeWorkout));
             }
             catch (Exception ex)
             {
