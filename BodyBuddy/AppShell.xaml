@@ -26,9 +26,8 @@
 
                 <!--  TabBar  -->
                 <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource TabBarColor}" />
-                <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource White}" />
-                <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Dark=#95FFFFFF, Light=#95000000}" />
-                <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource White}" />
+                <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Dark=#95FFFFFF, Light=#95FFFFFF}" />
+                <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource Primary}" />
             </Style>
 
             <Style
