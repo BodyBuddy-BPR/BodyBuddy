@@ -179,7 +179,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             if (workout == null)
                 return;
 
-            await Task.Delay(100);
             await Shell.Current.GoToAsync(nameof(WorkoutDetailsPage), true, new Dictionary<string, object>
             {
                 { "Workout", workout }

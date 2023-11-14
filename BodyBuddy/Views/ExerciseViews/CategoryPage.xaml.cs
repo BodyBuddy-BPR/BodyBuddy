@@ -22,7 +22,7 @@ public partial class CategoryPage : ContentPage
     {
         base.OnAppearing();
 
-        await Task.Delay(50); // Add a short delay
+        //await Task.Delay(100); // Add a short delay
 
         if (_isFirstTime)
         {

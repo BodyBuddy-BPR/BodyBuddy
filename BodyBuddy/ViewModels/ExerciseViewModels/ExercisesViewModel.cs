@@ -46,7 +46,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
 
         public async Task Initialize()
         {
-            await GetExercises();
+            await Task.Run(GetExercises);
             await GetWorkouts();
         }
 

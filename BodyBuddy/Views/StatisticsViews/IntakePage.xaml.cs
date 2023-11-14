@@ -19,6 +19,8 @@ public partial class IntakePage : ContentPage
 	protected override async void OnAppearing()
 	{
 		base.OnAppearing();
-		await _viewModel.Initialize();
+        await Task.Delay(100);
+
+        await _viewModel.Initialize();
 	}
 }
