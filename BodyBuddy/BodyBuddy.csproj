@@ -50,17 +50,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<AndroidResource Remove="Controls\**" />
 		<AndroidResource Remove="Database\Migrations\**" />
-		<Compile Remove="Controls\**" />
 		<Compile Remove="Database\Migrations\**" />
-		<EmbeddedResource Remove="Controls\**" />
 		<EmbeddedResource Remove="Database\Migrations\**" />
-		<MauiCss Remove="Controls\**" />
 		<MauiCss Remove="Database\Migrations\**" />
-		<MauiXaml Remove="Controls\**" />
 		<MauiXaml Remove="Database\Migrations\**" />
-		<None Remove="Controls\**" />
 		<None Remove="Database\Migrations\**" />
 	</ItemGroup>
 

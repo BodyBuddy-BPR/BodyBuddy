@@ -24,8 +24,8 @@ public partial class ProfilePage : ContentPage
         // Changes the button text depending on if the user is logged in
         LoginBtn.Text = _viewModel.IsLoggedIn switch
         {
-            true => "Logout",
-            false => "Login"
+            true => "Sign out",
+            false => "Sign In"
         };
     }
 

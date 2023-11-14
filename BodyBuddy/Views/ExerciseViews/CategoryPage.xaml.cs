@@ -1,3 +1,4 @@
+using BodyBuddy.Controls.Common;
 using BodyBuddy.ViewModels.ExerciseViewModels;
 
 namespace BodyBuddy.Views.ExerciseViews;
@@ -13,6 +14,8 @@ public partial class CategoryPage : ContentPage
         _viewModel = categoryViewModel;
 		BindingContext = categoryViewModel;
 
+        // Adding Common Toolbar items
+        CommonToolBarItems.AddCommonToolbarItems(this);
     }
 
     protected override async void OnAppearing()

@@ -7,7 +7,8 @@
     xmlns:model="clr-namespace:BodyBuddy.Dtos"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.User"
     Title="FriendsPage"
-    x:DataType="viewModel:FriendsViewModel">
+    x:DataType="viewModel:FriendsViewModel"
+    Shell.TabBarIsVisible="False">
 
     <ContentPage.Resources>
         <ResourceDictionary>

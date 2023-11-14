@@ -64,10 +64,10 @@
             ContentTemplate="{DataTemplate exerciseViews:CategoryPage}"
             Icon="dumbbell.png" />
 
-        <ShellContent
+        <!--<ShellContent
             Title="Friends"
             ContentTemplate="{DataTemplate userViews:FriendsPage}"
-            Icon="questionmark.png" />
+            Icon="questionmark.png" />-->
 
 
         <!--  StartupTest Temp, until found another place  -->

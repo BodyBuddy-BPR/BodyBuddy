@@ -26,11 +26,5 @@ namespace BodyBuddy.ViewModels
             await Shell.Current.Navigation.PopAsync();
         }
 
-        [RelayCommand]
-        public static async Task GoToProfile()
-        {
-            await Shell.Current.GoToAsync(nameof(ProfilePage), true);
-        }
-
     }
 }

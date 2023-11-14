@@ -1,4 +1,4 @@
-﻿using BodyBuddy.CustomControls;
+﻿using BodyBuddy.Controls.Custom;
 using BodyBuddy.Database;
 using Syncfusion.Licensing;
 
