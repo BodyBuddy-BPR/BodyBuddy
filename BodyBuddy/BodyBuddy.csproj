@@ -93,7 +93,6 @@
 		<PackageReference Include="Camera.MAUI" Version="1.4.4" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.2.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
-		<PackageReference Include="Imagekit" Version="4.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Mopups" Version="1.1.1" />
 		<PackageReference Include="PureWeen.Maui.FixesAndWorkarounds" Version="1.4.9" />
