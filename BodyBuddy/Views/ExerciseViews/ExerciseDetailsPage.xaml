@@ -10,11 +10,6 @@
     x:DataType="viewModel:ExerciseDetailsViewModel"
     Shell.TabBarIsVisible="False">
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converters:ImageConverter x:Key="ImageConverter" />
-        </ResourceDictionary>
-    </ContentPage.Resources>
 
     <ScrollView>
         <Grid RowDefinitions="35*, 30*, 35*">
