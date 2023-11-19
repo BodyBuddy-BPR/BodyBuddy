@@ -26,7 +26,6 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             if (category is null)
                 return;
 
-            await Task.Delay(150); // Add a short delay
             await Shell.Current.GoToAsync($"{nameof(MuscleGroupPage)}?Category={Uri.EscapeDataString(category)}",true);
         }
 

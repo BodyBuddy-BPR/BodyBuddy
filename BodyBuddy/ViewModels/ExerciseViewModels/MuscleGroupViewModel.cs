@@ -56,7 +56,6 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             if (exercise is null)
                 return;
 
-            await Task.Delay(150); // Add a short delay
             await Shell.Current.GoToAsync(nameof(ExercisesPage), true, new Dictionary<string, object>
             {
                 { "Exercise", exercise }

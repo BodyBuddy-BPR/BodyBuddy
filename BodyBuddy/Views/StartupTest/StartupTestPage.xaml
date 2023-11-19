@@ -4,7 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:BodyBuddy.Converters"
-    xmlns:customControls="clr-namespace:BodyBuddy.CustomControls"
+    xmlns:customControls="clr-namespace:BodyBuddy.Controls.Custom"
     xmlns:local="clr-namespace:BodyBuddy.Events"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:progressBar="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"

@@ -21,7 +21,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         private List<ExerciseDto> Exercises { get; set; } = new(); // Used for adding exercises from scanned workouts
 
         [ObservableProperty]
-        private bool _isPreMadeWorkout;
+        private bool _isPreMadeWorkout = true;
 
         [ObservableProperty]
         public string workoutName, workoutDescription;
@@ -179,7 +179,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             if (workout == null)
                 return;
 
-            await Task.Delay(100);
             await Shell.Current.GoToAsync(nameof(WorkoutDetailsPage), true, new Dictionary<string, object>
             {
                 { "Workout", workout }
