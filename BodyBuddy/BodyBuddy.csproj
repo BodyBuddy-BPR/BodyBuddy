@@ -82,6 +82,7 @@
 		<None Remove="Resources\Images\plus_sign.svg" />
 		<None Remove="Resources\Images\trashcan.svg" />
 		<None Remove="Resources\Images\profile-circle.svg" />
+		<None Remove="Resources\Raw\confetti.json" />
 		<None Remove="Resources\Raw\waving_hand.json" />
 	</ItemGroup>
 

@@ -15,6 +15,7 @@
 
             <!--  Other Colors  -->
             <Color x:Key="White">#D7E4EA</Color>
+            <Color x:Key="Black">#1F1F1F</Color>
 
             <!--  Text  -->
             <Color x:Key="DarkText">#1F1F1F</Color>
