@@ -9,6 +9,7 @@ using BodyBuddy.Dtos;
 using BodyBuddy.Helpers;
 using BodyBuddy.Services;
 using ZXing.QrCode;
+using Microsoft.VisualBasic;
 
 namespace BodyBuddy.ViewModels.WorkoutViewModels
 {
@@ -16,8 +17,10 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
     {
         private readonly IWorkoutService _workoutService;
         private readonly IWorkoutExercisesService _workoutExercisesService;
+        private readonly IStartupTestService _startupTestService;
 
         [ObservableProperty] private ObservableCollection<WorkoutDto> _workoutList = new();
+        private StartupTestDto startupTestDto;
         private List<ExerciseDto> Exercises { get; set; } = new(); // Used for adding exercises from scanned workouts
 
         [ObservableProperty]
@@ -29,12 +32,13 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         [ObservableProperty]
         public string errorMessage;
 
-        public WorkoutViewModel(IWorkoutService workoutService, IWorkoutExercisesService workoutExercisesService)
+        public WorkoutViewModel(IWorkoutService workoutService, IWorkoutExercisesService workoutExercisesService, IStartupTestService startupTestService)
         {
             Title = string.Empty;
 
             _workoutService = workoutService;
             _workoutExercisesService = workoutExercisesService;
+            _startupTestService = startupTestService;
         }
 
 
@@ -47,7 +51,21 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 IsBusy = true;
 
-                WorkoutList = new ObservableCollection<WorkoutDto>(await _workoutService.GetWorkoutPlans(IsPreMadeWorkout));
+                startupTestDto = await _startupTestService.GetStartupTestData();
+                string[] targetAreas = startupTestDto.TargetAreas.Split(new string[] { ", " }, StringSplitOptions.None);
+
+                var tempWorkoutList = new ObservableCollection<WorkoutDto>(await _workoutService.GetWorkoutPlans(IsPreMadeWorkout));
+
+                foreach (string area in targetAreas)
+                {
+                    WorkoutDto matchingWorkout = tempWorkoutList.FirstOrDefault(workout =>
+                        workout.Name.IndexOf(area, StringComparison.OrdinalIgnoreCase) >= 0);
+
+                    if (matchingWorkout != null)
+                    {
+                        WorkoutList.Add(matchingWorkout);
+                    }
+                }
             }
             catch (Exception ex)
             {
