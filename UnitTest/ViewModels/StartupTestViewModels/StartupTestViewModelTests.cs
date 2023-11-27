@@ -20,18 +20,19 @@ namespace UnitTest.ViewModels.StartupTest
             target = new StartupTestViewModel(_serviceMock.Object);
         }
 
-        [TestCase(0, true, false, false, false, false, false, false, false, false)]
-        [TestCase(1, false, true, false, false, false, false, false, false, false)]
-        [TestCase(2, false, false, true, false, false, false, false, false, false)]
-        [TestCase(3, false, false, false, true, false, false, false, false, false)]
-        [TestCase(4, false, false, false, false, true, false, false, false, false)]
-        [TestCase(5, false, false, false, false, false, true, false, false, false)]
-        [TestCase(6, false, false, false, false, false, false, true, false, false)]
-        [TestCase(7, false, false, false, false, false, false, false, true, false)]
-        [TestCase(8, false, false, false, false, false, false, false, false, true)]
-        [TestCase(9, false, false, false, false, false, false, false, false, false)]
+        [TestCase(0, true, false, false, false, false, false, false, false, false, false)]
+        [TestCase(1, false, true, false, false, false, false, false, false, false, false)]
+        [TestCase(2, false, false, true, false, false, false, false, false, false, false)]
+        [TestCase(3, false, false, false, true, false, false, false, false, false, false)]
+        [TestCase(4, false, false, false, false, true, false, false, false, false, false)]
+        [TestCase(5, false, false, false, false, false, true, false, false, false, false)]
+        [TestCase(6, false, false, false, false, false, false, true, false, false, false)]
+        [TestCase(7, false, false, false, false, false, false, false, true, false, false)]
+        [TestCase(8, false, false, false, false, false, false, false, false, true, false)]
+        [TestCase(9, false, false, false, false, false, false, false, false, false, true)]
+        [TestCase(10, false, false, false, false, false, false, false, false, false, false)]
         public void Test_StateNext_Progression_AndPropertyVisibility(int stateNumber, bool welcomeVisible, bool nameVisible, bool genderVisible, bool weightVisible, bool heightVisible,
-            bool birthdayVisible, bool activeVisible, bool passiveCalorieVisible, bool goalVisible)
+            bool birthdayVisible, bool activeVisible, bool passiveCalorieVisible, bool focusVisible, bool goalVisible)
         {
             // Arrange
             TargetSetup();
@@ -47,6 +48,7 @@ namespace UnitTest.ViewModels.StartupTest
             Assert.That(target.IsHeightVisible, Is.EqualTo(heightVisible));
             Assert.That(target.IsBirthdayVisible, Is.EqualTo(birthdayVisible));
             Assert.That(target.IsActiveVisible, Is.EqualTo(activeVisible));
+            Assert.That(target.IsFocusAreaVisible, Is.EqualTo(focusVisible));
             Assert.That(target.IsPassiveCalorieBurnVisible, Is.EqualTo(passiveCalorieVisible));
             Assert.That(target.IsGoalVisible, Is.EqualTo(goalVisible));
         }
@@ -59,8 +61,9 @@ namespace UnitTest.ViewModels.StartupTest
         [TestCase(5, "When is your birthday?")]
         [TestCase(6, "How active are you?")]
         [TestCase(7, "Passive Calorie Burn")]
-        [TestCase(8, "What are your goals?")]
-        [TestCase(9, "You're all set!")]
+        [TestCase(8, "What are your focus areas?")]
+        [TestCase(9, "What are your goals?")]
+        [TestCase(10, "You're all set!")]
         public void ProgressingThroughStates_UpdatesQuestionnaireTextCorrectly(int stateNumber, string expectedQuestionnaireText)
         {
             // Arrange
@@ -82,7 +85,8 @@ namespace UnitTest.ViewModels.StartupTest
         [TestCase(6,false)]
         [TestCase(7,false)]
         [TestCase(8,false)]
-        [TestCase(9,true)]
+        [TestCase(9,false)]
+        [TestCase(10,true)]
         public void Verify_SubmitIsVisible_OnlyOnDoneState(int stateNumber, bool expectedSubmitVisible)
         {
             // Arrange
@@ -113,6 +117,7 @@ namespace UnitTest.ViewModels.StartupTest
             target.StartupTestDto.Weight = 1.0;
             target.StartupTestDto.Height = 1;
             target.StartupTestDto.PassiveCalorieBurn = 1;
+            target.StartupTestDto.TargetAreas = "Abs, Back";
             target.StartupTestDto.Birthday = new DateTime(1997, 1, 1);
         }
     }

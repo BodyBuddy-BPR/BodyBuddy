@@ -18,6 +18,7 @@ public partial class StartupTestPage : ContentPage
 		NameEditor.Unfocus();
 	}
 
+    // Method to let the user tap the text next to a checkbox, and it will still be selected.
     private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
     {
         var layout = sender as Layout;

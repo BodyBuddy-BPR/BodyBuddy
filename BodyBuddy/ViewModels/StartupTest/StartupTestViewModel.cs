@@ -47,7 +47,6 @@ public partial class StartupTestViewModel : BaseViewModel
     #endregion
 
     public ICommand RadioButtonCheckedCommand { get; }
-    public ICommand CheckboxCheckedCommand { get; }
 
     private readonly IStartupTestService _startupTestService;
 
@@ -318,13 +317,4 @@ public partial class StartupTestViewModel : BaseViewModel
 
         return (int)(pcb * activityFactor);
     }
-
-    //public void CheckBoxStateChange(bool[] values)
-    //{
-    //    StartupTestDto.TargetAreas = "";
-    //    if (values[0]) StartupTestDto.TargetAreas += "Upper body";
-    //    if (values[1]) StartupTestDto.TargetAreas += "Lower body";
-    //    if (values[2]) StartupTestDto.TargetAreas += "Abs";
-    //    if (values[3]) StartupTestDto.TargetAreas += "Back";
-    //}
 }

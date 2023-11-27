@@ -52,14 +52,5 @@ namespace BodyBuddy.Mappers
         public static UserActivity GetUserActivityFromDisplayString(string displayString) => UserActivityDisplayStrings.FirstOrDefault(x => x.Value == displayString).Key;
 
         public static Goal GetGoalFromDisplayString(string displayString) => GoalDisplayStrings.FirstOrDefault(x => x.Value == displayString).Key;
-
-        public static List<string> GetFocusAreaToListFromDisplayString(string focusAreasString)
-        {
-            string[] focusAreasArray = focusAreasString.Split(',').Select(area => area.Trim()).ToArray();
-
-            List<string> focusAreasList = new List<string>(focusAreasArray);
-
-            return focusAreasList;
-        }
     }
 }

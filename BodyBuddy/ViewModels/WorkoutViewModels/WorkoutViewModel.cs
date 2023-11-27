@@ -9,7 +9,6 @@ using BodyBuddy.Dtos;
 using BodyBuddy.Helpers;
 using BodyBuddy.Services;
 using ZXing.QrCode;
-using Microsoft.VisualBasic;
 
 namespace BodyBuddy.ViewModels.WorkoutViewModels
 {
@@ -21,7 +20,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         [ObservableProperty] private ObservableCollection<WorkoutDto> _workoutList = new();
         private StartupTestDto startupTestDto;
-        private List<ExerciseDto> Exercises { get; set; } = new(); // Used for adding exercises from scanned workouts
+        private List<ExerciseDto> Exercises { get; set; } = new();
 
         [ObservableProperty]
         private bool _isPreMadeWorkout = true;
@@ -52,19 +51,27 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 IsBusy = true;
 
                 startupTestDto = await _startupTestService.GetStartupTestData();
-                string[] targetAreas = startupTestDto.TargetAreas.Split(new string[] { ", " }, StringSplitOptions.None);
-
                 var tempWorkoutList = new ObservableCollection<WorkoutDto>(await _workoutService.GetWorkoutPlans(IsPreMadeWorkout));
 
-                foreach (string area in targetAreas)
+                if (!String.IsNullOrEmpty(startupTestDto.TargetAreas))
                 {
-                    IEnumerable<WorkoutDto> matchingWorkouts = tempWorkoutList.Where(workout =>
-                        workout.Name.IndexOf(area, StringComparison.OrdinalIgnoreCase) >= 0);
-
-                    foreach (var matchingWorkout in matchingWorkouts)
+                    string[] targetAreas = startupTestDto.TargetAreas.Split(new string[] { ", " }, StringSplitOptions.None); 
+                    
+                    foreach (string area in targetAreas)
                     {
-                        WorkoutList.Add(matchingWorkout);
+                        IEnumerable<WorkoutDto> matchingWorkouts = tempWorkoutList.Where(workout =>
+                            workout.Name.IndexOf(area, StringComparison.OrdinalIgnoreCase) >= 0);
+
+                        foreach (var matchingWorkout in matchingWorkouts)
+                        {
+                            WorkoutList.Add(matchingWorkout);
+                        }
                     }
+                }
+
+                if(WorkoutList.Count == 0)
+                {
+                    WorkoutList = tempWorkoutList;
                 }
             }
             catch (Exception ex)
