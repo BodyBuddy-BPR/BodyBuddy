@@ -27,11 +27,11 @@ namespace BodyBuddy.Enums
         LoseWeight = 1,
     }
 
-    public enum FocusArea
+    public enum TargetArea
     {
         UpperBody = 0,
         LowerBody = 1,
-        AbsAndCore = 2,
-        Other = 3,
+        Abs = 2,
+        Back = 3,
     }
 }

@@ -16,6 +16,7 @@ namespace BodyBuddy.Enums
         BirthdaySelection,
         ActivitySelection,
         PassiveCalorieBurnEntry,
+        FocusAreas,
         GoalSelection,
         Done
     }

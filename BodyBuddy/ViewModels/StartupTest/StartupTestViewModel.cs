@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using BodyBuddy.Enums;
 using BodyBuddy.Mappers;
+using System.Collections.ObjectModel;
 
 namespace BodyBuddy.ViewModels.StartupTest;
 
@@ -18,7 +19,7 @@ public partial class StartupTestViewModel : BaseViewModel
     [ObservableProperty] private bool _isNameVisible, _isGenderVisible, _isWeightVisible, _isHeightVisible;
 
     [ObservableProperty]
-    private bool _isBirthdayVisible, _isActiveVisible, _isPassiveCalorieBurnVisible, _isGoalVisible;
+    private bool _isBirthdayVisible, _isActiveVisible, _isPassiveCalorieBurnVisible, _isGoalVisible, _isFocusAreaVisible;
 
     [ObservableProperty]
     private bool _submitDataIsVisible, _nextIsEnabled, _backIsVisible, _isNextButtonVisible, _isWelcomeVisible;
@@ -31,7 +32,7 @@ public partial class StartupTestViewModel : BaseViewModel
     private string _questionnaireText;
 
     //-1 used to avoid Welcome being a part of the progress
-    public double StartupTestProgress => (int)CurrentState > 1 ? ((double)CurrentState - 1) / 8 : 0;
+    public double StartupTestProgress => (int)CurrentState > 1 ? ((double)CurrentState - 1) / 9 : 0;
 
     public DateTime MinDate { get; } = new(1914, 7, 28);
     public DateTime MaxDate { get; } = DateTime.Now;
@@ -40,10 +41,10 @@ public partial class StartupTestViewModel : BaseViewModel
     public List<string> ActivityList { get; }
     public List<string> GoalList { get; }
     public List<string> FocusAreaList { get; }
-    //public List<bool> TargetSelectedStates { get; set; } = new() { false, false, false, false };
     #endregion
 
     public ICommand RadioButtonCheckedCommand { get; }
+    public ICommand CheckboxCheckedCommand { get; }
 
     private readonly IStartupTestService _startupTestService;
 
@@ -60,7 +61,7 @@ public partial class StartupTestViewModel : BaseViewModel
         GoalList = InitializeGoalList();
         FocusAreaList = InitializeFocusAreaList();
 
-        //SetStateProperties Has to be first due timing
+        //SetStateProperties Has to be first due to timing
         SetStateProperties();
         UpdateVisibility();
         RadioButtonCheckedCommand = new Command<string>(OnRadioButtonChecked);
@@ -94,6 +95,7 @@ public partial class StartupTestViewModel : BaseViewModel
             case nameof(StartupTestDto.Name):
             case nameof(StartupTestDto.Gender):
             case nameof(StartupTestDto.ActiveAmount):
+            case nameof(StartupTestDto.TargetAreas):
             case nameof(StartupTestDto.Goal):
             case nameof(StartupTestDto.Weight):
             case nameof(StartupTestDto.Height):
@@ -143,6 +145,7 @@ public partial class StartupTestViewModel : BaseViewModel
         IsBirthdayVisible = CurrentState == StartupTestStates.BirthdaySelection;
         IsActiveVisible = CurrentState == StartupTestStates.ActivitySelection;
         IsPassiveCalorieBurnVisible = CurrentState == StartupTestStates.PassiveCalorieBurnEntry;
+        IsFocusAreaVisible = CurrentState == StartupTestStates.FocusAreas;
         IsGoalVisible = CurrentState == StartupTestStates.GoalSelection;
         UpdateActionButtonsVisibility();
     }
@@ -194,6 +197,10 @@ public partial class StartupTestViewModel : BaseViewModel
                 StartupTestDto.PassiveCalorieBurn = CalculatePCB();
                 currentStateDone = () => StartupTestDto.PassiveCalorieBurn > 0;
                 break;
+            case StartupTestStates.FocusAreas:
+                QuestionnaireText = "What are your focus areas?";
+                currentStateDone = () => true;
+                break;
             case StartupTestStates.GoalSelection:
                 QuestionnaireText = "What are your goals?";
                 currentStateDone = () => !string.IsNullOrEmpty(StartupTestDto.Goal);
@@ -225,6 +232,26 @@ public partial class StartupTestViewModel : BaseViewModel
         }
     }
 
+    public void TargetAreaChangedEvent(List<object> selectedItems)
+    {
+        bool firstTime = true;
+        string selectedItemsString = "";
+        foreach(string str in selectedItems)
+        {
+            if (firstTime)
+            {
+                selectedItemsString += str;
+                firstTime = false;
+            }
+            else
+            {
+                selectedItemsString += ", " + str;
+            }
+        }
+
+        StartupTestDto.TargetAreas = selectedItemsString;
+    }
+
     #endregion
     private static List<string> InitializeGenderList()
     {
@@ -251,8 +278,8 @@ public partial class StartupTestViewModel : BaseViewModel
     }
     private static List<string> InitializeFocusAreaList()
     {
-        return Enum.GetValues(typeof(FocusArea))
-            .Cast<FocusArea>()
+        return Enum.GetValues(typeof(TargetArea))
+            .Cast<TargetArea>()
             .Select(EnumMapper.GetDisplayString)
             .ToList();
     }
@@ -281,5 +308,14 @@ public partial class StartupTestViewModel : BaseViewModel
         };
 
         return (int)(pcb * activityFactor);
+    }
+
+    public void CheckBoxStateChange(bool[] values)
+    {
+        StartupTestDto.TargetAreas = "";
+        if (values[0]) StartupTestDto.TargetAreas += "Upper body";
+        if (values[1]) StartupTestDto.TargetAreas += "Lower body";
+        if (values[2]) StartupTestDto.TargetAreas += "Abs";
+        if (values[3]) StartupTestDto.TargetAreas += "Back";
     }
 }

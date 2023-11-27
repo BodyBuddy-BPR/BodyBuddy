@@ -29,6 +29,9 @@ namespace BodyBuddy.Models
         [Column("passiveCalorieBurn")]
         public int PassiveCalorieBurn { get; set; }
 
+        [Column("targetAreas")]
+        public List<string> TargetAreas { get; set; }
+
         [Column("goal")]
         public int Goal { get; set; }
     }

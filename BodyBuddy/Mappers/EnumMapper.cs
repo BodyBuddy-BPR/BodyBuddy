@@ -31,12 +31,12 @@ namespace BodyBuddy.Mappers
             { Goal.GainMuscle, Strings.STARTUP_GOAL_GAINMUSCLE },
         };
 
-        private static readonly Dictionary<FocusArea, string> FocusAreaDisplayStrings = new()
+        private static readonly Dictionary<TargetArea, string> FocusAreaDisplayStrings = new()
         {
-            { FocusArea.UpperBody, Strings.STARTUP_FOCUSAREA_UPPERBODY },
-            { FocusArea.LowerBody, Strings.STARTUP_FOCUSAREA_LOWERBODY },
-            { FocusArea.AbsAndCore, Strings.STARTUP_FOCUSAREA_ABSANDCORE },
-            { FocusArea.Other, Strings.STARTUP_FOCUSAREA_OTHER },
+            { TargetArea.UpperBody, Strings.STARTUP_FOCUSAREA_UPPERBODY },
+            { TargetArea.LowerBody, Strings.STARTUP_FOCUSAREA_LOWERBODY },
+            { TargetArea.Abs, Strings.STARTUP_FOCUSAREA_ABS },
+            { TargetArea.Back, Strings.STARTUP_FOCUSAREA_BACK },
         };
 
         public static string GetDisplayString(Gender gender) => GenderDisplayStrings[gender];
@@ -45,7 +45,7 @@ namespace BodyBuddy.Mappers
 
         public static string GetDisplayString(Goal goal) => GoalDisplayStrings[goal];
 
-        public static string GetDisplayString(FocusArea focusArea) => FocusAreaDisplayStrings[focusArea];
+        public static string GetDisplayString(TargetArea targetArea) => FocusAreaDisplayStrings[targetArea];
 
         public static Gender GetGenderFromDisplayString(string displayString) => GenderDisplayStrings.FirstOrDefault(x => x.Value == displayString).Key;
 
@@ -53,6 +53,31 @@ namespace BodyBuddy.Mappers
 
         public static Goal GetGoalFromDisplayString(string displayString) => GoalDisplayStrings.FirstOrDefault(x => x.Value == displayString).Key;
 
-        public static FocusArea GetFocusAreaFromDisplayString(string displayString) => FocusAreaDisplayStrings.FirstOrDefault(x => x.Value == displayString).Key;
+        public static string GetFocusAreaFromDisplayString(List<string> displayStrings)
+        {
+            bool firstTime = false;
+            StringBuilder result = new StringBuilder();
+
+            foreach (string str in displayStrings)
+            {
+                if (!firstTime)
+                {
+                    result.Append(str);
+                    firstTime = true;
+                }
+                result.Append(", " + str);
+            }
+
+            return result.ToString();
+        }
+
+        public static List<string> GetFocusAreaToListFromDisplayString(string focusAreasString)
+        {
+            string[] focusAreasArray = focusAreasString.Split(',').Select(area => area.Trim()).ToArray();
+
+            List<string> focusAreasList = new List<string>(focusAreasArray);
+
+            return focusAreasList;
+        }
     }
 }

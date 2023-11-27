@@ -8,6 +8,7 @@
     xmlns:local="clr-namespace:BodyBuddy.Events"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:progressBar="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
+    xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.StartupTest"
     Title="StartupTest"
@@ -278,6 +279,45 @@
                 Text="Kcal/Day"
                 TextColor="White" />
         </VerticalStackLayout>
+
+        <!--  TargetArea  -->
+        <VerticalStackLayout
+            x:Name="TargetAreaCollectionView"
+            Grid.Row="1"
+            HorizontalOptions="End"
+            IsVisible="{Binding IsFocusAreaVisible}"
+            VerticalOptions="Center">
+            <syncfusion:SfCheckBox x:Name="UpperBody" Text="Upper body" />
+            <syncfusion:SfCheckBox
+                x:Name="LowerBody"
+                StateChanged="CheckBox_StateChanged"
+                Text="Lower body" />
+            <syncfusion:SfCheckBox
+                x:Name="Abs"
+                StateChanged="CheckBox_StateChanged"
+                Text="Abs" />
+            <syncfusion:SfCheckBox
+                x:Name="Back"
+                StateChanged="CheckBox_StateChanged"
+                Text="Back" />
+        </VerticalStackLayout>
+        <!--<CollectionView
+            x:Name="TargetAreaCollectionView"
+            Grid.Row="1"
+            HorizontalOptions="End"
+            IsVisible="{Binding IsFocusAreaVisible}"
+            ItemsSource="{Binding FocusAreaList}"
+            SelectionChanged="TargetAreaChangedEvent"
+            SelectionMode="Multiple"
+            VerticalOptions="Center">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="viewModel:StartupTestViewModel">
+                    <HorizontalStackLayout HorizontalOptions="Center" WidthRequest="120">
+                        <syncfusion:SfCheckBox StateChanged="CheckBox_StateChanged" Text="{Binding .}" />
+                    </HorizontalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>-->
 
         <!--  Goal  -->
         <CollectionView
