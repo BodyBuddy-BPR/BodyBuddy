@@ -7,13 +7,22 @@
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.Profile"
     x:DataType="viewModel:ProfileViewModel"
-    Shell.NavBarIsVisible="True">
+    Shell.NavBarIsVisible="True"
+    Shell.PresentationMode="Animated"
+    Shell.TabBarIsVisible="False">
 
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:BooleanInvertConverter x:Key="BooleanInvertConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            x:Name="LoginBtn"
+            Clicked="LoginOrOut_Clicked"
+            Text="Sign In" />
+    </ContentPage.ToolbarItems>
 
     <Grid RowDefinitions="47.5*, 5*, 47.5*">
 
@@ -407,7 +416,7 @@
         </Border>
 
         <!--  Login Button  -->
-        <Button
+        <!--<Button
             x:Name="LoginBtn"
             Grid.Row="1"
             Padding="5"
@@ -416,6 +425,6 @@
             Text="Login"
             TextColor="#212121"
             VerticalOptions="EndAndExpand"
-            WidthRequest="140" />
+            WidthRequest="140" />-->
     </Grid>
 </ContentPage>

@@ -2,6 +2,7 @@ using BodyBuddy.Helpers;
 using BodyBuddy.ViewModels.WorkoutViewModels;
 using Mopups.Interfaces;
 using System.Text.RegularExpressions;
+using BodyBuddy.Controls.Common;
 
 namespace BodyBuddy.Views.WorkoutViews;
 
@@ -19,6 +20,9 @@ public partial class WorkoutsPage : ContentPage
         BindingContext = workoutsViewModel;
 
         _popupNavigation = popupNavigation;
+
+        // Adding Common Toolbar items
+        CommonToolBarItems.AddCommonToolbarItems(this);
     }
 
 

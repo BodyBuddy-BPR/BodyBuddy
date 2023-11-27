@@ -3,13 +3,13 @@
     x:Class="BodyBuddy.Views.Authentication.LoginPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:customControls="clr-namespace:BodyBuddy.CustomControls"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.Authentication"
-    x:DataType="viewModel:LoginViewModel" 
+    x:DataType="viewModel:LoginViewModel"
     BackgroundColor="#2f2f2f"
-    Shell.NavBarIsVisible="True">
+    Shell.NavBarIsVisible="True"
+    Shell.PresentationMode="ModalAnimated">
 
     <ContentPage.Resources>
         <Style x:Key="providerButton" TargetType="Button">

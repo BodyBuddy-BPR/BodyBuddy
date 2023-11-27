@@ -58,7 +58,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 WorkoutDetails.Description = "Try giving this workout a description";
             }
 
-            await GetExercisesFromWorkout();
+            await Task.Run(GetExercisesFromWorkout);
 
             //Setting up Visibility of small and big buttons
             if (Exercises.Count > 0)

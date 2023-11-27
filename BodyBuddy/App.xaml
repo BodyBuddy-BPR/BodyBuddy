@@ -24,7 +24,7 @@
             <Color x:Key="StatusBarColor">#065A82</Color>
             <Color x:Key="NavigationBarColor">#065A82</Color>
             <Color x:Key="PageBackgroundColor">#2f2f2f</Color>
-            <Color x:Key="TabBarColor">#065A82</Color>
+            <Color x:Key="TabBarColor">#1F1F1F</Color>
 
             <!--  Pages  -->
             <Style ApplyToDerivedTypes="True" TargetType="Page">
