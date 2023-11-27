@@ -58,10 +58,10 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
                 foreach (string area in targetAreas)
                 {
-                    WorkoutDto matchingWorkout = tempWorkoutList.FirstOrDefault(workout =>
+                    IEnumerable<WorkoutDto> matchingWorkouts = tempWorkoutList.Where(workout =>
                         workout.Name.IndexOf(area, StringComparison.OrdinalIgnoreCase) >= 0);
 
-                    if (matchingWorkout != null)
+                    foreach (var matchingWorkout in matchingWorkouts)
                     {
                         WorkoutList.Add(matchingWorkout);
                     }
