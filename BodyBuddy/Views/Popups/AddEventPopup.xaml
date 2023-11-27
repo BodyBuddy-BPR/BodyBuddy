@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage
+    x:Class="BodyBuddy.Views.Popups.AddEventPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Dtos="clr-namespace:BodyBuddy.Dtos"
+    xmlns:mopupAnimation="clr-namespace:Mopups.Animations;assembly=Mopups"
+    xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.Calendar"
+    x:DataType="viewModel:CalendarViewModel"
+    BackgroundClickedCommand="{Binding DeclineAddEventCommand}"
+    BackgroundColor="#80000000"
+    CloseWhenBackgroundIsClicked="True">
+
+    <mopups:PopupPage.Animation>
+        <mopupAnimation:ScaleAnimation
+            DurationIn="1000"
+            EasingIn="BounceOut"
+            PositionIn="Bottom"
+            PositionOut="Center"
+            ScaleIn="1"
+            ScaleOut="0.7" />
+    </mopups:PopupPage.Animation>
+
+    <Border
+        x:Name="popupBorder"
+        HeightRequest="500"
+        HorizontalOptions="Center"
+        Style="{StaticResource CardView}"
+        WidthRequest="300">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="20" />
+        </Border.StrokeShape>
+
+        <Grid>
+
+            <VerticalStackLayout Padding="15,15" Spacing="10">
+                <!--  Title  -->
+                <Label
+                    Margin="0,0,0,10"
+                    Style="{StaticResource TitleLabel}"
+                    Text="Add an event"
+                    TextColor="Black" />
+
+                <!--  Event Name  -->
+                <Label
+                    Margin="0,0,0,-5"
+                    Style="{StaticResource LargeLabel}"
+                    Text="Event name"
+                    TextColor="{StaticResource DarkText}" />
+                <Border Opacity="0.9" Style="{StaticResource CardView}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="5" />
+                    </Border.StrokeShape>
+                    <Entry
+                        BackgroundColor="Transparent"
+                        FontSize="16"
+                        Placeholder="Event name"
+                        PlaceholderColor="DarkGray"
+                        Style="{StaticResource BaseEntry}"
+                        Text="{Binding EventName}">
+                        <Entry.Behaviors>
+                            <toolkit:MultiValidationBehavior x:Name="EventNameValid" Flags="ValidateOnValueChanged">
+                                <toolkit:CharactersValidationBehavior
+                                    toolkit:MultiValidationBehavior.Error="Minimum Length of 1"
+                                    CharacterType="Any"
+                                    MinimumCharacterTypeCount="1"
+                                    RegexPattern="" />
+                                <toolkit:TextValidationBehavior
+                                    toolkit:MultiValidationBehavior.Error="Exciding maximum length of 20"
+                                    Flags="ValidateOnValueChanged"
+                                    MaximumLength="10" />
+                            </toolkit:MultiValidationBehavior>
+
+                        </Entry.Behaviors>
+                    </Entry>
+                </Border>
+                <!--  Display event name error message  -->
+                <Label
+                    x:Name="EventNameError"
+                    Padding="2"
+                    FontAttributes="Bold"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    IsVisible="false"
+                    Opacity="0.7"
+                    Style="{StaticResource MediumLabel}"
+                    Text=""
+                    TextColor="Red"
+                    VerticalOptions="Center" />
+
+                <Grid RowDefinitions="Auto, Auto">
+                    <HorizontalStackLayout
+                        Grid.Row="0"
+                        HorizontalOptions="Start"
+                        Spacing="40">
+                        <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource LargeLabel}"
+                            Text="From"
+                            TextColor="{StaticResource DarkText}" />
+
+                        <Label
+                            HorizontalOptions="End"
+                            Style="{StaticResource LargeLabel}"
+                            Text="To"
+                            TextColor="{StaticResource DarkText}" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout
+                        Grid.Row="1"
+                        HorizontalOptions="Start"
+                        Spacing="10">
+                        <TimePicker FontSize="20" TextColor="{StaticResource DarkText}" />
+
+                        <Label
+                            HorizontalOptions="Center"
+                            Style="{StaticResource LargeLabel}"
+                            Text=" - "
+                            TextColor="{StaticResource DarkText}"
+                            VerticalOptions="Center" />
+
+                        <TimePicker FontSize="20" TextColor="{StaticResource DarkText}" />
+                    </HorizontalStackLayout>
+                </Grid>
+
+
+                <!--  Optional Select Workouts Dropdown  -->
+
+
+
+                <!--  Select Event Color dropdown  -->
+
+
+
+                <!--  Create a new event button  -->
+                <Button
+                    Clicked="CreateBtn_Clicked"
+                    Style="{StaticResource AddButton}"
+                    Text="Create"
+                    TextColor="{StaticResource LightText}"
+                    WidthRequest="240" />
+
+            </VerticalStackLayout>
+
+        </Grid>
+
+    </Border>
+
+
+</mopups:PopupPage>

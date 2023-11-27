@@ -33,10 +33,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#065A82" ForegroundScale="0.60"/>
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#065A82" ForegroundScale="0.60" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#065A82"  />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#065A82" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -94,21 +94,28 @@
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.2.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-		<PackageReference Include="Mopups" Version="1.1.1" />
-		<PackageReference Include="PureWeen.Maui.FixesAndWorkarounds" Version="1.4.9" />
+		<PackageReference Include="Mopups" Version="1.2.0" />
+		<PackageReference Include="PureWeen.Maui.FixesAndWorkarounds" Version="1.5.0" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
 		<PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
-		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.5" />
-		<PackageReference Include="supabase-csharp" Version="0.12.1" />
-		<PackageReference Include="Syncfusion.Licensing" Version="23.1.36" />
-		<PackageReference Include="Syncfusion.Maui.Inputs" Version="23.1.36" />
-		<PackageReference Include="Syncfusion.Maui.Popup" Version="23.1.36" />
-		<PackageReference Include="Syncfusion.Maui.ProgressBar" Version="23.1.36" />
+		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.7" />
+		<PackageReference Include="supabase-csharp" Version="0.13.7" />
+		<PackageReference Include="Syncfusion.Licensing" Version="23.2.5" />
+		<PackageReference Include="Syncfusion.Maui.Inputs" Version="23.2.5" />
+		<PackageReference Include="Syncfusion.Maui.Popup" Version="23.2.5" />
+		<PackageReference Include="Syncfusion.Maui.ProgressBar" Version="23.2.5" />
+		<PackageReference Include="Syncfusion.Maui.Scheduler" Version="23.2.5" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<MauiXaml Update="Views\Authentication\LoginPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Calendar\CalenderPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Popups\AddEventPopup.xaml">
+		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\StartupTest\StartupTestPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
