@@ -18,15 +18,15 @@ public partial class StartupTestPage : ContentPage
 		NameEditor.Unfocus();
 	}
 
-	private void TargetAreaChangedEvent(object sender, SelectionChangedEventArgs e)
-	{
-		_viewModel.TargetAreaChangedEvent(e.CurrentSelection.ToList());
-	}	
-	
-	private void CheckBox_StateChanged(object sender, Syncfusion.Maui.Buttons.StateChangedEventArgs e)
-	{
-        bool[] values = new bool[4] { UpperBody.IsChecked.Value, LowerBody.IsChecked.Value, Abs.IsChecked.Value, Back.IsChecked.Value };
-        _viewModel.CheckBoxStateChange(values);
+    private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+    {
+        var layout = sender as Layout;
+        var check = layout.FirstOrDefault(c => c.GetType() == typeof(CheckBox));
+
+        if (check != null)
+        {
+            ((CheckBox)check).IsChecked = !((CheckBox)check).IsChecked;
+        }
     }
 
 }

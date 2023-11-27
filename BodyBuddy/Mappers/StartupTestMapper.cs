@@ -28,7 +28,7 @@ namespace BodyBuddy.Mappers
                 Birthday = _dateTimeService.ConvertToEpochTime(startupTestDto.Birthday),
                 ActiveAmount = (int)EnumMapper.GetUserActivityFromDisplayString(startupTestDto.ActiveAmount),
                 PassiveCalorieBurn = startupTestDto.PassiveCalorieBurn,
-                TargetAreas = (List<string>)EnumMapper.GetFocusAreaToListFromDisplayString(startupTestDto.TargetAreas),
+                TargetAreas = startupTestDto.TargetAreas,
                 Goal = (int)EnumMapper.GetGoalFromDisplayString(startupTestDto.Goal)
             };
         }
@@ -48,7 +48,7 @@ namespace BodyBuddy.Mappers
                 Birthday = _dateTimeService.ConvertToDateTime(startupTest.Birthday),
                 ActiveAmount = EnumMapper.GetDisplayString((UserActivity)startupTest.ActiveAmount),
                 PassiveCalorieBurn = startupTest.PassiveCalorieBurn,
-                TargetAreas = EnumMapper.GetFocusAreaFromDisplayString(startupTest.TargetAreas),
+                TargetAreas = startupTest.TargetAreas,
                 Goal = EnumMapper.GetDisplayString((Goal)startupTest.Goal)
             };
         }

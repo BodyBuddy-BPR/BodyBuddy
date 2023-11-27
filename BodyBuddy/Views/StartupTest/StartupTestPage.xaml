@@ -284,40 +284,61 @@
         <VerticalStackLayout
             x:Name="TargetAreaCollectionView"
             Grid.Row="1"
-            HorizontalOptions="End"
             IsVisible="{Binding IsFocusAreaVisible}"
             VerticalOptions="Center">
-            <syncfusion:SfCheckBox x:Name="UpperBody" Text="Upper body" />
+            <HorizontalStackLayout>
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <Label Text="Upper body" VerticalOptions="Center" />
+                <CheckBox IsChecked="{Binding UpperBodyFocusArea}" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <Label Text="Lower body" VerticalOptions="Center" />
+                <CheckBox IsChecked="{Binding LowerBodyFocusArea}" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <Label Text="Abs" VerticalOptions="Center" />
+                <CheckBox IsChecked="{Binding AbsFocusArea}" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <Label Text="Back" VerticalOptions="Center" />
+                <CheckBox IsChecked="{Binding BackFocusArea}" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <!--<syncfusion:SfCheckBox
+                x:Name="UpperBody"
+                FontFamily="Montserrat"
+                HorizontalOptions="End"
+                Text="Upper body"
+                TextColor="White" />
             <syncfusion:SfCheckBox
                 x:Name="LowerBody"
+                FontFamily="Montserrat"
                 StateChanged="CheckBox_StateChanged"
-                Text="Lower body" />
+                Text="Lower body"
+                TextColor="White" />
             <syncfusion:SfCheckBox
                 x:Name="Abs"
+                FontFamily="Montserrat"
                 StateChanged="CheckBox_StateChanged"
-                Text="Abs" />
+                Text="Abs"
+                TextColor="White" />
             <syncfusion:SfCheckBox
                 x:Name="Back"
+                FontFamily="Montserrat"
                 StateChanged="CheckBox_StateChanged"
-                Text="Back" />
+                Text="Back"
+                TextColor="White" />-->
         </VerticalStackLayout>
-        <!--<CollectionView
-            x:Name="TargetAreaCollectionView"
-            Grid.Row="1"
-            HorizontalOptions="End"
-            IsVisible="{Binding IsFocusAreaVisible}"
-            ItemsSource="{Binding FocusAreaList}"
-            SelectionChanged="TargetAreaChangedEvent"
-            SelectionMode="Multiple"
-            VerticalOptions="Center">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="viewModel:StartupTestViewModel">
-                    <HorizontalStackLayout HorizontalOptions="Center" WidthRequest="120">
-                        <syncfusion:SfCheckBox StateChanged="CheckBox_StateChanged" Text="{Binding .}" />
-                    </HorizontalStackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>-->
 
         <!--  Goal  -->
         <CollectionView

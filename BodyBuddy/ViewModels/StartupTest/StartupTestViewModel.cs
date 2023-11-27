@@ -24,6 +24,9 @@ public partial class StartupTestViewModel : BaseViewModel
     [ObservableProperty]
     private bool _submitDataIsVisible, _nextIsEnabled, _backIsVisible, _isNextButtonVisible, _isWelcomeVisible;
 
+    [ObservableProperty]
+    private bool _upperBodyFocusArea, _lowerBodyFocusArea, _absFocusArea, _backFocusArea;
+
     //Saved Properties
     [ObservableProperty] private StartupTestDto _startupTestDto;
 
@@ -82,8 +85,34 @@ public partial class StartupTestViewModel : BaseViewModel
     [RelayCommand]
     public async Task SubmitData()
     {
+        SetFocusAreas();
         _startupTestService.SaveStartupTestData(StartupTestDto);
         await Shell.Current.GoToAsync($"//{nameof(MainPage)}", true);
+    }
+
+    private void SetFocusAreas()
+    {
+        if (UpperBodyFocusArea)
+        {
+            StartupTestDto.TargetAreas += "UpperBody, ";
+        }
+        if (LowerBodyFocusArea)
+        {
+            StartupTestDto.TargetAreas += "LowerBody, ";
+        }
+        if (AbsFocusArea)
+        {
+            StartupTestDto.TargetAreas += "Abs, ";
+        }
+        if (BackFocusArea)
+        {
+            StartupTestDto.TargetAreas += "Back, ";
+        }
+
+        if (!String.IsNullOrEmpty(StartupTestDto.TargetAreas))
+        {
+            StartupTestDto.TargetAreas = StartupTestDto.TargetAreas.Substring(0, StartupTestDto.TargetAreas.Length - 2);
+        }
     }
 
 
@@ -232,26 +261,6 @@ public partial class StartupTestViewModel : BaseViewModel
         }
     }
 
-    public void TargetAreaChangedEvent(List<object> selectedItems)
-    {
-        bool firstTime = true;
-        string selectedItemsString = "";
-        foreach(string str in selectedItems)
-        {
-            if (firstTime)
-            {
-                selectedItemsString += str;
-                firstTime = false;
-            }
-            else
-            {
-                selectedItemsString += ", " + str;
-            }
-        }
-
-        StartupTestDto.TargetAreas = selectedItemsString;
-    }
-
     #endregion
     private static List<string> InitializeGenderList()
     {
@@ -310,12 +319,12 @@ public partial class StartupTestViewModel : BaseViewModel
         return (int)(pcb * activityFactor);
     }
 
-    public void CheckBoxStateChange(bool[] values)
-    {
-        StartupTestDto.TargetAreas = "";
-        if (values[0]) StartupTestDto.TargetAreas += "Upper body";
-        if (values[1]) StartupTestDto.TargetAreas += "Lower body";
-        if (values[2]) StartupTestDto.TargetAreas += "Abs";
-        if (values[3]) StartupTestDto.TargetAreas += "Back";
-    }
+    //public void CheckBoxStateChange(bool[] values)
+    //{
+    //    StartupTestDto.TargetAreas = "";
+    //    if (values[0]) StartupTestDto.TargetAreas += "Upper body";
+    //    if (values[1]) StartupTestDto.TargetAreas += "Lower body";
+    //    if (values[2]) StartupTestDto.TargetAreas += "Abs";
+    //    if (values[3]) StartupTestDto.TargetAreas += "Back";
+    //}
 }

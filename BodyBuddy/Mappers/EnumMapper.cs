@@ -53,24 +53,6 @@ namespace BodyBuddy.Mappers
 
         public static Goal GetGoalFromDisplayString(string displayString) => GoalDisplayStrings.FirstOrDefault(x => x.Value == displayString).Key;
 
-        public static string GetFocusAreaFromDisplayString(List<string> displayStrings)
-        {
-            bool firstTime = false;
-            StringBuilder result = new StringBuilder();
-
-            foreach (string str in displayStrings)
-            {
-                if (!firstTime)
-                {
-                    result.Append(str);
-                    firstTime = true;
-                }
-                result.Append(", " + str);
-            }
-
-            return result.ToString();
-        }
-
         public static List<string> GetFocusAreaToListFromDisplayString(string focusAreasString)
         {
             string[] focusAreasArray = focusAreasString.Split(',').Select(area => area.Trim()).ToArray();
