@@ -26,8 +26,8 @@ namespace BodyBuddy.Dtos
 
         [ObservableProperty] private int _passiveCalorieBurn;
 
-        [ObservableProperty] private string _goal;
+        [ObservableProperty] private string _targetAreas;
 
-        public List<string> FocusAreas { get; set; } = new();
+        [ObservableProperty] private string _goal;
     }
 }
