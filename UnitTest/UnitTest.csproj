@@ -1,14 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <UseMaui>true</UseMaui>
-    <IsPackable>false</IsPackable>
+    <UseMaui>true</UseMaui>
+	  <MauiVersion>8.0.3</MauiVersion>
+	  <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="Repositories\**" />
     <EmbeddedResource Remove="Repositories\**" />
@@ -16,7 +15,6 @@
     <MauiXaml Remove="Repositories\**" />
     <None Remove="Repositories\**" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
     <PackageReference Include="Moq" Version="4.20.69" />
@@ -30,10 +28,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.3" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.3" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\BodyBuddy\BodyBuddy.csproj" />
   </ItemGroup>
-
 </Project>
