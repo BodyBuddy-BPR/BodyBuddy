@@ -31,12 +31,12 @@ namespace BodyBuddy.Mappers
             { Goal.GainMuscle, Strings.STARTUP_GOAL_GAINMUSCLE },
         };
 
-        private static readonly Dictionary<TargetArea, string> FocusAreaDisplayStrings = new()
+        private static readonly Dictionary<TargetArea, string> TargetAreaDisplayStrings = new()
         {
-            { TargetArea.UpperBody, Strings.STARTUP_FOCUSAREA_UPPERBODY },
-            { TargetArea.LowerBody, Strings.STARTUP_FOCUSAREA_LOWERBODY },
-            { TargetArea.Abs, Strings.STARTUP_FOCUSAREA_ABS },
-            { TargetArea.Back, Strings.STARTUP_FOCUSAREA_BACK },
+            { TargetArea.UpperBody, Strings.STARTUP_TARGETAREA_UPPERBODY },
+            { TargetArea.LowerBody, Strings.STARTUP_TARGETAREA_LOWERBODY },
+            { TargetArea.Abs, Strings.STARTUP_TARGETAREA_ABS },
+            { TargetArea.Back, Strings.STARTUP_TARGETAREA_BACK },
         };
 
         public static string GetDisplayString(Gender gender) => GenderDisplayStrings[gender];
@@ -45,7 +45,7 @@ namespace BodyBuddy.Mappers
 
         public static string GetDisplayString(Goal goal) => GoalDisplayStrings[goal];
 
-        public static string GetDisplayString(TargetArea targetArea) => FocusAreaDisplayStrings[targetArea];
+        public static string GetDisplayString(TargetArea targetArea) => TargetAreaDisplayStrings[targetArea];
 
         public static Gender GetGenderFromDisplayString(string displayString) => GenderDisplayStrings.FirstOrDefault(x => x.Value == displayString).Key;
 

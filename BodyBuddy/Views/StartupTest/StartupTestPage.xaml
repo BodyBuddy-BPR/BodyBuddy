@@ -284,13 +284,13 @@
             x:Name="TargetAreaCollectionView"
             Grid.Row="1"
             HorizontalOptions="Center"
-            IsVisible="{Binding IsFocusAreaVisible}"
+            IsVisible="{Binding IsTargetAreaVisible}"
             VerticalOptions="Center">
             <HorizontalStackLayout>
                 <HorizontalStackLayout.GestureRecognizers>
                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
                 </HorizontalStackLayout.GestureRecognizers>
-                <CheckBox IsChecked="{Binding UpperBodyFocusArea}" VerticalOptions="Center" />
+                <CheckBox IsChecked="{Binding UpperBodyTargetArea}" VerticalOptions="Center" />
                 <Label
                     FontFamily="Montserrat"
                     Text="Upper body"
@@ -301,7 +301,7 @@
                 <HorizontalStackLayout.GestureRecognizers>
                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
                 </HorizontalStackLayout.GestureRecognizers>
-                <CheckBox IsChecked="{Binding LowerBodyFocusArea}" VerticalOptions="Center" />
+                <CheckBox IsChecked="{Binding LowerBodyTargetArea}" VerticalOptions="Center" />
                 <Label
                     FontFamily="Montserrat"
                     Text="Lower body"
@@ -312,7 +312,7 @@
                 <HorizontalStackLayout.GestureRecognizers>
                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
                 </HorizontalStackLayout.GestureRecognizers>
-                <CheckBox IsChecked="{Binding AbsFocusArea}" VerticalOptions="Center" />
+                <CheckBox IsChecked="{Binding AbsTargetArea}" VerticalOptions="Center" />
                 <Label
                     FontFamily="Montserrat"
                     Text="Abs"
@@ -323,7 +323,7 @@
                 <HorizontalStackLayout.GestureRecognizers>
                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
                 </HorizontalStackLayout.GestureRecognizers>
-                <CheckBox IsChecked="{Binding BackFocusArea}" VerticalOptions="Center" />
+                <CheckBox IsChecked="{Binding BackTargetArea}" VerticalOptions="Center" />
                 <Label
                     FontFamily="Montserrat"
                     Text="Back"

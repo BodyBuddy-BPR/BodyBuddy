@@ -19,13 +19,13 @@ public partial class StartupTestViewModel : BaseViewModel
     [ObservableProperty] private bool _isNameVisible, _isGenderVisible, _isWeightVisible, _isHeightVisible;
 
     [ObservableProperty]
-    private bool _isBirthdayVisible, _isActiveVisible, _isPassiveCalorieBurnVisible, _isGoalVisible, _isFocusAreaVisible;
+    private bool _isBirthdayVisible, _isActiveVisible, _isPassiveCalorieBurnVisible, _isGoalVisible, _isTargetAreaVisible;
 
     [ObservableProperty]
     private bool _submitDataIsVisible, _nextIsEnabled, _backIsVisible, _isNextButtonVisible, _isWelcomeVisible;
 
     [ObservableProperty]
-    private bool _upperBodyFocusArea, _lowerBodyFocusArea, _absFocusArea, _backFocusArea;
+    private bool _upperBodyTargetArea, _lowerBodyTargetArea, _absTargetArea, _backTargetArea;
 
     //Saved Properties
     [ObservableProperty] private StartupTestDto _startupTestDto;
@@ -43,7 +43,7 @@ public partial class StartupTestViewModel : BaseViewModel
     public List<string> GenderList { get; }
     public List<string> ActivityList { get; }
     public List<string> GoalList { get; }
-    public List<string> FocusAreaList { get; }
+    public List<string> TargetAreaList { get; }
     #endregion
 
     public ICommand RadioButtonCheckedCommand { get; }
@@ -61,7 +61,7 @@ public partial class StartupTestViewModel : BaseViewModel
         GenderList = InitializeGenderList();
         ActivityList = InitializeActivityList();
         GoalList = InitializeGoalList();
-        FocusAreaList = InitializeFocusAreaList();
+        TargetAreaList = InitializeTargetAreaList();
 
         //SetStateProperties Has to be first due to timing
         SetStateProperties();
@@ -84,26 +84,26 @@ public partial class StartupTestViewModel : BaseViewModel
     [RelayCommand]
     public async Task SubmitData()
     {
-        SetFocusAreas();
+        SetTargetArea();
         _startupTestService.SaveStartupTestData(StartupTestDto);
         await Shell.Current.GoToAsync($"//{nameof(MainPage)}", true);
     }
 
-    private void SetFocusAreas()
+    private void SetTargetArea()
     {
-        if (UpperBodyFocusArea)
+        if (UpperBodyTargetArea)
         {
             StartupTestDto.TargetAreas += "UpperBody, ";
         }
-        if (LowerBodyFocusArea)
+        if (LowerBodyTargetArea)
         {
             StartupTestDto.TargetAreas += "LowerBody, ";
         }
-        if (AbsFocusArea)
+        if (AbsTargetArea)
         {
             StartupTestDto.TargetAreas += "Abs, ";
         }
-        if (BackFocusArea)
+        if (BackTargetArea)
         {
             StartupTestDto.TargetAreas += "Back, ";
         }
@@ -173,7 +173,7 @@ public partial class StartupTestViewModel : BaseViewModel
         IsBirthdayVisible = CurrentState == StartupTestStates.BirthdaySelection;
         IsActiveVisible = CurrentState == StartupTestStates.ActivitySelection;
         IsPassiveCalorieBurnVisible = CurrentState == StartupTestStates.PassiveCalorieBurnEntry;
-        IsFocusAreaVisible = CurrentState == StartupTestStates.FocusAreas;
+        IsTargetAreaVisible = CurrentState == StartupTestStates.TargetAreas;
         IsGoalVisible = CurrentState == StartupTestStates.GoalSelection;
         UpdateActionButtonsVisibility();
     }
@@ -225,8 +225,8 @@ public partial class StartupTestViewModel : BaseViewModel
                 StartupTestDto.PassiveCalorieBurn = CalculatePCB();
                 currentStateDone = () => StartupTestDto.PassiveCalorieBurn > 0;
                 break;
-            case StartupTestStates.FocusAreas:
-                QuestionnaireText = "What are your focus areas?";
+            case StartupTestStates.TargetAreas:
+                QuestionnaireText = "What are your target areas?";
                 currentStateDone = () => true;
                 break;
             case StartupTestStates.GoalSelection:
@@ -284,7 +284,7 @@ public partial class StartupTestViewModel : BaseViewModel
             .Select(EnumMapper.GetDisplayString)
             .ToList();
     }
-    private static List<string> InitializeFocusAreaList()
+    private static List<string> InitializeTargetAreaList()
     {
         return Enum.GetValues(typeof(TargetArea))
             .Cast<TargetArea>()

@@ -48,7 +48,7 @@ namespace UnitTest.ViewModels.StartupTest
             Assert.That(target.IsHeightVisible, Is.EqualTo(heightVisible));
             Assert.That(target.IsBirthdayVisible, Is.EqualTo(birthdayVisible));
             Assert.That(target.IsActiveVisible, Is.EqualTo(activeVisible));
-            Assert.That(target.IsFocusAreaVisible, Is.EqualTo(focusVisible));
+            Assert.That(target.IsTargetAreaVisible, Is.EqualTo(focusVisible));
             Assert.That(target.IsPassiveCalorieBurnVisible, Is.EqualTo(passiveCalorieVisible));
             Assert.That(target.IsGoalVisible, Is.EqualTo(goalVisible));
         }
@@ -61,7 +61,7 @@ namespace UnitTest.ViewModels.StartupTest
         [TestCase(5, "When is your birthday?")]
         [TestCase(6, "How active are you?")]
         [TestCase(7, "Passive Calorie Burn")]
-        [TestCase(8, "What are your focus areas?")]
+        [TestCase(8, "What are your target areas?")]
         [TestCase(9, "What are your goals?")]
         [TestCase(10, "You're all set!")]
         public void ProgressingThroughStates_UpdatesQuestionnaireTextCorrectly(int stateNumber, string expectedQuestionnaireText)
