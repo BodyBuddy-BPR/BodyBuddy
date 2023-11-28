@@ -41,6 +41,15 @@
                     Text="{Binding Quote.Author, StringFormat='- {0}'}" />
             </VerticalStackLayout>
         </Frame>
+        <VerticalStackLayout Grid.Row="2">
+            <HorizontalStackLayout>
+                <Label Text="Steps: " />
+                <Label Text="{Binding UserSteps.Steps}" />
+            </HorizontalStackLayout>
+            <Label Text="{Binding Acceleration}" />
+            <Label Text="{Binding Magnitude}" />
+
+        </VerticalStackLayout>
 
     </Grid>
 

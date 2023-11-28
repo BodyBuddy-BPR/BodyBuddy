@@ -164,6 +164,9 @@ public static class MauiProgram
         // Startup Test
         builder.Services.AddSingleton<IStartupTestRepository, StartupTestRepository>();
 
+        // Step
+        builder.Services.AddSingleton<IStepRepository, StepRepository>();
+
         // Workout
         builder.Services.AddSingleton<IWorkoutRepository, WorkoutRepository>();
         builder.Services.AddSingleton<IWorkoutExercisesRepository, WorkoutExercisesRepository>();
@@ -198,7 +201,10 @@ public static class MauiProgram
 
         // Startup Test
         builder.Services.AddSingleton<IStartupTestService, StartupTestService>();
-
+        
+        //Step
+        builder.Services.AddSingleton<IStepService, StepService>();
+        
         // Workout
         builder.Services.AddSingleton<IWorkoutService, WorkoutService>();
         builder.Services.AddSingleton<IWorkoutExercisesService, WorkoutExercisesService>();
