@@ -10,7 +10,7 @@ namespace BodyBuddy.Services
     public interface IStepService
     {
         //Converts Dto --> Db object
-        void SaveStepData(StepDto stepDto);
+        Task SaveStepData(StepDto stepDto);
 
         //Converts Db --> Dto object
         Task<StepDto> GetStepData();

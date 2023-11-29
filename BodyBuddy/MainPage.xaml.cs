@@ -27,5 +27,10 @@ public partial class MainPage : ContentPage
 
         await _viewModel.Initialize();
     }
+
+    private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+    {
+        _viewModel.ClickToShowPopup_Clicked();
+    }
 }
 

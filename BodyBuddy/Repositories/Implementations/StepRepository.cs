@@ -43,7 +43,8 @@ namespace BodyBuddy.Repositories.Implementations
                 {
                     Id = await GetNextStepId(),
                     Date = currentDateTimestamp,
-                    Steps = previousStepCount?.Steps ?? 0
+                    Steps = 0,
+                    StepGoal = previousStepCount?.StepGoal ?? 8000
                 };
 
                 // Insert the new entry in the database

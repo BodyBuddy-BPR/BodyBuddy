@@ -8,6 +8,8 @@ namespace BodyBuddy.Dtos
 
         [ObservableProperty] private int _steps;
 
+        [ObservableProperty] private int _stepGoal;
+
         [ObservableProperty] private DateTime _date;
     }
 }

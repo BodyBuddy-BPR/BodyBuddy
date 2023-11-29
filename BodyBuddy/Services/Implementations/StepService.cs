@@ -24,9 +24,9 @@ namespace BodyBuddy.Services.Implementations
             return mapper.MapToDto(stepData);
         }
 
-        public void SaveStepData(StepDto stepDto)
+        public async Task SaveStepData(StepDto stepDto)
         {
-            _repo.SaveChangesAsync(mapper.MapToDatabase(stepDto));
+            await _repo.SaveChangesAsync(mapper.MapToDatabase(stepDto));
         }
     }
 }

@@ -33,10 +33,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#065A82" ForegroundScale="0.60"/>
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#065A82" ForegroundScale="0.60" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#065A82"  />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#065A82" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -73,6 +73,7 @@
 		<None Remove="Resources\Images\Icons\profile_circle.svg" />
 		<None Remove="Resources\Images\Icons\share_white.svg" />
 		<None Remove="Resources\Images\Icons\trashcan_white.svg" />
+		<None Remove="Resources\Images\Icons\walking.svg" />
 		<None Remove="Resources\Images\Icons\water_glass.svg" />
 		<None Remove="Resources\Images\list.svg" />
 		<None Remove="Resources\Images\minus_sign.svg" />
@@ -109,6 +110,9 @@
 	<ItemGroup>
 		<MauiXaml Update="Views\Authentication\LoginPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Popups\EditStepGoalPopup.xaml">
+		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\StartupTest\StartupTestPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
@@ -188,10 +192,14 @@
 		<MauiImage Include="Resources\Images\Icons\share_white.svg" />
 		<MauiImage Include="Resources\Images\Icons\trashcan_white.svg" />
 		<MauiImage Include="Resources\Images\Icons\trashcan.svg" />
+		<MauiImage Include="Resources\Images\Icons\walking.svg" />
 		<MauiImage Include="Resources\Images\Icons\water_glass.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Update="Views\Popups\EditStepGoalPopup.xaml.cs">
+		  <DependentUpon>EditStepGoalPopup.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\Popups\EditIntakeGoalPopup.xaml.cs">
 			<DependentUpon>EditIntakeGoalPopup.xaml</DependentUpon>
 		</Compile>

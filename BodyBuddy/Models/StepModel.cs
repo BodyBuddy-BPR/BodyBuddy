@@ -10,6 +10,8 @@ namespace BodyBuddy.Models
 
         [Column("steps")]
         public int Steps { get; set; }
+        [Column("stepGoal")]
+        public int StepGoal { get; set; }
 
         [Column("date")]
         public long Date { get; set; }
