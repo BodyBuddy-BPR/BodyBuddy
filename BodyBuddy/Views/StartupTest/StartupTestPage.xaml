@@ -279,6 +279,59 @@
                 TextColor="White" />
         </VerticalStackLayout>
 
+        <!--  TargetArea  -->
+        <VerticalStackLayout
+            x:Name="TargetAreaCollectionView"
+            Grid.Row="1"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsTargetAreaVisible}"
+            VerticalOptions="Center">
+            <HorizontalStackLayout>
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <CheckBox IsChecked="{Binding UpperBodyTargetArea}" VerticalOptions="Center" />
+                <Label
+                    FontFamily="Montserrat"
+                    Text="Upper body"
+                    TextColor="White"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <CheckBox IsChecked="{Binding LowerBodyTargetArea}" VerticalOptions="Center" />
+                <Label
+                    FontFamily="Montserrat"
+                    Text="Lower body"
+                    TextColor="White"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <CheckBox IsChecked="{Binding AbsTargetArea}" VerticalOptions="Center" />
+                <Label
+                    FontFamily="Montserrat"
+                    Text="Abs"
+                    TextColor="White"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <CheckBox IsChecked="{Binding BackTargetArea}" VerticalOptions="Center" />
+                <Label
+                    FontFamily="Montserrat"
+                    Text="Back"
+                    TextColor="White"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
         <!--  Goal  -->
         <CollectionView
             x:Name="GoalListView"

@@ -46,19 +46,5 @@ namespace UnitTest.Mappers
                 Assert.That(mappedGoal, Is.EqualTo(goal), $"Mismatch for Goal enum value: {goal}");
             }
         }
-
-        [Test]
-        public void AllFocusAreaEnumValues_AreMappedCorrectly()
-        {
-            foreach (FocusArea focusArea in Enum.GetValues(typeof(FocusArea)))
-            {
-                // Act
-                var displayString = EnumMapper.GetDisplayString(focusArea);
-                var mappedFocusArea = EnumMapper.GetFocusAreaFromDisplayString(displayString);
-
-                // Assert
-                Assert.That(mappedFocusArea, Is.EqualTo(focusArea), $"Mismatch for FocusArea enum value: {focusArea}");
-            }
-        }
     }
 }

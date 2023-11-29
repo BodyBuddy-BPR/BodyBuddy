@@ -23,9 +23,9 @@ namespace BodyBuddy.Helpers
         public static string STARTUP_ACTIVITY_LITTLEACTIVE = "A Little Active";
         public static string STARTUP_ACTIVITY_NOTVERYACTIVE = "Not Very Active";
 
-        public static string STARTUP_FOCUSAREA_UPPERBODY = "Upper Body";
-        public static string STARTUP_FOCUSAREA_LOWERBODY = "Lower Body";
-        public static string STARTUP_FOCUSAREA_ABSANDCORE = "Abs & Core";
-        public static string STARTUP_FOCUSAREA_OTHER = "Other";
+        public static string STARTUP_TARGETAREA_UPPERBODY = "Upper Body";
+        public static string STARTUP_TARGETAREA_LOWERBODY = "Lower Body";
+        public static string STARTUP_TARGETAREA_ABS = "Abs";
+        public static string STARTUP_TARGETAREA_BACK = "Back";
     }
 }
