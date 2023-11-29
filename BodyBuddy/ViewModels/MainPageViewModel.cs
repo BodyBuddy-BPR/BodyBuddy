@@ -57,10 +57,10 @@ namespace BodyBuddy.ViewModels
             UserSteps = await _stepService.GetStepData(); 
             StepProgress = UserSteps.Steps == 0 ? 0 : (double)UserSteps.Steps / UserSteps.StepGoal;
             await GetDailyQuote();
-            TurnOnAccelerometer();
+            await TurnOnAccelerometer();
         }
 
-        public void TurnOnAccelerometer()
+        public async Task TurnOnAccelerometer()
         {
             if (Accelerometer.Default.IsSupported)
             {
