@@ -34,6 +34,7 @@
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#065A82" ForegroundScale="0.60" />
+		<MauiImage Include="Resources\Images\Icons\calendar.svg" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#065A82" />
@@ -63,6 +64,7 @@
 		<None Remove="Resources\Images\dumbbell.svg" />
 		<None Remove="Resources\Images\home.svg" />
 		<None Remove="Resources\Images\Icons\apple.svg" />
+		<None Remove="Resources\Images\Icons\calendar.svg" />
 		<None Remove="Resources\Images\Icons\camera_white.svg" />
 		<None Remove="Resources\Images\Icons\google.svg" />
 		<None Remove="Resources\Images\Icons\knifeandfork.svg" />

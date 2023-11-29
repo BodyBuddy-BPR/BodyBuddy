@@ -67,7 +67,7 @@
         <ShellContent
             Title="Calendar"
             ContentTemplate="{DataTemplate calendarViews:CalenderPage}"
-            Icon="questionmark.png" />
+            Icon="calendar.png" />
 
 
         <!--  StartupTest Temp, until found another place  -->
