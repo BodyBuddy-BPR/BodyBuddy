@@ -151,6 +151,8 @@ namespace BodyBuddy.ViewModels.Calendar
             var events = await _calenderService.GetAppointments();
             await GetWorkouts();
 
+            Events.Clear();
+
             foreach (var item in events)
             {
                 // Check if item.Workout is not null
@@ -166,10 +168,34 @@ namespace BodyBuddy.ViewModels.Calendar
 
         }
 
-        /// <summary>
-        /// Metho to get selected date appointments.
-        /// </summary>
-        /// <param name="date">The selected date</param>
+        private async Task GetWorkouts()
+        {
+            if (IsBusy) return;
+
+            try
+            {
+                IsBusy = true;
+
+                WorkoutList = await _workoutService.GetWorkoutPlans(false);
+
+                var preMadeWorkouts = await _workoutService.GetWorkoutPlans(true);
+
+                foreach (var item in preMadeWorkouts)
+                {
+                    WorkoutList.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("Error!", $"Unable to get workouts {ex.Message}", "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
         public ObservableCollection<AppointmentDto> GetSelectedDateAppointments(DateTime date)
         {
             ObservableCollection<AppointmentDto> selectedAppiointments = new ObservableCollection<AppointmentDto>();
@@ -238,6 +264,7 @@ namespace BodyBuddy.ViewModels.Calendar
             };
 
             await _calenderService.CreateEvent(newEvent);
+            await Initialize();
         }
 
 
@@ -247,33 +274,6 @@ namespace BodyBuddy.ViewModels.Calendar
             EventName = string.Empty;
         }
 
-        private async Task GetWorkouts()
-        {
-            if (IsBusy) return;
-
-            try
-            {
-                IsBusy = true;
-
-                WorkoutList = await _workoutService.GetWorkoutPlans(false);
-
-                var preMadeWorkouts = await _workoutService.GetWorkoutPlans(true);
-
-                foreach (var item in preMadeWorkouts)
-                {
-                    WorkoutList.Add(item);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-                await Shell.Current.DisplayAlert("Error!", $"Unable to get workouts {ex.Message}", "OK");
-            }
-            finally
-            {
-                IsBusy = false;
-            }
-        }
 
         private void CreateColors()
         {
@@ -320,15 +320,8 @@ namespace BodyBuddy.ViewModels.Calendar
             }
         }
 
-        /// <summary>
-        /// Property changed event handler
-        /// </summary>
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        /// <summary>
-        /// Invoke method when property changed
-        /// </summary>
-        /// <param name="propertyName">property name</param>
         private void RaisePropertyChanged(string propertyName)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
