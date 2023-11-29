@@ -26,6 +26,7 @@ public partial class CalenderPage : ContentPage
 
     private void AddEventClicked(object sender, EventArgs e)
     {
+        _viewModel.InitializePopup();
         _popupNavigation.PushAsync(new AddEventPopup(_viewModel));
     }
 }

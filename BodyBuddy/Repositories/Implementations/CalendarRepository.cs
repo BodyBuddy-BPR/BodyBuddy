@@ -17,6 +17,14 @@ namespace BodyBuddy.Repositories.Implementations
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
+        public async Task CreateEvent(AppointmentModel newEvent)
+        {
+            var lastItem = await _context.Table<AppointmentModel>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
+            newEvent.Id = lastItem?.Id + 1 ?? 1;
+
+            await _context.InsertAsync(newEvent);
+        }
+
         public async Task<List<AppointmentModel>> GetAppointments()
         {
             try
@@ -25,9 +33,8 @@ namespace BodyBuddy.Repositories.Implementations
 
                 return appointments;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // Handle or log the exception
                 return new List<AppointmentModel>(); // Return an empty list
             }
         }

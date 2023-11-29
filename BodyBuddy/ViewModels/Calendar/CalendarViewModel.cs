@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,9 +16,15 @@ namespace BodyBuddy.ViewModels.Calendar
     public partial class CalendarViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private readonly ICalendarService _calenderService;
+        private readonly IWorkoutService _workoutService;
+
 
         [ObservableProperty]
         private ObservableCollection<ColorItem> _colorList = new();
+        [ObservableProperty] private List<WorkoutDto> _workoutList = new();
+
+        [ObservableProperty]
+        private WorkoutDto _selectedWorkout;
 
         #region Fields
 
@@ -58,18 +65,14 @@ namespace BodyBuddy.ViewModels.Calendar
         /// <summary>
         /// Initializes a new instance of the <see cref="SchedulerDataBindingViewModel" /> class.
         /// </summary>
-        public CalendarViewModel(ICalendarService calenderService)
+        public CalendarViewModel(ICalendarService calenderService, IWorkoutService workoutService)
         {
-            //this.subjects = new List<string>();
-            //this.colors = new List<Brush>();
             this.selectedDateMeetings = new ObservableCollection<AppointmentDto>();
-            //this.CreateSubjects();
-            this.CreateColors();
-            //this.IntializeAppoitments();
             this.selectedDateMeetings = this.GetSelectedDateAppointments(this.selectedDate);
             this.DisplayDate = DateTime.Now.Date.AddHours(8).AddMinutes(50);
 
             _calenderService = calenderService;
+            _workoutService = workoutService;
         }
 
         #endregion Constructor
@@ -143,42 +146,24 @@ namespace BodyBuddy.ViewModels.Calendar
 
         #region Methods
 
-        /// <summary>
-        /// Method to initialize the appointments.
-        /// </summary>
         public async Task Initialize()
         {
-            //this.Events = new ObservableCollection<AppointmentDto>();
-            //Random randomTime = new();
-            //List<Point> randomTimeCollection = this.GettingTimeRanges();
-
-            //DateTime date;
-            //DateTime dateFrom = DateTime.Now.AddDays(-25);
-            //DateTime dateTo = DateTime.Now.AddDays(25);
-
-            //for (date = dateFrom; date < dateTo; date = date.AddDays(1))
-            //{
-            //    for (int additionalAppointmentIndex = 0; additionalAppointmentIndex < randomTime.Next(4, 7); additionalAppointmentIndex++)
-            //    {
-            //        var meeting = new AppointmentDto();
-            //        var randomTimeIndex = randomTime.Next(2);
-            //        int hour = randomTime.Next((int)randomTimeCollection[randomTimeIndex].X, (int)randomTimeCollection[randomTimeIndex].Y);
-            //        meeting.From = new DateTime(date.Year, date.Month, date.Day, hour, 0, 0);
-            //        meeting.To = meeting.From.AddHours(1);
-            //        meeting.EventName = this.subjects[randomTime.Next(9)];
-            //        meeting.Background = this.colors[randomTime.Next(10)];
-
-            //        this.Events.Add(meeting);
-            //    }
-            //}
             var events = await _calenderService.GetAppointments();
-            //Get events from database
+            await GetWorkouts();
+
             foreach (var item in events)
             {
-                //item.Background = new SolidColorBrush(Color.FromArgb(item.Background.ToString()));
+                // Check if item.Workout is not null
+                if (item.Workout != null)
+                {
+                    // Find the correct workout
+                    WorkoutDto matchingWorkout = WorkoutList.FirstOrDefault(w => w.Id == item.Workout.Id);
+
+                    item.Workout = matchingWorkout;
+                }
                 this.Events.Add(item);
             }
-            //Events = new ObservableCollection<AppointmentDto>(await _calenderService.GetAppointments());
+
         }
 
         /// <summary>
@@ -202,61 +187,7 @@ namespace BodyBuddy.ViewModels.Calendar
             return selectedAppiointments;
         }
 
-        /// <summary>
-        /// Method to create the subject.
-        /// </summary>
-        //private void CreateSubjects()
-        //{
-        //    this.subjects.AddRange(new List<string>()
-        //    {
-        //        "General Meeting",
-        //        "Plan Execution",
-        //        "Project Plan",
-        //        "Consulting",
-        //        "Performance Check",
-        //        "Support",
-        //        "Development Meeting",
-        //        "Scrum",
-        //        "Project Completion",
-        //        "Release updates",
-        //        "Performance Check"
-        //    });
-        //}
-
-        /// <summary>
-        /// Method for get timing range.
-        /// </summary>
-        /// <returns>return time collection</returns>
-        //private List<Point> GettingTimeRanges()
-        //{
-        //    List<Point> randomTimeCollection = new();
-        //    randomTimeCollection.Add(new Point(9, 11));
-        //    randomTimeCollection.Add(new Point(12, 14));
-        //    randomTimeCollection.Add(new Point(15, 17));
-
-        //    return randomTimeCollection;
-        //}
-
-        /// <summary>
-        /// Method to create the colors.
-        /// </summary>
-        //private void CreateColors()
-        //{
-        //    this.colors.AddRange(new List<Brush>()
-        //    {
-        //        new SolidColorBrush(Color.FromArgb("#FF8B1FA9")),
-        //        new SolidColorBrush(Color.FromArgb("#FFD20100")),
-        //        new SolidColorBrush(Color.FromArgb("#FFFC571D")),
-        //        new SolidColorBrush(Color.FromArgb("#FF36B37B")),
-        //        new SolidColorBrush(Color.FromArgb("#FF3D4FB5")),
-        //        new SolidColorBrush(Color.FromArgb("#FFE47C73")),
-        //        new SolidColorBrush(Color.FromArgb("#FF636363")),
-        //        new SolidColorBrush(Color.FromArgb("#FF85461E")),
-        //        new SolidColorBrush(Color.FromArgb("#FF0F8644")),
-        //        new SolidColorBrush(Color.FromArgb("#FF01A1EF"))
-        //    });
-        //}
-
+       
         #endregion
 
         #region Property Changed Event
@@ -284,17 +215,29 @@ namespace BodyBuddy.ViewModels.Calendar
         [ObservableProperty]
         public string _eventName;
 
-        // to & from time
+        [ObservableProperty] public TimeSpan _fromTime, _toTime;
 
-        //Color
+        [ObservableProperty] public ColorItem _selectedColor;
+        //[ObservableProperty] public ColorItem _selectedColor = new () { HexValue = Color.FromArgb("#0000ccff") };
 
-        //chosen workout
-
-
-
-        public async Task<bool> CreateEvent()
+        public void InitializePopup()
         {
-            return false;
+            this.CreateColors();
+        }
+
+        public async Task CreateEvent()
+        {
+            var newEvent = new AppointmentDto
+            {
+                EventName = EventName,
+                Date = SelectedDate.Date,
+                From = SelectedDate.Add(FromTime),
+                To = SelectedDate.Date.Add(ToTime),
+                Background = SelectedColor.HexValue,
+                Workout = SelectedWorkout
+            };
+
+            await _calenderService.CreateEvent(newEvent);
         }
 
 
@@ -302,29 +245,94 @@ namespace BodyBuddy.ViewModels.Calendar
         public void DeclineAddEvent()
         {
             EventName = string.Empty;
-            //WorkoutName = string.Empty;
-            //WorkoutDescription = string.Empty;
-            //ErrorMessage = string.Empty;
         }
 
-       
+        private async Task GetWorkouts()
+        {
+            if (IsBusy) return;
+
+            try
+            {
+                IsBusy = true;
+
+                WorkoutList = await _workoutService.GetWorkoutPlans(false);
+
+                var preMadeWorkouts = await _workoutService.GetWorkoutPlans(true);
+
+                foreach (var item in preMadeWorkouts)
+                {
+                    WorkoutList.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("Error!", $"Unable to get workouts {ex.Message}", "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
 
         private void CreateColors()
         {
-            ColorList.Add(new ColorItem { Name = "Color 1", HexValue = "FF8B1FA9" });
-            ColorList.Add(new ColorItem { Name = "Color 2", HexValue = "FFD20100" });
-            ColorList.Add(new ColorItem { Name = "Color 3", HexValue = "FFE47C73" });
-            ColorList.Add(new ColorItem { Name = "Color 4", HexValue = "FF0F8644" });
-            ColorList.Add(new ColorItem { Name = "Color 5", HexValue = "FF01A1EF" });
+            ColorList.Add(new ColorItem { Name = "Light Blue", HexValue = Color.FromArgb("#FF00ccff") });
+            ColorList.Add(new ColorItem { Name = "Blue", HexValue = Color.FromArgb("#FF3366ff") });
+            ColorList.Add(new ColorItem { Name = "Green", HexValue = Color.FromArgb("#FF00cc66") });
+            ColorList.Add(new ColorItem { Name = "Mint", HexValue = Color.FromArgb("#FF00cc99") });
+            ColorList.Add(new ColorItem { Name = "Red", HexValue = Color.FromArgb("#FFe60000") });
+            ColorList.Add(new ColorItem { Name = "Orange", HexValue = Color.FromArgb("#FFFF9505") });
+            ColorList.Add(new ColorItem { Name = "Purple", HexValue = Color.FromArgb("#FFA800E0") });
+            ColorList.Add(new ColorItem { Name = "Lavender", HexValue = Color.FromArgb("#FFB388EB") });
+            ColorList.Add(new ColorItem { Name = "Pink", HexValue = Color.FromArgb("#FFff66cc") });
+            ColorList.Add(new ColorItem { Name = "Black", HexValue = Color.FromArgb("#FF1F1F1F") });
         }
     }
 
     #endregion
 
-    public class ColorItem
+    public partial class ColorItem : ObservableObject, INotifyPropertyChanged
     {
-        public string Name { get; set; }
-        public string HexValue { get; set; }
+        private string name;
+        private Color hexValue;
+
+        public string Name
+        {
+            get { return name; }
+            set { SetProperty(ref name, value); }
+        }
+
+        public Color HexValue
+        {
+            get { return hexValue; }
+            set
+            {
+                if (SetProperty(ref hexValue, value))
+                {
+                    // Convert Color to hex string
+                    var hexString = $"#{(int)(value.Red * 255):X2}{(int)(value.Green * 255):X2}{(int)(value.Blue * 255):X2}{(int)(value.Alpha * 255):X2}";
+
+                    // Raise PropertyChanged for HexValue when it changes
+                    RaisePropertyChanged(nameof(HexValue));
+                    Debug.WriteLine($"HexValue changed to: {hexString}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Property changed event handler
+        /// </summary>
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        /// <summary>
+        /// Invoke method when property changed
+        /// </summary>
+        /// <param name="propertyName">property name</param>
+        private void RaisePropertyChanged(string propertyName)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
 

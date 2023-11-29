@@ -20,6 +20,11 @@ namespace BodyBuddy.Services.Implementations
             _calendarRepository = calendarRepository;
         }
 
+        public async Task CreateEvent(AppointmentDto newEvent)
+        {
+            await _calendarRepository.CreateEvent(_mapper.MapToModel(newEvent));
+        }
+
         public async Task<List<AppointmentDto>> GetAppointments()
         {
             List<AppointmentModel> appointments;

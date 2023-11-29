@@ -26,7 +26,7 @@
 
     <Border
         x:Name="popupBorder"
-        HeightRequest="500"
+        HeightRequest="470"
         HorizontalOptions="Center"
         Style="{StaticResource CardView}"
         WidthRequest="300">
@@ -37,46 +37,69 @@
         <Grid>
 
             <VerticalStackLayout Padding="15,15" Spacing="10">
-                <!--  Title  -->
-                <Label
-                    Margin="0,0,0,10"
-                    Style="{StaticResource TitleLabel}"
-                    Text="{Binding DisplayDate, StringFormat='Event on the {0}.'}"
-                    TextColor="Black" />
+
+                <HorizontalStackLayout Margin="0,0,0,10" Spacing="10">
+                    <!--  Title  -->
+                    <Label
+                        Style="{StaticResource TitleLabel}"
+                        Text="{Binding SelectedDate, StringFormat='Event on the '}"
+                        TextColor="Black" />
+
+                    <AbsoluteLayout
+                        Margin="0"
+                        Padding="0"
+                        BackgroundColor="{StaticResource White}">
+                        <BoxView
+                            AbsoluteLayout.LayoutBounds="0.5,0.1,36,36"
+                            AbsoluteLayout.LayoutFlags="PositionProportional"
+                            CornerRadius="18"
+                            HeightRequest="36"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            WidthRequest="36"
+                            Color="Blue" />
+
+                        <Label
+                            AbsoluteLayout.LayoutBounds="0.5,0.3,36,36"
+                            AbsoluteLayout.LayoutFlags="PositionProportional"
+                            BackgroundColor="Transparent"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding SelectedDate, StringFormat='{}{0:dd}'}"
+                            TextColor="White"
+                            VerticalTextAlignment="Center" />
+                    </AbsoluteLayout>
+                </HorizontalStackLayout>
 
                 <!--  Event Name  -->
                 <Label
                     Margin="0,0,0,-5"
+                    FontSize="18"
                     Style="{StaticResource LargeLabel}"
                     Text="Event name"
                     TextColor="{StaticResource DarkText}" />
-                <Border Opacity="0.9" Style="{StaticResource CardView}">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="5" />
-                    </Border.StrokeShape>
-                    <Entry
-                        BackgroundColor="Transparent"
-                        FontSize="16"
-                        Placeholder="Event name"
-                        PlaceholderColor="DarkGray"
-                        Style="{StaticResource BaseEntry}"
-                        Text="{Binding EventName}">
-                        <Entry.Behaviors>
-                            <toolkit:MultiValidationBehavior x:Name="EventNameValid" Flags="ValidateOnValueChanged">
-                                <toolkit:CharactersValidationBehavior
-                                    toolkit:MultiValidationBehavior.Error="Minimum Length of 1"
-                                    CharacterType="Any"
-                                    MinimumCharacterTypeCount="1"
-                                    RegexPattern="" />
-                                <toolkit:TextValidationBehavior
-                                    toolkit:MultiValidationBehavior.Error="Exciding maximum length of 20"
-                                    Flags="ValidateOnValueChanged"
-                                    MaximumLength="10" />
-                            </toolkit:MultiValidationBehavior>
+                <Entry
+                    Margin="2,-5,0,0"
+                    BackgroundColor="Transparent"
+                    FontSize="16"
+                    Placeholder="Event name"
+                    PlaceholderColor="DarkGray"
+                    Style="{StaticResource BaseEntry}"
+                    Text="{Binding EventName}">
+                    <Entry.Behaviors>
+                        <toolkit:MultiValidationBehavior x:Name="EventNameValid" Flags="ValidateOnValueChanged">
+                            <toolkit:CharactersValidationBehavior
+                                toolkit:MultiValidationBehavior.Error="Minimum Length of 1"
+                                CharacterType="Any"
+                                MinimumCharacterTypeCount="1"
+                                RegexPattern="" />
+                            <toolkit:TextValidationBehavior
+                                toolkit:MultiValidationBehavior.Error="Exciding maximum length of 20"
+                                Flags="ValidateOnValueChanged"
+                                MaximumLength="10" />
+                        </toolkit:MultiValidationBehavior>
 
-                        </Entry.Behaviors>
-                    </Entry>
-                </Border>
+                    </Entry.Behaviors>
+                </Entry>
                 <!--  Display event name error message  -->
                 <Label
                     x:Name="EventNameError"
@@ -97,12 +120,14 @@
                         HorizontalOptions="Start"
                         Spacing="40">
                         <Label
+                            FontSize="18"
                             HorizontalOptions="Start"
                             Style="{StaticResource LargeLabel}"
                             Text="From"
                             TextColor="{StaticResource DarkText}" />
 
                         <Label
+                            FontSize="18"
                             HorizontalOptions="End"
                             Style="{StaticResource LargeLabel}"
                             Text="To"
@@ -113,7 +138,10 @@
                         Grid.Row="1"
                         HorizontalOptions="Start"
                         Spacing="10">
-                        <TimePicker FontSize="20" TextColor="{StaticResource DarkText}" />
+                        <TimePicker
+                            FontSize="16"
+                            TextColor="{StaticResource DarkText}"
+                            Time="{Binding FromTime}" />
 
                         <Label
                             HorizontalOptions="Center"
@@ -122,65 +150,55 @@
                             TextColor="{StaticResource DarkText}"
                             VerticalOptions="Center" />
 
-                        <TimePicker FontSize="20" TextColor="{StaticResource DarkText}" />
+                        <TimePicker
+                            FontSize="16"
+                            TextColor="{StaticResource DarkText}"
+                            Time="{Binding ToTime}" />
                     </HorizontalStackLayout>
                 </Grid>
 
 
-                <!--  Optional Select Workouts Dropdown  -->
-
-
-
                 <!--  Select Event Color dropdown  -->
-
-                <inputs:SfComboBox
-                    Padding="5,0"
-                    BackgroundColor="Gray"
-                    DisplayMemberPath="Name"
-                    HeightRequest="34"
-                    IsEditable="False"
-                    ItemsSource="{Binding ColorList}"
-                    Placeholder="Select a color for the event"
-                    PlaceholderColor="Black"
-                    TextColor="Black"
-                    TextMemberPath="Name"
-                    WidthRequest="280">
-
-                    <inputs:SfComboBox.ItemTemplate>
-                        <DataTemplate x:DataType="viewModel:ColorItem">
-                            <ViewCell>
-                                <!--<StackLayout Orientation="Horizontal">
-                                        <BoxView
-                                            Margin="5,0"
-                                            HeightRequest="20"
-                                            WidthRequest="20"
-                                            Color="{Binding HexValue}" />
-                                        <Label
-                                            Margin="5,0"
-                                            Text="{Binding Name}"
-                                            TextColor="Black"
-                                            VerticalOptions="Center" />
-                                    </StackLayout>-->
-
+                <Label
+                    Margin="0,0,0,-5"
+                    FontAttributes="Bold"
+                    Style="{StaticResource MediumLabel}"
+                    Text="Select event color" />
+                <Border
+                    x:Name="ColorComboBox"
+                    Grid.Row="0"
+                    Margin="0,0,0,10"
+                    BackgroundColor="Transparent"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 10,10,10,10">
+                    <inputs:SfComboBox
+                        BackgroundColor="Transparent"
+                        DisplayMemberPath="Name"
+                        FontSize="16"
+                        HeightRequest="40"
+                        IsEditable="False"
+                        ItemsSource="{Binding ColorList}"
+                        Placeholder="Select a color for the event"
+                        PlaceholderColor="Black"
+                        SelectedItem="{Binding SelectedColor}"
+                        SelectionChanged="SfComboBox_SelectionChanged"
+                        Stroke="Transparent"
+                        TextColor="Black"
+                        TextMemberPath="Name"
+                        WidthRequest="270">
+                        <inputs:SfComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="viewModel:ColorItem">
                                 <Grid
-                                    Margin="0,5"
-                                    ColumnDefinitions="48,220"
+                                    Margin="0,2"
+                                    ColumnDefinitions="128,140"
                                     HorizontalOptions="Center"
-                                    RowDefinitions="50"
+                                    RowDefinitions="40"
                                     VerticalOptions="Center">
-                                    <Image
-                                        Grid.Column="0"
-                                        Aspect="AspectFit"
-                                        Background="red"
-                                        BackgroundColor="{Binding HexValue}"
-                                        HorizontalOptions="Center"
-                                        Source="no_image"
-                                        VerticalOptions="Center" />
-                                    <!--<BoxView
+                                    <BoxView
                                         Grid.Column="0"
                                         HorizontalOptions="Center"
                                         VerticalOptions="Center"
-                                        Color="{Binding HexValue}" />-->
+                                        Color="{Binding HexValue}" />
                                     <StackLayout
                                         Grid.Column="1"
                                         Margin="15,0,0,0"
@@ -193,20 +211,44 @@
                                             Text="{Binding Name}"
                                             TextColor="Black"
                                             VerticalTextAlignment="Center" />
-
                                     </StackLayout>
-
-
                                 </Grid>
-                            </ViewCell>
-                        </DataTemplate>
-                    </inputs:SfComboBox.ItemTemplate>
-                </inputs:SfComboBox>
+                            </DataTemplate>
+                        </inputs:SfComboBox.ItemTemplate>
+                    </inputs:SfComboBox>
+                </Border>
 
+                <!--  Optional Select Workouts Dropdown  -->
+                <Label
+                    Margin="0,0,0,-5"
+                    FontAttributes="Bold"
+                    Style="{StaticResource MediumLabel}"
+                    Text="Optionally select a workout" />
+                <Border
+                    Grid.Row="0"
+                    BackgroundColor="Transparent"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 10,10,10,10">
+                    <inputs:SfComboBox
+                        BackgroundColor="Transparent"
+                        ClearButtonIconColor="Black"
+                        DisplayMemberPath="Name"
+                        FontSize="16"
+                        HeightRequest="40"
+                        IsEditable="False"
+                        ItemsSource="{Binding WorkoutList}"
+                        Placeholder="Select a workout"
+                        PlaceholderColor="Black"
+                        SelectedItem="{Binding SelectedWorkout}"
+                        Stroke="Transparent"
+                        TextMemberPath="Name"
+                        WidthRequest="270" />
+                </Border>
 
 
                 <!--  Create a new event button  -->
                 <Button
+                    Margin="0,5,0,0"
                     Clicked="CreateBtn_Clicked"
                     Style="{StaticResource AddButton}"
                     Text="Create"

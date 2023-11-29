@@ -15,10 +15,8 @@ public partial class AddEventPopup
         BindingContext = calendarViewModel;
     }
 
-
     private async void CreateBtn_Clicked(object sender, EventArgs e)
     {
-
         if (!EventNameValid.IsValid)
         {
             EventNameError.Text = EventNameValid.Errors.FirstOrDefault().ToString();
@@ -31,12 +29,11 @@ public partial class AddEventPopup
         {
             EventNameError.IsVisible = false;
 
-            if (await _viewModel.CreateEvent())
-            {
-                await MopupService.Instance.PopAsync();
+            await _viewModel.CreateEvent();
 
-                _viewModel.EventName = string.Empty;
-            }
+            await MopupService.Instance.PopAsync();
+
+            _viewModel.EventName = string.Empty;
         }
     }
 
@@ -49,6 +46,18 @@ public partial class AddEventPopup
         if (errorLabel.IsVisible)
         {
             errorLabel.IsVisible = false;
+        }
+    }
+
+    private void SfComboBox_SelectionChanged(object sender, Syncfusion.Maui.Inputs.SelectionChangedEventArgs e)
+    {
+        if (BindingContext is CalendarViewModel viewModel)
+        {
+            // Assuming you have a UI element named "popupBorder" that needs its background color changed
+            if (viewModel.SelectedColor != null)
+            {
+                ColorComboBox.BackgroundColor = viewModel.SelectedColor.HexValue;
+            }
         }
     }
 }

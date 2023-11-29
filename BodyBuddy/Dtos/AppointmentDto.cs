@@ -20,5 +20,9 @@ namespace BodyBuddy.Dtos
         public DateTime To { get; set; }
 
         public Brush Background { get; set; }
+
+        public WorkoutDto? Workout { get; set; }
+
+        public bool IsWorkoutVisible => Workout != null;
     }
 }
