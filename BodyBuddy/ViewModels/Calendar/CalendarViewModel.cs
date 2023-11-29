@@ -264,6 +264,7 @@ namespace BodyBuddy.ViewModels.Calendar
             };
 
             await _calenderService.CreateEvent(newEvent);
+            ClearInputData();
             await Initialize();
         }
 
@@ -271,9 +272,17 @@ namespace BodyBuddy.ViewModels.Calendar
         [RelayCommand]
         public void DeclineAddEvent()
         {
-            EventName = string.Empty;
+            ClearInputData();
         }
 
+        public void ClearInputData()
+        {
+            EventName = string.Empty;
+            FromTime = TimeSpan.Zero;
+            ToTime = TimeSpan.Zero;
+            SelectedColor = null;
+            SelectedWorkout = null;
+        }
 
         private void CreateColors()
         {
