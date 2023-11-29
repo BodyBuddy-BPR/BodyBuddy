@@ -36,22 +36,16 @@
                 <schedule:SfScheduler.AppointmentMapping>
                     <schedule:SchedulerAppointmentMapping
                         Background="Background"
-                        EndTime="To"
-                        EndTimeZone="EndTimeZone"
-                        IsAllDay="IsAllDay"
-                        RecurrenceExceptionDates="RecurrenceExceptions"
-                        RecurrenceId="RecurrenceId"
-                        RecurrenceRule="RecurrenceRule"
+                        EndTime="To"                        
                         StartTime="From"
-                        StartTimeZone="StartTimeZone"
                         Subject="EventName" />
                 </schedule:SfScheduler.AppointmentMapping>
             </schedule:SfScheduler>
 
             <Grid Grid.Row="1" Margin="0,2,2,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="{OnIdiom Desktop=0.05*, Phone=0.2*, Default=0.1*}" />
-                    <ColumnDefinition Width="{OnIdiom Desktop=0.95*, Phone=0.8*, Default=0.9*}" />
+                    <ColumnDefinition Width="0.2*" />
+                    <ColumnDefinition Width="0.8*" />
                 </Grid.ColumnDefinitions>
 
                 <StackLayout Grid.Column="0">

@@ -139,6 +139,7 @@
                         HorizontalOptions="Start"
                         Spacing="10">
                         <TimePicker
+                            x:Name="FromTime"
                             FontSize="16"
                             TextColor="{StaticResource DarkText}"
                             Time="{Binding FromTime}" />
@@ -151,6 +152,7 @@
                             VerticalOptions="Center" />
 
                         <TimePicker
+                            x:Name="ToTime"
                             FontSize="16"
                             TextColor="{StaticResource DarkText}"
                             Time="{Binding ToTime}" />
@@ -165,13 +167,14 @@
                     Style="{StaticResource MediumLabel}"
                     Text="Select event color" />
                 <Border
-                    x:Name="ColorComboBox"
+                    x:Name="ColorComboBoxBorder"
                     Grid.Row="0"
                     Margin="0,0,0,10"
                     BackgroundColor="Transparent"
                     Stroke="Transparent"
                     StrokeShape="RoundRectangle 10,10,10,10">
                     <inputs:SfComboBox
+                        x:Name="ColorComboBox"
                         BackgroundColor="Transparent"
                         DisplayMemberPath="Name"
                         FontSize="16"
@@ -217,6 +220,18 @@
                         </inputs:SfComboBox.ItemTemplate>
                     </inputs:SfComboBox>
                 </Border>
+                <Label
+                    x:Name="ComboBoxError"
+                    Padding="2"
+                    FontAttributes="Bold"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    IsVisible="false"
+                    Opacity="0.7"
+                    Style="{StaticResource MediumLabel}"
+                    Text=""
+                    TextColor="Red"
+                    VerticalOptions="Center" />
 
                 <!--  Optional Select Workouts Dropdown  -->
                 <Label

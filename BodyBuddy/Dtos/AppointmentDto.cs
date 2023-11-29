@@ -23,6 +23,6 @@ namespace BodyBuddy.Dtos
 
         public WorkoutDto? Workout { get; set; }
 
-        public bool IsWorkoutVisible => Workout != null;
+        public bool IsWorkoutVisible => Workout != null && Workout.Id != 0;
     }
 }

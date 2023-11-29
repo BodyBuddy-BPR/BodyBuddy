@@ -25,6 +25,12 @@ public partial class AddEventPopup
             // Start the timer to hide the error label after 3 seconds
             StartErrorLabelTimer(EventNameError);
         }
+        else if (_viewModel.SelectedColor == null)
+        {
+            ComboBoxError.IsVisible = true;
+            ComboBoxError.Text = "Please select an event color";
+            StartErrorLabelTimer(ComboBoxError);
+        }
         else if (EventNameValid.IsValid)
         {
             EventNameError.IsVisible = false;
@@ -53,10 +59,9 @@ public partial class AddEventPopup
     {
         if (BindingContext is CalendarViewModel viewModel)
         {
-            // Assuming you have a UI element named "popupBorder" that needs its background color changed
             if (viewModel.SelectedColor != null)
             {
-                ColorComboBox.BackgroundColor = viewModel.SelectedColor.HexValue;
+                ColorComboBoxBorder.BackgroundColor = viewModel.SelectedColor.HexValue;
             }
         }
     }

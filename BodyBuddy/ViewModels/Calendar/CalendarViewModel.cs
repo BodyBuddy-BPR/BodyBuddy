@@ -28,48 +28,26 @@ namespace BodyBuddy.ViewModels.Calendar
 
         #region Fields
 
-        ///// <summary>
-        ///// team management
-        ///// </summary>
-        //private List<string> subjects;
 
-        /// <summary>
-        /// color collection
-        /// </summary>
-        //private List<Brush> colors;
-
-        /// <summary>
-        /// The selected date meetings.
-        /// </summary>
         private ObservableCollection<AppointmentDto>? selectedDateMeetings;
 
-        /// <summary>
-        /// The selected date
-        /// </summary>
         private DateTime selectedDate = DateTime.Now.Date;
-
-        /// <summary>
-        /// The bool value.
-        /// </summary>
+    
         private bool isToday = true;
 
-        /// <summary>
-        /// The date text color.
-        /// </summary>
         private Color dateTextColor = Colors.White;
 
         #endregion
 
         #region Constructor
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SchedulerDataBindingViewModel" /> class.
-        /// </summary>
         public CalendarViewModel(ICalendarService calenderService, IWorkoutService workoutService)
         {
             this.selectedDateMeetings = new ObservableCollection<AppointmentDto>();
             this.selectedDateMeetings = this.GetSelectedDateAppointments(this.selectedDate);
-            this.DisplayDate = DateTime.Now.Date.AddHours(8).AddMinutes(50);
+            //this.DisplayDate = DateTime.Now.Date.AddHours(8).AddMinutes(50);
+            this.DisplayDate = DateTime.Now.Date;
+
 
             _calenderService = calenderService;
             _workoutService = workoutService;
@@ -165,7 +143,6 @@ namespace BodyBuddy.ViewModels.Calendar
                 }
                 this.Events.Add(item);
             }
-
         }
 
         private async Task GetWorkouts()

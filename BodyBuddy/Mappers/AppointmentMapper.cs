@@ -16,7 +16,6 @@ namespace BodyBuddy.Mappers
             if (appointment == null)
                 return new AppointmentDto();
 
-
             return new AppointmentDto()
             {
                 Id = appointment.Id,
@@ -25,10 +24,7 @@ namespace BodyBuddy.Mappers
                 From = DateTime.Parse(appointment.From),
                 To = DateTime.Parse(appointment.To),
                 Background = new SolidColorBrush(Color.FromArgb(appointment.Background)),
-                Workout = new WorkoutDto()
-                {
-                    Id = appointment.WorkoutId
-                }
+                Workout = appointment.WorkoutId != 0 ? new WorkoutDto() { Id = appointment.WorkoutId } : null
             };
         }
 
@@ -42,7 +38,7 @@ namespace BodyBuddy.Mappers
                 From = newEvent.From.ToString(),
                 To = newEvent.To.ToString(),
                 Background = ConvertBrushToString(newEvent.Background),
-                WorkoutId = newEvent.Workout.Id
+                WorkoutId = newEvent.Workout?.Id ?? 0
             };
         }
 
