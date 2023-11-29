@@ -16,6 +16,9 @@ namespace BodyBuddy.ViewModels.Calendar
     {
         private readonly ICalendarService _calenderService;
 
+        [ObservableProperty]
+        private ObservableCollection<ColorItem> _colorList = new();
+
         #region Fields
 
         ///// <summary>
@@ -61,7 +64,7 @@ namespace BodyBuddy.ViewModels.Calendar
             //this.colors = new List<Brush>();
             this.selectedDateMeetings = new ObservableCollection<AppointmentDto>();
             //this.CreateSubjects();
-            //this.CreateColors();
+            this.CreateColors();
             //this.IntializeAppoitments();
             this.selectedDateMeetings = this.GetSelectedDateAppointments(this.selectedDate);
             this.DisplayDate = DateTime.Now.Date.AddHours(8).AddMinutes(50);
@@ -276,11 +279,18 @@ namespace BodyBuddy.ViewModels.Calendar
 
 
 
-
         #region Popup
 
         [ObservableProperty]
         public string _eventName;
+
+        // to & from time
+
+        //Color
+
+        //chosen workout
+
+
 
         public async Task<bool> CreateEvent()
         {
@@ -297,7 +307,26 @@ namespace BodyBuddy.ViewModels.Calendar
             //ErrorMessage = string.Empty;
         }
 
-        #endregion
+       
 
+        private void CreateColors()
+        {
+            ColorList.Add(new ColorItem { Name = "Color 1", HexValue = "FF8B1FA9" });
+            ColorList.Add(new ColorItem { Name = "Color 2", HexValue = "FFD20100" });
+            ColorList.Add(new ColorItem { Name = "Color 3", HexValue = "FFE47C73" });
+            ColorList.Add(new ColorItem { Name = "Color 4", HexValue = "FF0F8644" });
+            ColorList.Add(new ColorItem { Name = "Color 5", HexValue = "FF01A1EF" });
+        }
+    }
+
+    #endregion
+
+    public class ColorItem
+    {
+        public string Name { get; set; }
+        public string HexValue { get; set; }
     }
 }
+
+
+
