@@ -25,10 +25,20 @@
         </Style>
     </ContentPage.Resources>
 
-    <Grid>
+    <Grid RowDefinitions="Auto, *">
+
+        <Image
+            Grid.Row="0"
+            Margin="0,30,0,0"
+            HeightRequest="200"
+            Source="body_buddy_logo.png"
+            WidthRequest="200" />
 
         <!--  ______________ Login page ______________  -->
-        <StackLayout Margin="20,10" IsVisible="{Binding IsLogin}">
+        <StackLayout
+            Grid.Row="1"
+            Margin="20,0"
+            IsVisible="{Binding IsLogin}">
 
             <!--  Titel  -->
             <VerticalStackLayout Margin="0,30">
@@ -141,7 +151,10 @@
 
 
         <!--  ______________ Sign Up page ______________  -->
-        <StackLayout Margin="20,10" IsVisible="{Binding IsSignUp}">
+        <StackLayout
+            Grid.Row="1"
+            Margin="20,0"
+            IsVisible="{Binding IsSignUp}">
 
             <!--  Titel  -->
             <VerticalStackLayout Margin="0,30">

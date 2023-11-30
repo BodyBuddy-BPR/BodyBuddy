@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
     xmlns:modelDto="clr-namespace:BodyBuddy.Dtos"
+    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
     xmlns:progressBar="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels"
     x:DataType="viewModel:MainPageViewModel"
@@ -26,6 +27,14 @@
             Style="{StaticResource TitleLabel}"
             Text="Welcome " />
 
+        <skia:SKLottieView
+            Margin="80,0,0,10"
+            Padding="0,-30"
+            HeightRequest="30"
+            HorizontalOptions="Center"
+            RepeatCount="1"
+            Source="waving_hand.json"
+            VerticalOptions="FillAndExpand" />
         <Frame
             Grid.Row="1"
             Padding="10,15"

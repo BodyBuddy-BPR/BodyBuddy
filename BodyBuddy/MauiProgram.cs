@@ -32,6 +32,7 @@ using BodyBuddy.ViewModels.User;
 using BodyBuddy.Views.User;
 using BodyBuddy.Views.Calendar;
 using BodyBuddy.ViewModels.Calendar;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace BodyBuddy;
 
@@ -47,6 +48,7 @@ public static class MauiProgram
             .ConfigureMauiWorkarounds()
             .ConfigureMopups()
             .UseMauiCameraView()
+            .UseSkiaSharp()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
