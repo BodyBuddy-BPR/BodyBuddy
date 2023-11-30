@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BodyBuddy.Views.Calendar.CalenderPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Dtos="clr-namespace:BodyBuddy.Dtos"
+    xmlns:calendar="clr-namespace:BodyBuddy.Views.Calendar"
+    xmlns:schedule="clr-namespace:Syncfusion.Maui.Scheduler;assembly=Syncfusion.Maui.Scheduler"
+    xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.Calendar"
+    Title="CalendarPage"
+    x:DataType="viewModel:CalendarViewModel">
+
+    <ContentPage.Content>
+
+        <Grid Padding="0,0,0,10" BackgroundColor="{StaticResource White}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <schedule:SfScheduler
+                x:Name="Scheduler"
+                Grid.Row="0"
+                AllowAppointmentDrag="False"
+                AppointmentsSource="{Binding Events}"
+                DisplayDate="{Binding DisplayDate}"
+                SelectedDate="{Binding SelectedDate}"
+                ShowBusyIndicator="True"
+                View="Month">
+
+                <schedule:SfScheduler.MonthView>
+                    <schedule:SchedulerMonthView AppointmentDisplayMode="Indicator" NumberOfVisibleWeeks="5" />
+                </schedule:SfScheduler.MonthView>
+
+                <schedule:SfScheduler.AppointmentMapping>
+                    <schedule:SchedulerAppointmentMapping
+                        Background="Background"
+                        EndTime="To"                        
+                        StartTime="From"
+                        Subject="EventName" />
+                </schedule:SfScheduler.AppointmentMapping>
+            </schedule:SfScheduler>
+
+            <Grid Grid.Row="1" Margin="0,2,2,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*" />
+                    <ColumnDefinition Width="0.8*" />
+                </Grid.ColumnDefinitions>
+
+                <StackLayout Grid.Column="0">
+                    <Label
+                        Margin="0,10,0,0"
+                        BackgroundColor="{StaticResource White}"
+                        FontSize="14"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding SelectedDate, StringFormat='{}{0:ddd}'}"
+                        TextColor="Gray"
+                        TextTransform="Uppercase" />
+                    <AbsoluteLayout
+                        Grid.Row="1"
+                        Margin="0"
+                        Padding="0"
+                        BackgroundColor="{StaticResource White}">
+                        <BoxView
+                            AbsoluteLayout.LayoutBounds="0.5,0.1,36,36"
+                            AbsoluteLayout.LayoutFlags="PositionProportional"
+                            CornerRadius="18"
+                            HeightRequest="36"
+                            HorizontalOptions="Center"
+                            IsVisible="{Binding IsToday}"
+                            VerticalOptions="Center"
+                            WidthRequest="36"
+                            Color="Blue" />
+
+                        <Label
+                            AbsoluteLayout.LayoutBounds="0.5,0.3,36,36"
+                            AbsoluteLayout.LayoutFlags="PositionProportional"
+                            BackgroundColor="Transparent"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding SelectedDate, StringFormat='{}{0:dd}'}"
+                            TextColor="{Binding DateTextColor}"
+                            VerticalTextAlignment="Center" />
+                    </AbsoluteLayout>
+
+                </StackLayout>
+
+                <Label
+                    x:Name="noEventsLabel"
+                    Grid.Column="1"
+                    Padding="15,15,10,0"
+                    FontAttributes="Bold"
+                    FontSize="14"
+                    Text="No events"
+                    TextColor="Gray" />
+                <ListView
+                    x:Name="appointmentListView"
+                    Grid.Column="1"
+                    ItemsSource="{Binding SelectedDateMeetings}"
+                    RowHeight="54"
+                    SelectionMode="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="Dtos:AppointmentDto">
+                            <ViewCell>
+                                <Grid Margin="0,0,0,2" Background="{Binding Background}">
+
+                                    <StackLayout
+                                        Padding="5,5,10,5"
+                                        Orientation="Vertical"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="10"
+                                            Text="{Binding EventName}"
+                                            TextColor="White" />
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label
+                                                FontSize="10"
+                                                Text="{Binding From, StringFormat='{}{0:hh:mm tt}'}"
+                                                TextColor="White" />
+                                            <Label
+                                                FontSize="10"
+                                                HorizontalOptions="Center"
+                                                Text=" - "
+                                                TextColor="White"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                FontSize="10"
+                                                Text="{Binding To, StringFormat='{}{0:hh:mm tt}'}"
+                                                TextColor="White" />
+                                        </StackLayout>
+                                        <Label
+                                            FontSize="10"
+                                            IsVisible="{Binding IsWorkoutVisible}"
+                                            Text="{Binding Workout.Name, StringFormat='Workout: {0}', FallbackValue='', TargetNullValue=''}"
+                                            TextColor="White" />
+                                    </StackLayout>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+
+            <Button
+                Grid.Row="2"
+                Clicked="AddEventClicked"
+                Style="{StaticResource AddButton}"
+                Text="Add Event" />
+
+        </Grid>
+    </ContentPage.Content>
+
+    <calendar:CalenderPage.Behaviors>
+        <calendar:CalendarBehavior />
+    </calendar:CalenderPage.Behaviors>
+
+</ContentPage>

@@ -1,3 +1,4 @@
+using BodyBuddy.Controls.Common;
 using BodyBuddy.ViewModels.IntakeViewModels;
 
 namespace BodyBuddy.Views.StatisticsViews;
@@ -11,11 +12,15 @@ public partial class IntakePage : ContentPage
 		_viewModel = intakeViewModel;
 		BindingContext = intakeViewModel;
 
-	}
+        // Adding Common Toolbar items
+        CommonToolBarItems.AddCommonToolbarItems(this);
+    }
 
 	protected override async void OnAppearing()
 	{
 		base.OnAppearing();
-		await _viewModel.Initialize();
+        await Task.Delay(100);
+
+        await _viewModel.Initialize();
 	}
 }

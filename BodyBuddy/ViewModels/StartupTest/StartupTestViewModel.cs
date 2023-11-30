@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using BodyBuddy.Enums;
 using BodyBuddy.Mappers;
+using System.Collections.ObjectModel;
 
 namespace BodyBuddy.ViewModels.StartupTest;
 
@@ -18,10 +19,13 @@ public partial class StartupTestViewModel : BaseViewModel
     [ObservableProperty] private bool _isNameVisible, _isGenderVisible, _isWeightVisible, _isHeightVisible;
 
     [ObservableProperty]
-    private bool _isBirthdayVisible, _isActiveVisible, _isPassiveCalorieBurnVisible, _isGoalVisible;
+    private bool _isBirthdayVisible, _isActiveVisible, _isPassiveCalorieBurnVisible, _isGoalVisible, _isTargetAreaVisible;
 
     [ObservableProperty]
     private bool _submitDataIsVisible, _nextIsEnabled, _backIsVisible, _isNextButtonVisible, _isWelcomeVisible;
+
+    [ObservableProperty]
+    private bool _upperBodyTargetArea, _lowerBodyTargetArea, _absTargetArea, _backTargetArea;
 
     //Saved Properties
     [ObservableProperty] private StartupTestDto _startupTestDto;
@@ -31,7 +35,7 @@ public partial class StartupTestViewModel : BaseViewModel
     private string _questionnaireText;
 
     //-1 used to avoid Welcome being a part of the progress
-    public double StartupTestProgress => (int)CurrentState > 1 ? ((double)CurrentState - 1) / 8 : 0;
+    public double StartupTestProgress => (int)CurrentState > 1 ? ((double)CurrentState - 1) / 9 : 0;
 
     public DateTime MinDate { get; } = new(1914, 7, 28);
     public DateTime MaxDate { get; } = DateTime.Now;
@@ -39,8 +43,7 @@ public partial class StartupTestViewModel : BaseViewModel
     public List<string> GenderList { get; }
     public List<string> ActivityList { get; }
     public List<string> GoalList { get; }
-    public List<string> FocusAreaList { get; }
-    //public List<bool> TargetSelectedStates { get; set; } = new() { false, false, false, false };
+    public List<string> TargetAreaList { get; }
     #endregion
 
     public ICommand RadioButtonCheckedCommand { get; }
@@ -58,9 +61,9 @@ public partial class StartupTestViewModel : BaseViewModel
         GenderList = InitializeGenderList();
         ActivityList = InitializeActivityList();
         GoalList = InitializeGoalList();
-        FocusAreaList = InitializeFocusAreaList();
+        TargetAreaList = InitializeTargetAreaList();
 
-        //SetStateProperties Has to be first due timing
+        //SetStateProperties Has to be first due to timing
         SetStateProperties();
         UpdateVisibility();
         RadioButtonCheckedCommand = new Command<string>(OnRadioButtonChecked);
@@ -81,8 +84,34 @@ public partial class StartupTestViewModel : BaseViewModel
     [RelayCommand]
     public async Task SubmitData()
     {
+        SetTargetArea();
         _startupTestService.SaveStartupTestData(StartupTestDto);
         await Shell.Current.GoToAsync($"//{nameof(MainPage)}", true);
+    }
+
+    private void SetTargetArea()
+    {
+        if (UpperBodyTargetArea)
+        {
+            StartupTestDto.TargetAreas += "UpperBody, ";
+        }
+        if (LowerBodyTargetArea)
+        {
+            StartupTestDto.TargetAreas += "LowerBody, ";
+        }
+        if (AbsTargetArea)
+        {
+            StartupTestDto.TargetAreas += "Abs, ";
+        }
+        if (BackTargetArea)
+        {
+            StartupTestDto.TargetAreas += "Back, ";
+        }
+
+        if (!String.IsNullOrEmpty(StartupTestDto.TargetAreas))
+        {
+            StartupTestDto.TargetAreas = StartupTestDto.TargetAreas.Substring(0, StartupTestDto.TargetAreas.Length - 2);
+        }
     }
 
 
@@ -94,6 +123,7 @@ public partial class StartupTestViewModel : BaseViewModel
             case nameof(StartupTestDto.Name):
             case nameof(StartupTestDto.Gender):
             case nameof(StartupTestDto.ActiveAmount):
+            case nameof(StartupTestDto.TargetAreas):
             case nameof(StartupTestDto.Goal):
             case nameof(StartupTestDto.Weight):
             case nameof(StartupTestDto.Height):
@@ -143,6 +173,7 @@ public partial class StartupTestViewModel : BaseViewModel
         IsBirthdayVisible = CurrentState == StartupTestStates.BirthdaySelection;
         IsActiveVisible = CurrentState == StartupTestStates.ActivitySelection;
         IsPassiveCalorieBurnVisible = CurrentState == StartupTestStates.PassiveCalorieBurnEntry;
+        IsTargetAreaVisible = CurrentState == StartupTestStates.TargetAreas;
         IsGoalVisible = CurrentState == StartupTestStates.GoalSelection;
         UpdateActionButtonsVisibility();
     }
@@ -193,6 +224,10 @@ public partial class StartupTestViewModel : BaseViewModel
                 QuestionnaireText = "Passive Calorie Burn";
                 StartupTestDto.PassiveCalorieBurn = CalculatePCB();
                 currentStateDone = () => StartupTestDto.PassiveCalorieBurn > 0;
+                break;
+            case StartupTestStates.TargetAreas:
+                QuestionnaireText = "What are your target areas?";
+                currentStateDone = () => true;
                 break;
             case StartupTestStates.GoalSelection:
                 QuestionnaireText = "What are your goals?";
@@ -249,10 +284,10 @@ public partial class StartupTestViewModel : BaseViewModel
             .Select(EnumMapper.GetDisplayString)
             .ToList();
     }
-    private static List<string> InitializeFocusAreaList()
+    private static List<string> InitializeTargetAreaList()
     {
-        return Enum.GetValues(typeof(FocusArea))
-            .Cast<FocusArea>()
+        return Enum.GetValues(typeof(TargetArea))
+            .Cast<TargetArea>()
             .Select(EnumMapper.GetDisplayString)
             .ToList();
     }

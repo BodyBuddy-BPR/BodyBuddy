@@ -15,6 +15,7 @@
 
             <!--  Other Colors  -->
             <Color x:Key="White">#D7E4EA</Color>
+            <Color x:Key="Black">#1F1F1F</Color>
 
             <!--  Text  -->
             <Color x:Key="DarkText">#1F1F1F</Color>
@@ -24,7 +25,7 @@
             <Color x:Key="StatusBarColor">#065A82</Color>
             <Color x:Key="NavigationBarColor">#065A82</Color>
             <Color x:Key="PageBackgroundColor">#2f2f2f</Color>
-            <Color x:Key="TabBarColor">#065A82</Color>
+            <Color x:Key="TabBarColor">#1F1F1F</Color>
 
             <!--  Pages  -->
             <Style ApplyToDerivedTypes="True" TargetType="Page">

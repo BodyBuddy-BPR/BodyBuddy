@@ -28,6 +28,11 @@ using BodyBuddy.ViewModels.Profile;
 using BodyBuddy.Views.Authentication;
 using BodyBuddy.Helpers;
 using BodyBuddy.Authentication;
+using BodyBuddy.ViewModels.User;
+using BodyBuddy.Views.User;
+using BodyBuddy.Views.Calendar;
+using BodyBuddy.ViewModels.Calendar;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace BodyBuddy;
 
@@ -43,6 +48,7 @@ public static class MauiProgram
             .ConfigureMauiWorkarounds()
             .ConfigureMopups()
             .UseMauiCameraView()
+            .UseSkiaSharp()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -120,6 +126,12 @@ public static class MauiProgram
         // Authentication
         builder.Services.AddSingleton<LoginPage>();
 
+        // User
+        builder.Services.AddSingleton<FriendsPage>();
+
+        // Calendar
+        builder.Services.AddSingleton<CalenderPage>();
+
         #endregion
 
 
@@ -149,6 +161,13 @@ public static class MauiProgram
 
         // Authentication
         builder.Services.AddSingleton<LoginViewModel>();
+
+        // User
+        builder.Services.AddSingleton<FriendsViewModel>();
+
+        // Calendar
+        builder.Services.AddSingleton<CalendarViewModel>();
+
         #endregion
 
 
@@ -156,6 +175,9 @@ public static class MauiProgram
 
         // Startup Test
         builder.Services.AddSingleton<IStartupTestRepository, StartupTestRepository>();
+
+        // Step
+        builder.Services.AddSingleton<IStepRepository, StepRepository>();
 
         // Workout
         builder.Services.AddSingleton<IWorkoutRepository, WorkoutRepository>();
@@ -171,6 +193,12 @@ public static class MauiProgram
         // Quote
         builder.Services.AddSingleton<IQuoteRepository, QuoteRepository>();
 
+        // User
+        builder.Services.AddSingleton<IUserRepository, UserRepository>();
+
+        // Calendar
+        builder.Services.AddSingleton<ICalendarRepository, CalendarRepository>();
+
         #endregion
 
 
@@ -181,13 +209,17 @@ public static class MauiProgram
         builder.Services.AddSingleton<StartupTestMapper>();
         builder.Services.AddSingleton<IntakeMapper>();
         builder.Services.AddSingleton<QuoteMapper>();
+
         #endregion
 
         #region Services
 
         // Startup Test
         builder.Services.AddSingleton<IStartupTestService, StartupTestService>();
-
+        
+        //Step
+        builder.Services.AddSingleton<IStepService, StepService>();
+        
         // Workout
         builder.Services.AddSingleton<IWorkoutService, WorkoutService>();
         builder.Services.AddSingleton<IWorkoutExercisesService, WorkoutExercisesService>();
@@ -202,13 +234,17 @@ public static class MauiProgram
         // Authentication
         builder.Services.AddSingleton<IUserAuthenticationService, UserAuthenticationService>();
 
-        
         // Quote
         builder.Services.AddSingleton<IQuoteService, QuoteService>();
 
+        // User
+        builder.Services.AddSingleton<IUserService, UserService>();
 
         builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
         builder.Services.AddSingleton<IPopupNavigation>(MopupService.Instance);
+
+        // Calendar
+        builder.Services.AddSingleton<ICalendarService, CalendarService>();
         #endregion
 
         #endregion

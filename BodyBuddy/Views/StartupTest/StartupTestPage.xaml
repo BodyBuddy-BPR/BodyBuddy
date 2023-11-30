@@ -4,7 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:BodyBuddy.Converters"
-    xmlns:customControls="clr-namespace:BodyBuddy.CustomControls"
+    xmlns:customControls="clr-namespace:BodyBuddy.Controls.Custom"
     xmlns:local="clr-namespace:BodyBuddy.Events"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:progressBar="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
@@ -277,6 +277,59 @@
                 Style="{StaticResource LargeLabel}"
                 Text="Kcal/Day"
                 TextColor="White" />
+        </VerticalStackLayout>
+
+        <!--  TargetArea  -->
+        <VerticalStackLayout
+            x:Name="TargetAreaCollectionView"
+            Grid.Row="1"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsTargetAreaVisible}"
+            VerticalOptions="Center">
+            <HorizontalStackLayout>
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <CheckBox IsChecked="{Binding UpperBodyTargetArea}" VerticalOptions="Center" />
+                <Label
+                    FontFamily="Montserrat"
+                    Text="Upper body"
+                    TextColor="White"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <CheckBox IsChecked="{Binding LowerBodyTargetArea}" VerticalOptions="Center" />
+                <Label
+                    FontFamily="Montserrat"
+                    Text="Lower body"
+                    TextColor="White"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <CheckBox IsChecked="{Binding AbsTargetArea}" VerticalOptions="Center" />
+                <Label
+                    FontFamily="Montserrat"
+                    Text="Abs"
+                    TextColor="White"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <CheckBox IsChecked="{Binding BackTargetArea}" VerticalOptions="Center" />
+                <Label
+                    FontFamily="Montserrat"
+                    Text="Back"
+                    TextColor="White"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
         </VerticalStackLayout>
 
         <!--  Goal  -->

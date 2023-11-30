@@ -16,7 +16,7 @@ public partial class ExerciseDetailsPage : ContentPage
     {
         base.OnAppearing();
 
-        await Task.Delay(50); // Add a short delay
+        await Task.Delay(200); // Add a short delay
 
         await _viewModel.GetExerciseDetails();
         ToolBarItems();

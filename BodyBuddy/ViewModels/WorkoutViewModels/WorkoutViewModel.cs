@@ -16,12 +16,14 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
     {
         private readonly IWorkoutService _workoutService;
         private readonly IWorkoutExercisesService _workoutExercisesService;
+        private readonly IStartupTestService _startupTestService;
 
         [ObservableProperty] private ObservableCollection<WorkoutDto> _workoutList = new();
-        private List<ExerciseDto> Exercises { get; set; } = new(); // Used for adding exercises from scanned workouts
+        private StartupTestDto startupTestDto;
+        private List<ExerciseDto> Exercises { get; set; } = new();
 
         [ObservableProperty]
-        private bool _isPreMadeWorkout;
+        private bool _isPreMadeWorkout = true;
 
         [ObservableProperty]
         public string workoutName, workoutDescription;
@@ -29,12 +31,13 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         [ObservableProperty]
         public string errorMessage;
 
-        public WorkoutViewModel(IWorkoutService workoutService, IWorkoutExercisesService workoutExercisesService)
+        public WorkoutViewModel(IWorkoutService workoutService, IWorkoutExercisesService workoutExercisesService, IStartupTestService startupTestService)
         {
             Title = string.Empty;
 
             _workoutService = workoutService;
             _workoutExercisesService = workoutExercisesService;
+            _startupTestService = startupTestService;
         }
 
 
@@ -47,7 +50,29 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 IsBusy = true;
 
-                WorkoutList = new ObservableCollection<WorkoutDto>(await _workoutService.GetWorkoutPlans(IsPreMadeWorkout));
+                startupTestDto = await _startupTestService.GetStartupTestData();
+                var tempWorkoutList = new ObservableCollection<WorkoutDto>(await _workoutService.GetWorkoutPlans(IsPreMadeWorkout));
+
+                if (!String.IsNullOrEmpty(startupTestDto.TargetAreas))
+                {
+                    string[] targetAreas = startupTestDto.TargetAreas.Split(new string[] { ", " }, StringSplitOptions.None); 
+                    
+                    foreach (string area in targetAreas)
+                    {
+                        IEnumerable<WorkoutDto> matchingWorkouts = tempWorkoutList.Where(workout =>
+                            workout.Name.IndexOf(area, StringComparison.OrdinalIgnoreCase) >= 0);
+
+                        foreach (var matchingWorkout in matchingWorkouts)
+                        {
+                            WorkoutList.Add(matchingWorkout);
+                        }
+                    }
+                }
+
+                if(WorkoutList.Count == 0)
+                {
+                    WorkoutList = tempWorkoutList;
+                }
             }
             catch (Exception ex)
             {
@@ -179,7 +204,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             if (workout == null)
                 return;
 
-            await Task.Delay(100);
             await Shell.Current.GoToAsync(nameof(WorkoutDetailsPage), true, new Dictionary<string, object>
             {
                 { "Workout", workout }

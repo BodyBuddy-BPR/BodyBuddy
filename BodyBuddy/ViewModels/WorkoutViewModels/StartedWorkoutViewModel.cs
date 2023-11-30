@@ -36,6 +36,8 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         [ObservableProperty]
         public bool finishWorkoutButtonIsEnabled = false;
 
+        [ObservableProperty]
+        public bool _isWorkoutFinished = false;
 
         public StartedWorkoutViewModel(IWorkoutExercisesService workoutExercisesService, IExerciseRecordsService exerciseRecordsService)
         {
@@ -110,7 +112,15 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         public async Task FinishWorkout()
         {
             await SaveRecords();
+            IsWorkoutFinished = true;
+
+        }
+
+        [RelayCommand]
+        public async Task GoBackToWorkoutDetails()
+        {
             await GoBackAsync();
+            IsWorkoutFinished = false;
         }
 
         public async Task SaveRecords()

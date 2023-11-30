@@ -46,7 +46,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
 
         public async Task Initialize()
         {
-            await GetExercises();
+            await Task.Run(GetExercises);
             await GetWorkouts();
         }
 
@@ -142,7 +142,6 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             if (exercise is null)
                 return;
 
-            await Task.Delay(100); // Add a short delay
             await Shell.Current.GoToAsync(nameof(ExerciseDetailsPage), true, new Dictionary<string, object>
             {
                 {"Exercise", exercise }

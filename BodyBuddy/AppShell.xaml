@@ -3,6 +3,7 @@
     x:Class="BodyBuddy.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:calendarViews="clr-namespace:BodyBuddy.Views.Calendar"
     xmlns:chart="clr-namespace:BodyBuddy.Views"
     xmlns:exerciseViews="clr-namespace:BodyBuddy.Views.ExerciseViews"
     xmlns:helpers="clr-namespace:BodyBuddy.Helpers"
@@ -10,9 +11,10 @@
     xmlns:profile="clr-namespace:BodyBuddy.Views.Profile"
     xmlns:startup="clr-namespace:BodyBuddy.Views.StartupTest"
     xmlns:statisticsViews="clr-namespace:BodyBuddy.Views.StatisticsViews"
+    xmlns:userViews="clr-namespace:BodyBuddy.Views.User"
     xmlns:workoutViews="clr-namespace:BodyBuddy.Views.WorkoutViews"
     FlyoutBackgroundColor="{StaticResource NavigationBarColor}"
-    Shell.FlyoutBehavior="Flyout">
+    Shell.FlyoutBehavior="Disabled">
 
     <Shell.Resources>
         <ResourceDictionary>
@@ -26,9 +28,8 @@
 
                 <!--  TabBar  -->
                 <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource TabBarColor}" />
-                <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource White}" />
-                <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Dark=#95FFFFFF, Light=#95000000}" />
-                <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource White}" />
+                <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Dark=#95FFFFFF, Light=#95FFFFFF}" />
+                <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource Primary}" />
             </Style>
 
             <Style
@@ -38,6 +39,7 @@
 
         </ResourceDictionary>
     </Shell.Resources>
+
 
     <TabBar>
         <ShellContent
@@ -63,17 +65,11 @@
             ContentTemplate="{DataTemplate exerciseViews:CategoryPage}"
             Icon="dumbbell.png" />
 
-        <Tab Title="Profile" Icon="profile.png">
-            <ShellContent Title="Profile" ContentTemplate="{DataTemplate profile:ProfilePage}" />
+        <ShellContent
+            Title="Calendar"
+            ContentTemplate="{DataTemplate calendarViews:CalenderPage}"
+            Icon="calendar.png" />
 
-            <ShellContent Title="Graphs" ContentTemplate="{DataTemplate profile:ProfileGraph}" />
-        </Tab>
-
-
-        <!--<ShellContent
-            Title="Profile"
-            ContentTemplate="{DataTemplate profile:ProfilePage}"
-            Icon="profile.png" />-->
 
         <!--  StartupTest Temp, until found another place  -->
         <ShellContent

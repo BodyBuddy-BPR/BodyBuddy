@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage
+    x:Class="BodyBuddy.Views.Popups.EditStepGoalPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControls="clr-namespace:BodyBuddy.Controls.Custom"
+    xmlns:model="clr-namespace:BodyBuddy.Models"
+    xmlns:mopupAnimation="clr-namespace:Mopups.Animations;assembly=Mopups"
+    xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+    xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels"
+    x:DataType="viewModel:MainPageViewModel"
+    BackgroundClickedCommand="{Binding DeclineEditStepGoalCommand}"
+    BackgroundColor="#80000000"
+    CloseWhenBackgroundIsClicked="True">
+
+
+    <mopups:PopupPage.Animation>
+        <mopupAnimation:ScaleAnimation
+            DurationIn="1000"
+            EasingIn="BounceOut"
+            PositionIn="Bottom"
+            PositionOut="Center"
+            ScaleIn="1"
+            ScaleOut="0.7" />
+    </mopups:PopupPage.Animation>
+
+    <Border
+        HeightRequest="230"
+        HorizontalOptions="Center"
+        Style="{StaticResource CardView}"
+        WidthRequest="330">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="20" />
+        </Border.StrokeShape>
+        <Grid Margin="10" RowDefinitions="*,*,*">
+
+            <Label
+                Grid.Row="0"
+                Margin="20,0,0,0"
+                Style="{StaticResource TitleLabel}"
+                Text="Edit step goal"
+                TextColor="Black" />
+
+            <customControls:CustomEntry
+                Grid.Row="1"
+                Margin="20,0"
+                BackgroundColor="Transparent"
+                FontSize="20"
+                Keyboard="Numeric"
+                MaxLength="32"
+                Placeholder="New step goal"
+                PlaceholderColor="DarkGrey"
+                Style="{StaticResource BaseEntry}"
+                Text="{Binding NewStepGoal}"
+                TextColor="Black" />
+
+            <Grid Grid.Row="2" Margin="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Grid.Column="0"
+                    Clicked="CancelBtn_Clicked"
+                    HorizontalOptions="Start"
+                    Style="{StaticResource CancelButton}"
+                    Text="Cancel"
+                    TextColor="{StaticResource LightText}"
+                    WidthRequest="100" />
+                <Button
+                    Grid.Column="1"
+                    Clicked="SaveBtn_Clicked"
+                    HorizontalOptions="End"
+                    Style="{StaticResource AddButton}"
+                    Text="Save"
+                    TextColor="{StaticResource LightText}"
+                    WidthRequest="100" />
+            </Grid>
+
+        </Grid>
+    </Border>
+
+</mopups:PopupPage>

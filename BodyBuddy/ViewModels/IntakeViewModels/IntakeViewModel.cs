@@ -26,6 +26,9 @@ namespace BodyBuddy.ViewModels.IntakeViewModels
 
         //Setting WaterProgress and CalorieProgress
         public double WaterProgress => IntakeDto.WaterGoal != 0 ? (double)IntakeDto.WaterCurrent / IntakeDto.WaterGoal : 0;
+        [ObservableProperty]
+        private bool _isConfettiAnimationEnabled = false;
+        private readonly string _waterGoalReachedToday = "WaterGoalReachedToday";
         public double CalorieProgress => IntakeDto.CalorieGoal != 0 ? (double)IntakeDto.CalorieCurrent / IntakeDto.CalorieGoal : 0;
 
         private IntakeDto _intakeDto;
@@ -100,13 +103,23 @@ namespace BodyBuddy.ViewModels.IntakeViewModels
             }
         }
 
+
+
         [RelayCommand]
         public async Task AddWaterClicked()
         {
+            // Increase water current
             IntakeDto.WaterCurrent += 250;
 
+            if (IntakeDto.WaterCurrent >= IntakeDto.WaterGoal && IntakeDto.WaterCurrent <= IntakeDto.WaterGoal + 250)
+            {
+                IsConfettiAnimationEnabled = true;
+            }
+
+            // Save changes to IntakeDto
             await _intakeService.SaveChangesAsync(IntakeDto);
         }
+
 
         [RelayCommand]
         public async Task AddKcalClicked(int calories)
@@ -192,6 +205,9 @@ namespace BodyBuddy.ViewModels.IntakeViewModels
         #endregion popup methods
 
         #region private methods
+
+
+
         private void IntakeDtoPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             //If the following properties are changed, it lets the UI know that WaterProgress or CalorieProgress is changed
@@ -205,6 +221,7 @@ namespace BodyBuddy.ViewModels.IntakeViewModels
                     break;
             }
         }
+
         #endregion
 
     }

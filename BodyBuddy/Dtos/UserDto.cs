@@ -8,8 +8,12 @@ namespace BodyBuddy.Dtos
 {
     public class UserDto
     {
-        public string UserUid { get; set; }
+        public string Id { get; set; }
+
+        public string Email { get; set; }
 
         public string Role { get; set; }
+
+        public string Type { get; set; }
     }
 }

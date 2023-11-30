@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage
+    x:Class="BodyBuddy.Views.Popups.AddEventPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Dtos="clr-namespace:BodyBuddy.Dtos"
+    xmlns:inputs="http://schemas.syncfusion.com/maui"
+    xmlns:mopupAnimation="clr-namespace:Mopups.Animations;assembly=Mopups"
+    xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.Calendar"
+    x:DataType="viewModel:CalendarViewModel"
+    BackgroundClickedCommand="{Binding DeclineAddEventCommand}"
+    BackgroundColor="#80000000"
+    CloseWhenBackgroundIsClicked="True">
+
+    <mopups:PopupPage.Animation>
+        <mopupAnimation:ScaleAnimation
+            DurationIn="1000"
+            EasingIn="BounceOut"
+            PositionIn="Bottom"
+            PositionOut="Center"
+            ScaleIn="1"
+            ScaleOut="0.7" />
+    </mopups:PopupPage.Animation>
+
+    <Border
+        x:Name="popupBorder"
+        HeightRequest="470"
+        HorizontalOptions="Center"
+        Style="{StaticResource CardView}"
+        WidthRequest="300">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="20" />
+        </Border.StrokeShape>
+
+        <Grid>
+
+            <VerticalStackLayout Padding="15,15" Spacing="10">
+
+                <HorizontalStackLayout Margin="0,0,0,10" Spacing="10">
+                    <!--  Title  -->
+                    <Label
+                        Style="{StaticResource TitleLabel}"
+                        Text="{Binding SelectedDate, StringFormat='Event on the '}"
+                        TextColor="Black" />
+
+                    <AbsoluteLayout
+                        Margin="0"
+                        Padding="0"
+                        BackgroundColor="{StaticResource White}">
+                        <BoxView
+                            AbsoluteLayout.LayoutBounds="0.5,0.1,36,36"
+                            AbsoluteLayout.LayoutFlags="PositionProportional"
+                            CornerRadius="18"
+                            HeightRequest="36"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            WidthRequest="36"
+                            Color="Blue" />
+
+                        <Label
+                            AbsoluteLayout.LayoutBounds="0.5,0.3,36,36"
+                            AbsoluteLayout.LayoutFlags="PositionProportional"
+                            BackgroundColor="Transparent"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding SelectedDate, StringFormat='{}{0:dd}'}"
+                            TextColor="White"
+                            VerticalTextAlignment="Center" />
+                    </AbsoluteLayout>
+                </HorizontalStackLayout>
+
+                <!--  Event Name  -->
+                <Label
+                    Margin="0,0,0,-5"
+                    FontSize="18"
+                    Style="{StaticResource LargeLabel}"
+                    Text="Event name"
+                    TextColor="{StaticResource DarkText}" />
+                <Entry
+                    Margin="2,-5,0,0"
+                    BackgroundColor="Transparent"
+                    FontSize="16"
+                    Placeholder="Event name"
+                    PlaceholderColor="DarkGray"
+                    Style="{StaticResource BaseEntry}"
+                    Text="{Binding EventName}">
+                    <Entry.Behaviors>
+                        <toolkit:MultiValidationBehavior x:Name="EventNameValid" Flags="ValidateOnValueChanged">
+                            <toolkit:CharactersValidationBehavior
+                                toolkit:MultiValidationBehavior.Error="Minimum Length of 1"
+                                CharacterType="Any"
+                                MinimumCharacterTypeCount="1"
+                                RegexPattern="" />
+                            <toolkit:TextValidationBehavior
+                                toolkit:MultiValidationBehavior.Error="Exciding maximum length of 20"
+                                Flags="ValidateOnValueChanged"
+                                MaximumLength="10" />
+                        </toolkit:MultiValidationBehavior>
+
+                    </Entry.Behaviors>
+                </Entry>
+                <!--  Display event name error message  -->
+                <Label
+                    x:Name="EventNameError"
+                    Padding="2"
+                    FontAttributes="Bold"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    IsVisible="false"
+                    Opacity="0.7"
+                    Style="{StaticResource MediumLabel}"
+                    Text=""
+                    TextColor="Red"
+                    VerticalOptions="Center" />
+
+                <Grid RowDefinitions="Auto, Auto">
+                    <HorizontalStackLayout
+                        Grid.Row="0"
+                        HorizontalOptions="Start"
+                        Spacing="40">
+                        <Label
+                            FontSize="18"
+                            HorizontalOptions="Start"
+                            Style="{StaticResource LargeLabel}"
+                            Text="From"
+                            TextColor="{StaticResource DarkText}" />
+
+                        <Label
+                            FontSize="18"
+                            HorizontalOptions="End"
+                            Style="{StaticResource LargeLabel}"
+                            Text="To"
+                            TextColor="{StaticResource DarkText}" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout
+                        Grid.Row="1"
+                        HorizontalOptions="Start"
+                        Spacing="10">
+                        <TimePicker
+                            x:Name="FromTime"
+                            FontSize="16"
+                            TextColor="{StaticResource DarkText}"
+                            Time="{Binding FromTime}" />
+
+                        <Label
+                            HorizontalOptions="Center"
+                            Style="{StaticResource LargeLabel}"
+                            Text=" - "
+                            TextColor="{StaticResource DarkText}"
+                            VerticalOptions="Center" />
+
+                        <TimePicker
+                            x:Name="ToTime"
+                            FontSize="16"
+                            TextColor="{StaticResource DarkText}"
+                            Time="{Binding ToTime}" />
+                    </HorizontalStackLayout>
+                </Grid>
+
+
+                <!--  Select Event Color dropdown  -->
+                <Label
+                    Margin="0,0,0,-5"
+                    FontAttributes="Bold"
+                    Style="{StaticResource MediumLabel}"
+                    Text="Select event color" />
+                <Border
+                    x:Name="ColorComboBoxBorder"
+                    Grid.Row="0"
+                    Margin="0,0,0,10"
+                    BackgroundColor="Transparent"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 10,10,10,10">
+                    <inputs:SfComboBox
+                        x:Name="ColorComboBox"
+                        BackgroundColor="Transparent"
+                        DisplayMemberPath="Name"
+                        FontSize="16"
+                        HeightRequest="40"
+                        IsEditable="False"
+                        ItemsSource="{Binding ColorList}"
+                        Placeholder="Select a color for the event"
+                        PlaceholderColor="Black"
+                        SelectedItem="{Binding SelectedColor}"
+                        SelectionChanged="SfComboBox_SelectionChanged"
+                        Stroke="Transparent"
+                        TextColor="Black"
+                        TextMemberPath="Name"
+                        WidthRequest="270">
+                        <inputs:SfComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="viewModel:ColorItem">
+                                <Grid
+                                    Margin="0,2"
+                                    ColumnDefinitions="128,140"
+                                    HorizontalOptions="Center"
+                                    RowDefinitions="40"
+                                    VerticalOptions="Center">
+                                    <BoxView
+                                        Grid.Column="0"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        Color="{Binding HexValue}" />
+                                    <StackLayout
+                                        Grid.Column="1"
+                                        Margin="15,0,0,0"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontSize="14"
+                                            HorizontalTextAlignment="Start"
+                                            Opacity=".87"
+                                            Text="{Binding Name}"
+                                            TextColor="Black"
+                                            VerticalTextAlignment="Center" />
+                                    </StackLayout>
+                                </Grid>
+                            </DataTemplate>
+                        </inputs:SfComboBox.ItemTemplate>
+                    </inputs:SfComboBox>
+                </Border>
+                <Label
+                    x:Name="ComboBoxError"
+                    Padding="2"
+                    FontAttributes="Bold"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    IsVisible="false"
+                    Opacity="0.7"
+                    Style="{StaticResource MediumLabel}"
+                    Text=""
+                    TextColor="Red"
+                    VerticalOptions="Center" />
+
+                <!--  Optional Select Workouts Dropdown  -->
+                <Label
+                    Margin="0,0,0,-5"
+                    FontAttributes="Bold"
+                    Style="{StaticResource MediumLabel}"
+                    Text="Optionally select a workout" />
+                <Border
+                    Grid.Row="0"
+                    BackgroundColor="Transparent"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 10,10,10,10">
+                    <inputs:SfComboBox
+                        BackgroundColor="Transparent"
+                        ClearButtonIconColor="Black"
+                        DisplayMemberPath="Name"
+                        FontSize="16"
+                        HeightRequest="40"
+                        IsEditable="False"
+                        ItemsSource="{Binding WorkoutList}"
+                        Placeholder="Select a workout"
+                        PlaceholderColor="Black"
+                        SelectedItem="{Binding SelectedWorkout}"
+                        Stroke="Transparent"
+                        TextMemberPath="Name"
+                        WidthRequest="270" />
+                </Border>
+
+
+                <!--  Create a new event button  -->
+                <Button
+                    Margin="0,5,0,0"
+                    Clicked="CreateBtn_Clicked"
+                    Style="{StaticResource AddButton}"
+                    Text="Create"
+                    TextColor="{StaticResource LightText}"
+                    WidthRequest="240" />
+
+            </VerticalStackLayout>
+
+        </Grid>
+
+    </Border>
+
+
+</mopups:PopupPage>

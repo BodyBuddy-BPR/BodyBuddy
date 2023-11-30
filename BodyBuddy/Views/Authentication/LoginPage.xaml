@@ -3,13 +3,13 @@
     x:Class="BodyBuddy.Views.Authentication.LoginPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:customControls="clr-namespace:BodyBuddy.CustomControls"
     xmlns:model="clr-namespace:BodyBuddy.Models"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.Authentication"
-    x:DataType="viewModel:LoginViewModel" 
+    x:DataType="viewModel:LoginViewModel"
     BackgroundColor="#2f2f2f"
-    Shell.NavBarIsVisible="True">
+    Shell.NavBarIsVisible="True"
+    Shell.PresentationMode="ModalAnimated">
 
     <ContentPage.Resources>
         <Style x:Key="providerButton" TargetType="Button">
@@ -25,10 +25,20 @@
         </Style>
     </ContentPage.Resources>
 
-    <Grid>
+    <Grid RowDefinitions="Auto, *">
+
+        <Image
+            Grid.Row="0"
+            Margin="0,30,0,0"
+            HeightRequest="200"
+            Source="body_buddy_logo.png"
+            WidthRequest="200" />
 
         <!--  ______________ Login page ______________  -->
-        <StackLayout Margin="20,10" IsVisible="{Binding IsLogin}">
+        <StackLayout
+            Grid.Row="1"
+            Margin="20,0"
+            IsVisible="{Binding IsLogin}">
 
             <!--  Titel  -->
             <VerticalStackLayout Margin="0,30">
@@ -141,7 +151,10 @@
 
 
         <!--  ______________ Sign Up page ______________  -->
-        <StackLayout Margin="20,10" IsVisible="{Binding IsSignUp}">
+        <StackLayout
+            Grid.Row="1"
+            Margin="20,0"
+            IsVisible="{Binding IsSignUp}">
 
             <!--  Titel  -->
             <VerticalStackLayout Margin="0,30">

@@ -1,4 +1,5 @@
-﻿using BodyBuddy.ViewModels;
+﻿using BodyBuddy.Controls.Common;
+using BodyBuddy.ViewModels;
 
 namespace BodyBuddy;
 
@@ -11,7 +12,10 @@ public partial class MainPage : ContentPage
 		InitializeComponent();
 		_viewModel = mainPageViewModel;
 		BindingContext = mainPageViewModel;
-	}
+
+        // Adding Common Toolbar items
+        CommonToolBarItems.AddCommonToolbarItems(this);
+    }
 
     protected override async void OnAppearing()
     {
@@ -22,6 +26,11 @@ public partial class MainPage : ContentPage
         await _viewModel.AttemptToLogin();
 
         await _viewModel.Initialize();
+    }
+
+    private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+    {
+        _viewModel.ClickToShowPopup_Clicked();
     }
 }
 
