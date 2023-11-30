@@ -14,7 +14,7 @@
     <chart:SfCartesianChart BackgroundColor="{StaticResource Primary}">
         <!--  Defining the type of axis  -->
         <chart:SfCartesianChart.XAxes>
-            <chart:DateTimeAxis />
+            <chart:DateTimeAxis IntervalType="Days" />
         </chart:SfCartesianChart.XAxes>
 
         <chart:SfCartesianChart.YAxes>

@@ -27,6 +27,22 @@ namespace BodyBuddy.ViewModels.Profile
         {
             IntakeList.Add(new IntakeDto()
             {
+                CalorieCurrent = 3333,
+                CalorieGoal = 3500,
+                WaterCurrent = 2500,
+                WaterGoal = 2500,
+                Date = new DateTime(2023, 11, 30)
+            });
+            IntakeList.Add(new IntakeDto()
+            {
+                CalorieCurrent = 3333,
+                CalorieGoal = 3500,
+                WaterCurrent = 2500,
+                WaterGoal = 2500,
+                Date = new DateTime(2023, 11, 29)
+            });
+            IntakeList.Add(new IntakeDto()
+            {
                 CalorieCurrent = 3333, 
                 CalorieGoal = 3500, 
                 WaterCurrent = 2500, 
