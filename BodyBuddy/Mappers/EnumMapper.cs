@@ -31,12 +31,12 @@ namespace BodyBuddy.Mappers
             { Goal.GainMuscle, Strings.STARTUP_GOAL_GAINMUSCLE },
         };
 
-        private static readonly Dictionary<FocusArea, string> FocusAreaDisplayStrings = new()
+        private static readonly Dictionary<TargetArea, string> TargetAreaDisplayStrings = new()
         {
-            { FocusArea.UpperBody, Strings.STARTUP_FOCUSAREA_UPPERBODY },
-            { FocusArea.LowerBody, Strings.STARTUP_FOCUSAREA_LOWERBODY },
-            { FocusArea.AbsAndCore, Strings.STARTUP_FOCUSAREA_ABSANDCORE },
-            { FocusArea.Other, Strings.STARTUP_FOCUSAREA_OTHER },
+            { TargetArea.UpperBody, Strings.STARTUP_TARGETAREA_UPPERBODY },
+            { TargetArea.LowerBody, Strings.STARTUP_TARGETAREA_LOWERBODY },
+            { TargetArea.Abs, Strings.STARTUP_TARGETAREA_ABS },
+            { TargetArea.Back, Strings.STARTUP_TARGETAREA_BACK },
         };
 
         public static string GetDisplayString(Gender gender) => GenderDisplayStrings[gender];
@@ -45,14 +45,12 @@ namespace BodyBuddy.Mappers
 
         public static string GetDisplayString(Goal goal) => GoalDisplayStrings[goal];
 
-        public static string GetDisplayString(FocusArea focusArea) => FocusAreaDisplayStrings[focusArea];
+        public static string GetDisplayString(TargetArea targetArea) => TargetAreaDisplayStrings[targetArea];
 
         public static Gender GetGenderFromDisplayString(string displayString) => GenderDisplayStrings.FirstOrDefault(x => x.Value == displayString).Key;
 
         public static UserActivity GetUserActivityFromDisplayString(string displayString) => UserActivityDisplayStrings.FirstOrDefault(x => x.Value == displayString).Key;
 
         public static Goal GetGoalFromDisplayString(string displayString) => GoalDisplayStrings.FirstOrDefault(x => x.Value == displayString).Key;
-
-        public static FocusArea GetFocusAreaFromDisplayString(string displayString) => FocusAreaDisplayStrings.FirstOrDefault(x => x.Value == displayString).Key;
     }
 }

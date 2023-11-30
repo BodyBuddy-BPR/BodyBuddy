@@ -12,6 +12,7 @@ namespace UnitTest.ViewModels.WorkoutViewModels
         private WorkoutViewModel target;
         private Mock<IWorkoutService> mockService;
         private Mock<IWorkoutExercisesService> workoutExercisesMockService;
+        private Mock<IStartupTestService> startupTestMockService;
         private WorkoutDto workout1, workout2;
         private List<WorkoutDto> workoutList;
 
@@ -20,7 +21,8 @@ namespace UnitTest.ViewModels.WorkoutViewModels
         {
             mockService = new Mock<IWorkoutService>();
             workoutExercisesMockService = new Mock<IWorkoutExercisesService>();
-            target = new WorkoutViewModel(mockService.Object, workoutExercisesMockService.Object);
+            startupTestMockService = new Mock<IStartupTestService>();
+            target = new WorkoutViewModel(mockService.Object, workoutExercisesMockService.Object, startupTestMockService.Object);
 
             workout1 = new WorkoutDto { Id = 3, Name = "Workout3", PreMade = false };
             workout2 = new WorkoutDto { Id = 4, Name = "Workout4", PreMade = false };
@@ -42,24 +44,82 @@ namespace UnitTest.ViewModels.WorkoutViewModels
             mockService.Verify(service => service.GetWorkoutPlans(It.IsAny<bool>()), Times.Never());
         }
 
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task GetWorkoutPlanIsCalledAndReturnsCorrectWorkoutList(bool preMade)
+        [Test]
+        public async Task ValidWorkout_EmptyName_ReturnsFalseAndSetsErrorMessage()
         {
-            //Arrange
-            target.IsBusy = false;
-            target.IsPreMadeWorkout = preMade;
-            mockService.Setup(service => service.GetWorkoutPlans(preMade)).ReturnsAsync(workoutList);
-            target.WorkoutList.Add(workout2);
+            // Arrange
+            target.WorkoutName = string.Empty;
 
-            //Act
+            // Act
+            bool result = await target.ValidWorkout(target.WorkoutName);
+
+            // Assert
+            Assert.That(result, Is.False);
+            Assert.That(target.ErrorMessage, Is.EqualTo("Workout name cannot be empty."));
+        }
+
+        [Test]
+        public async Task ValidWorkout_ExistingName_ReturnsFalseAndSetsErrorMessage()
+        {
+            // Arrange
+            target.WorkoutName = "ExistingWorkout";
+            mockService.Setup(service => service.DoesWorkoutAlreadyExist(target.WorkoutName)).ReturnsAsync(true);
+
+            // Act
+            bool result = await target.ValidWorkout(target.WorkoutName);
+
+            // Assert
+            Assert.That(result, Is.False);
+            Assert.That(target.ErrorMessage, Is.EqualTo("A workoutplan with the name \"ExistingWorkout\" already exists."));
+        }
+
+        [Test]
+        public async Task ValidWorkout_ValidName_ReturnsTrueAndClearsErrorMessage()
+        {
+            // Arrange
+            target.WorkoutName = "NewWorkout";
+            mockService.Setup(service => service.DoesWorkoutAlreadyExist(target.WorkoutName)).ReturnsAsync(false);
+
+            // Act
+            bool result = await target.ValidWorkout(target.WorkoutName);
+
+            // Assert
+            Assert.That(result, Is.True);
+            Assert.That(target.ErrorMessage, Is.Null);
+        }
+
+        #region GetWorkoutPlans method tests
+
+        [Test]
+        public async Task GetWorkoutPlans_NonEmptyTargetAreas_FiltersWorkoutList()
+        {
+            // Arrange
+            startupTestMockService.Setup(service => service.GetStartupTestData()).ReturnsAsync(new StartupTestDto { TargetAreas = "Workout3" });
+            mockService.Setup(service => service.GetWorkoutPlans(true)).ReturnsAsync(workoutList);
+
+            // Act
             await target.GetWorkoutPlans();
 
-            //Assert
-            mockService.Verify(service => service.GetWorkoutPlans(preMade), Times.Exactly(1));
-            mockService.Verify(service => service.GetWorkoutPlans(It.IsAny<bool>()), Times.Exactly(1));
-            Assert.That(target.WorkoutList, Is.EqualTo(workoutList));
+            // Assert
+            mockService.Verify(service => service.GetWorkoutPlans(true), Times.Once());
+            Assert.That(target.WorkoutList.Count, Is.EqualTo(1));
+        }
+
+        [Test]
+        public async Task GetWorkoutPlans_EmptyTargetAreas_SetsEntireWorkoutList()
+        {
+            // Arrange
+            startupTestMockService.Setup(service => service.GetStartupTestData()).ReturnsAsync(new StartupTestDto { TargetAreas = string.Empty });
+            mockService.Setup(service => service.GetWorkoutPlans(true)).ReturnsAsync(workoutList);
+
+            // Act
+            await target.GetWorkoutPlans();
+
+            // Assert
+            mockService.Verify(service => service.GetWorkoutPlans(true), Times.Once());
             Assert.That(target.WorkoutList.Count, Is.EqualTo(2));
         }
+        #endregion
+
     }
 }
