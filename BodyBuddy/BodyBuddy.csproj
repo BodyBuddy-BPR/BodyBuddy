@@ -185,6 +185,7 @@
 		<MauiImage Include="Resources\Images\Categories\stretching.svg" />
 		<MauiImage Include="Resources\Images\Categories\strongman.svg" />
 		<MauiImage Include="Resources\Images\Icons\apple.svg" />
+		<MauiImage Include="Resources\Images\Icons\calendar.svg" />
 		<MauiImage Include="Resources\Images\Icons\camera_white.svg" />
 		<MauiImage Include="Resources\Images\Icons\dumbbell.svg" />
 		<MauiImage Include="Resources\Images\Icons\google.svg" />
