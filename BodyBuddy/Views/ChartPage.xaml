@@ -5,7 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
     xmlns:viewModels="clr-namespace:BodyBuddy.ViewModels"
-    Title="ChartPage">
+    Title="ChartPage"
+    Shell.TabBarIsVisible="False">
 
     <ContentPage.BindingContext>
         <viewModels:ChartViewModel />

@@ -9,11 +9,14 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BodyBuddy.ViewModels
 {
+    [QueryProperty(nameof(ExerciseDetails), "Exercise")]
     public partial class ChartViewModel : BaseViewModel
     {
         [ObservableProperty] private List<ChartData> _data;
         public List<ExerciseRecordsDto> WorkoutDataFromDb { get; set; } = new List<ExerciseRecordsDto>();
 
+        [ObservableProperty]
+        private ExerciseDto _exerciseDetails; // Get Exercise from this 
 
         public ChartViewModel()
         {

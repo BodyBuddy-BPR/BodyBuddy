@@ -5,6 +5,8 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using BodyBuddy.Dtos;
 using BodyBuddy.Services;
+using BodyBuddy.Views;
+using CommunityToolkit.Mvvm.Input;
 
 namespace BodyBuddy.ViewModels.ExerciseViewModels
 {
@@ -70,6 +72,23 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             if (ExerciseDetails.Equipment == null) ExerciseDetails.Equipment = "---";
             if (ExerciseDetails.Force == null) ExerciseDetails.Force = "---";
         }
+
+        #region Navigation
+
+        // Navigation to exercise details
+        [RelayCommand]
+        async Task GoToExerciseGraphs(ExerciseDto exercise)
+        {
+            if (exercise is null)
+                return;
+
+            await Shell.Current.GoToAsync(nameof(ChartPage), true, new Dictionary<string, object>
+            {
+                {"Exercise", exercise }
+            });
+        }
+
+        #endregion
 
         #region Helper methods
 
