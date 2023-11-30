@@ -10,6 +10,11 @@ using System.Threading.Tasks;
 using BodyBuddy.ViewModels.Authentication;
 using BodyBuddy.Views.Authentication;
 using BodyBuddy.Authentication;
+using BodyBuddy.Models;
+using BodyBuddy.Services.Implementations;
+using CommunityToolkit.Mvvm.Input;
+using Mopups.Interfaces;
+using BodyBuddy.Views.Popups;
 
 namespace BodyBuddy.ViewModels
 {
@@ -17,21 +22,84 @@ namespace BodyBuddy.ViewModels
     {
         private readonly IQuoteService _quoteService;
         private IUserAuthenticationService _userAuthService;
+        private readonly IStepService _stepService;
+        private readonly IPopupNavigation _popupNavigation;
 
         [ObservableProperty]
-        public QuoteDto _quote;
+        private StepDto _userSteps;
+
+        [ObservableProperty]
+        public double _stepProgress;
+
+        [ObservableProperty]
+        private QuoteDto _quote;
+
+        [ObservableProperty]
+        private string _errorMessage;
+
+        [ObservableProperty]
+        private int _newStepGoal;
 
         private readonly string _skipLoginKey = "SkipLogInKey";
+        private const double StepThreshold = 1.5;
+        private bool isStepInProgress;
 
-        public MainPageViewModel(IQuoteService quoteService, IUserAuthenticationService userAuthService)
+        public MainPageViewModel(IStepService stepService, IQuoteService quoteService, IUserAuthenticationService userAuthService, IPopupNavigation popupNavigation)
         {
+            _stepService = stepService;
             _quoteService = quoteService;
             _userAuthService = userAuthService;
+            _popupNavigation = popupNavigation;
         }
 
         public async Task Initialize()
         {
+            UserSteps = await _stepService.GetStepData(); 
+            StepProgress = UserSteps.Steps == 0 ? 0 : (double)UserSteps.Steps / UserSteps.StepGoal;
             await GetDailyQuote();
+            await TurnOnAccelerometer();
+        }
+
+        public async Task TurnOnAccelerometer()
+        {
+            if (Accelerometer.Default.IsSupported)
+            {
+                if (!Accelerometer.Default.IsMonitoring)
+                {
+                    Accelerometer.Default.ReadingChanged += Accelerometer_ReadingChanged;
+                    Accelerometer.Default.Start(SensorSpeed.UI);
+                }
+            }
+        }
+
+        private void Accelerometer_ReadingChanged(object sender, AccelerometerChangedEventArgs e)
+        {
+            var acceleration = e.Reading.Acceleration;
+
+            // Calculate the magnitude of the acceleration vector
+            var magnitude = Math.Sqrt(acceleration.X * acceleration.X + acceleration.Y * acceleration.Y + acceleration.Z * acceleration.Z);
+
+            // Check if a step is in progress
+            if (isStepInProgress)
+            {
+                if (magnitude < StepThreshold)
+                {
+                    // Step is complete
+                    isStepInProgress = false;
+                }
+            }
+            else
+            {
+                if (magnitude > StepThreshold)
+                {
+                    // Start of a step
+                    isStepInProgress = true;
+
+                    UserSteps.Steps++;
+                    _stepService.SaveStepData(UserSteps);
+                    StepProgress = (double)UserSteps.Steps / (double)UserSteps.StepGoal;
+                }
+            }
         }
 
         public async Task AttemptToLogin()
@@ -50,20 +118,6 @@ namespace BodyBuddy.ViewModels
                 {
                     { "SkipVisible", true }
                 });
-
-                //var navigationParams = new Dictionary<string, object>
-                //{
-                //    { "SkipVisible", true }
-                //};
-
-                //var navigationPage = new NavigationPage(new LoginPage(new LoginViewModel(_userAuthService)))
-                //{
-                //    BarBackgroundColor = Color.Transparent,
-                //    BarTextColor = Color.White
-                //};
-
-                //await Shell.Current.Navigation.PushModalAsync(navigationPage, true);
-
             }
         }
 
@@ -86,6 +140,36 @@ namespace BodyBuddy.ViewModels
             {
                 IsBusy = false;
             }
+        }
+
+        public async Task<bool> SaveNewStepGoalValue()
+        {
+
+            if (NewStepGoal <= 0)
+            {
+                ErrorMessage = "New step goal cannot be negative or zero.";
+                return false;
+            }
+
+            UserSteps.StepGoal = NewStepGoal;
+            StepProgress = (double)UserSteps.Steps / (double)UserSteps.StepGoal;
+
+            await _stepService.SaveStepData(UserSteps);
+
+            ErrorMessage = string.Empty;
+
+            return true;
+        }
+
+        public void ClickToShowPopup_Clicked()
+        {
+            _popupNavigation.PushAsync(new EditStepGoalPopup(this));
+        }
+
+        [RelayCommand]
+        public void DeclineEditStepGoal()
+        {
+            ErrorMessage = string.Empty;
         }
     }
 }

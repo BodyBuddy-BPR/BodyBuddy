@@ -6,6 +6,7 @@
     xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
     xmlns:modelDto="clr-namespace:BodyBuddy.Dtos"
     xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+    xmlns:progressBar="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels"
     x:DataType="viewModel:MainPageViewModel"
     Shell.NavBarIsVisible="True">
@@ -17,7 +18,7 @@
     <!--  Entire Page  -->
     <Grid
         Margin="15,15"
-        RowDefinitions="Auto, Auto, *, Auto"
+        RowDefinitions="Auto, Auto, Auto, Auto"
         RowSpacing="15">
 
         <Label
@@ -50,6 +51,43 @@
                     Text="{Binding Quote.Author, StringFormat='- {0}'}" />
             </VerticalStackLayout>
         </Frame>
+        <progressBar:SfCircularProgressBar
+            Grid.Row="2"
+            Padding="40"
+            EndAngle="400"
+            HorizontalOptions="Center"
+            Maximum="1"
+            Minimum="0"
+            Progress="{Binding StepProgress}"
+            ProgressFill="{StaticResource Primary}"
+            StartAngle="140" />
+        <VerticalStackLayout
+            Grid.Row="2"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+            <VerticalStackLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+            </VerticalStackLayout.GestureRecognizers>
+            <HorizontalStackLayout Margin="0,40,0,0" VerticalOptions="End">
+                <Label
+                    Style="{StaticResource SmallLabel}"
+                    Text="{Binding UserSteps.Steps}"
+                    TextColor="White" />
+                <Label
+                    Style="{StaticResource SmallLabel}"
+                    Text=" / "
+                    TextColor="White" />
+                <Label
+                    Style="{StaticResource SmallLabel}"
+                    Text="{Binding UserSteps.StepGoal}"
+                    TextColor="White" />
+            </HorizontalStackLayout>
+            <Image
+                Margin="0,10,0,0"
+                HeightRequest="30"
+                Source="walking.svg"
+                WidthRequest="30" />
+        </VerticalStackLayout>
 
     </Grid>
 

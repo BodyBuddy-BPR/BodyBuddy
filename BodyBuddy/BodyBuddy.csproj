@@ -75,6 +75,7 @@
 		<None Remove="Resources\Images\Icons\profile_circle.svg" />
 		<None Remove="Resources\Images\Icons\share_white.svg" />
 		<None Remove="Resources\Images\Icons\trashcan_white.svg" />
+		<None Remove="Resources\Images\Icons\walking.svg" />
 		<None Remove="Resources\Images\Icons\water_glass.svg" />
 		<None Remove="Resources\Images\list.svg" />
 		<None Remove="Resources\Images\minus_sign.svg" />
@@ -120,6 +121,9 @@
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\Popups\AddEventPopup.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Popups\EditStepGoalPopup.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\StartupTest\StartupTestPage.xaml">
@@ -200,10 +204,14 @@
 		<MauiImage Include="Resources\Images\Icons\share_white.svg" />
 		<MauiImage Include="Resources\Images\Icons\trashcan_white.svg" />
 		<MauiImage Include="Resources\Images\Icons\trashcan.svg" />
+		<MauiImage Include="Resources\Images\Icons\walking.svg" />
 		<MauiImage Include="Resources\Images\Icons\water_glass.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Update="Views\Popups\EditStepGoalPopup.xaml.cs">
+		  <DependentUpon>EditStepGoalPopup.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\Popups\EditIntakeGoalPopup.xaml.cs">
 			<DependentUpon>EditIntakeGoalPopup.xaml</DependentUpon>
 		</Compile>
