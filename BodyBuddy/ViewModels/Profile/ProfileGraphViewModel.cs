@@ -12,7 +12,7 @@ namespace BodyBuddy.ViewModels.Profile
 {
     public partial class ProfileGraphViewModel : BaseViewModel
     {
-        private IIntakeService _intakeService;
+        private readonly IIntakeService _intakeService;
 
         [ObservableProperty]
         private ObservableCollection<IntakeDto> _intakeList = new();

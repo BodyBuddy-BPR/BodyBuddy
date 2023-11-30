@@ -10,9 +10,10 @@ public partial class ProfileGraph : ContentPage
 
     public ProfileGraph(ProfileGraphViewModel profileGraphViewModel)
 	{
+        InitializeComponent();
+
         _viewModel = profileGraphViewModel;
         BindingContext = profileGraphViewModel;
-        InitializeComponent();
 	}
 
     //private void OnLabelCreated(object sender, ChartAxisLabelEventArgs e)
