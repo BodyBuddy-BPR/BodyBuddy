@@ -4,7 +4,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:charts="http://schemas.syncfusion.com/maui"
-    Title="ProfileGraph">
+    Title="ProfileGraph"
+    Shell.TabBarIsVisible="False">
 
     <!--<ContentPage.Resources>
         <Style x:Key="Graphs" TargetType="charts:DateTimeAxis">
@@ -59,7 +60,17 @@
 
         </charts:SfCartesianChart>
 
-        <Label Grid.Row="2">Hehe</Label>
+        <Grid
+            Margin="35,5"
+            ColumnDefinitions="Auto,Auto"
+            Row="2"
+            RowDefinitions="*,*">
+            <Label Grid.Row="0">Calorie Goal Reached</Label>
+            <Label Grid.Row="0" Grid.Column="1">3/7</Label>
+            <Label Grid.Row="1">Water Goal Reached</Label>
+            <Label Grid.Row="1" Grid.Column="1">2/7</Label>
+
+        </Grid>
     </Grid>
 
 
