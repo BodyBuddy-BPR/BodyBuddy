@@ -65,10 +65,19 @@
             ColumnDefinitions="Auto,Auto"
             Row="2"
             RowDefinitions="*,*">
+
             <Label Grid.Row="0">Calorie Goal Reached</Label>
-            <Label Grid.Row="0" Grid.Column="1">3/7</Label>
+            <Label
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="10,0,0,0"
+                Text="{Binding CalorieGoalsCompletedString}" />
             <Label Grid.Row="1">Water Goal Reached</Label>
-            <Label Grid.Row="1" Grid.Column="1">2/7</Label>
+            <Label
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="10,0,0,0"
+                Text="{Binding WaterGoalsCompletedString}" />
 
         </Grid>
     </Grid>
