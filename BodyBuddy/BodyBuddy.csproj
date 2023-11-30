@@ -122,6 +122,9 @@
 		<MauiXaml Update="Views\ChartPage.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Views\Profile\ProfileGraph.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\StartupTest\StartupTestPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>

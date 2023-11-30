@@ -101,6 +101,7 @@ public static class MauiProgram
         // Startup Test
         builder.Services.AddSingleton<StartupTestPage>();
         builder.Services.AddSingleton<ProfilePage>();
+        builder.Services.AddSingleton<ProfileGraph>();
 
         // Workout
         builder.Services.AddTransient<WorkoutsPage>();
@@ -130,6 +131,7 @@ public static class MauiProgram
         // Startup Test
         builder.Services.AddSingleton<StartupTestViewModel>();
         builder.Services.AddSingleton<ProfileViewModel>();
+        builder.Services.AddSingleton<ProfileGraphViewModel>();
 
         // Workout
         builder.Services.AddTransient<WorkoutViewModel>();

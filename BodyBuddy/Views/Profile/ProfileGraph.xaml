@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BodyBuddy.Views.Profile.ProfileGraph"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:charts="http://schemas.syncfusion.com/maui"
+    Title="ProfileGraph">
+
+    <!--<ContentPage.BindingContext>
+        <profile:ProfileGraphViewModel />
+    </ContentPage.BindingContext>-->
+
+    <charts:SfCartesianChart BackgroundColor="{StaticResource Primary}">
+        <!--  Defining the type of axis  -->
+        <charts:SfCartesianChart.XAxes>
+            <charts:DateTimeAxis />
+        </charts:SfCartesianChart.XAxes>
+
+        <charts:SfCartesianChart.YAxes>
+            <charts:NumericalAxis Name="MainY" />
+            <charts:NumericalAxis Name="SecondaryY" CrossesAt="5191935193522" />
+        </charts:SfCartesianChart.YAxes>
+
+
+
+        <!--  Enabling the legend  -->
+        <charts:SfCartesianChart.Legend>
+            <charts:ChartLegend IsVisible="True" ToggleSeriesVisibility="True" />
+        </charts:SfCartesianChart.Legend>
+
+        <!--  Tooltip Behaviour  -->
+        <charts:SfCartesianChart.TooltipBehavior>
+            <charts:ChartTooltipBehavior Duration="5" />
+        </charts:SfCartesianChart.TooltipBehavior>
+
+        <charts:SfCartesianChart.Series>
+
+            <!--  Calories Series  -->
+            <charts:LineSeries
+                x:Name="CalorieSeries"
+                EnableTooltip="True"
+                ItemsSource="{Binding IntakeList}"
+                Label="Calorie Intake"
+                ShowMarkers="True"
+                XBindingPath="Date"
+                YAxisName="MainY"
+                YBindingPath="CalorieCurrent">
+                <charts:LineSeries.Fill>
+                    <Color>
+                        Red
+                    </Color>
+                </charts:LineSeries.Fill>
+                <charts:LineSeries.MarkerSettings>
+                    <charts:ChartMarkerSettings
+                        Width="6"
+                        Height="6"
+                        Fill="Brown"
+                        Stroke="Black"
+                        StrokeWidth="1"
+                        Type="Diamond" />
+                </charts:LineSeries.MarkerSettings>
+            </charts:LineSeries>
+
+            <!--  Water Series  -->
+            <charts:LineSeries
+                x:Name="WaterSeries"
+                EnableTooltip="True"
+                ItemsSource="{Binding IntakeList}"
+                Label="Water Intake(ml)"
+                ShowMarkers="True"
+                XBindingPath="Date"
+                YAxisName="MainY"
+                YBindingPath="WaterCurrent">
+                <charts:LineSeries.Fill>
+                    <Color>
+                        Blue
+                    </Color>
+                </charts:LineSeries.Fill>
+                <charts:LineSeries.MarkerSettings>
+                    <charts:ChartMarkerSettings
+                        Width="6"
+                        Height="6"
+                        Fill="Brown"
+                        Stroke="Black"
+                        StrokeWidth="1"
+                        Type="Diamond" />
+                </charts:LineSeries.MarkerSettings>
+            </charts:LineSeries>
+
+        </charts:SfCartesianChart.Series>
+    </charts:SfCartesianChart>
+
+</ContentPage>

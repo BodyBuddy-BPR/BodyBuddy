@@ -63,10 +63,17 @@
             ContentTemplate="{DataTemplate exerciseViews:CategoryPage}"
             Icon="dumbbell.png" />
 
-        <ShellContent
+        <Tab Title="Profile" Icon="profile.png">
+            <ShellContent Title="Profile" ContentTemplate="{DataTemplate profile:ProfilePage}" />
+
+            <ShellContent Title="Graphs" ContentTemplate="{DataTemplate profile:ProfileGraph}" />
+        </Tab>
+
+
+        <!--<ShellContent
             Title="Profile"
             ContentTemplate="{DataTemplate profile:ProfilePage}"
-            Icon="profile.png" />
+            Icon="profile.png" />-->
 
         <!--  StartupTest Temp, until found another place  -->
         <ShellContent
