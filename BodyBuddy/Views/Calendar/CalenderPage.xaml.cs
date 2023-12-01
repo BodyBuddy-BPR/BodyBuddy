@@ -18,9 +18,11 @@ public partial class CalenderPage : ContentPage
         _popupNavigation = popupNavigation;
     }
 
+
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+
         await _viewModel.Initialize();
     }
 

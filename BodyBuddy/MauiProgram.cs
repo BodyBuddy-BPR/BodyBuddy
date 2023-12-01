@@ -56,6 +56,8 @@ public static class MauiProgram
                 fonts.AddFont("Montserrat-Regular-400.ttf", "Montserrat");
             });
 
+        builder.ConfigureKeyboardAutoScroll();
+
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
@@ -214,10 +216,10 @@ public static class MauiProgram
 
         // Startup Test
         builder.Services.AddSingleton<IStartupTestService, StartupTestService>();
-        
+
         //Step
         builder.Services.AddSingleton<IStepService, StepService>();
-        
+
         // Workout
         builder.Services.AddSingleton<IWorkoutService, WorkoutService>();
         builder.Services.AddSingleton<IWorkoutExercisesService, WorkoutExercisesService>();
