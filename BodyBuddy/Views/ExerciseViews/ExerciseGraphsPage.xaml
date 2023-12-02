@@ -7,133 +7,131 @@
     Title="ExerciseGraphsPage"
     Shell.TabBarIsVisible="False">
 
-    <VerticalStackLayout>
-        <chart:SfCartesianChart BackgroundColor="{StaticResource Primary}">
-            <!--  Defining the type of axis  -->
-            <chart:SfCartesianChart.XAxes>
-                <chart:DateTimeAxis IntervalType="Days" />
-            </chart:SfCartesianChart.XAxes>
+    <chart:SfCartesianChart BackgroundColor="{StaticResource Primary}">
+        <!--  Defining the type of axis  -->
+        <chart:SfCartesianChart.XAxes>
+            <chart:DateTimeAxis IntervalType="Days" />
+        </chart:SfCartesianChart.XAxes>
 
-            <chart:SfCartesianChart.YAxes>
-                <chart:NumericalAxis />
-            </chart:SfCartesianChart.YAxes>
+        <chart:SfCartesianChart.YAxes>
+            <chart:NumericalAxis Minimum="0" />
+        </chart:SfCartesianChart.YAxes>
 
 
-            <chart:SfCartesianChart.Resources>
-                <!--  Templates for Tooltips  -->
-                <DataTemplate x:Key="ExerciseTemplate">
-                    <StackLayout Orientation="Vertical">
-                        <StackLayout Orientation="Horizontal">
-                            <Label
-                                FontAttributes="Bold"
-                                FontSize="12"
-                                HorizontalOptions="Center"
-                                Text="Total Reps: "
-                                TextColor="White"
-                                VerticalOptions="Center" />
-                            <Label
-                                FontAttributes="Bold"
-                                FontSize="12"
-                                HorizontalOptions="Center"
-                                Text="{Binding Item.TotalReps}"
-                                TextColor="White"
-                                VerticalOptions="Center" />
-                        </StackLayout>
-
-                        <StackLayout Orientation="Horizontal">
-                            <Label
-                                FontAttributes="Bold"
-                                FontSize="12"
-                                HorizontalOptions="Center"
-                                Text="Max Weight: "
-                                TextColor="White"
-                                VerticalOptions="Center" />
-                            <Label
-                                FontAttributes="Bold"
-                                FontSize="12"
-                                HorizontalOptions="Center"
-                                Text="{Binding Item.MaxWeight}"
-                                TextColor="White"
-                                VerticalOptions="Center" />
-                        </StackLayout>
-
-                        <StackLayout Orientation="Horizontal">
-                            <Label
-                                FontAttributes="Bold"
-                                FontSize="12"
-                                HorizontalOptions="Center"
-                                Text="Average Weight: "
-                                TextColor="White"
-                                VerticalOptions="Center" />
-                            <Label
-                                FontAttributes="Bold"
-                                FontSize="12"
-                                HorizontalOptions="Center"
-                                Text="{Binding Item.AverageWeight}"
-                                TextColor="White"
-                                VerticalOptions="Center" />
-                        </StackLayout>
-
-                        <StackLayout Orientation="Horizontal">
-                            <Label
-                                FontAttributes="Bold"
-                                FontSize="12"
-                                HorizontalOptions="Center"
-                                Text="Min Weight: "
-                                TextColor="White"
-                                VerticalOptions="Center" />
-                            <Label
-                                FontAttributes="Bold"
-                                FontSize="12"
-                                HorizontalOptions="Center"
-                                Text="{Binding Item.MinWeight}"
-                                TextColor="White"
-                                VerticalOptions="Center" />
-                        </StackLayout>
+        <chart:SfCartesianChart.Resources>
+            <!--  Templates for Tooltips  -->
+            <DataTemplate x:Key="ExerciseTemplate">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="Total Reps: "
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="{Binding Item.TotalReps}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
                     </StackLayout>
-                </DataTemplate>
-                <!--  End Templates for Tooltips  -->
-            </chart:SfCartesianChart.Resources>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="Max Weight: "
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="{Binding Item.MaxWeight}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="Average Weight: "
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="{Binding Item.AverageWeight}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="Min Weight: "
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="{Binding Item.MinWeight}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                </StackLayout>
+            </DataTemplate>
+            <!--  End Templates for Tooltips  -->
+        </chart:SfCartesianChart.Resources>
 
 
-            <!--  Enabling the legend  -->
-            <chart:SfCartesianChart.Legend>
-                <chart:ChartLegend IsVisible="True" ToggleSeriesVisibility="True" />
-            </chart:SfCartesianChart.Legend>
+        <!--  Enabling the legend  -->
+        <chart:SfCartesianChart.Legend>
+            <chart:ChartLegend IsVisible="True" ToggleSeriesVisibility="True" />
+        </chart:SfCartesianChart.Legend>
 
-            <!--  Tooltip Behaviour  -->
-            <chart:SfCartesianChart.TooltipBehavior>
-                <chart:ChartTooltipBehavior Duration="5" />
-            </chart:SfCartesianChart.TooltipBehavior>
+        <!--  Tooltip Behaviour  -->
+        <chart:SfCartesianChart.TooltipBehavior>
+            <chart:ChartTooltipBehavior Duration="5" />
+        </chart:SfCartesianChart.TooltipBehavior>
 
-            <chart:SfCartesianChart.Series>
-                <!--  Average Weight Series  -->
-                <chart:LineSeries
-                    x:Name="AverageWeightSeries"
-                    EnableTooltip="True"
-                    ItemsSource="{Binding GraphData}"
-                    Label="Average Weight"
-                    ShowMarkers="True"
-                    TooltipTemplate="{StaticResource ExerciseTemplate}"
-                    XBindingPath="Date"
-                    YBindingPath="AverageWeight">
-                    <chart:LineSeries.Fill>
-                        <Color>
-                            Red
-                        </Color>
-                    </chart:LineSeries.Fill>
-                    <chart:LineSeries.MarkerSettings>
-                        <chart:ChartMarkerSettings
-                            Width="6"
-                            Height="6"
-                            Fill="Brown"
-                            Stroke="Black"
-                            StrokeWidth="1"
-                            Type="Diamond" />
-                    </chart:LineSeries.MarkerSettings>
-                </chart:LineSeries>
-            </chart:SfCartesianChart.Series>
+        <chart:SfCartesianChart.Series>
+            <!--  Average Weight Series  -->
+            <chart:LineSeries
+                x:Name="AverageWeightSeries"
+                EnableTooltip="True"
+                ItemsSource="{Binding GraphData}"
+                Label="Average Weight"
+                ShowMarkers="True"
+                TooltipTemplate="{StaticResource ExerciseTemplate}"
+                XBindingPath="Date"
+                YBindingPath="AverageWeight">
+                <chart:LineSeries.Fill>
+                    <Color>
+                        Red
+                    </Color>
+                </chart:LineSeries.Fill>
+                <chart:LineSeries.MarkerSettings>
+                    <chart:ChartMarkerSettings
+                        Width="6"
+                        Height="6"
+                        Fill="Brown"
+                        Stroke="Black"
+                        StrokeWidth="1"
+                        Type="Diamond" />
+                </chart:LineSeries.MarkerSettings>
+            </chart:LineSeries>
+        </chart:SfCartesianChart.Series>
 
-        </chart:SfCartesianChart>
-    </VerticalStackLayout>
+    </chart:SfCartesianChart>
 </ContentPage>

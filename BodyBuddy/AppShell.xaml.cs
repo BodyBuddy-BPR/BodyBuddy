@@ -15,7 +15,6 @@ public partial class AppShell : Shell
 		InitializeComponent();
 		//Profile
 		Routing.RegisterRoute(nameof(ProfilePage), typeof(ProfilePage));
-		Routing.RegisterRoute(nameof(ProfileGraph), typeof(ProfileGraph));
 		Routing.RegisterRoute(nameof(FriendsPage), typeof(FriendsPage));
 
 		//Exercise Pages

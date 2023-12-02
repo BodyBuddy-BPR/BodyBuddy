@@ -133,9 +133,6 @@
 		<MauiXaml Update="Views\ChartPage.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\Profile\ProfileGraph.xaml">
-		  <Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
 		<MauiXaml Update="Views\StartupTest\StartupTestPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
@@ -165,6 +162,9 @@
 		</MauiXaml>
 		<MauiXaml Update="Views\Profile\ProfilePage.xaml">
 			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\StatisticsViews\IntakeGraph.xaml">
+		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\StatisticsViews\IntakePage.xaml">
 			<Generator>MSBuild:Compile</Generator>

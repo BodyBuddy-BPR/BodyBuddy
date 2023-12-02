@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="BodyBuddy.Views.Profile.ProfileGraph"
+    x:Class="BodyBuddy.Views.StatisticsViews.IntakeGraph"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:charts="http://schemas.syncfusion.com/maui"
-    Title="ProfileGraph"
-    Shell.TabBarIsVisible="False">
+    Title="IntakeGraph">
 
     <!--<ContentPage.Resources>
-        <Style x:Key="Graphs" TargetType="charts:DateTimeAxis">
-            <Setter Property="TextColor" Value="{StaticResource LightText}" />
-            <Setter Property="FontSize" Value="16" />
-    -->
+    <Style x:Key="Graphs" TargetType="charts:DateTimeAxis">
+        <Setter Property="TextColor" Value="{StaticResource LightText}" />
+        <Setter Property="FontSize" Value="16" />    -->
     <!--<Setter Property="FontAttributes" Value="Bold" />-->
     <!--<Setter Property="CornerRadius" Value="10" />-->
     <!--
-        </Style>
-    </ContentPage.Resources>-->
+    </Style>
+</ContentPage.Resources>-->
     <Grid RowDefinitions="Auto,*,Auto">
         <Label Grid.Row="0">Test</Label>
 

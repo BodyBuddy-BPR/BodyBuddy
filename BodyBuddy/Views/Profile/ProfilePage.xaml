@@ -19,14 +19,9 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem
-            x:Name="GraphBtn"
-            Command="{Binding GoToProfileGraphsCommand}"
-            Text="Graphs" />
-        <ToolbarItem
             x:Name="LoginBtn"
             Clicked="LoginOrOut_Clicked"
             Text="Sign In" />
-
     </ContentPage.ToolbarItems>
 
     <Grid RowDefinitions="47.5*, 5*, 47.5*">

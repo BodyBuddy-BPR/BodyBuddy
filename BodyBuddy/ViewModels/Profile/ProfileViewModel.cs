@@ -104,13 +104,6 @@ namespace BodyBuddy.ViewModels.Profile
         }
 
         #endregion
-
-        [RelayCommand]
-        async Task GoToProfileGraphs()
-        {
-            await Shell.Current.GoToAsync(nameof(ProfileGraph), true);
-        }
-
         #region Weekday button methods
 
         private void GetCurrentWeekDay()

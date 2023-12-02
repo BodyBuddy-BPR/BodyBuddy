@@ -1,20 +1,18 @@
 using BodyBuddy.ViewModels.Profile;
-using Syncfusion.Maui.Charts;
-using System.Globalization;
 
-namespace BodyBuddy.Views.Profile;
+namespace BodyBuddy.Views.StatisticsViews;
 
-public partial class ProfileGraph : ContentPage
+public partial class IntakeGraph : ContentPage
 {
     private ProfileGraphViewModel _viewModel;
 
-    public ProfileGraph(ProfileGraphViewModel profileGraphViewModel)
-	{
+    public IntakeGraph(ProfileGraphViewModel profileGraphViewModel)
+    {
         InitializeComponent();
 
         _viewModel = profileGraphViewModel;
         BindingContext = profileGraphViewModel;
-	}
+    }
 
     //private void OnLabelCreated(object sender, ChartAxisLabelEventArgs e)
     //{

@@ -48,10 +48,11 @@
             Icon="home.png"
             Route="MainPage" />
 
-        <ShellContent
-            Title="Macros"
-            ContentTemplate="{DataTemplate statisticsViews:IntakePage}"
-            Icon="knifeandfork.png" />
+        <Tab Title="Macros" Icon="knifeandfork.png">
+            <ShellContent Title="Macros" ContentTemplate="{DataTemplate statisticsViews:IntakePage}" />
+
+            <ShellContent Title="Graphs" ContentTemplate="{DataTemplate statisticsViews:IntakeGraph}" />
+        </Tab>
 
 
         <Tab Title="Workouts" Icon="list.png">
