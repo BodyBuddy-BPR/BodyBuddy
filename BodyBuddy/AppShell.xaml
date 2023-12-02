@@ -78,10 +78,10 @@
             ContentTemplate="{DataTemplate startup:StartupTestPage}"
             Icon="questionmark.png" />
 
-        <ShellContent
+        <!--<ShellContent
             Title="Graphs"
             ContentTemplate="{DataTemplate chart:ChartPage}"
-            Icon="questionmark.png" />
+            Icon="questionmark.png" />-->
     </TabBar>
 
 </Shell>
