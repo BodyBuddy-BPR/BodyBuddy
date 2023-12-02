@@ -119,6 +119,7 @@ public static class MauiProgram
         builder.Services.AddTransient<MuscleGroupPage>();
         builder.Services.AddTransient<ExercisesPage>();
         builder.Services.AddTransient<ExerciseDetailsPage>();
+        builder.Services.AddTransient<ExerciseGraphsPage>();
 
         // Statistics
         builder.Services.AddSingleton<IntakePage>();
@@ -155,6 +156,7 @@ public static class MauiProgram
         builder.Services.AddTransient<MuscleGroupViewModel>();
         builder.Services.AddTransient<ExercisesViewModel>();
         builder.Services.AddTransient<ExerciseDetailsViewModel>();
+        builder.Services.AddTransient<ExerciseGraphsViewModel>();
 
         // Statistics
         builder.Services.AddSingleton<IntakeViewModel>();

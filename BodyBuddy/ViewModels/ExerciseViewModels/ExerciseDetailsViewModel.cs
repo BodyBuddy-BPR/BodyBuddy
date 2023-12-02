@@ -6,6 +6,7 @@ using System.Diagnostics;
 using BodyBuddy.Dtos;
 using BodyBuddy.Services;
 using BodyBuddy.Views;
+using BodyBuddy.Views.ExerciseViews;
 using CommunityToolkit.Mvvm.Input;
 
 namespace BodyBuddy.ViewModels.ExerciseViewModels
@@ -82,7 +83,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             if (exercise is null)
                 return;
 
-            await Shell.Current.GoToAsync(nameof(ChartPage), true, new Dictionary<string, object>
+            await Shell.Current.GoToAsync(nameof(ExerciseGraphsPage), true, new Dictionary<string, object>
             {
                 {"Exercise", exercise }
             });

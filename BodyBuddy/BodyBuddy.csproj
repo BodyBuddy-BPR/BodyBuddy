@@ -121,6 +121,9 @@
 		<MauiXaml Update="Views\Calendar\CalenderPage.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Views\ExerciseViews\ExerciseGraphsPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\Popups\AddEventPopup.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
