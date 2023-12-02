@@ -23,10 +23,16 @@ namespace BodyBuddy.ViewModels.Profile
         public ProfileGraphViewModel(IIntakeService intakeService)
         {
             _intakeService = intakeService;
-            GenerateIntakeData();
+            //GenerateIntakeData();
+        }
+
+        public async Task GetAllIntakeData()
+        {
+            IntakeList = new ObservableCollection<IntakeDto>(await _intakeService.GetAllIntakeDataAsync());
             GoalsCompleted();
         }
 
+        #region privates
         private void GoalsCompleted()
         {
             _intakeCount = IntakeList.Count;
@@ -34,19 +40,21 @@ namespace BodyBuddy.ViewModels.Profile
             {
                 if (intake.CalorieCurrent >= intake.CalorieGoal)
                     _calorieGoalsCompleted++;
-                if(intake.WaterCurrent >= intake.WaterGoal)
+                if (intake.WaterCurrent >= intake.WaterGoal)
                     _waterGoalsCompleted++;
             }
 
             SetStringText();
         }
-
         private void SetStringText()
         {
             CalorieGoalsCompletedString = $"{_calorieGoalsCompleted} / {_intakeCount} days";
             WaterGoalsCompletedString = $"{_waterGoalsCompleted} / {_intakeCount} days";
         }
+        #endregion
 
+
+        #region TestData
         private void GenerateIntakeData()
         {
             IntakeList.Add(new IntakeDto()
@@ -67,36 +75,29 @@ namespace BodyBuddy.ViewModels.Profile
             });
             IntakeList.Add(new IntakeDto()
             {
-                CalorieCurrent = 3333, 
-                CalorieGoal = 3000, 
-                WaterCurrent = 2750, 
-                WaterGoal = 2500, 
+                CalorieCurrent = 3333,
+                CalorieGoal = 3000,
+                WaterCurrent = 2750,
+                WaterGoal = 2500,
                 Date = new DateTime(2023, 11, 26)
-            });                        
+            });
             IntakeList.Add(new IntakeDto()
             {
                 CalorieCurrent = 2500,
                 CalorieGoal = 3500,
-                WaterCurrent = 2500, 
+                WaterCurrent = 2500,
                 WaterGoal = 2500,
                 Date = new DateTime(2023, 11, 25)
-            });            
+            });
             IntakeList.Add(new IntakeDto()
             {
                 CalorieCurrent = 2000,
                 CalorieGoal = 3500,
-                WaterCurrent = 1250, 
+                WaterCurrent = 1250,
                 WaterGoal = 2500,
                 Date = new DateTime(2023, 11, 24)
             });
-            
         }
-
-        public async Task GetAllIntakeData()
-        {
-            IntakeList = new ObservableCollection<IntakeDto>(await _intakeService.GetAllIntakeDataAsync());
-        }
-
-
+        #endregion
     }
 }

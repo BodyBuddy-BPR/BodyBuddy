@@ -14,6 +14,12 @@ public partial class IntakeGraph : ContentPage
         BindingContext = profileGraphViewModel;
     }
 
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await _viewModel.GetAllIntakeData();
+    }
+
     //private void OnLabelCreated(object sender, ChartAxisLabelEventArgs e)
     //{
     //    // Assuming e.Label is a string representing the date in a specific format
