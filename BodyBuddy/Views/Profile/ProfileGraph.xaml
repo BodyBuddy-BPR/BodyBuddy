@@ -29,7 +29,7 @@
                             FontAttributes="Bold"
                             FontSize="12"
                             HorizontalOptions="Center"
-                            Text="3"
+                            Text="{Binding Item.CalorieCurrent}"
                             TextColor="White"
                             VerticalOptions="Center" />
                         <Label
@@ -43,7 +43,14 @@
                             FontAttributes="Bold"
                             FontSize="12"
                             HorizontalOptions="Center"
-                            Text="7"
+                            Text="{Binding Item.CalorieGoal}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text=" Calories"
                             TextColor="White"
                             VerticalOptions="Center" />
                     </StackLayout>
@@ -54,7 +61,7 @@
                             FontAttributes="Bold"
                             FontSize="12"
                             HorizontalOptions="Center"
-                            Text="{Binding WaterCurrent}"
+                            Text="{Binding Item.WaterCurrent}"
                             TextColor="White"
                             VerticalOptions="Center" />
                         <Label
@@ -68,7 +75,14 @@
                             FontAttributes="Bold"
                             FontSize="12"
                             HorizontalOptions="Center"
-                            Text="{Binding WaterGoal}"
+                            Text="{Binding Item.WaterGoal}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text=" mL Water"
                             TextColor="White"
                             VerticalOptions="Center" />
                     </StackLayout>
