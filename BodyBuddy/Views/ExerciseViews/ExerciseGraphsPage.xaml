@@ -22,66 +22,74 @@
             <chart:SfCartesianChart.Resources>
                 <!--  Templates for Tooltips  -->
                 <DataTemplate x:Key="ExerciseTemplate">
-                    <StackLayout Orientation="Horizontal">
-                        <Label
-                            FontAttributes="Bold"
-                            FontSize="12"
-                            HorizontalOptions="Center"
-                            Text="Total Reps: "
-                            TextColor="White"
-                            VerticalOptions="Center" />
-                        <Label
-                            FontAttributes="Bold"
-                            FontSize="12"
-                            HorizontalOptions="Center"
-                            Text="{Binding Item.TotalReps}"
-                            TextColor="White"
-                            VerticalOptions="Center" />
+                    <StackLayout Orientation="Vertical">
+                        <StackLayout Orientation="Horizontal">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="12"
+                                HorizontalOptions="Center"
+                                Text="Total Reps: "
+                                TextColor="White"
+                                VerticalOptions="Center" />
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="12"
+                                HorizontalOptions="Center"
+                                Text="{Binding Item.TotalReps}"
+                                TextColor="White"
+                                VerticalOptions="Center" />
+                        </StackLayout>
 
-                        <Label
-                            FontAttributes="Bold"
-                            FontSize="12"
-                            HorizontalOptions="Center"
-                            Text="Max Weight: "
-                            TextColor="White"
-                            VerticalOptions="Center" />
-                        <Label
-                            FontAttributes="Bold"
-                            FontSize="12"
-                            HorizontalOptions="Center"
-                            Text="{Binding Item.MaxWeight}"
-                            TextColor="White"
-                            VerticalOptions="Center" />
+                        <StackLayout Orientation="Horizontal">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="12"
+                                HorizontalOptions="Center"
+                                Text="Max Weight: "
+                                TextColor="White"
+                                VerticalOptions="Center" />
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="12"
+                                HorizontalOptions="Center"
+                                Text="{Binding Item.MaxWeight}"
+                                TextColor="White"
+                                VerticalOptions="Center" />
+                        </StackLayout>
 
-                        <Label
-                            FontAttributes="Bold"
-                            FontSize="12"
-                            HorizontalOptions="Center"
-                            Text="Average Weight: "
-                            TextColor="White"
-                            VerticalOptions="Center" />
-                        <Label
-                            FontAttributes="Bold"
-                            FontSize="12"
-                            HorizontalOptions="Center"
-                            Text="{Binding Item.AverageWeight}"
-                            TextColor="White"
-                            VerticalOptions="Center" />
+                        <StackLayout Orientation="Horizontal">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="12"
+                                HorizontalOptions="Center"
+                                Text="Average Weight: "
+                                TextColor="White"
+                                VerticalOptions="Center" />
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="12"
+                                HorizontalOptions="Center"
+                                Text="{Binding Item.AverageWeight}"
+                                TextColor="White"
+                                VerticalOptions="Center" />
+                        </StackLayout>
 
-                        <Label
-                            FontAttributes="Bold"
-                            FontSize="12"
-                            HorizontalOptions="Center"
-                            Text="Min Weight: "
-                            TextColor="White"
-                            VerticalOptions="Center" />
-                        <Label
-                            FontAttributes="Bold"
-                            FontSize="12"
-                            HorizontalOptions="Center"
-                            Text="{Binding Item.MinWeight}"
-                            TextColor="White"
-                            VerticalOptions="Center" />
+                        <StackLayout Orientation="Horizontal">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="12"
+                                HorizontalOptions="Center"
+                                Text="Min Weight: "
+                                TextColor="White"
+                                VerticalOptions="Center" />
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="12"
+                                HorizontalOptions="Center"
+                                Text="{Binding Item.MinWeight}"
+                                TextColor="White"
+                                VerticalOptions="Center" />
+                        </StackLayout>
                     </StackLayout>
                 </DataTemplate>
                 <!--  End Templates for Tooltips  -->
