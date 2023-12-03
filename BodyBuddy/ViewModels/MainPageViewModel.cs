@@ -12,21 +12,25 @@ using BodyBuddy.Views.Authentication;
 using BodyBuddy.Authentication;
 using BodyBuddy.Models;
 using BodyBuddy.Services.Implementations;
+using BodyBuddy.SupaBaseModels;
 using CommunityToolkit.Mvvm.Input;
 using Mopups.Interfaces;
 using BodyBuddy.Views.Popups;
+using System.Collections.ObjectModel;
 
 namespace BodyBuddy.ViewModels
 {
     public partial class MainPageViewModel : BaseViewModel
     {
         private readonly IQuoteService _quoteService;
-        private IUserAuthenticationService _userAuthService;
+        private readonly IUserAuthenticationService _userAuthService;
         private readonly IStepService _stepService;
         private readonly IPopupNavigation _popupNavigation;
 
         [ObservableProperty]
         private StepDto _userSteps;
+
+        [ObservableProperty] private ObservableCollection<StepsSupaBaseModel> _friendsSteps = new();
 
         [ObservableProperty]
         public double _stepProgress;
@@ -54,10 +58,15 @@ namespace BodyBuddy.ViewModels
 
         public async Task Initialize()
         {
-            UserSteps = await _stepService.GetStepDataTodayAsync(); 
+            UserSteps = await _stepService.GetStepDataTodayAsync();
             StepProgress = UserSteps.Steps == 0 ? 0 : (double)UserSteps.Steps / UserSteps.StepGoal;
             await GetDailyQuote();
             TurnOnAccelerometer();
+        }
+
+        public async Task GetFriendsSteps()
+        {
+            FriendsSteps = new ObservableCollection<StepsSupaBaseModel>(await _stepService.GetStepsForPeriodFriends());
         }
 
         public void TurnOnAccelerometer()

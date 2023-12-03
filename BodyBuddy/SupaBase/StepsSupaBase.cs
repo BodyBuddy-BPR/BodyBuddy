@@ -20,7 +20,7 @@ namespace BodyBuddy.SupaBase
         }
         public async Task<List<StepsSupaBaseModel>> GetStepsForPeriodFriends()
         {
-            List<StepsSupaBaseModel> stepsSupaBaseModels = new List<StepsSupaBaseModel>();
+            var stepsSupaBaseModels = new List<StepsSupaBaseModel>();
 
             var userId = SecureStorage.GetAsync("UserUID").Result;
 

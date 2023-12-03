@@ -4,6 +4,7 @@ using BodyBuddy.Repositories;
 using BodyBuddy.Authentication;
 using BodyBuddy.Helpers;
 using BodyBuddy.SupaBase;
+using BodyBuddy.SupaBaseModels;
 
 namespace BodyBuddy.Services.Implementations
 {
@@ -25,6 +26,13 @@ namespace BodyBuddy.Services.Implementations
         {
             var stepData = await _repo.GetStepsForDayAsTimestampAsync(DateHelper.GetCurrentDayAtMidnight());
             return _mapper.MapToDto(stepData);
+        }
+
+        public async Task<List<StepsSupaBaseModel>> GetStepsForPeriodFriends()
+        {
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet && _userAuthenticationService.IsUserLoggedIn())
+                return await _stepsSupa.GetStepsForPeriodFriends();
+            return new List<StepsSupaBaseModel>();
         }
 
         public async Task SaveStepData(StepDto stepDto)
