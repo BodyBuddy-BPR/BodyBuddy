@@ -205,8 +205,6 @@ public static class MauiProgram
         #endregion
 
         #region Helpers
-        builder.Services.AddSingleton<DateHelper>();
-
         // FIXME: Are these needed?
         builder.Services.AddSingleton<StartupTestMapper>();
         builder.Services.AddSingleton<IntakeMapper>();

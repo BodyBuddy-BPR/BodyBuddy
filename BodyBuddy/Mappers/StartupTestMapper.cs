@@ -14,8 +14,6 @@ namespace BodyBuddy.Mappers
 {
     public class StartupTestMapper
     {
-        private readonly DateHelper _dateTimeService = new();
-
         public StartupTestModel MapToDatabase(StartupTestDto startupTestDto)
         {
             return new StartupTestModel()
@@ -25,7 +23,7 @@ namespace BodyBuddy.Mappers
                 Gender = (int)EnumMapper.GetGenderFromDisplayString(startupTestDto.Gender),
                 Weight = startupTestDto.Weight,
                 Height = startupTestDto.Height,
-                Birthday = _dateTimeService.ConvertToEpochTime(startupTestDto.Birthday),
+                Birthday = DateHelper.ConvertToEpochTime(startupTestDto.Birthday),
                 ActiveAmount = (int)EnumMapper.GetUserActivityFromDisplayString(startupTestDto.ActiveAmount),
                 PassiveCalorieBurn = startupTestDto.PassiveCalorieBurn,
                 TargetAreas = startupTestDto.TargetAreas,
@@ -45,7 +43,7 @@ namespace BodyBuddy.Mappers
                 Gender = EnumMapper.GetDisplayString((Gender)startupTest.Gender),
                 Weight = startupTest.Weight,
                 Height = startupTest.Height,
-                Birthday = _dateTimeService.ConvertToDateTime(startupTest.Birthday),
+                Birthday = DateHelper.ConvertToDateTime(startupTest.Birthday),
                 ActiveAmount = EnumMapper.GetDisplayString((UserActivity)startupTest.ActiveAmount),
                 PassiveCalorieBurn = startupTest.PassiveCalorieBurn,
                 TargetAreas = startupTest.TargetAreas,

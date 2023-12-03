@@ -11,8 +11,6 @@ namespace BodyBuddy.Mappers
 {
     public class IntakeMapper
     {
-        private readonly DateHelper _dateTimeService = new();
-
         public IntakeModel MapToDatabase(IntakeDto intakeDto)
         {
             return new IntakeModel()
@@ -22,7 +20,7 @@ namespace BodyBuddy.Mappers
                 WaterGoal = intakeDto.WaterGoal,
                 CalorieCurrent = intakeDto.CalorieCurrent,
                 WaterCurrent = intakeDto.WaterCurrent,
-                Date = _dateTimeService.ConvertToEpochTime(intakeDto.Date)
+                Date = DateHelper.ConvertToEpochTime(intakeDto.Date)
             };
         }
 
@@ -38,7 +36,7 @@ namespace BodyBuddy.Mappers
                 WaterGoal = intakeModel.WaterGoal,
                 CalorieCurrent = intakeModel.CalorieCurrent,
                 WaterCurrent = intakeModel.WaterCurrent,
-                Date = _dateTimeService.ConvertToDateTime(intakeModel.Date)
+                Date = DateHelper.ConvertToDateTime(intakeModel.Date)
             };
         }
     }

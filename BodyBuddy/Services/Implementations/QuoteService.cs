@@ -14,14 +14,12 @@ namespace BodyBuddy.Services.Implementations
     public class QuoteService : IQuoteService
     {
         private IQuoteRepository _quoteRepository;
-        private DateHelper _dateTimeService;
         private QuoteMapper _mapper;
 
-        public QuoteService(IQuoteRepository quoteRepository, QuoteMapper quoteMapper, DateHelper dateTimeService)
+        public QuoteService(IQuoteRepository quoteRepository, QuoteMapper quoteMapper)
         {
             _quoteRepository = quoteRepository;
             _mapper = quoteMapper;
-            _dateTimeService = dateTimeService;
         }
 
         public async Task<QuoteDto> GetDailyQuote()
