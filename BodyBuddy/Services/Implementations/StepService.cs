@@ -1,12 +1,8 @@
 ﻿using BodyBuddy.Dtos;
 using BodyBuddy.Mappers;
 using BodyBuddy.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BodyBuddy.Authentication;
+using BodyBuddy.Helpers;
 using BodyBuddy.SupaBase;
 
 namespace BodyBuddy.Services.Implementations
@@ -25,13 +21,9 @@ namespace BodyBuddy.Services.Implementations
             _stepsSupa = stepsSupaBase;
             _userAuthenticationService = userAuthenticationService;
         }
-        public async Task<StepDto> GetStepData()
+        public async Task<StepDto> GetStepDataTodayAsync()
         {
-            //Get current date at midnight in UTC, and convert it to a timestamp
-            DateTime currentDateTime = DateTime.UtcNow.Date;
-            int currentDateTimestamp = (int)(currentDateTime.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
-
-            var stepData = await _repo.GetStepsForDayAsTimestampAsync(currentDateTimestamp);
+            var stepData = await _repo.GetStepsForDayAsTimestampAsync(DateHelper.GetCurrentDayAtMidnight());
             return _mapper.MapToDto(stepData);
         }
 

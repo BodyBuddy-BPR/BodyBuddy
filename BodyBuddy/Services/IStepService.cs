@@ -13,6 +13,6 @@ namespace BodyBuddy.Services
         Task SaveStepData(StepDto stepDto);
 
         //Converts Db --> Dto object
-        Task<StepDto> GetStepData();
+        Task<StepDto> GetStepDataTodayAsync();
     }
 }

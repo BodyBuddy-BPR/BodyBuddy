@@ -8,7 +8,7 @@ namespace BodyBuddy.Helpers
 {
     public static class DateHelper
     {
-        private static readonly string _datePreferencesKey = "LastFetchedDate";
+        private const string _datePreferencesKey = "LastFetchedDate";
         public static DateTime Today => DateTime.Today;
 
         public static bool IsNewDay()

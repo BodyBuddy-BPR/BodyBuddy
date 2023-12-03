@@ -54,13 +54,13 @@ namespace BodyBuddy.ViewModels
 
         public async Task Initialize()
         {
-            UserSteps = await _stepService.GetStepData(); 
+            UserSteps = await _stepService.GetStepDataTodayAsync(); 
             StepProgress = UserSteps.Steps == 0 ? 0 : (double)UserSteps.Steps / UserSteps.StepGoal;
             await GetDailyQuote();
-            await TurnOnAccelerometer();
+            TurnOnAccelerometer();
         }
 
-        public async Task TurnOnAccelerometer()
+        public void TurnOnAccelerometer()
         {
             if (Accelerometer.Default.IsSupported)
             {
