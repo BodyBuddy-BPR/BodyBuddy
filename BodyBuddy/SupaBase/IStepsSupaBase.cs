@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BodyBuddy.Dtos;
-using BodyBuddy.Models;
+using BodyBuddy.SupaBaseModels;
 
 namespace BodyBuddy.SupaBase
 {
     public interface IStepsSupaBase
     {
-        StepModel GetStepsForPeriodFriends();
+        Task<List<StepsSupaBaseModel>> GetStepsForPeriodFriends();
         void AddOrUpdateSteps(StepDto stepDto);
     }
 }

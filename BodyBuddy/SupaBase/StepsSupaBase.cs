@@ -18,18 +18,31 @@ namespace BodyBuddy.SupaBase
         {
             _supabase = client; 
         }
-        public StepModel GetStepsForPeriodFriends()
+        public async Task<List<StepsSupaBaseModel>> GetStepsForPeriodFriends()
         {
-            throw new NotImplementedException();
+            List<StepsSupaBaseModel> stepsSupaBaseModels = new List<StepsSupaBaseModel>();
+
+            var userId = SecureStorage.GetAsync("UserUID").Result;
+
+            var friendListModels = await _supabase.From<UserRelationsModel>()
+                .Where(x => x.UserId == userId && x.Type == "friend").Get();
+            var friends = friendListModels.Models;
+
+
+            foreach (var friend in friends)
+            {
+                var stepModel = await _supabase.From<StepsSupaBaseModel>().Where(x => x.Id == friend.FriendId).Get();
+                stepsSupaBaseModels.AddRange(stepModel.Models);
+            }
+
+            return stepsSupaBaseModels;
         }
 
         public async void AddOrUpdateSteps(StepDto stepDto)
         {
-            //var testId = SecureStorage.GetAsync("UserUIDKey").Result;
-            var testId = "ca1f7124-9763-4f1d-848c-6661adf4689a";
             var record = new StepsSupaBaseModel
             {
-                Id = testId,
+                Id = SecureStorage.GetAsync("UserUID").Result,
                 Date = stepDto.Date,
                 Steps = stepDto.Steps
             }; 

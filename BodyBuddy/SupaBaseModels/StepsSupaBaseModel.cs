@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BodyBuddy.Models;
 using Postgrest.Attributes;
 using Postgrest.Models;
 
@@ -17,5 +18,8 @@ namespace BodyBuddy.SupaBaseModels
         public DateTime Date { get; set; }
         [Column("steps")]
         public int Steps { get; set; }
+
+        [Reference(typeof(UserModel))]
+        public UserModel User { get; set; }
     }
 }

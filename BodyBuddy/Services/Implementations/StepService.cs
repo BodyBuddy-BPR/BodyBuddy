@@ -32,7 +32,10 @@ namespace BodyBuddy.Services.Implementations
             await _repo.SaveChangesAsync(_mapper.MapToDatabase(stepDto));
 
             if (Connectivity.NetworkAccess == NetworkAccess.Internet && _userAuthenticationService.IsUserLoggedIn())
+            {
+                await _stepsSupa.GetStepsForPeriodFriends();
                 _stepsSupa.AddOrUpdateSteps(stepDto);
+            }
         }
     }
 }
