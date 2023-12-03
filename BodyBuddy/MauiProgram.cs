@@ -28,6 +28,7 @@ using BodyBuddy.ViewModels.Profile;
 using BodyBuddy.Views.Authentication;
 using BodyBuddy.Helpers;
 using BodyBuddy.Authentication;
+using BodyBuddy.SupaBase;
 using BodyBuddy.ViewModels.User;
 using BodyBuddy.Views.User;
 using BodyBuddy.Views.Calendar;
@@ -199,6 +200,9 @@ public static class MauiProgram
 
         #endregion
 
+        #region SupaBase
+        builder.Services.AddSingleton<IStepsSupaBase, StepsSupaBase>();
+        #endregion
 
         #region Helpers
         builder.Services.AddSingleton<DateHelper>();

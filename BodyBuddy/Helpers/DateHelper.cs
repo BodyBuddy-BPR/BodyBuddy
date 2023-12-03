@@ -34,6 +34,13 @@ namespace BodyBuddy.Helpers
             return (long)(dateTime.ToUniversalTime() - epochStart).TotalSeconds;
         }
 
+        //Get current date at midnight in UTC, and convert it to a timestamp
+        public long GetCurrentDayAtMidnight()
+        {
+            DateTime currentDateTime = DateTime.UtcNow.Date;
+            return (long)(currentDateTime.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+        }
+
         private DateTime GetLastFetchedDate()
         {
             return Preferences.Get(_datePreferencesKey, DateTime.MinValue);

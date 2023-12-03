@@ -5,7 +5,7 @@ namespace BodyBuddy.Repositories
 {
     public interface IStepRepository
     {
-        Task<StepModel> GetStepsAsync();
+        Task<StepModel> GetStepsForDayAsTimestampAsync(long dayAsTimestamp);
         Task SaveChangesAsync(StepModel stepDetails);
     }
 }

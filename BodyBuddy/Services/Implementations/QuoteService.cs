@@ -28,7 +28,7 @@ namespace BodyBuddy.Services.Implementations
         {
             QuoteModel quote;
 
-            if (_dateTimeService.IsNewDay())
+            if (DateHelper.IsNewDay())
             {
                 quote = await _quoteRepository.FetchNewQuote();
             }
