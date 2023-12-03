@@ -204,14 +204,6 @@ public static class MauiProgram
         builder.Services.AddSingleton<IStepsSupaBase, StepsSupaBase>();
         #endregion
 
-        #region Helpers
-        // FIXME: Are these needed?
-        builder.Services.AddSingleton<StartupTestMapper>();
-        builder.Services.AddSingleton<IntakeMapper>();
-        builder.Services.AddSingleton<QuoteMapper>();
-
-        #endregion
-
         #region Services
 
         // Startup Test

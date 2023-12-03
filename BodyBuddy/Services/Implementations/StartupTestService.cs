@@ -12,12 +12,11 @@ namespace BodyBuddy.Services.Implementations
 {
     public class StartupTestService : IStartupTestService
     {
-        private IStartupTestRepository _repo;
-        private StartupTestMapper mapper;
-        public StartupTestService(IStartupTestRepository startupTestRepository, StartupTestMapper startupTestMapper)
+        private readonly IStartupTestRepository _repo;
+        private readonly StartupTestMapper mapper = new();
+        public StartupTestService(IStartupTestRepository startupTestRepository)
         {
             _repo = startupTestRepository;
-            mapper = startupTestMapper;
         }
 
         public async Task<StartupTestDto> GetStartupTestData()

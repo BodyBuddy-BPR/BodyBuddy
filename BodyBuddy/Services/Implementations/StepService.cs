@@ -17,7 +17,7 @@ namespace BodyBuddy.Services.Implementations
         private readonly IStepsSupaBase _stepsSupa;
         private readonly IUserAuthenticationService _userAuthenticationService;
 
-        private StepMapper mapper = new StepMapper();
+        private readonly StepMapper _mapper = new();
 
         public StepService(IStepRepository stepRepository, IStepsSupaBase stepsSupaBase, IUserAuthenticationService userAuthenticationService)
         {
@@ -32,12 +32,12 @@ namespace BodyBuddy.Services.Implementations
             int currentDateTimestamp = (int)(currentDateTime.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
 
             var stepData = await _repo.GetStepsForDayAsTimestampAsync(currentDateTimestamp);
-            return mapper.MapToDto(stepData);
+            return _mapper.MapToDto(stepData);
         }
 
         public async Task SaveStepData(StepDto stepDto)
         {
-            await _repo.SaveChangesAsync(mapper.MapToDatabase(stepDto));
+            await _repo.SaveChangesAsync(_mapper.MapToDatabase(stepDto));
 
             if (Connectivity.NetworkAccess == NetworkAccess.Internet && _userAuthenticationService.IsUserLoggedIn())
                 _stepsSupa.AddOrUpdateSteps(stepDto);

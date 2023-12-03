@@ -12,12 +12,11 @@ namespace BodyBuddy.Services.Implementations
     public class WorkoutService : IWorkoutService
     {
         private readonly IWorkoutRepository _repo;
-        private readonly WorkoutMapper _mapper;
+        private readonly WorkoutMapper _mapper = new();
 
         public WorkoutService(IWorkoutRepository repository)
         {
             _repo = repository;
-            _mapper = new WorkoutMapper();
         }
 
         public async Task<int> SaveWorkoutData(WorkoutDto startupTestDto)
