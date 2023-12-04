@@ -78,6 +78,7 @@
                     Text="Event name"
                     TextColor="{StaticResource DarkText}" />
                 <Entry
+                    x:Name="NameEntry"
                     Margin="2,-5,0,0"
                     BackgroundColor="Transparent"
                     FontSize="16"
@@ -93,17 +94,20 @@
                                 MinimumCharacterTypeCount="1"
                                 RegexPattern="" />
                             <toolkit:TextValidationBehavior
-                                toolkit:MultiValidationBehavior.Error="Exciding maximum length of 20"
+                                toolkit:MultiValidationBehavior.Error="Exceeding maximum length of 20"
                                 Flags="ValidateOnValueChanged"
                                 MaximumLength="10" />
+                            <toolkit:TextValidationBehavior
+                                toolkit:MultiValidationBehavior.Error="Minimum Length of 1"
+                                Flags="ValidateOnValueChanged"
+                                MaximumLength="11" />
                         </toolkit:MultiValidationBehavior>
-
                     </Entry.Behaviors>
                 </Entry>
                 <!--  Display event name error message  -->
                 <Label
                     x:Name="EventNameError"
-                    Padding="2"
+                    Margin="0,-20,0,0"
                     FontAttributes="Bold"
                     FontSize="14"
                     HorizontalOptions="Start"
@@ -125,7 +129,6 @@
                             Style="{StaticResource LargeLabel}"
                             Text="From"
                             TextColor="{StaticResource DarkText}" />
-
                         <Label
                             FontSize="18"
                             HorizontalOptions="End"
@@ -143,14 +146,12 @@
                             FontSize="16"
                             TextColor="{StaticResource DarkText}"
                             Time="{Binding FromTime}" />
-
                         <Label
                             HorizontalOptions="Center"
                             Style="{StaticResource LargeLabel}"
                             Text=" - "
                             TextColor="{StaticResource DarkText}"
                             VerticalOptions="Center" />
-
                         <TimePicker
                             x:Name="ToTime"
                             FontSize="16"
@@ -222,7 +223,7 @@
                 </Border>
                 <Label
                     x:Name="ComboBoxError"
-                    Padding="2"
+                    Margin="0,-20,0,0"
                     FontAttributes="Bold"
                     FontSize="14"
                     HorizontalOptions="Start"

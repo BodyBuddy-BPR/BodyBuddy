@@ -31,6 +31,7 @@ namespace BodyBuddy.Views.Calendar
             this.scheduler = bindable.Content.FindByName<SfScheduler>("Scheduler");
             this.noEventsLabel = bindable.Content.FindByName<Label>("noEventsLabel");
             this.appointmentListView = bindable.Content.FindByName<ListView>("appointmentListView");
+
             if (scheduler != null)
             {
                 scheduler.ViewChanged += this.OnSchedulerViewChanged;
@@ -41,11 +42,14 @@ namespace BodyBuddy.Views.Calendar
 
         private async void Scheduler_SelectionChanged(object? sender, SchedulerSelectionChangedEventArgs e)
         {
-            if (e.NewValue != null)
+            var viewModel = this.scheduler.BindingContext as CalendarViewModel;
+
+            if (e.NewValue != null && !viewModel.IsBusy && !viewModel.IsUpdatingData)
             {
-                //// Listview takes time to update items source hence uses delay so that scheduler will be loaded and after the delay listview items will be generated.
-                await Task.Delay(50);
+                viewModel.IsUpdatingData = true;
+                await Task.Delay(50); // You may still keep the delay if needed
                 this.UpdateMonthAgendaViewDetails(e.NewValue.Value);
+                viewModel.IsUpdatingData = false;
             }
         }
 
@@ -60,9 +64,11 @@ namespace BodyBuddy.Views.Calendar
             {
                 this.UpdateMonthAgendaViewDetails(e.Date.Value);
             }
+
+
         }
 
-        private void UpdateMonthAgendaViewDetails(DateTime? tappedDate)
+        public void UpdateMonthAgendaViewDetails(DateTime? tappedDate)
         {
             if (this.scheduler == null || this.noEventsLabel == null || this.appointmentListView == null || tappedDate == null)
             {
@@ -93,10 +99,6 @@ namespace BodyBuddy.Views.Calendar
 
             var appointments = viewModel.GetSelectedDateAppointments(tappedDate.Value.Date);
 
-            //// TODO: IsVisible property breaks in 6.0.400 release.
-            //// Issue link -https://github.com/dotnet/maui/issues/7507
-            //// -https://github.com/dotnet/maui/issues/8044
-            //// -https://github.com/dotnet/maui/issues/7482
             if (appointments != null && appointments.Count > 0)
             {
                 viewModel.SelectedDateMeetings = appointments;
@@ -136,7 +138,8 @@ namespace BodyBuddy.Views.Calendar
 
             if (this.scheduler != null && this.scheduler.SelectedDate != null && e.NewVisibleDates != null && e.NewVisibleDates.Count > 0)
             {
-                scheduler.SelectedDate = e.NewVisibleDates[0];
+                //scheduler.SelectedDate = e.NewVisibleDates[0];
+                scheduler.SelectedDate = DateTime.Now.Date;
             }
         }
 

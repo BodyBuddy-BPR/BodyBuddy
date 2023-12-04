@@ -1,5 +1,6 @@
 ﻿using BodyBuddy.Dtos;
 using BodyBuddy.Services;
+using BodyBuddy.Views.Calendar;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -18,7 +19,6 @@ namespace BodyBuddy.ViewModels.Calendar
         private readonly ICalendarService _calenderService;
         private readonly IWorkoutService _workoutService;
 
-
         [ObservableProperty]
         private ObservableCollection<ColorItem> _colorList = new();
         [ObservableProperty] private List<WorkoutDto> _workoutList = new();
@@ -28,11 +28,12 @@ namespace BodyBuddy.ViewModels.Calendar
 
         #region Fields
 
+        private bool isUpdatingData = false;
 
         private ObservableCollection<AppointmentDto>? selectedDateMeetings;
 
         private DateTime selectedDate = DateTime.Now.Date;
-    
+
         private bool isToday = true;
 
         private Color dateTextColor = Colors.White;
@@ -44,7 +45,8 @@ namespace BodyBuddy.ViewModels.Calendar
         public CalendarViewModel(ICalendarService calenderService, IWorkoutService workoutService)
         {
             this.selectedDateMeetings = new ObservableCollection<AppointmentDto>();
-            this.selectedDateMeetings = this.GetSelectedDateAppointments(this.selectedDate);
+            //this.selectedDateMeetings = this.GetSelectedDateAppointments(this.selectedDate);
+
             //this.DisplayDate = DateTime.Now.Date.AddHours(8).AddMinutes(50);
             this.DisplayDate = DateTime.Now.Date;
 
@@ -72,7 +74,17 @@ namespace BodyBuddy.ViewModels.Calendar
             set
             {
                 selectedDateMeetings = value;
-                RaiseOnPropertyChanged("SelectedDateMeetings");
+                RaiseOnPropertyChanged(nameof(SelectedDateMeetings));
+            }
+        }
+
+        public bool IsUpdatingData
+        {
+            get { return isUpdatingData; }
+            set
+            {
+                isUpdatingData = value;
+                RaiseOnPropertyChanged("IsUpdatingData");
             }
         }
 
@@ -127,40 +139,52 @@ namespace BodyBuddy.ViewModels.Calendar
         public async Task Initialize()
         {
             var events = await _calenderService.GetAppointments();
+
             await GetWorkouts();
 
-            Events.Clear();
-
-            foreach (var item in events)
+            if (Events != null)
             {
-                // Check if item.Workout is not null
-                if (item.Workout != null)
-                {
-                    // Find the correct workout
-                    WorkoutDto matchingWorkout = WorkoutList.FirstOrDefault(w => w.Id == item.Workout.Id);
+                Events.Clear();
+                SelectedDateMeetings.Clear();
 
-                    item.Workout = matchingWorkout;
+                foreach (var item in events)
+                {
+                    // Check if item.Workout is not null
+                    if (item.Workout != null)
+                    {
+                        // Find the correct workout
+                        WorkoutDto matchingWorkout = WorkoutList.FirstOrDefault(w => w.Id == item.Workout.Id);
+
+                        item.Workout = matchingWorkout;
+                    }
+
+                    this.Events.Add(item);
                 }
-                this.Events.Add(item);
             }
+
+            // Wait for GetWorkouts to complete
+            await Task.Delay(400); // Adjust the delay time as needed
+
+            //SelectedDateMeetings.Clear();
+            SelectedDateMeetings = (this.GetSelectedDateAppointments(this.selectedDate));
         }
 
         private async Task GetWorkouts()
         {
-            if (IsBusy) return;
+            if (IsBusy || IsUpdatingData) return;
 
             try
             {
                 IsBusy = true;
+                IsUpdatingData = true;
 
-                WorkoutList = await _workoutService.GetWorkoutPlans(false);
+                var fetchedWorkouts = await _workoutService.GetWorkoutPlans(false);
 
                 var preMadeWorkouts = await _workoutService.GetWorkoutPlans(true);
 
-                foreach (var item in preMadeWorkouts)
-                {
-                    WorkoutList.Add(item);
-                }
+                fetchedWorkouts.AddRange(preMadeWorkouts);
+
+                WorkoutList = fetchedWorkouts;
             }
             catch (Exception ex)
             {
@@ -170,12 +194,15 @@ namespace BodyBuddy.ViewModels.Calendar
             finally
             {
                 IsBusy = false;
+                IsUpdatingData = false;
             }
         }
 
         public ObservableCollection<AppointmentDto> GetSelectedDateAppointments(DateTime date)
         {
             ObservableCollection<AppointmentDto> selectedAppiointments = new ObservableCollection<AppointmentDto>();
+
+            SelectedDateMeetings.Clear();
 
             for (int i = 0; i < this.Events?.Count; i++)
             {
@@ -190,7 +217,7 @@ namespace BodyBuddy.ViewModels.Calendar
             return selectedAppiointments;
         }
 
-       
+
         #endregion
 
         #region Property Changed Event
@@ -221,7 +248,6 @@ namespace BodyBuddy.ViewModels.Calendar
         [ObservableProperty] public TimeSpan _fromTime, _toTime;
 
         [ObservableProperty] public ColorItem _selectedColor;
-        //[ObservableProperty] public ColorItem _selectedColor = new () { HexValue = Color.FromArgb("#0000ccff") };
 
         public void InitializePopup()
         {
@@ -242,6 +268,8 @@ namespace BodyBuddy.ViewModels.Calendar
 
             await _calenderService.CreateEvent(newEvent);
             ClearInputData();
+
+
             await Initialize();
         }
 
@@ -263,6 +291,8 @@ namespace BodyBuddy.ViewModels.Calendar
 
         private void CreateColors()
         {
+            ColorList.Clear();
+
             ColorList.Add(new ColorItem { Name = "Light Blue", HexValue = Color.FromArgb("#FF00ccff") });
             ColorList.Add(new ColorItem { Name = "Blue", HexValue = Color.FromArgb("#FF3366ff") });
             ColorList.Add(new ColorItem { Name = "Green", HexValue = Color.FromArgb("#FF00cc66") });

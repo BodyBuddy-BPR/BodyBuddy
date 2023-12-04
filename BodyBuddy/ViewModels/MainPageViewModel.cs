@@ -57,8 +57,10 @@ namespace BodyBuddy.ViewModels
             UserSteps = await _stepService.GetStepData(); 
             StepProgress = UserSteps.Steps == 0 ? 0 : (double)UserSteps.Steps / UserSteps.StepGoal;
             await GetDailyQuote();
-            await TurnOnAccelerometer();
+            //await TurnOnAccelerometer();
         }
+
+        #region Accelerometer
 
         public async Task TurnOnAccelerometer()
         {
@@ -72,7 +74,7 @@ namespace BodyBuddy.ViewModels
             }
         }
 
-        private void Accelerometer_ReadingChanged(object sender, AccelerometerChangedEventArgs e)
+        private async void Accelerometer_ReadingChanged(object sender, AccelerometerChangedEventArgs e)
         {
             var acceleration = e.Reading.Acceleration;
 
@@ -96,11 +98,13 @@ namespace BodyBuddy.ViewModels
                     isStepInProgress = true;
 
                     UserSteps.Steps++;
-                    _stepService.SaveStepData(UserSteps);
+                    await _stepService.SaveStepData(UserSteps);
                     StepProgress = (double)UserSteps.Steps / (double)UserSteps.StepGoal;
                 }
             }
         }
+
+        #endregion
 
         public async Task AttemptToLogin()
         {

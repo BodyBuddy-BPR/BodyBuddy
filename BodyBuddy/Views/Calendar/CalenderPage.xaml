@@ -36,7 +36,7 @@
                 <schedule:SfScheduler.AppointmentMapping>
                     <schedule:SchedulerAppointmentMapping
                         Background="Background"
-                        EndTime="To"                        
+                        EndTime="To"
                         StartTime="From"
                         Subject="EventName" />
                 </schedule:SfScheduler.AppointmentMapping>
