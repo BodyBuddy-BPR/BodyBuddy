@@ -57,7 +57,7 @@ namespace BodyBuddy.ViewModels
             UserSteps = await _stepService.GetStepData(); 
             StepProgress = UserSteps.Steps == 0 ? 0 : (double)UserSteps.Steps / UserSteps.StepGoal;
             await GetDailyQuote();
-            //await TurnOnAccelerometer();
+            await TurnOnAccelerometer();
         }
 
         #region Accelerometer
