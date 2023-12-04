@@ -1,26 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BodyBuddy.Dtos;
+﻿using BodyBuddy.Dtos;
 using BodyBuddy.Models;
-using BodyBuddy.SupaBaseModels;
+using BodyBuddy.Models.Supabase;
+using BodyBuddy.Repositories.Supabase.Implementation;
 using Supabase;
 
-namespace BodyBuddy.SupaBase
+namespace BodyBuddy.Repositories.Supabase
 {
-    public class StepsSupaBase : IStepsSupaBase
+    public class StepsSupabase : IStepsSupabase
     {
         private readonly Client _supabase;
 
-        public StepsSupaBase(Client client)
+        public StepsSupabase(Client client)
         {
             _supabase = client; 
         }
-        public async Task<List<StepsSupaBaseModel>> GetStepsForPeriodFriends()
+        public async Task<List<StepsSbModel>> GetStepsForPeriodFriends()
         {
-            var stepsSupaBaseModels = new List<StepsSupaBaseModel>();
+            var stepsSupaBaseModels = new List<StepsSbModel>();
 
             var userId = SecureStorage.GetAsync("UserUID").Result;
 
@@ -31,7 +27,7 @@ namespace BodyBuddy.SupaBase
 
             foreach (var friend in friends)
             {
-                var stepModel = await _supabase.From<StepsSupaBaseModel>().Where(x => x.Id == friend.FriendId).Get();
+                var stepModel = await _supabase.From<StepsSbModel>().Where(x => x.Id == friend.FriendId).Get();
                 stepsSupaBaseModels.AddRange(stepModel.Models);
             }
 
@@ -40,13 +36,13 @@ namespace BodyBuddy.SupaBase
 
         public async void AddOrUpdateSteps(StepDto stepDto)
         {
-            var record = new StepsSupaBaseModel
+            var record = new StepsSbModel
             {
                 Id = SecureStorage.GetAsync("UserUID").Result,
                 Date = stepDto.Date,
                 Steps = stepDto.Steps
             }; 
-            await _supabase.From<StepsSupaBaseModel>().Upsert(record);
+            await _supabase.From<StepsSbModel>().Upsert(record);
         }
     }
 }

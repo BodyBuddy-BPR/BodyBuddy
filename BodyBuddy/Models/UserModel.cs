@@ -16,5 +16,15 @@ namespace BodyBuddy.Models
 
         [Column("email")]
         public string Email { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is UserModel user && Id == user.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
     }
 }

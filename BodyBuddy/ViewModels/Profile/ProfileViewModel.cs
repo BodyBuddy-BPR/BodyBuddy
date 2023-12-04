@@ -1,27 +1,18 @@
 ﻿using BodyBuddy.Dtos;
 using BodyBuddy.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BodyBuddy.Authentication;
 using BodyBuddy.Views.Authentication;
-using CommunityToolkit.Mvvm.Input;
-using Supabase;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
-using Syncfusion.Maui.GridCommon.Collections;
-using System.Runtime.CompilerServices;
 
 
 namespace BodyBuddy.ViewModels.Profile
 {
     public partial class ProfileViewModel : BaseViewModel
     {
-        private IStartupTestService _startupTestService;
-        private IIntakeService _intakeService;
+        private readonly IStartupTestService _startupTestService;
+        private readonly IIntakeService _intakeService;
         private readonly IUserAuthenticationService _userAuthenticationService;
 
         private static int secondsInADay = 86400;
@@ -154,7 +145,7 @@ namespace BodyBuddy.ViewModels.Profile
             SetSelectedWeekday();
             currentAndSelectedDayDifference = CurrentSelectedDate - currentDayOfWeek;
             int currentDateTimestamp = (int)(DateTime.UtcNow.Date.Subtract((new DateTime(1970, 1, 1))).TotalSeconds);
-            UserIntakeForDate = await _intakeService.GetIntakeForDateAsync(currentDateTimestamp - (currentAndSelectedDayDifference * 86400));
+            UserIntakeForDate = await _intakeService.GetIntakeForDateAsync(currentDateTimestamp - (currentAndSelectedDayDifference * secondsInADay));
         }
         #endregion
     }

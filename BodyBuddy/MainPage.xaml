@@ -3,11 +3,11 @@
     x:Class="BodyBuddy.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dtos="clr-namespace:BodyBuddy.Dtos"
     xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
     xmlns:progressBar="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
     xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels"
-    xmlns:supaBaseModels="clr-namespace:BodyBuddy.SupaBaseModels"
     x:DataType="viewModel:MainPageViewModel"
     Shell.NavBarIsVisible="True">
 
@@ -91,12 +91,12 @@
 
         <ListView Grid.Row="3" ItemsSource="{Binding FriendsSteps}">
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="supaBaseModels:StepsSupaBaseModel">
+                <DataTemplate x:DataType="dtos:UserTotalSteps">
                     <ViewCell>
                         <StackLayout Padding="10" Orientation="Horizontal">
                             <!--  Replace with your actual data fields  -->
                             <Label FontAttributes="Bold" Text="{Binding User.Email}" />
-                            <Label HorizontalOptions="EndAndExpand" Text="{Binding Steps}" />
+                            <Label HorizontalOptions="EndAndExpand" Text="{Binding TotalSteps}" />
                             <!--  Add more labels or other controls as needed  -->
                         </StackLayout>
                     </ViewCell>

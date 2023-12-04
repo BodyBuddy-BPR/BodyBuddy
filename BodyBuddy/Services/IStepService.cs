@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BodyBuddy.SupaBaseModels;
 
 namespace BodyBuddy.Services
 {
@@ -16,6 +15,6 @@ namespace BodyBuddy.Services
         //Converts Db --> Dto object
         Task<StepDto> GetStepDataTodayAsync();
 
-        Task<List<StepsSupaBaseModel>> GetStepsForPeriodFriends();
+        Task<List<UserTotalSteps>> GetStepsForPeriodFriends();
     }
 }

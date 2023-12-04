@@ -12,7 +12,6 @@ using BodyBuddy.Views.Authentication;
 using BodyBuddy.Authentication;
 using BodyBuddy.Models;
 using BodyBuddy.Services.Implementations;
-using BodyBuddy.SupaBaseModels;
 using CommunityToolkit.Mvvm.Input;
 using Mopups.Interfaces;
 using BodyBuddy.Views.Popups;
@@ -30,7 +29,7 @@ namespace BodyBuddy.ViewModels
         [ObservableProperty]
         private StepDto _userSteps;
 
-        [ObservableProperty] private ObservableCollection<StepsSupaBaseModel> _friendsSteps = new();
+        [ObservableProperty] private ObservableCollection<UserTotalSteps> _friendsSteps = new();
 
         [ObservableProperty]
         public double _stepProgress;
@@ -66,19 +65,15 @@ namespace BodyBuddy.ViewModels
 
         public async Task GetFriendsSteps()
         {
-            FriendsSteps = new ObservableCollection<StepsSupaBaseModel>(await _stepService.GetStepsForPeriodFriends());
+            FriendsSteps = new ObservableCollection<UserTotalSteps>(await _stepService.GetStepsForPeriodFriends());
         }
 
         public void TurnOnAccelerometer()
         {
-            if (Accelerometer.Default.IsSupported)
-            {
-                if (!Accelerometer.Default.IsMonitoring)
-                {
-                    Accelerometer.Default.ReadingChanged += Accelerometer_ReadingChanged;
-                    Accelerometer.Default.Start(SensorSpeed.UI);
-                }
-            }
+            if (!Accelerometer.Default.IsSupported) return;
+            if (Accelerometer.Default.IsMonitoring) return;
+            Accelerometer.Default.ReadingChanged += Accelerometer_ReadingChanged;
+            Accelerometer.Default.Start(SensorSpeed.UI);
         }
 
         private void Accelerometer_ReadingChanged(object sender, AccelerometerChangedEventArgs e)

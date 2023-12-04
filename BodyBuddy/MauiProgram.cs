@@ -16,7 +16,6 @@ using Mopups.Services;
 using Camera.MAUI;
 using Maui.FixesAndWorkarounds;
 using BodyBuddy.ViewModels;
-using BodyBuddy.Mappers;
 using BodyBuddy.Services;
 using BodyBuddy.Services.Implementations;
 using BodyBuddy.ViewModels.Authentication;
@@ -26,9 +25,8 @@ using BodyBuddy.Views.Profile;
 using BodyBuddy.ViewModels.StartupTest;
 using BodyBuddy.ViewModels.Profile;
 using BodyBuddy.Views.Authentication;
-using BodyBuddy.Helpers;
 using BodyBuddy.Authentication;
-using BodyBuddy.SupaBase;
+using BodyBuddy.Repositories.Supabase.Implementation;
 using BodyBuddy.ViewModels.User;
 using BodyBuddy.Views.User;
 using BodyBuddy.Views.Calendar;
@@ -99,7 +97,6 @@ public static class MauiProgram
 
         #endregion
 
-
         #region Views
 
         // MainPage
@@ -133,7 +130,6 @@ public static class MauiProgram
         builder.Services.AddSingleton<CalenderPage>();
 
         #endregion
-
 
         #region ViewModels
 
@@ -169,7 +165,6 @@ public static class MauiProgram
 
         #endregion
 
-
         #region Repositories
 
         // Startup Test
@@ -201,7 +196,7 @@ public static class MauiProgram
         #endregion
 
         #region SupaBase
-        builder.Services.AddSingleton<IStepsSupaBase, StepsSupaBase>();
+        builder.Services.AddSingleton<IStepsSupabase, StepsSupabase>();
         #endregion
 
         #region Services

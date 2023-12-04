@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BodyBuddy.Models;
-using Postgrest.Attributes;
+﻿using Postgrest.Attributes;
 using Postgrest.Models;
 
-namespace BodyBuddy.SupaBaseModels
+namespace BodyBuddy.Models.Supabase
 {
     [Table("Steps")]
-    public class StepsSupaBaseModel : BaseModel
+    public class StepsSbModel : BaseModel
     {
         [Column("id")]
         public string Id { get; set; }

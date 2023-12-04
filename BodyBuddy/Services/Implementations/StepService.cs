@@ -3,23 +3,22 @@ using BodyBuddy.Mappers;
 using BodyBuddy.Repositories;
 using BodyBuddy.Authentication;
 using BodyBuddy.Helpers;
-using BodyBuddy.SupaBase;
-using BodyBuddy.SupaBaseModels;
+using BodyBuddy.Repositories.Supabase.Implementation;
 
 namespace BodyBuddy.Services.Implementations
 {
     public class StepService : IStepService
     {
         private readonly IStepRepository _repo;
-        private readonly IStepsSupaBase _stepsSupa;
+        private readonly IStepsSupabase _stepsSupa;
         private readonly IUserAuthenticationService _userAuthenticationService;
 
         private readonly StepMapper _mapper = new();
 
-        public StepService(IStepRepository stepRepository, IStepsSupaBase stepsSupaBase, IUserAuthenticationService userAuthenticationService)
+        public StepService(IStepRepository stepRepository, IStepsSupabase stepsSupabase, IUserAuthenticationService userAuthenticationService)
         {
             _repo = stepRepository;
-            _stepsSupa = stepsSupaBase;
+            _stepsSupa = stepsSupabase;
             _userAuthenticationService = userAuthenticationService;
         }
         public async Task<StepDto> GetStepDataTodayAsync()
@@ -28,11 +27,20 @@ namespace BodyBuddy.Services.Implementations
             return _mapper.MapToDto(stepData);
         }
 
-        public async Task<List<StepsSupaBaseModel>> GetStepsForPeriodFriends()
+        public async Task<List<UserTotalSteps>> GetStepsForPeriodFriends()
         {
             if (Connectivity.NetworkAccess == NetworkAccess.Internet && _userAuthenticationService.IsUserLoggedIn())
-                return await _stepsSupa.GetStepsForPeriodFriends();
-            return new List<StepsSupaBaseModel>();
+            {
+                var stepsList = await _stepsSupa.GetStepsForPeriodFriends();
+                return stepsList.GroupBy(step => step.User)
+                    .Select(group => new UserTotalSteps
+                    {
+                        User = group.Key,
+                        TotalSteps = group.Sum(item => item.Steps)
+                    })
+                    .ToList();
+            }
+            return new List<UserTotalSteps>();
         }
 
         public async Task SaveStepData(StepDto stepDto)
