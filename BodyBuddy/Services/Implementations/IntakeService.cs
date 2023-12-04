@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace BodyBuddy.Services.Implementations
         }
         public async Task<IntakeDto> GetIntakeAsync()
         {
-            return _mapper.MapToDto(await _repo.GetIntakeAsync());
+            return _mapper.MapToDto(await _repo.GetCurrentDayIntakeAsync());
         }
 
 		public async Task<IntakeDto> GetIntakeForDateAsync(int dateTimeUTC)
@@ -28,7 +29,15 @@ namespace BodyBuddy.Services.Implementations
 			return _mapper.MapToDto(await _repo.GetIntakeForDateAsync(dateTimeUTC));
 		}
 
-		public async Task SaveChangesAsync(IntakeDto intakeDetails)
+        public async Task<List<IntakeDto>> GetAllIntakeDataAsync()
+        {
+            var intakeModels = await _repo.GetAllIntakeDataAsync();
+
+            //Converting each intakeModel into intakeDto
+            return intakeModels.Select(intakeModel => _mapper.MapToDto(intakeModel)).ToList();
+        }
+
+        public async Task SaveChangesAsync(IntakeDto intakeDetails)
         {
             await _repo.SaveChangesAsync(_mapper.MapToDatabase(intakeDetails));
         }

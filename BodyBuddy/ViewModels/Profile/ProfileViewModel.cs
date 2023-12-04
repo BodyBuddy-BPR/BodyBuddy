@@ -14,6 +14,7 @@ using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using Syncfusion.Maui.GridCommon.Collections;
 using System.Runtime.CompilerServices;
+using BodyBuddy.Views.Profile;
 
 
 namespace BodyBuddy.ViewModels.Profile
@@ -103,7 +104,6 @@ namespace BodyBuddy.ViewModels.Profile
         }
 
         #endregion
-
         #region Weekday button methods
 
         private void GetCurrentWeekDay()

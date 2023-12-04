@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BodyBuddy.Views.ChartPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+    xmlns:viewModels="clr-namespace:BodyBuddy.ViewModels"
+    Title="ChartPage"
+    Shell.TabBarIsVisible="False">
+
+    <ContentPage.BindingContext>
+        <viewModels:ChartViewModel />
+    </ContentPage.BindingContext>
+
+    <chart:SfCartesianChart BackgroundColor="{StaticResource Primary}">
+        <!--  Defining the type of axis  -->
+        <chart:SfCartesianChart.XAxes>
+            <chart:DateTimeAxis IntervalType="Days" />
+        </chart:SfCartesianChart.XAxes>
+
+        <chart:SfCartesianChart.YAxes>
+            <chart:NumericalAxis Name="MainY" />
+            <chart:NumericalAxis Name="SecondaryY" CrossesAt="5191935193522" />
+        </chart:SfCartesianChart.YAxes>
+
+        <chart:SfCartesianChart.Resources>
+            <!--  Templates for Tooltips  -->
+            <DataTemplate x:Key="ExerciseTemplate">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="Total Reps: "
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="{Binding Item.TotalReps}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="Max Weight: "
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="{Binding Item.MaxWeight}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="Average Weight: "
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="{Binding Item.AverageWeight}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="Min Weight: "
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="{Binding Item.MinWeight}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                </StackLayout>
+            </DataTemplate>
+            <!--  End Templates for Tooltips  -->
+        </chart:SfCartesianChart.Resources>
+
+        <!--  Enabling the legend  -->
+        <chart:SfCartesianChart.Legend>
+            <chart:ChartLegend IsVisible="True" ToggleSeriesVisibility="True" />
+        </chart:SfCartesianChart.Legend>
+
+        <!--  Tooltip Behaviour  -->
+        <chart:SfCartesianChart.TooltipBehavior>
+            <chart:ChartTooltipBehavior Duration="5" />
+        </chart:SfCartesianChart.TooltipBehavior>
+
+        <chart:SfCartesianChart.Series>
+            <!--  Max Weight Series  -->
+            <chart:LineSeries
+                x:Name="MaxWeightSeries"
+                EnableTooltip="True"
+                ItemsSource="{Binding Data}"
+                Label="Max Weight"
+                ShowMarkers="True"
+                TooltipTemplate="{StaticResource ExerciseTemplate}"
+                XBindingPath="Date"
+                YAxisName="MainY"
+                YBindingPath="MaxWeight">
+                <chart:LineSeries.Fill>
+                    <Color>
+                        Green
+                    </Color>
+                </chart:LineSeries.Fill>
+                <chart:LineSeries.MarkerSettings>
+                    <chart:ChartMarkerSettings
+                        Width="6"
+                        Height="6"
+                        Fill="Brown"
+                        Stroke="Black"
+                        StrokeWidth="1"
+                        Type="Diamond" />
+                </chart:LineSeries.MarkerSettings>
+            </chart:LineSeries>
+
+            <!--  Min Weight Series  -->
+            <chart:LineSeries
+                x:Name="MinWeightSeries"
+                EnableTooltip="True"
+                ItemsSource="{Binding Data}"
+                Label="Min Weight"
+                ShowMarkers="True"
+                TooltipTemplate="{StaticResource ExerciseTemplate}"
+                XBindingPath="Date"
+                YAxisName="MainY"
+                YBindingPath="MinWeight">
+                <chart:LineSeries.Fill>
+                    <Color>
+                        YellowGreen
+                    </Color>
+                </chart:LineSeries.Fill>
+                <chart:LineSeries.MarkerSettings>
+                    <chart:ChartMarkerSettings
+                        Width="6"
+                        Height="6"
+                        Fill="Brown"
+                        Stroke="Black"
+                        StrokeWidth="1"
+                        Type="Diamond" />
+                </chart:LineSeries.MarkerSettings>
+            </chart:LineSeries>
+
+            <!--  Average Weight Series  -->
+            <chart:LineSeries
+                x:Name="AverageWeightSeries"
+                EnableTooltip="True"
+                ItemsSource="{Binding Data}"
+                Label="Average Weight"
+                ShowMarkers="True"
+                TooltipTemplate="{StaticResource ExerciseTemplate}"
+                XBindingPath="Date"
+                YAxisName="MainY"
+                YBindingPath="AverageWeight">
+                <chart:LineSeries.Fill>
+                    <Color>
+                        Red
+                    </Color>
+                </chart:LineSeries.Fill>
+                <chart:LineSeries.MarkerSettings>
+                    <chart:ChartMarkerSettings
+                        Width="6"
+                        Height="6"
+                        Fill="Brown"
+                        Stroke="Black"
+                        StrokeWidth="1"
+                        Type="Diamond" />
+                </chart:LineSeries.MarkerSettings>
+            </chart:LineSeries>
+
+            <!--  Total Reps Series  -->
+            <chart:LineSeries
+                x:Name="TotalRepsSeries"
+                EnableTooltip="True"
+                ItemsSource="{Binding Data}"
+                Label="Total Reps"
+                ShowMarkers="True"
+                TooltipTemplate="{StaticResource ExerciseTemplate}"
+                XBindingPath="Date"
+                YAxisName="SecondaryY"
+                YBindingPath="TotalReps">
+                <chart:LineSeries.Fill>
+                    <Color>
+                        Blue
+                    </Color>
+                </chart:LineSeries.Fill>
+                <chart:LineSeries.MarkerSettings>
+                    <chart:ChartMarkerSettings
+                        Width="6"
+                        Height="6"
+                        Fill="Brown"
+                        Stroke="Black"
+                        StrokeWidth="1"
+                        Type="Circle" />
+                </chart:LineSeries.MarkerSettings>
+            </chart:LineSeries>
+        </chart:SfCartesianChart.Series>
+    </chart:SfCartesianChart>
+
+</ContentPage>
