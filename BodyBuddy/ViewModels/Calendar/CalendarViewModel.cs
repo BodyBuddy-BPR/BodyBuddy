@@ -45,9 +45,7 @@ namespace BodyBuddy.ViewModels.Calendar
         public CalendarViewModel(ICalendarService calenderService, IWorkoutService workoutService)
         {
             this.selectedDateMeetings = new ObservableCollection<AppointmentDto>();
-            //this.selectedDateMeetings = this.GetSelectedDateAppointments(this.selectedDate);
 
-            //this.DisplayDate = DateTime.Now.Date.AddHours(8).AddMinutes(50);
             this.DisplayDate = DateTime.Now.Date;
 
 
@@ -163,9 +161,8 @@ namespace BodyBuddy.ViewModels.Calendar
             }
 
             // Wait for GetWorkouts to complete
-            await Task.Delay(400); // Adjust the delay time as needed
+            await Task.Delay(400);
 
-            //SelectedDateMeetings.Clear();
             SelectedDateMeetings = (this.GetSelectedDateAppointments(this.selectedDate));
         }
 
