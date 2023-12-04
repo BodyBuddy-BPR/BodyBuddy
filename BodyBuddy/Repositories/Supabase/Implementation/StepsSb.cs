@@ -1,18 +1,17 @@
 ﻿using BodyBuddy.Dtos;
 using BodyBuddy.Models;
 using BodyBuddy.Models.Supabase;
-using BodyBuddy.Repositories.Supabase.Implementation;
 using Supabase;
 
-namespace BodyBuddy.Repositories.Supabase
+namespace BodyBuddy.Repositories.Supabase.Implementation
 {
-    public class StepsSupabase : IStepsSupabase
+    public class StepsSb : IStepsSb
     {
         private readonly Client _supabase;
 
-        public StepsSupabase(Client client)
+        public StepsSb(Client client)
         {
-            _supabase = client; 
+            _supabase = client;
         }
         public async Task<List<StepsSbModel>> GetStepsForPeriodFriends()
         {
@@ -34,14 +33,14 @@ namespace BodyBuddy.Repositories.Supabase
             return stepsSupaBaseModels;
         }
 
-        public async void AddOrUpdateSteps(StepDto stepDto)
+        public async Task AddOrUpdateSteps(StepDto stepDto)
         {
             var record = new StepsSbModel
             {
                 Id = SecureStorage.GetAsync("UserUID").Result,
                 Date = stepDto.Date,
                 Steps = stepDto.Steps
-            }; 
+            };
             await _supabase.From<StepsSbModel>().Upsert(record);
         }
     }

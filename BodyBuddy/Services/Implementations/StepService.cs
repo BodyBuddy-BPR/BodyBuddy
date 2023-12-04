@@ -3,19 +3,19 @@ using BodyBuddy.Mappers;
 using BodyBuddy.Repositories;
 using BodyBuddy.Authentication;
 using BodyBuddy.Helpers;
-using BodyBuddy.Repositories.Supabase.Implementation;
+using BodyBuddy.Repositories.Supabase;
 
 namespace BodyBuddy.Services.Implementations
 {
     public class StepService : IStepService
     {
         private readonly IStepRepository _repo;
-        private readonly IStepsSupabase _stepsSupa;
+        private readonly IStepsSb _stepsSupa;
         private readonly IUserAuthenticationService _userAuthenticationService;
 
         private readonly StepMapper _mapper = new();
 
-        public StepService(IStepRepository stepRepository, IStepsSupabase stepsSupabase, IUserAuthenticationService userAuthenticationService)
+        public StepService(IStepRepository stepRepository, IStepsSb stepsSupabase, IUserAuthenticationService userAuthenticationService)
         {
             _repo = stepRepository;
             _stepsSupa = stepsSupabase;

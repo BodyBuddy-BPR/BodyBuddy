@@ -32,7 +32,7 @@ namespace BodyBuddy.ViewModels
         [ObservableProperty] private ObservableCollection<UserTotalSteps> _friendsSteps = new();
 
         [ObservableProperty]
-        public double _stepProgress;
+        public int _stepProgress;
 
         [ObservableProperty]
         private QuoteDto _quote;
@@ -58,7 +58,7 @@ namespace BodyBuddy.ViewModels
         public async Task Initialize()
         {
             UserSteps = await _stepService.GetStepDataTodayAsync();
-            StepProgress = UserSteps.Steps == 0 ? 0 : (double)UserSteps.Steps / UserSteps.StepGoal;
+            StepProgress = UserSteps.Steps == 0 ? 0 : UserSteps.Steps / UserSteps.StepGoal;
             await GetDailyQuote();
             TurnOnAccelerometer();
         }
@@ -66,6 +66,10 @@ namespace BodyBuddy.ViewModels
         public async Task GetFriendsSteps()
         {
             FriendsSteps = new ObservableCollection<UserTotalSteps>(await _stepService.GetStepsForPeriodFriends());
+            FriendsSteps.Add(new UserTotalSteps(){TotalSteps = UserSteps.Steps, User = new UserModel() {Email = "You"}});
+
+            var sortedSteps = FriendsSteps.OrderByDescending(u => u.TotalSteps).ToList();
+            FriendsSteps = new ObservableCollection<UserTotalSteps>(sortedSteps);
         }
 
         public void TurnOnAccelerometer()
@@ -101,7 +105,7 @@ namespace BodyBuddy.ViewModels
 
                     UserSteps.Steps++;
                     _stepService.SaveStepData(UserSteps);
-                    StepProgress = (double)UserSteps.Steps / (double)UserSteps.StepGoal;
+                    StepProgress = UserSteps.Steps / UserSteps.StepGoal;
                 }
             }
         }
@@ -156,7 +160,7 @@ namespace BodyBuddy.ViewModels
             }
 
             UserSteps.StepGoal = NewStepGoal;
-            StepProgress = (double)UserSteps.Steps / (double)UserSteps.StepGoal;
+            StepProgress = UserSteps.Steps / UserSteps.StepGoal;
 
             await _stepService.SaveStepData(UserSteps);
 

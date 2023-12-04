@@ -26,13 +26,13 @@ using BodyBuddy.ViewModels.StartupTest;
 using BodyBuddy.ViewModels.Profile;
 using BodyBuddy.Views.Authentication;
 using BodyBuddy.Authentication;
-using BodyBuddy.Repositories.Supabase;
 using BodyBuddy.Repositories.Supabase.Implementation;
 using BodyBuddy.ViewModels.User;
 using BodyBuddy.Views.User;
 using BodyBuddy.Views.Calendar;
 using BodyBuddy.ViewModels.Calendar;
 using SkiaSharp.Views.Maui.Controls.Hosting;
+using BodyBuddy.Repositories.Supabase;
 
 namespace BodyBuddy;
 
@@ -197,7 +197,7 @@ public static class MauiProgram
         #endregion
 
         #region SupaBase
-        builder.Services.AddSingleton<IStepsSupabase, StepsSupabase>();
+        builder.Services.AddSingleton<IStepsSb, StepsSb>();
         #endregion
 
         #region Services
