@@ -177,6 +177,14 @@
                     </VerticalStackLayout>
                 </Grid>
             </Border>
+
+            <ActivityIndicator
+                Grid.RowSpan="3"
+                HorizontalOptions="Fill"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="Center"
+                Color="{StaticResource Primary}" />
         </Grid>
     </ScrollView>
 </ContentPage>

@@ -254,10 +254,6 @@
                 TextColor="{StaticResource LightText}"
                 VerticalOptions="End" />
 
-            <!--<skia:SKConfettiView
-                Grid.RowSpan="2"
-                HorizontalOptions="Fill"
-                />-->
             <skia:SKLottieView
                 Grid.RowSpan="2"
                 HeightRequest="2000"
@@ -267,8 +263,6 @@
                 VerticalOptions="FillAndExpand"
                 WidthRequest="600" />
         </Grid>
-
-
 
     </Grid>
 </ContentPage>

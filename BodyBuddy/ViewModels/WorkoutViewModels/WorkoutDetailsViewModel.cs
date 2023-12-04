@@ -17,10 +17,14 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
     [QueryProperty(nameof(WorkoutDetails), "Workout")]
     public partial class WorkoutDetailsViewModel : BaseViewModel
     {
+        private readonly IWorkoutService _workoutService;
+        private readonly IWorkoutExercisesService _workoutExercisesService;
+
         #region ObservableProperties
 
         // Query field
         [ObservableProperty] private WorkoutDto _workoutDetails;
+        private WorkoutDto _previousWorkoutDetails;
 
         // Exercises to show
         [ObservableProperty] private List<ExerciseDto> _exercises = new();
@@ -41,9 +45,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         #endregion
 
-
-        private readonly IWorkoutService _workoutService;
-        private readonly IWorkoutExercisesService _workoutExercisesService;
 
         public WorkoutDetailsViewModel(IWorkoutService workoutService, IWorkoutExercisesService workoutExercisesService)
         {
@@ -83,7 +84,11 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 IsBusy = true;
 
-                Exercises = await _workoutExercisesService.GetExercisesInWorkout(WorkoutDetails.Id);
+                if (!WorkoutDetails.Equals(_previousWorkoutDetails))
+                {
+                    Exercises = await _workoutExercisesService.GetExercisesInWorkout(WorkoutDetails.Id);
+                    _previousWorkoutDetails = WorkoutDetails;
+                }
             }
             catch (Exception ex)
             {
