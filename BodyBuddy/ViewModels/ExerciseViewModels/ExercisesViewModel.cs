@@ -109,7 +109,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
 
         private void SetSelectedWorkout()
         {
-            if (CachedData.SharedWorkout != null && WorkoutList.Any(x => x.Id == CachedData.SharedWorkout.Id))
+            if (CachedData.SharedWorkout != null && WorkoutList.Any(x => x.Name == CachedData.SharedWorkout.Name))
             {
                 SelectedWorkout = CachedData.SharedWorkout;
             }

@@ -21,6 +21,12 @@ namespace BodyBuddy.Repositories.Implementations
             await _context.InsertAsync(exerciseRecord);
         }
 
+        public async Task<List<ExerciseRecordsModel>> GetAllExerciseRecordsForExercise(int exerciseId)
+        {
+            return await _context.Table<ExerciseRecordsModel>().Where(x => x.ExerciseId == exerciseId)
+                .ToListAsync();
+        }
+
         private async Task<int> GetNextExerciseRecordsId()
         {
             var lastItem = await _context.Table<ExerciseRecordsModel>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();

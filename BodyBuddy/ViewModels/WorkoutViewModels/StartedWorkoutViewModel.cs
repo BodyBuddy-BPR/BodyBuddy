@@ -24,7 +24,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         private ExerciseDto _displayedExercise;
         public ObservableCollection<ExerciseRecordsDto> ExerciseRecords { get; set; } = new();
         [ObservableProperty] private List<ExerciseDto> _exercises = new();
-              
+
 
         // Keep track of the index of the currently displayed exercise
         private int _currentExerciseIndex = 0;
@@ -130,7 +130,8 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 foreach (var record in exercise.Records)
                 {
-                    await _exerciseRecordsService.SaveExerciseRecords(record);
+                    if (record.Weight > 0)
+                        await _exerciseRecordsService.SaveExerciseRecords(record);
                 }
             }
 

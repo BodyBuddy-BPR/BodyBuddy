@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BodyBuddy.Dtos;
+using BodyBuddy.Helpers;
 using BodyBuddy.Models;
 
 namespace BodyBuddy.Mappers
 {
     public class ExerciseRecordsMapper
     {
+        private readonly DateHelper _dateHelper = new ();
         public ExerciseRecordsModel MapToDatabase(ExerciseRecordsDto exerciseRecordsDto)
         {
             return new ExerciseRecordsModel
@@ -19,7 +21,7 @@ namespace BodyBuddy.Mappers
                 Set = exerciseRecordsDto.Set,
                 Weight = exerciseRecordsDto.Weight,
                 Reps = exerciseRecordsDto.Reps,
-
+                Date = _dateHelper.ConvertToEpochTime(exerciseRecordsDto.Date)
             };
         }
 
@@ -35,6 +37,7 @@ namespace BodyBuddy.Mappers
                 Set = exerciseRecordsModel.Set,
                 Weight = exerciseRecordsModel.Weight,
                 Reps = exerciseRecordsModel.Reps,
+                Date = _dateHelper.ConvertToDateTime(exerciseRecordsModel.Date)
             };
         }
     }

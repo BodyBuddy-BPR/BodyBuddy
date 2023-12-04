@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BodyBuddy.Views.StatisticsViews.IntakeGraph"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:charts="http://schemas.syncfusion.com/maui"
+    Title="IntakeGraph">
+
+    <!--<ContentPage.Resources>
+    <Style x:Key="Graphs" TargetType="charts:DateTimeAxis">
+        <Setter Property="TextColor" Value="{StaticResource LightText}" />
+        <Setter Property="FontSize" Value="16" />    -->
+    <!--<Setter Property="FontAttributes" Value="Bold" />-->
+    <!--<Setter Property="CornerRadius" Value="10" />-->
+    <!--
+    </Style>
+</ContentPage.Resources>-->
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Label Grid.Row="0">Test</Label>
+
+        <charts:SfCartesianChart Grid.Row="1">
+            <charts:SfCartesianChart.Resources>
+                <!--  Templates for Tooltips  -->
+                <DataTemplate x:Key="CalorieTemplate">
+                    <StackLayout Orientation="Horizontal">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="{Binding Item.CalorieCurrent}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text=" / "
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="{Binding Item.CalorieGoal}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text=" Calories"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                </DataTemplate>
+                <DataTemplate x:Key="WaterTemplate">
+                    <StackLayout Orientation="Horizontal">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="{Binding Item.WaterCurrent}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text=" / "
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="{Binding Item.WaterGoal}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text=" mL Water"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                </DataTemplate>
+                <!--  End Templates for Tooltips  -->
+            </charts:SfCartesianChart.Resources>
+
+            <!--  Defining the type of axis  -->
+            <charts:SfCartesianChart.XAxes>
+                <charts:DateTimeAxis IntervalType="Days" />
+            </charts:SfCartesianChart.XAxes>
+
+            <charts:SfCartesianChart.YAxes>
+                <charts:NumericalAxis />
+            </charts:SfCartesianChart.YAxes>
+
+            <!--  Enabling the legend  -->
+            <charts:SfCartesianChart.Legend>
+                <charts:ChartLegend IsVisible="True" ToggleSeriesVisibility="True" />
+            </charts:SfCartesianChart.Legend>
+
+            <!--  Tooltip Behaviour  -->
+            <charts:SfCartesianChart.TooltipBehavior>
+                <charts:ChartTooltipBehavior Duration="5" />
+            </charts:SfCartesianChart.TooltipBehavior>
+
+            <charts:ColumnSeries
+                x:Name="CalorieSeries"
+                EnableTooltip="True"
+                Fill="{StaticResource Secondary}"
+                ItemsSource="{Binding IntakeList}"
+                Label="Calorie Intake"
+                TooltipTemplate="{StaticResource CalorieTemplate}"
+                XBindingPath="Date"
+                YBindingPath="CalorieCurrent" />
+
+            <charts:ColumnSeries
+                x:Name="WaterSeries"
+                EnableTooltip="True"
+                Fill="{StaticResource PrimaryDark}"
+                ItemsSource="{Binding IntakeList}"
+                Label="Water Intake"
+                TooltipTemplate="{StaticResource WaterTemplate}"
+                XBindingPath="Date"
+                YBindingPath="WaterCurrent" />
+
+        </charts:SfCartesianChart>
+
+        <Grid
+            Margin="35,5"
+            ColumnDefinitions="Auto,Auto"
+            Row="2"
+            RowDefinitions="*,*">
+
+            <Label Grid.Row="0">Calorie Goal Reached</Label>
+            <Label
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="10,0,0,0"
+                Text="{Binding CalorieGoalsCompletedString}" />
+            <Label Grid.Row="1">Water Goal Reached</Label>
+            <Label
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="10,0,0,0"
+                Text="{Binding WaterGoalsCompletedString}" />
+
+        </Grid>
+    </Grid>
+
+
+</ContentPage>

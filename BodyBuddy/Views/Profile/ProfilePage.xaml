@@ -414,17 +414,5 @@
                 </HorizontalStackLayout>
             </Grid>
         </Border>
-
-        <!--  Login Button  -->
-        <!--<Button
-            x:Name="LoginBtn"
-            Grid.Row="1"
-            Padding="5"
-            Clicked="LoginOrOut_Clicked"
-            Style="{StaticResource BaseButton}"
-            Text="Login"
-            TextColor="#212121"
-            VerticalOptions="EndAndExpand"
-            WidthRequest="140" />-->
     </Grid>
 </ContentPage>

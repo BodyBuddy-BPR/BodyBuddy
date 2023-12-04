@@ -5,6 +5,9 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using BodyBuddy.Dtos;
 using BodyBuddy.Services;
+using BodyBuddy.Views;
+using BodyBuddy.Views.ExerciseViews;
+using CommunityToolkit.Mvvm.Input;
 
 namespace BodyBuddy.ViewModels.ExerciseViewModels
 {
@@ -71,6 +74,23 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             if (ExerciseDetails.Force == null) ExerciseDetails.Force = "---";
         }
 
+        #region Navigation
+
+        // Navigation to exercise details
+        [RelayCommand]
+        async Task GoToExerciseGraphs(ExerciseDto exercise)
+        {
+            if (exercise is null)
+                return;
+
+            await Shell.Current.GoToAsync(nameof(ExerciseGraphsPage), true, new Dictionary<string, object>
+            {
+                {"Exercise", exercise }
+            });
+        }
+
+        #endregion
+
         #region Helper methods
 
         // Method to populate ExerciseImages list from the images string
@@ -86,6 +106,9 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
                 }
             }
         }
+
+
+
 
         #endregion
     }
