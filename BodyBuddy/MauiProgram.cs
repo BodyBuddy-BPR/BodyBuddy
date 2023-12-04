@@ -26,6 +26,7 @@ using BodyBuddy.ViewModels.StartupTest;
 using BodyBuddy.ViewModels.Profile;
 using BodyBuddy.Views.Authentication;
 using BodyBuddy.Authentication;
+using BodyBuddy.Repositories.Supabase;
 using BodyBuddy.Repositories.Supabase.Implementation;
 using BodyBuddy.ViewModels.User;
 using BodyBuddy.Views.User;

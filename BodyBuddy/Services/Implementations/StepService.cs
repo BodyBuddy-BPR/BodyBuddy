@@ -29,18 +29,17 @@ namespace BodyBuddy.Services.Implementations
 
         public async Task<List<UserTotalSteps>> GetStepsForPeriodFriends()
         {
-            if (Connectivity.NetworkAccess == NetworkAccess.Internet && _userAuthenticationService.IsUserLoggedIn())
-            {
-                var stepsList = await _stepsSupa.GetStepsForPeriodFriends();
-                return stepsList.GroupBy(step => step.User)
-                    .Select(group => new UserTotalSteps
-                    {
-                        User = group.Key,
-                        TotalSteps = group.Sum(item => item.Steps)
-                    })
-                    .ToList();
-            }
-            return new List<UserTotalSteps>();
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet || !_userAuthenticationService.IsUserLoggedIn())
+                return new List<UserTotalSteps>();
+
+            var stepsList = await _stepsSupa.GetStepsForPeriodFriends();
+            return stepsList.GroupBy(step => step.User)
+                .Select(group => new UserTotalSteps
+                {
+                    User = group.Key,
+                    TotalSteps = group.Sum(item => item.Steps)
+                })
+                .ToList();
         }
 
         public async Task SaveStepData(StepDto stepDto)
@@ -49,7 +48,7 @@ namespace BodyBuddy.Services.Implementations
 
             if (Connectivity.NetworkAccess == NetworkAccess.Internet && _userAuthenticationService.IsUserLoggedIn())
             {
-                await _stepsSupa.GetStepsForPeriodFriends();
+                if (stepDto.Steps % 100 != 0) return;
                 _stepsSupa.AddOrUpdateSteps(stepDto);
             }
         }
