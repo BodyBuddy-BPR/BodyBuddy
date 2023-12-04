@@ -12,7 +12,6 @@ namespace UnitTest.ViewModels.WorkoutViewModels
         private WorkoutViewModel target;
         private Mock<IWorkoutService> mockService;
         private Mock<IWorkoutExercisesService> workoutExercisesMockService;
-        private Mock<IStartupTestService> startupTestMockService;
         private WorkoutDto workout1, workout2;
         private List<WorkoutDto> workoutList;
 
@@ -21,8 +20,7 @@ namespace UnitTest.ViewModels.WorkoutViewModels
         {
             mockService = new Mock<IWorkoutService>();
             workoutExercisesMockService = new Mock<IWorkoutExercisesService>();
-            startupTestMockService = new Mock<IStartupTestService>();
-            target = new WorkoutViewModel(mockService.Object, workoutExercisesMockService.Object, startupTestMockService.Object);
+            target = new WorkoutViewModel(mockService.Object, workoutExercisesMockService.Object);
 
             workout1 = new WorkoutDto { Id = 3, Name = "Workout3", PreMade = false };
             workout2 = new WorkoutDto { Id = 4, Name = "Workout4", PreMade = false };
@@ -90,35 +88,6 @@ namespace UnitTest.ViewModels.WorkoutViewModels
 
         #region GetWorkoutPlans method tests
 
-        [Test]
-        public async Task GetWorkoutPlans_NonEmptyTargetAreas_FiltersWorkoutList()
-        {
-            // Arrange
-            startupTestMockService.Setup(service => service.GetStartupTestData()).ReturnsAsync(new StartupTestDto { TargetAreas = "Workout3" });
-            mockService.Setup(service => service.GetWorkoutPlans(true)).ReturnsAsync(workoutList);
-
-            // Act
-            await target.GetWorkoutPlans();
-
-            // Assert
-            mockService.Verify(service => service.GetWorkoutPlans(true), Times.Once());
-            Assert.That(target.WorkoutList.Count, Is.EqualTo(1));
-        }
-
-        [Test]
-        public async Task GetWorkoutPlans_EmptyTargetAreas_SetsEntireWorkoutList()
-        {
-            // Arrange
-            startupTestMockService.Setup(service => service.GetStartupTestData()).ReturnsAsync(new StartupTestDto { TargetAreas = string.Empty });
-            mockService.Setup(service => service.GetWorkoutPlans(true)).ReturnsAsync(workoutList);
-
-            // Act
-            await target.GetWorkoutPlans();
-
-            // Assert
-            mockService.Verify(service => service.GetWorkoutPlans(true), Times.Once());
-            Assert.That(target.WorkoutList.Count, Is.EqualTo(2));
-        }
         #endregion
 
     }
