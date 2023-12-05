@@ -26,7 +26,7 @@ public partial class WorkoutDetailsPage : ContentPage
     {
         base.OnAppearing();
 
-        await Task.Delay(250); // Add a short delay
+        await Task.Delay(400); // Add a short delay
 
         await _viewModel.Initialize();
         UpdateToolbarItemsVisibility();
