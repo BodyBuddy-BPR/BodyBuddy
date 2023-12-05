@@ -19,8 +19,7 @@ namespace BodyBuddy.Repositories.Implementations
 
         public async Task<StartupTestModel> GetStartupTestData()
         {
-            var startupTest = await _context.Table<StartupTestModel>().FirstOrDefaultAsync();
-            return startupTest;
+            return await _context.Table<StartupTestModel>().FirstOrDefaultAsync();
         }
 
         public async Task SaveStartupTestData(StartupTestModel startupTest)
