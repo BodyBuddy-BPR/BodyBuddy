@@ -8,6 +8,7 @@ using Postgrest.Models;
 
 namespace BodyBuddy.Models.Supabase
 {
+    [Table("ChallengeUserProgress")]
     public class ChallengeProgressSbModel : BaseModel
     {
         [Column("userId")]

@@ -197,7 +197,8 @@ public static class MauiProgram
         #endregion
 
         #region SupaBase
-        builder.Services.AddSingleton<IStepsSb, StepsSb>();
+        builder.Services.AddSingleton<IStepsSbRepository, StepsSbRepository>();
+        builder.Services.AddSingleton<IChallengeSbRepository, ChallengeSbRepository>();
         #endregion
 
         #region Services
@@ -233,6 +234,10 @@ public static class MauiProgram
 
         // Calendar
         builder.Services.AddSingleton<ICalendarService, CalendarService>();
+
+        // Challenges
+        builder.Services.AddSingleton<IChallengeService, ChallengeService>();
+
         #endregion
 
         #endregion

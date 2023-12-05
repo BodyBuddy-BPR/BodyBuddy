@@ -5,11 +5,11 @@ using Supabase;
 
 namespace BodyBuddy.Repositories.Supabase.Implementation
 {
-    public class StepsSb : IStepsSb
+    public class StepsSbRepository : IStepsSbRepository
     {
         private readonly Client _supabase;
 
-        public StepsSb(Client client)
+        public StepsSbRepository(Client client)
         {
             _supabase = client;
         }

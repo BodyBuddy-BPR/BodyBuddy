@@ -21,8 +21,6 @@ namespace BodyBuddy.Repositories.Implementations
         {
             try
             {
-
-
                 //Check if entry for today exists.
                 var existingStepCount = await _context.Table<StepModel>()
                     .Where(x => x.Date == dayAsTimestamp)

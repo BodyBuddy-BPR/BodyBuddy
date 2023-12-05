@@ -16,5 +16,6 @@ namespace BodyBuddy.Dtos
         public string Difficulty { get; set; }
         public DateTime From {get; set; }
         public DateTime To { get; set; }
+        public List<UserTotalSteps> UserTotalSteps { get; set; }
     }
 }

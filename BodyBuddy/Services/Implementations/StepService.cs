@@ -3,19 +3,27 @@ using BodyBuddy.Mappers;
 using BodyBuddy.Repositories;
 using BodyBuddy.Authentication;
 using BodyBuddy.Helpers;
+using BodyBuddy.Models;
+using BodyBuddy.Models.Supabase;
 using BodyBuddy.Repositories.Supabase;
+using static BodyBuddy.Services.Implementations.StepService;
 
 namespace BodyBuddy.Services.Implementations
 {
     public class StepService : IStepService
     {
         private readonly IStepRepository _repo;
-        private readonly IStepsSb _stepsSupa;
+        private readonly IStepsSbRepository _stepsSupa;
         private readonly IUserAuthenticationService _userAuthenticationService;
 
         private readonly StepMapper _mapper = new();
+        private List<UserTotalSteps> _totalSteps = new();
 
-        public StepService(IStepRepository stepRepository, IStepsSb stepsSupabase, IUserAuthenticationService userAuthenticationService)
+        //Delegate to notify ChallengeService
+        public delegate void StepsChanged(int steps);
+        public event IStepService.StepsChanged IsStepsChanged;
+
+        public StepService(IStepRepository stepRepository, IStepsSbRepository stepsSupabase, IUserAuthenticationService userAuthenticationService)
         {
             _repo = stepRepository;
             _stepsSupa = stepsSupabase;
@@ -33,13 +41,32 @@ namespace BodyBuddy.Services.Implementations
                 return new List<UserTotalSteps>();
 
             var stepsList = await _stepsSupa.GetStepsForPeriodFriends();
-            return stepsList.GroupBy(step => step.User)
+
+            _totalSteps = stepsList.GroupBy(step => step.User)
                 .Select(group => new UserTotalSteps
                 {
                     User = group.Key,
                     TotalSteps = group.Sum(item => item.Steps)
                 })
                 .ToList();
+
+            return _totalSteps;
+        }
+
+        public async Task<UserTotalSteps> GetStepDataForPeriodAsync(long startDate, long endDate)
+        {
+            List<StepModel> stepsList = new();
+            while (startDate != endDate)
+            {
+                stepsList.Add(await _repo.GetStepsForDayAsTimestampAsync(startDate));
+                startDate += 86400;
+            }
+
+            return new UserTotalSteps()
+            {
+                User = new UserModel() { Email = "You" },
+                TotalSteps = stepsList.Sum(item => item.Steps)
+            };
         }
 
         public async Task SaveStepData(StepDto stepDto)
@@ -48,8 +75,9 @@ namespace BodyBuddy.Services.Implementations
 
             if (Connectivity.NetworkAccess == NetworkAccess.Internet && _userAuthenticationService.IsUserLoggedIn())
             {
-                if (stepDto.Steps % 100 != 0) return;
-                _stepsSupa.AddOrUpdateSteps(stepDto);
+                if (stepDto.Steps % 25 != 0) return;
+                await _stepsSupa.AddOrUpdateSteps(stepDto);
+                IsStepsChanged?.Invoke(stepDto.Steps);
             }
         }
     }

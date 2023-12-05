@@ -3,7 +3,7 @@ using BodyBuddy.Models.Supabase;
 
 namespace BodyBuddy.Repositories.Supabase
 {
-    public interface IStepsSb
+    public interface IStepsSbRepository
     {
         Task<List<StepsSbModel>> GetStepsForPeriodFriends();
         Task AddOrUpdateSteps(StepDto stepDto);
