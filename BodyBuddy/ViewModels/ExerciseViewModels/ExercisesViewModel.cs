@@ -36,7 +36,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
 
         [ObservableProperty] private List<ExerciseDto> _exerciseList = new();
         [ObservableProperty] private List<WorkoutDto> _workoutList = new();
-
+        private List<ExerciseDto> _allExercisesList;
         public ExercisesViewModel(IExerciseService exerciseService, IWorkoutService workoutService, IWorkoutExercisesService workoutExercisesService)
         {
             Title = string.Empty;
@@ -65,11 +65,16 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
 
                 if (!QueryDetails.Equals(_previousQueryDetails))
                 {
-                    ExerciseList = await _exerciseService.GetExercisesAsync(QueryDetails.Category, QueryDetails.PrimaryMuscles);
+                    _allExercisesList = new();
+
+                    _allExercisesList = await _exerciseService.GetExercisesAsync(QueryDetails.Category, QueryDetails.PrimaryMuscles);
+
+                    ExerciseList = _allExercisesList.Take(15).ToList();
+
                     _previousQueryDetails = QueryDetails;
                 }
 
-                if (ExerciseList.Count == 0)
+                if(ExerciseList.Count==0)
                 {
                     await Shell.Current.DisplayAlert("Error!", $"Exercises is null", "OK");
                 }
@@ -82,6 +87,32 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             finally
             {
                 IsBusy = false;
+            }
+        }
+
+        private int _loadedExerciseCount = 15; // Initial count
+        [RelayCommand]
+        public void LoadMoreExercisesIncrementally()
+        {
+            try
+            {
+                int remainingCount = _allExercisesList.Count - _loadedExerciseCount;
+
+                if (remainingCount > 0)
+                {
+                    // Load the next exercises
+                    List<ExerciseDto> moreExercises = _allExercisesList.Skip(_loadedExerciseCount).Take(15).ToList();
+
+                    // Add the loaded exercises to ExerciseList
+                    ExerciseList.AddRange(moreExercises);
+
+                    // Update the loaded exercise count
+                    _loadedExerciseCount += moreExercises.Count;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
             }
         }
 
