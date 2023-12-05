@@ -44,7 +44,7 @@
         <!--  List of exercises  -->
         <CollectionView
             Grid.Row="1"
-            BackgroundColor="Transparent"
+            BackgroundColor="Transparent" RemainingItemsThreshold="5" RemainingItemsThresholdReachedCommand="{Binding LoadMoreExercisesIncrementallyCommand}"
             ItemsSource="{Binding ExerciseList}"
             VerticalOptions="FillAndExpand">
 
