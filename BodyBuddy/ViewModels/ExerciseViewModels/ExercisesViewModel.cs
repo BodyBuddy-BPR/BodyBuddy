@@ -32,6 +32,8 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
 
         #endregion
 
+        private ExerciseDto _previousQueryDetails;
+
         [ObservableProperty] private List<ExerciseDto> _exerciseList = new();
         [ObservableProperty] private List<WorkoutDto> _workoutList = new();
         private List<ExerciseDto> _allExercisesList;
@@ -74,9 +76,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
 
                 if(ExerciseList.Count==0)
                 {
-                    // Log or handle the case where exercises is null
                     await Shell.Current.DisplayAlert("Error!", $"Exercises is null", "OK");
-
                 }
             }
             catch (Exception ex)
@@ -127,7 +127,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
                 WorkoutList = await _workoutService.GetWorkoutPlans(false);
 
                 SetSelectedWorkout();
-                
+
             }
             catch (Exception ex)
             {
@@ -157,7 +157,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
         [RelayCommand]
         async Task AddExerciseToWorkout(ExerciseDto exercise)
         {
-            if(SelectedWorkout.Id != 0)
+            if (SelectedWorkout.Id != 0)
             {
                 await _workoutExercisesService.AddExerciseToWorkout(SelectedWorkout.Id, exercise.Id);
                 await Shell.Current.DisplaySnackbar($"{exercise.Name} added to {SelectedWorkout.Name}");
