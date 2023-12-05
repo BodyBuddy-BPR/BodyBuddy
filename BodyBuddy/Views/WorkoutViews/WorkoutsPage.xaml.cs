@@ -30,7 +30,7 @@ public partial class WorkoutsPage : ContentPage
     {
         base.OnAppearing();
 
-        await Task.Delay(100); // Add a short delay
+        await Task.Delay(300); // Add a short delay
         if (_isFirstTime)
         {
             PageDetector();

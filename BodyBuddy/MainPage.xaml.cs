@@ -21,7 +21,7 @@ public partial class MainPage : ContentPage
     {
         base.OnAppearing();
 
-        await Task.Delay(200); // Add a short delay
+        await Task.Delay(300); // Add a short delay
 
         await _viewModel.AttemptToLogin();
 
