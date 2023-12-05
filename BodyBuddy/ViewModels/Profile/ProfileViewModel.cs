@@ -154,7 +154,7 @@ namespace BodyBuddy.ViewModels.Profile
             SetSelectedWeekday();
             currentAndSelectedDayDifference = CurrentSelectedDate - currentDayOfWeek;
             int currentDateTimestamp = (int)(DateTime.UtcNow.Date.Subtract((new DateTime(1970, 1, 1))).TotalSeconds);
-            UserIntakeForDate = await _intakeService.GetIntakeForDateAsync(currentDateTimestamp - (currentAndSelectedDayDifference * 86400));
+            UserIntakeForDate = await _intakeService.GetIntakeForDateAsync(currentDateTimestamp + (currentAndSelectedDayDifference * 86400));
         }
         #endregion
     }
