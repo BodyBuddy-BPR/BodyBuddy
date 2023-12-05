@@ -113,7 +113,6 @@
                                                 Clicked="SetsAndRepsBtn_Clicked"
                                                 CommandParameter="{Binding .}"
                                                 HeightRequest="25"
-                                                IsVisible="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutDetailsViewModel}}, Path=IsPremade, Converter={StaticResource BooleanInvertConverter}}"
                                                 Source="pencil.png"
                                                 Style="{StaticResource ImageButtonVisualState}"
                                                 WidthRequest="25" />
@@ -137,7 +136,7 @@
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutDetailsViewModel}}, Path=DeleteFromWorkoutCommand}"
                                     CommandParameter="{Binding .}"
                                     IconImageSource="trashcan.png"
-                                    IsVisible="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutDetailsViewModel}}, Path=IsPremade, Converter={StaticResource BooleanInvertConverter}}"
+                                    IsVisible="{Binding Source={RelativeSource AncestorType={x:Type viewModel:WorkoutDetailsViewModel}}, Path=WorkoutDetails.PreMade, Converter={StaticResource BooleanInvertConverter}}"
                                     Text="Delete" />
                             </SwipeItems>
                         </SwipeView.RightItems>
