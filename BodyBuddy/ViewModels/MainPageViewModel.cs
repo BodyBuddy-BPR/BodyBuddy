@@ -29,7 +29,8 @@ namespace BodyBuddy.ViewModels
         private readonly IPopupNavigation _popupNavigation;
         private readonly IWorkoutService _workoutService;
 
-        private StartupTestDto startupTestDto;
+        [ObservableProperty]
+        private StartupTestDto _startupTestDto;
 
         [ObservableProperty]
         private StepDto _userSteps;
@@ -81,11 +82,11 @@ namespace BodyBuddy.ViewModels
 
         public async Task SetWorkoutsToShow()
         {
-            startupTestDto = await _startupTestService.GetStartupTestData();
+            StartupTestDto = await _startupTestService.GetStartupTestData();
 
-            if (!string.IsNullOrEmpty(startupTestDto.TargetAreas))
+            if (!string.IsNullOrEmpty(StartupTestDto.TargetAreas))
             {
-                var targetAreaStrings = startupTestDto.TargetAreas.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
+                var targetAreaStrings = StartupTestDto.TargetAreas.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
                 TargetAreas = new ObservableCollection<string>(targetAreaStrings);
             }
 

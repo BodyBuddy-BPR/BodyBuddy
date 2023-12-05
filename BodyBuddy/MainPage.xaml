@@ -23,11 +23,19 @@
         RowDefinitions="50, Auto, Auto, Auto"
         RowSpacing="15">
 
-        <Label
-            Grid.Row="0"
-            FontSize="32"
-            Style="{StaticResource TitleLabel}"
-            Text="Welcome " />
+        <VerticalStackLayout>
+            <Label
+                Grid.Row="0"
+                FontSize="22"
+                Style="{StaticResource TitleLabel}"
+                Text="Welcome " />
+            <Label
+                Grid.Row="0"
+                FontSize="18"
+                Style="{StaticResource TitleLabel}"
+                Text="{Binding StartupTestDto.Name}" />
+        </VerticalStackLayout>
+
 
         <skia:SKLottieView
             Margin="80,20,0,10"
@@ -44,11 +52,20 @@
             Style="{StaticResource CardView}">
             <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
                 <Label
+                    Margin="10,0"
+                    FontFamily="Montserrat"
+                    FontSize="16"
+                    Text="Quote of the day"
+                    TextColor="Black" />
+                <Label
+                    FontSize="14"
                     HorizontalOptions="Center"
                     HorizontalTextAlignment="Center"
                     Style="{StaticResource LargeLabel}"
                     Text="{Binding Quote.Quote}" />
                 <Label
+                    FontAttributes="Bold"
+                    FontSize="11"
                     HorizontalOptions="Center"
                     Style="{StaticResource MediumLabel}"
                     Text="{Binding Quote.Author, StringFormat='- {0}'}" />
@@ -122,8 +139,8 @@
                     TextColor="White"
                     VerticalOptions="Start" />
                 <syncfusion:SfListView
-                    Margin="20,0"
                     Grid.Row="1"
+                    Margin="20,0"
                     HeightRequest="25"
                     HorizontalOptions="StartAndExpand"
                     ItemSize="120"
