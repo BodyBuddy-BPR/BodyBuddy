@@ -32,5 +32,10 @@ public partial class MainPage : ContentPage
     {
         _viewModel.ClickToShowPopup_Clicked();
     }
+
+    private void ListView_ItemTapped(object sender, Syncfusion.Maui.ListView.ItemTappedEventArgs e)
+    {
+        _viewModel.UpdateWorkoutsToShow(e.DataItem);
+    }
 }
 

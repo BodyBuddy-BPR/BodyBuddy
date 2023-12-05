@@ -22,7 +22,7 @@
         <Grid
             Margin="20,10,20,15"
             IsVisible="{Binding IsLoggedIn}"
-            RowDefinitions="Auto, Auto, Auto"
+            RowDefinitions="50*, 50*, 20*"
             RowSpacing="25">
 
             <!--  Friends  -->
