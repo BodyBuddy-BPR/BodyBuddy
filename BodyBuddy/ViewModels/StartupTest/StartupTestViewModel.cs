@@ -91,13 +91,14 @@ public partial class StartupTestViewModel : BaseViewModel
 
     private void SetTargetArea()
     {
+        StartupTestDto.TargetAreas = String.Empty;
         if (UpperBodyTargetArea)
         {
-            StartupTestDto.TargetAreas += "UpperBody, ";
+            StartupTestDto.TargetAreas += "Upperbody, ";
         }
         if (LowerBodyTargetArea)
         {
-            StartupTestDto.TargetAreas += "LowerBody, ";
+            StartupTestDto.TargetAreas += "Lowerbody, ";
         }
         if (AbsTargetArea)
         {

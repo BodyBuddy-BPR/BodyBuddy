@@ -14,6 +14,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
     public partial class MuscleGroupViewModel : BaseViewModel
     {
         [ObservableProperty] private string _category;
+        private string _previousCategory;
         public ObservableCollection<Grouping<string, ExerciseDto>> MuscleGroups { get; set; } = new();
 
         private readonly IExerciseService _exerciseService;
@@ -21,6 +22,11 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
         public MuscleGroupViewModel(IExerciseService exerciseService)
         {
             _exerciseService = exerciseService;
+        }
+
+        public async Task Initialize()
+        {
+            await GetMuscleGroups();
         }
 
         public async Task GetMuscleGroups()
@@ -31,12 +37,16 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
             {
                 IsBusy = true;
 
-                if (MuscleGroups.Count != 0)
+                if (!Category.Equals(_previousCategory))
                 {
-                    MuscleGroups.Clear();
-                }
+                    if (MuscleGroups.Count != 0)
+                    {
+                        MuscleGroups.Clear();
+                    }
 
-                await GenerateMuscleGroupsForCategory(Category);
+                    await GenerateMuscleGroupsForCategory(Category);
+                    _previousCategory = Category;
+                }
 
             }
             catch (Exception ex)

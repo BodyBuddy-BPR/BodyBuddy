@@ -3,10 +3,12 @@
     x:Class="BodyBuddy.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:dtos="clr-namespace:BodyBuddy.Dtos"
+    xmlns:effectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+    xmlns:modelDto="clr-namespace:BodyBuddy.Dtos"
     xmlns:progressBar="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
     xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+    xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels"
     x:DataType="viewModel:MainPageViewModel"
     Shell.NavBarIsVisible="True">
@@ -17,18 +19,26 @@
 
     <!--  Entire Page  -->
     <Grid
-        Margin="15"
-        RowDefinitions="Auto, Auto, Auto, *"
-        RowSpacing="10">
+        Margin="15,15"
+        RowDefinitions="50, Auto, Auto, Auto"
+        RowSpacing="15">
 
-        <Label
-            Grid.Row="0"
-            FontSize="32"
-            Style="{StaticResource TitleLabel}"
-            Text="Welcome " />
+        <VerticalStackLayout>
+            <Label
+                Grid.Row="0"
+                FontSize="22"
+                Style="{StaticResource TitleLabel}"
+                Text="Welcome " />
+            <Label
+                Grid.Row="0"
+                FontSize="18"
+                Style="{StaticResource TitleLabel}"
+                Text="{Binding StartupTestDto.Name}" />
+        </VerticalStackLayout>
+
 
         <skia:SKLottieView
-            Margin="80,0,0,10"
+            Margin="80,20,0,10"
             Padding="0,-30"
             HeightRequest="30"
             HorizontalOptions="Center"
@@ -37,97 +47,331 @@
             VerticalOptions="FillAndExpand" />
         <Frame
             Grid.Row="1"
+            Margin="0,10,0,0"
             Padding="10,15"
             Style="{StaticResource CardView}">
             <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
                 <Label
+                    Margin="10,0"
+                    FontFamily="Montserrat"
+                    FontSize="16"
+                    Text="Quote of the day"
+                    TextColor="Black" />
+                <Label
+                    FontSize="14"
                     HorizontalOptions="Center"
                     HorizontalTextAlignment="Center"
                     Style="{StaticResource LargeLabel}"
                     Text="{Binding Quote.Quote}" />
                 <Label
+                    FontAttributes="Bold"
+                    FontSize="11"
                     HorizontalOptions="Center"
                     Style="{StaticResource MediumLabel}"
                     Text="{Binding Quote.Author, StringFormat='- {0}'}" />
             </VerticalStackLayout>
         </Frame>
-        <progressBar:SfCircularProgressBar
-            Grid.Row="2"
-            Padding="40"
-            EndAngle="400"
-            HorizontalOptions="Center"
-            Maximum="1"
-            Minimum="0"
-            Progress="{Binding StepProgress}"
-            ProgressFill="{StaticResource Primary}"
-            StartAngle="140" />
-        <VerticalStackLayout
-            Grid.Row="2"
-            HorizontalOptions="Center"
-            VerticalOptions="Center">
-            <VerticalStackLayout.GestureRecognizers>
-                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-            </VerticalStackLayout.GestureRecognizers>
-            <HorizontalStackLayout Margin="0,40,0,0" VerticalOptions="End">
-                <Label
-                    Style="{StaticResource SmallLabel}"
-                    Text="{Binding UserSteps.Steps}"
-                    TextColor="White" />
-                <Label
-                    Style="{StaticResource SmallLabel}"
-                    Text=" / "
-                    TextColor="White" />
-                <Label
-                    Style="{StaticResource SmallLabel}"
-                    Text="{Binding UserSteps.StepGoal}"
-                    TextColor="White" />
-            </HorizontalStackLayout>
-            <Image
-                Margin="0,10,0,0"
-                HeightRequest="30"
-                Source="walking.svg"
-                WidthRequest="30" />
-        </VerticalStackLayout>
 
-        <ListView
+        <!--  Step counter  -->
+        <Grid
+            Grid.Row="0"
+            ColumnDefinitions="80*,20*"
+            HorizontalOptions="End"
+            VerticalOptions="End">
+            <progressBar:SfCircularProgressBar
+                Grid.Column="1"
+                Padding="40"
+                EndAngle="400"
+                HorizontalOptions="Center"
+                Maximum="1"
+                Minimum="0"
+                Progress="{Binding StepProgress}"
+                ProgressFill="{StaticResource Primary}"
+                StartAngle="140" />
+            <VerticalStackLayout
+                Grid.Column="1"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                </VerticalStackLayout.GestureRecognizers>
+                <Image
+                    Margin="0,14,0,0"
+                    HeightRequest="30"
+                    Source="walking.svg"
+                    WidthRequest="30" />
+                <HorizontalStackLayout Margin="0,3,0,0" VerticalOptions="End">
+                    <Label
+                        Style="{StaticResource SmallLabel}"
+                        Text="{Binding UserSteps.Steps}"
+                        TextColor="White" />
+                    <Label
+                        Style="{StaticResource SmallLabel}"
+                        Text=" / "
+                        TextColor="White" />
+                    <Label
+                        Style="{StaticResource SmallLabel}"
+                        Text="{Binding UserSteps.StepGoal}"
+                        TextColor="White" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </Grid>
+
+
+        <!--  Recommended Workouts  -->
+        <Border
             Grid.Row="3"
-            ItemsSource="{Binding ChallengeDtos}"
-            RowHeight="150">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="dtos:ChallengeDto">
-                    <ViewCell>
-                        <StackLayout Padding="10">
-                            <!--  ChallengeDto Properties  -->
-                            <HorizontalStackLayout Spacing="10">
-                                <Label FontAttributes="Bold" Text="{Binding Difficulty}" />
-                                <Label FontAttributes="Bold" Text="{Binding Type}" />
-                            </HorizontalStackLayout>
+            Margin="0"
+            BackgroundColor="{StaticResource Primary}"
+            ZIndex="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="25,25,25,25" />
+            </Border.StrokeShape>
+            <Grid RowDefinitions="*, *, *">
+                <Label
+                    Grid.Row="0"
+                    Margin="20,10"
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    HorizontalOptions="Start"
+                    Style="{StaticResource SmallLabel}"
+                    Text="Recommended workouts"
+                    TextColor="White"
+                    VerticalOptions="Start" />
+                <syncfusion:SfListView
+                    Grid.Row="1"
+                    Margin="20,0"
+                    HeightRequest="25"
+                    HorizontalOptions="StartAndExpand"
+                    ItemSize="120"
+                    ItemTapped="ListView_ItemTapped"
+                    ItemsSource="{Binding TargetAreas}"
+                    Orientation="Horizontal">
+                    <syncfusion:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <Label
+                                FontFamily="Montserrat"
+                                HorizontalTextAlignment="Center"
+                                Text="{Binding}"
+                                TextColor="White" />
+                        </DataTemplate>
+                    </syncfusion:SfListView.ItemTemplate>
+                </syncfusion:SfListView>
 
-                            <HorizontalStackLayout Spacing="10">
-                                <Label FontAttributes="Bold" Text="{Binding Progress}" />
-                                <Label FontAttributes="Bold" Text="/" />
-                                <Label FontAttributes="Bold" Text="{Binding Goal}" />
-                                <Label FontAttributes="Bold" Text="Steps" />
-                            </HorizontalStackLayout>
+                <!--  Workouts to show  -->
+                <CollectionView
+                    Grid.Row="2"
+                    Margin="20"
+                    ItemsSource="{Binding WorkoutsToShow}">
 
-                            <!--  Nested ListView for UserTotalSteps  -->
-                            <CollectionView ItemsSource="{Binding UserTotalSteps}" VerticalOptions="Fill">
-                                <CollectionView.ItemTemplate>
-                                    <DataTemplate x:DataType="dtos:UserTotalSteps">
-                                        <StackLayout Orientation="Horizontal">
-                                            <!--  Display User's Email  -->
-                                            <Label Text="{Binding User.Email}" />
-                                            <!--  Display Total Steps  -->
-                                            <Label HorizontalOptions="EndAndExpand" Text="{Binding TotalSteps}" />
-                                        </StackLayout>
-                                    </DataTemplate>
-                                </CollectionView.ItemTemplate>
-                            </CollectionView>
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="modelDto:WorkoutDto">
+
+                            <Frame
+                                BackgroundColor="{StaticResource Primary}"
+                                HeightRequest="60"
+                                Style="{StaticResource CardView}">
+                                <effectsView:SfEffectsView Style="{StaticResource CardRippleEffect}">
+                                    <Label
+                                        Margin="20"
+                                        FontSize="12"
+                                        Style="{StaticResource LargeLabel}"
+                                        Text="{Binding Name}"
+                                        VerticalOptions="Center" />
+
+                                    <effectsView:SfEffectsView.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:MainPageViewModel}}, Path=GoToWorkoutDetailsFromMainPageCommand}" CommandParameter="{Binding .}" />
+                                    </effectsView:SfEffectsView.GestureRecognizers>
+
+
+                                </effectsView:SfEffectsView>
+                            </Frame>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+
+
+                <!--  Weekday buttons  -->
+                <!--<HorizontalStackLayout
+                    Grid.Row="0"
+                    Grid.ColumnSpan="2"
+                    Margin="0,0,0,20"
+                    HorizontalOptions="Center"
+                    VerticalOptions="End">
+                    <VerticalStackLayout VerticalOptions="Start">
+                        <Button
+                            BackgroundColor="{StaticResource Primary}"
+                            Clicked="WeekdayButtonClicked"
+                            CommandParameter="1"
+                            Text="M"
+                            TextColor="White"
+                            VerticalOptions="Start">
+                            <Button.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsMondaySelected}"
+                                    TargetType="Button"
+                                    Value="true">
+                                    <Setter Property="FontAttributes" Value="Bold" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                        <Ellipse
+                            Fill="White"
+                            HeightRequest="5"
+                            IsVisible="{Binding IsMondaySelected}"
+                            Stroke="White"
+                            WidthRequest="5" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout VerticalOptions="Start">
+                        <Button
+                            BackgroundColor="{StaticResource Primary}"
+                            Clicked="WeekdayButtonClicked"
+                            CommandParameter="2"
+                            Text="T"
+                            TextColor="White">
+                            <Button.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsTuesdaySelected}"
+                                    TargetType="Button"
+                                    Value="true">
+                                    <Setter Property="FontAttributes" Value="Bold" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                        <Ellipse
+                            Fill="White"
+                            HeightRequest="5"
+                            IsVisible="{Binding IsTuesdaySelected}"
+                            Stroke="White"
+                            WidthRequest="5" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout VerticalOptions="Start">
+                        <Button
+                            BackgroundColor="{StaticResource Primary}"
+                            Clicked="WeekdayButtonClicked"
+                            CommandParameter="3"
+                            Text="W"
+                            TextColor="White">
+                            <Button.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsWednesdaySelected}"
+                                    TargetType="Button"
+                                    Value="true">
+                                    <Setter Property="FontAttributes" Value="Bold" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                        <Ellipse
+                            Fill="White"
+                            HeightRequest="5"
+                            IsVisible="{Binding IsWednesdaySelected}"
+                            Stroke="White"
+                            WidthRequest="5" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout VerticalOptions="Start">
+                        <Button
+                            BackgroundColor="{StaticResource Primary}"
+                            Clicked="WeekdayButtonClicked"
+                            CommandParameter="4"
+                            Text="T"
+                            TextColor="White">
+                            <Button.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsThursdaySelected}"
+                                    TargetType="Button"
+                                    Value="true">
+                                    <Setter Property="FontAttributes" Value="Bold" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                        <Ellipse
+                            Fill="White"
+                            HeightRequest="5"
+                            IsVisible="{Binding IsThursdaySelected}"
+                            Stroke="White"
+                            WidthRequest="5" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout VerticalOptions="Start">
+                        <Button
+                            BackgroundColor="{StaticResource Primary}"
+                            Clicked="WeekdayButtonClicked"
+                            CommandParameter="5"
+                            Text="F"
+                            TextColor="White">
+                            <Button.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsFridaySelected}"
+                                    TargetType="Button"
+                                    Value="true">
+                                    <Setter Property="FontAttributes" Value="Bold" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                        <Ellipse
+                            Fill="White"
+                            HeightRequest="5"
+                            IsVisible="{Binding IsFridaySelected}"
+                            Stroke="White"
+                            WidthRequest="5" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout VerticalOptions="Start">
+                        <Button
+                            BackgroundColor="{StaticResource Primary}"
+                            Clicked="WeekdayButtonClicked"
+                            CommandParameter="6"
+                            Text="S"
+                            TextColor="White">
+                            <Button.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsSaturdaySelected}"
+                                    TargetType="Button"
+                                    Value="true">
+                                    <Setter Property="FontAttributes" Value="Bold" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                        <Ellipse
+                            Fill="White"
+                            HeightRequest="5"
+                            IsVisible="{Binding IsSaturdaySelected}"
+                            Stroke="White"
+                            WidthRequest="5" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout VerticalOptions="Start">
+                        <Button
+                            BackgroundColor="{StaticResource Primary}"
+                            Clicked="WeekdayButtonClicked"
+                            CommandParameter="7"
+                            Text="S"
+                            TextColor="White">
+                            <Button.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsSundaySelected}"
+                                    TargetType="Button"
+                                    Value="true">
+                                    <Setter Property="FontAttributes" Value="Bold" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                        <Ellipse
+                            Fill="White"
+                            HeightRequest="5"
+                            IsVisible="{Binding IsSundaySelected}"
+                            Stroke="White"
+                            WidthRequest="5" />
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>-->
+
+
+            </Grid>
+        </Border>
+
     </Grid>
 
 </ContentPage>

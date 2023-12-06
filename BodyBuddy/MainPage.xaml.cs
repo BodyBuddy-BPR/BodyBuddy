@@ -21,7 +21,7 @@ public partial class MainPage : ContentPage
     {
         base.OnAppearing();
 
-        await Task.Delay(200); // Add a short delay
+        await Task.Delay(300); // Add a short delay
 
         await _viewModel.AttemptToLogin();
         await _viewModel.Initialize();
@@ -31,6 +31,11 @@ public partial class MainPage : ContentPage
     private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
     {
         _viewModel.ClickToShowPopup_Clicked();
+    }
+
+    private void ListView_ItemTapped(object sender, Syncfusion.Maui.ListView.ItemTappedEventArgs e)
+    {
+        _viewModel.UpdateWorkoutsToShow(e.DataItem);
     }
 }
 

@@ -16,9 +16,28 @@ public partial class ExerciseDetailsPage : ContentPage
     {
         base.OnAppearing();
 
-        await Task.Delay(200); // Add a short delay
+        await Task.Delay(300); // Add a short delay
 
         await _viewModel.GetExerciseDetails();
+        ToolBarItems();
+    }
+
+    private void ToolBarItems()
+    {
+        var toolbarItems = new List<ToolbarItem>();
+
+        toolbarItems.Add(new ToolbarItem
+        {
+            Command = _viewModel.GoToExerciseGraphsCommand,
+            Text = "Graph",
+            CommandParameter = _viewModel.ExerciseDetails,
+        });
+
+        ToolbarItems.Clear();
+        foreach (ToolbarItem toolbarItem in toolbarItems)
+        {
+            ToolbarItems.Add(toolbarItem);
+        }
     }
 
 }

@@ -5,9 +5,10 @@ namespace BodyBuddy.Views.ExerciseViews;
 public partial class MuscleGroupPage : ContentPage
 {
 	private readonly MuscleGroupViewModel _viewModel;
+
 	public MuscleGroupPage(MuscleGroupViewModel muscleGroupViewModel) 
 	{
-		InitializeComponent();
+        InitializeComponent();
 		_viewModel = muscleGroupViewModel;
 		BindingContext = muscleGroupViewModel;
     }
@@ -15,9 +16,9 @@ public partial class MuscleGroupPage : ContentPage
 	protected override async void OnAppearing()
 	{
         base.OnAppearing();
-        
-        await Task.Delay(200); // Add a short delay
 
-        await _viewModel.GetMuscleGroups();
+        await Task.Delay(400); // Add a short delay
+        
+        await _viewModel.Initialize();
     }
 }

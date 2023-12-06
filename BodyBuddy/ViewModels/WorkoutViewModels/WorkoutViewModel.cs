@@ -16,7 +16,6 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
     {
         private readonly IWorkoutService _workoutService;
         private readonly IWorkoutExercisesService _workoutExercisesService;
-        private readonly IStartupTestService _startupTestService;
 
         [ObservableProperty] private ObservableCollection<WorkoutDto> _workoutList = new();
         private StartupTestDto startupTestDto;
@@ -31,13 +30,12 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
         [ObservableProperty]
         public string errorMessage;
 
-        public WorkoutViewModel(IWorkoutService workoutService, IWorkoutExercisesService workoutExercisesService, IStartupTestService startupTestService)
+        public WorkoutViewModel(IWorkoutService workoutService, IWorkoutExercisesService workoutExercisesService)
         {
             Title = string.Empty;
 
             _workoutService = workoutService;
             _workoutExercisesService = workoutExercisesService;
-            _startupTestService = startupTestService;
         }
 
 
@@ -50,29 +48,8 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
             {
                 IsBusy = true;
 
-                startupTestDto = await _startupTestService.GetStartupTestData();
-                var tempWorkoutList = new ObservableCollection<WorkoutDto>(await _workoutService.GetWorkoutPlans(IsPreMadeWorkout));
+                WorkoutList = new ObservableCollection<WorkoutDto>(await _workoutService.GetWorkoutPlans(IsPreMadeWorkout));
 
-                if (!String.IsNullOrEmpty(startupTestDto.TargetAreas))
-                {
-                    string[] targetAreas = startupTestDto.TargetAreas.Split(new string[] { ", " }, StringSplitOptions.None); 
-                    
-                    foreach (string area in targetAreas)
-                    {
-                        IEnumerable<WorkoutDto> matchingWorkouts = tempWorkoutList.Where(workout =>
-                            workout.Name.IndexOf(area, StringComparison.OrdinalIgnoreCase) >= 0);
-
-                        foreach (var matchingWorkout in matchingWorkouts)
-                        {
-                            WorkoutList.Add(matchingWorkout);
-                        }
-                    }
-                }
-
-                if(WorkoutList.Count == 0)
-                {
-                    WorkoutList = tempWorkoutList;
-                }
             }
             catch (Exception ex)
             {

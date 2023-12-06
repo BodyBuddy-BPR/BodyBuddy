@@ -5,6 +5,9 @@ using BodyBuddy.Authentication;
 using BodyBuddy.Views.Authentication;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
+using Syncfusion.Maui.GridCommon.Collections;
+using System.Runtime.CompilerServices;
+using BodyBuddy.Views.Profile;
 
 
 namespace BodyBuddy.ViewModels.Profile
@@ -94,7 +97,6 @@ namespace BodyBuddy.ViewModels.Profile
         }
 
         #endregion
-
         #region Weekday button methods
 
         private void GetCurrentWeekDay()
@@ -145,7 +147,7 @@ namespace BodyBuddy.ViewModels.Profile
             SetSelectedWeekday();
             currentAndSelectedDayDifference = CurrentSelectedDate - currentDayOfWeek;
             int currentDateTimestamp = (int)(DateTime.UtcNow.Date.Subtract((new DateTime(1970, 1, 1))).TotalSeconds);
-            UserIntakeForDate = await _intakeService.GetIntakeForDateAsync(currentDateTimestamp - (currentAndSelectedDayDifference * secondsInADay));
+            UserIntakeForDate = await _intakeService.GetIntakeForDateAsync(currentDateTimestamp + (currentAndSelectedDayDifference * secondsInADay));
         }
         #endregion
     }

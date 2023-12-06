@@ -16,6 +16,7 @@ using CommunityToolkit.Mvvm.Input;
 using Mopups.Interfaces;
 using BodyBuddy.Views.Popups;
 using System.Collections.ObjectModel;
+using BodyBuddy.Views.WorkoutViews;
 
 namespace BodyBuddy.ViewModels
 {
@@ -23,9 +24,14 @@ namespace BodyBuddy.ViewModels
     {
         private readonly IQuoteService _quoteService;
         private readonly IUserAuthenticationService _userAuthService;
+        private readonly IStartupTestService _startupTestService;
         private readonly IStepService _stepService;
         private readonly IChallengeService _challengeService;
         private readonly IPopupNavigation _popupNavigation;
+        private readonly IWorkoutService _workoutService;
+
+        [ObservableProperty]
+        private StartupTestDto _startupTestDto;
 
         [ObservableProperty]
         private StepDto _userSteps;
@@ -44,17 +50,29 @@ namespace BodyBuddy.ViewModels
         [ObservableProperty]
         private int _newStepGoal;
 
+        [ObservableProperty]
+        private ObservableCollection<string> _targetAreas;
+
+        [ObservableProperty]
+        private List<WorkoutDto> _workoutsToShow;
+
+        [ObservableProperty]
+        private List<WorkoutDto> _allWorkouts;
+
         private readonly string _skipLoginKey = "SkipLogInKey";
         private const double StepThreshold = 1.5;
         private bool isStepInProgress;
 
-        public MainPageViewModel(IStepService stepService, IQuoteService quoteService, IChallengeService challengeService, IUserAuthenticationService userAuthService, IPopupNavigation popupNavigation)
+        public MainPageViewModel(IStepService stepService, IQuoteService quoteService, IUserAuthenticationService userAuthService, IPopupNavigation popupNavigation,
+            IStartupTestService startupTestService, IWorkoutService , IChallengeService challengeService)
         {
             _stepService = stepService;
             _quoteService = quoteService;
             _userAuthService = userAuthService;
             _popupNavigation = popupNavigation;
             _challengeService = challengeService;
+            _startupTestService = startupTestService;
+            _workoutService = workoutService;
         }
 
         public async Task Initialize()
@@ -62,7 +80,8 @@ namespace BodyBuddy.ViewModels
             UserSteps = await _stepService.GetStepDataTodayAsync();
             StepProgress = UserSteps.Steps == 0 ? 0 : UserSteps.Steps / UserSteps.StepGoal;
             await GetDailyQuote();
-            TurnOnAccelerometer();
+            await SetWorkoutsToShow();
+            await TurnOnAccelerometer();
         }
 
         public async Task GetActiveChallenges()
@@ -70,15 +89,59 @@ namespace BodyBuddy.ViewModels
             ChallengeDtos = new ObservableCollection<ChallengeDto>(await _challengeService.GetActiveChallenges());
         }
 
-        public void TurnOnAccelerometer()
+        public async Task SetWorkoutsToShow()
         {
-            if (!Accelerometer.Default.IsSupported) return;
-            if (Accelerometer.Default.IsMonitoring) return;
-            Accelerometer.Default.ReadingChanged += Accelerometer_ReadingChanged;
-            Accelerometer.Default.Start(SensorSpeed.UI);
+            StartupTestDto = await _startupTestService.GetStartupTestData();
+
+            if (!string.IsNullOrEmpty(StartupTestDto.TargetAreas))
+            {
+                var targetAreaStrings = StartupTestDto.TargetAreas.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
+                TargetAreas = new ObservableCollection<string>(targetAreaStrings);
+            }
+
+            AllWorkouts = await _workoutService.GetWorkoutPlans(true);
+
+            if (TargetAreas != null && TargetAreas.Count == 1 && TargetAreas[0].Equals("Abs", StringComparison.OrdinalIgnoreCase))
+            {
+                TargetAreas[0] = "Ab";
+            }
+            else if (TargetAreas != null && TargetAreas.Count > 0)
+            {
+                WorkoutsToShow = AllWorkouts
+                    .Where(x => x.Name.ToLowerInvariant().Contains(TargetAreas.FirstOrDefault()?.ToLowerInvariant()))
+                    .ToList();
+            }
+            else
+            {
+                TargetAreas = new ObservableCollection<string>
+                {
+                    "Upperbody",
+                    "Lowerbody",
+                    "Abs",
+                    "Back"
+                };
+
+                WorkoutsToShow = AllWorkouts
+                    .Where(x => x.Name.ToLowerInvariant().Contains(TargetAreas.FirstOrDefault()?.ToLowerInvariant()))
+                    .ToList();
+            }
         }
 
-        private void Accelerometer_ReadingChanged(object sender, AccelerometerChangedEventArgs e)
+        #region Accelerometer
+
+        public async Task TurnOnAccelerometer()
+        {
+            if (Accelerometer.Default.IsSupported)
+            {
+                if (!Accelerometer.Default.IsMonitoring)
+                {
+                    Accelerometer.Default.ReadingChanged += Accelerometer_ReadingChanged;
+                    Accelerometer.Default.Start(SensorSpeed.UI);
+                }
+            }
+        }
+
+        private async void Accelerometer_ReadingChanged(object sender, AccelerometerChangedEventArgs e)
         {
             var acceleration = e.Reading.Acceleration;
 
@@ -102,11 +165,13 @@ namespace BodyBuddy.ViewModels
                     isStepInProgress = true;
 
                     UserSteps.Steps++;
-                    _stepService.SaveStepData(UserSteps);
+                    await _stepService.SaveStepData(UserSteps);
                     StepProgress = UserSteps.Steps / UserSteps.StepGoal;
                 }
             }
         }
+
+        #endregion
 
         public async Task AttemptToLogin()
         {
@@ -177,5 +242,43 @@ namespace BodyBuddy.ViewModels
         {
             ErrorMessage = string.Empty;
         }
+
+        public void UpdateWorkoutsToShow(object dataItem)
+        {
+            string searchTerm = dataItem?.ToString()?.ToLowerInvariant();
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                // Remove the 's' if the search term is "abs"
+                if (searchTerm == "abs")
+                {
+                    searchTerm = searchTerm.TrimEnd('s');
+                }
+
+                WorkoutsToShow = AllWorkouts
+                    .Where(x => x.Name.ToLowerInvariant().Contains(searchTerm))
+                    .ToList();
+            }
+            else
+            {
+                WorkoutsToShow = AllWorkouts.ToList();
+            }
+        }
+
+
+        #region Navigation
+
+        [RelayCommand]
+        public async Task GoToWorkoutDetailsFromMainPage(WorkoutDto workout)
+        {
+            if (workout == null)
+                return;
+
+            await Shell.Current.GoToAsync(nameof(WorkoutDetailsPage), true, new Dictionary<string, object>
+            {
+                { "Workout", workout }
+            });
+        }
+        #endregion
     }
 }

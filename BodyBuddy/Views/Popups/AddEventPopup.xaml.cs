@@ -17,11 +17,11 @@ public partial class AddEventPopup
 
     private async void CreateBtn_Clicked(object sender, EventArgs e)
     {
-        if (!EventNameValid.IsValid)
+        if (/*!EventNameValid.IsValid || */string.IsNullOrEmpty(NameEntry.Text))
         {
-            EventNameError.Text = EventNameValid.Errors.FirstOrDefault().ToString();
+            //EventNameError.Text = EventNameValid.Errors.FirstOrDefault().ToString();
             EventNameError.IsVisible = true;
-
+            EventNameError.Text = "Enter a name between 1 and 20 characters";
             // Start the timer to hide the error label after 3 seconds
             StartErrorLabelTimer(EventNameError);
         }
@@ -38,8 +38,6 @@ public partial class AddEventPopup
             await _viewModel.CreateEvent();
 
             await MopupService.Instance.PopAsync();
-
-            _viewModel.EventName = string.Empty;
         }
     }
 

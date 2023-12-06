@@ -19,6 +19,9 @@ public partial class ProfilePage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+
+        await Task.Delay(400);
+
         await _viewModel.Initialize();
 
         // Changes the button text depending on if the user is logged in

@@ -20,5 +20,8 @@ namespace BodyBuddy.Models
 
         [Column("reps")]
         public int Reps { get; set; }
+
+        [Column("date")]
+        public long Date { get; set; }
     }
 }

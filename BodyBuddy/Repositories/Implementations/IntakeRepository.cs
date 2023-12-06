@@ -16,7 +16,7 @@ namespace BodyBuddy.Repositories.Implementations
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IntakeModel> GetIntakeAsync()
+        public async Task<IntakeModel> GetCurrentDayIntakeAsync()
         {
             try
             {
@@ -55,8 +55,25 @@ namespace BodyBuddy.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in GetIntakeAsync: {ex}");
+                Console.WriteLine($"Error in GetCurrentDayIntakeAsync: {ex}");
                 return new IntakeModel();
+            }
+        }
+
+        public async Task<List<IntakeModel>> GetAllIntakeDataAsync()
+        {
+            try
+            {
+                // Fetch all IntakeModel entries from the database
+                var allIntakes = await _context.Table<IntakeModel>()
+                    .ToListAsync();
+
+                return allIntakes;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetAllIntakeDataAsync: {ex}");
+                return new List<IntakeModel>(); // Return an empty list in case of an exception
             }
         }
 

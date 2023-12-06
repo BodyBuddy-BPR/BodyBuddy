@@ -10,6 +10,8 @@ namespace BodyBuddy.Helpers
     {
         private const string _datePreferencesKey = "LastFetchedDate";
         public static DateTime Today => DateTime.Today;
+        public static DateTime Now => DateTime.Now;
+
 
         public static bool IsNewDay()
         {

@@ -7,7 +7,7 @@
     xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:effectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:model="clr-namespace:BodyBuddy.Models"
-    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:shimmer="clr-namespace:Syncfusion.Maui.Shimmer;assembly=Syncfusion.Maui.Core"
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.ExerciseViewModels"
     Title="Exercises"
     x:DataType="viewModel:ExercisesViewModel">
@@ -41,15 +41,17 @@
                 TextMemberPath="Name" />
         </Border>
 
+
         <!--  List of exercises  -->
         <CollectionView
             Grid.Row="1"
-            BackgroundColor="Transparent"
+            BackgroundColor="Transparent" RemainingItemsThreshold="5" RemainingItemsThresholdReachedCommand="{Binding LoadMoreExercisesIncrementallyCommand}"
             ItemsSource="{Binding ExerciseList}"
             VerticalOptions="FillAndExpand">
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:ExerciseModel">
+
                     <Grid Padding="0,5">
 
                         <Frame HeightRequest="80" Style="{StaticResource CardView}">
@@ -99,7 +101,6 @@
                                 </effectsView:SfEffectsView.GestureRecognizers>
                             </effectsView:SfEffectsView>
                         </Frame>
-
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
@@ -115,5 +116,18 @@
             VerticalOptions="Center"
             Color="{StaticResource Primary}" />
 
+        <!--  Do not remove, here as an example of a shimmer view  -->
+        <!--<shimmer:SfShimmer
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            AnimationDuration="1500"
+            Fill="{StaticResource White}"
+            HorizontalOptions="Fill"
+            IsActive="{Binding Source={RelativeSource AncestorType={x:Type viewModel:ExercisesViewModel}}, Path=IsBusy}"
+            RepeatCount="8"
+            Type="SquarePersona"
+            VerticalOptions="Center"
+            WaveColor="{StaticResource Primary}"
+            WaveDirection="Default" />-->
     </Grid>
 </ContentPage>
