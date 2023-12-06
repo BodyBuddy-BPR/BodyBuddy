@@ -16,6 +16,7 @@
 
         private async Task ReplaceStartupTestData()
         {
+            await _startupTestService.ReplaceSQLiteDataWithRemoteData();
             await _startupTestService.RemoveAllSQLiteData();
             await _startupTestService.AddRemoteDataToSQLite();
         }
