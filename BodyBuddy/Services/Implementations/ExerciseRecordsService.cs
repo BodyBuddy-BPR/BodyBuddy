@@ -14,17 +14,15 @@ namespace BodyBuddy.Services.Implementations
     public class ExerciseRecordsService : IExerciseRecordsService
     {
         private readonly IExerciseRecordsRepository _repo;
-        private readonly ExerciseRecordsMapper _mapper;
-        private readonly DateHelper _dateHelper = new();
+        private readonly ExerciseRecordsMapper _mapper = new();
 
         public ExerciseRecordsService(IExerciseRecordsRepository repo)
         {
             _repo = repo;
-            _mapper = new ExerciseRecordsMapper();
         }
         public async Task SaveExerciseRecords(ExerciseRecordsDto exerciseRecordsDto)
         {
-            exerciseRecordsDto.Date = _dateHelper.Now;
+            exerciseRecordsDto.Date = DateHelper.Now;
             await _repo.SaveExerciseRecords(_mapper.MapToDatabase(exerciseRecordsDto));
         }
 

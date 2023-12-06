@@ -9,7 +9,7 @@ public partial class MainPage : ContentPage
 
 	public MainPage(MainPageViewModel mainPageViewModel)
 	{
-		InitializeComponent();
+        InitializeComponent();
 		_viewModel = mainPageViewModel;
 		BindingContext = mainPageViewModel;
 
@@ -24,8 +24,8 @@ public partial class MainPage : ContentPage
         await Task.Delay(300); // Add a short delay
 
         await _viewModel.AttemptToLogin();
-
         await _viewModel.Initialize();
+        await _viewModel.GetActiveChallenges();
     }
 
     private void TapGestureRecognizer_Tapped(object sender, EventArgs e)

@@ -7,28 +7,59 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BodyBuddy.Authentication;
+using BodyBuddy.Repositories.Supabase;
 
 namespace BodyBuddy.Services.Implementations
 {
     public class StartupTestService : IStartupTestService
     {
-        private IStartupTestRepository _repo;
-        private StartupTestMapper mapper;
-        public StartupTestService(IStartupTestRepository startupTestRepository, StartupTestMapper startupTestMapper)
+        private readonly IStartupTestRepository _startupTestRepository;
+        private readonly IStartupTestSbRepository _startupTestSbRepository;
+        private readonly IUserAuthenticationService _userAuthenticationService;
+
+        private readonly StartupTestMapper mapper = new();
+
+
+        public StartupTestService(IStartupTestRepository startupTestRepository, IStartupTestSbRepository startupTestSbRepository, IUserAuthenticationService userAuthenticationService)
         {
-            _repo = startupTestRepository;
-            mapper = startupTestMapper;
+            _startupTestRepository = startupTestRepository;
+            _startupTestSbRepository = startupTestSbRepository;
+            _userAuthenticationService = userAuthenticationService;
         }
 
         public async Task<StartupTestDto> GetStartupTestData()
         {
-            var startupTestData = await _repo.GetStartupTestData();
+            var startupTestData = await _startupTestRepository.GetStartupTestData();
             return mapper.MapToDto(startupTestData);
         }
 
         public void SaveStartupTestData(StartupTestDto startupTestDto)
         {
-            _repo.SaveStartupTestData(mapper.MapToDatabase(startupTestDto));
+            _startupTestRepository.SaveStartupTestData(mapper.MapToDatabaseFromDto(startupTestDto));
+
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet || !_userAuthenticationService.IsUserLoggedIn())
+                return;
+
+            _startupTestSbRepository.AddOrUpdateStartupTest(mapper.MapToSbModel(startupTestDto));
         }
+
+        #region Clear and add data to SQLite from remote
+        public async Task RemoveAllSQLiteData()
+        {
+            await _startupTestRepository.ClearSQLiteData();
+        }
+
+        public async Task AddRemoteDataToSQLite()
+        {
+            var supabaseData = await _startupTestSbRepository.GetStartupTestSbModel();
+
+            if (supabaseData != null)
+                await _startupTestRepository.SaveStartupTestData(mapper.MapToDatabaseFromSb(supabaseData));
+        }
+        #endregion
+
+
+
     }
 }

@@ -11,7 +11,6 @@ namespace BodyBuddy.Mappers
 {
     public class StepMapper
     {
-        private readonly DateHelper _dateTimeService = new();
         public StepModel MapToDatabase(StepDto stepDto)
         {
             return new StepModel()
@@ -19,7 +18,7 @@ namespace BodyBuddy.Mappers
                 Id = stepDto.Id,
                 Steps = stepDto.Steps,
                 StepGoal = stepDto.StepGoal,
-                Date = _dateTimeService.ConvertToEpochTime(stepDto.Date)
+                Date = DateHelper.ConvertToEpochTime(stepDto.Date)
             };
         }
 
@@ -33,7 +32,7 @@ namespace BodyBuddy.Mappers
                 Id = stepsModel.Id,
                 Steps = stepsModel.Steps,
                 StepGoal = stepsModel.StepGoal,
-                Date = _dateTimeService.ConvertToDateTime(stepsModel.Date)
+                Date = DateHelper.ConvertToDateTime(stepsModel.Date)
             };
         }
     }

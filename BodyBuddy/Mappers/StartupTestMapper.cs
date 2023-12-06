@@ -9,14 +9,13 @@ using System.Runtime.InteropServices.JavaScript;
 using System.Text;
 using System.Threading.Tasks;
 using BodyBuddy.Enums;
+using BodyBuddy.Models.Supabase;
 
 namespace BodyBuddy.Mappers
 {
     public class StartupTestMapper
     {
-        private readonly DateHelper _dateTimeService = new();
-
-        public StartupTestModel MapToDatabase(StartupTestDto startupTestDto)
+        public StartupTestModel MapToDatabaseFromDto(StartupTestDto startupTestDto)
         {
             return new StartupTestModel()
             {
@@ -25,7 +24,39 @@ namespace BodyBuddy.Mappers
                 Gender = (int)EnumMapper.GetGenderFromDisplayString(startupTestDto.Gender),
                 Weight = startupTestDto.Weight,
                 Height = startupTestDto.Height,
-                Birthday = _dateTimeService.ConvertToEpochTime(startupTestDto.Birthday),
+                Birthday = DateHelper.ConvertToEpochTimeAtMidnight(startupTestDto.Birthday),
+                ActiveAmount = (int)EnumMapper.GetUserActivityFromDisplayString(startupTestDto.ActiveAmount),
+                PassiveCalorieBurn = startupTestDto.PassiveCalorieBurn,
+                TargetAreas = startupTestDto.TargetAreas,
+                Goal = (int)EnumMapper.GetGoalFromDisplayString(startupTestDto.Goal)
+            };
+        }
+
+        public StartupTestModel MapToDatabaseFromSb(StartupTestSbModel startupTestSbModel)
+        {
+            return new StartupTestModel()
+            {
+                Name = startupTestSbModel.Name,
+                Gender = startupTestSbModel.Gender,
+                Weight = startupTestSbModel.Weight,
+                Height = startupTestSbModel.Height,
+                Birthday = DateHelper.ConvertToEpochTimeAtMidnight(startupTestSbModel.Birthday),
+                ActiveAmount = startupTestSbModel.ActiveAmount,
+                PassiveCalorieBurn = startupTestSbModel.PassiveCalorieBurn,
+                TargetAreas = startupTestSbModel.TargetAreas,
+                Goal = startupTestSbModel.Goal
+            };
+        }
+
+        public StartupTestSbModel MapToSbModel(StartupTestDto startupTestDto)
+        {
+            return new StartupTestSbModel()
+            {
+                Name = startupTestDto.Name,
+                Gender = (int)EnumMapper.GetGenderFromDisplayString(startupTestDto.Gender),
+                Weight = startupTestDto.Weight,
+                Height = startupTestDto.Height,
+                Birthday = startupTestDto.Birthday,
                 ActiveAmount = (int)EnumMapper.GetUserActivityFromDisplayString(startupTestDto.ActiveAmount),
                 PassiveCalorieBurn = startupTestDto.PassiveCalorieBurn,
                 TargetAreas = startupTestDto.TargetAreas,
@@ -45,7 +76,7 @@ namespace BodyBuddy.Mappers
                 Gender = EnumMapper.GetDisplayString((Gender)startupTest.Gender),
                 Weight = startupTest.Weight,
                 Height = startupTest.Height,
-                Birthday = _dateTimeService.ConvertToDateTime(startupTest.Birthday),
+                Birthday = DateHelper.ConvertToDateTime(startupTest.Birthday),
                 ActiveAmount = EnumMapper.GetDisplayString((UserActivity)startupTest.ActiveAmount),
                 PassiveCalorieBurn = startupTest.PassiveCalorieBurn,
                 TargetAreas = startupTest.TargetAreas,

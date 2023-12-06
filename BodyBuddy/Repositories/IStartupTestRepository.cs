@@ -6,5 +6,6 @@ namespace BodyBuddy.Repositories
     {
         Task SaveStartupTestData(StartupTestModel startupTest);
         Task<StartupTestModel> GetStartupTestData();
+        Task ClearSQLiteData();
     }
 }

@@ -20,18 +20,16 @@
     <!--  Entire Page  -->
     <Grid
         Margin="15,15"
-        RowDefinitions="50, Auto, Auto, Auto"
+        RowDefinitions="50, Auto, Auto, Auto, *"
         RowSpacing="15">
 
         <VerticalStackLayout>
             <Label
-                Grid.Row="0"
                 FontSize="22"
                 Style="{StaticResource TitleLabel}"
                 Text="Welcome " />
             <Label
-                Grid.Row="0"
-                FontSize="18"
+                FontSize="20"
                 Style="{StaticResource TitleLabel}"
                 Text="{Binding StartupTestDto.Name}" />
         </VerticalStackLayout>
@@ -194,183 +192,48 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-
-
-
-                <!--  Weekday buttons  -->
-                <!--<HorizontalStackLayout
-                    Grid.Row="0"
-                    Grid.ColumnSpan="2"
-                    Margin="0,0,0,20"
-                    HorizontalOptions="Center"
-                    VerticalOptions="End">
-                    <VerticalStackLayout VerticalOptions="Start">
-                        <Button
-                            BackgroundColor="{StaticResource Primary}"
-                            Clicked="WeekdayButtonClicked"
-                            CommandParameter="1"
-                            Text="M"
-                            TextColor="White"
-                            VerticalOptions="Start">
-                            <Button.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding IsMondaySelected}"
-                                    TargetType="Button"
-                                    Value="true">
-                                    <Setter Property="FontAttributes" Value="Bold" />
-                                </DataTrigger>
-                            </Button.Triggers>
-                        </Button>
-                        <Ellipse
-                            Fill="White"
-                            HeightRequest="5"
-                            IsVisible="{Binding IsMondaySelected}"
-                            Stroke="White"
-                            WidthRequest="5" />
-                    </VerticalStackLayout>
-                    <VerticalStackLayout VerticalOptions="Start">
-                        <Button
-                            BackgroundColor="{StaticResource Primary}"
-                            Clicked="WeekdayButtonClicked"
-                            CommandParameter="2"
-                            Text="T"
-                            TextColor="White">
-                            <Button.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding IsTuesdaySelected}"
-                                    TargetType="Button"
-                                    Value="true">
-                                    <Setter Property="FontAttributes" Value="Bold" />
-                                </DataTrigger>
-                            </Button.Triggers>
-                        </Button>
-                        <Ellipse
-                            Fill="White"
-                            HeightRequest="5"
-                            IsVisible="{Binding IsTuesdaySelected}"
-                            Stroke="White"
-                            WidthRequest="5" />
-                    </VerticalStackLayout>
-                    <VerticalStackLayout VerticalOptions="Start">
-                        <Button
-                            BackgroundColor="{StaticResource Primary}"
-                            Clicked="WeekdayButtonClicked"
-                            CommandParameter="3"
-                            Text="W"
-                            TextColor="White">
-                            <Button.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding IsWednesdaySelected}"
-                                    TargetType="Button"
-                                    Value="true">
-                                    <Setter Property="FontAttributes" Value="Bold" />
-                                </DataTrigger>
-                            </Button.Triggers>
-                        </Button>
-                        <Ellipse
-                            Fill="White"
-                            HeightRequest="5"
-                            IsVisible="{Binding IsWednesdaySelected}"
-                            Stroke="White"
-                            WidthRequest="5" />
-                    </VerticalStackLayout>
-                    <VerticalStackLayout VerticalOptions="Start">
-                        <Button
-                            BackgroundColor="{StaticResource Primary}"
-                            Clicked="WeekdayButtonClicked"
-                            CommandParameter="4"
-                            Text="T"
-                            TextColor="White">
-                            <Button.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding IsThursdaySelected}"
-                                    TargetType="Button"
-                                    Value="true">
-                                    <Setter Property="FontAttributes" Value="Bold" />
-                                </DataTrigger>
-                            </Button.Triggers>
-                        </Button>
-                        <Ellipse
-                            Fill="White"
-                            HeightRequest="5"
-                            IsVisible="{Binding IsThursdaySelected}"
-                            Stroke="White"
-                            WidthRequest="5" />
-                    </VerticalStackLayout>
-                    <VerticalStackLayout VerticalOptions="Start">
-                        <Button
-                            BackgroundColor="{StaticResource Primary}"
-                            Clicked="WeekdayButtonClicked"
-                            CommandParameter="5"
-                            Text="F"
-                            TextColor="White">
-                            <Button.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding IsFridaySelected}"
-                                    TargetType="Button"
-                                    Value="true">
-                                    <Setter Property="FontAttributes" Value="Bold" />
-                                </DataTrigger>
-                            </Button.Triggers>
-                        </Button>
-                        <Ellipse
-                            Fill="White"
-                            HeightRequest="5"
-                            IsVisible="{Binding IsFridaySelected}"
-                            Stroke="White"
-                            WidthRequest="5" />
-                    </VerticalStackLayout>
-                    <VerticalStackLayout VerticalOptions="Start">
-                        <Button
-                            BackgroundColor="{StaticResource Primary}"
-                            Clicked="WeekdayButtonClicked"
-                            CommandParameter="6"
-                            Text="S"
-                            TextColor="White">
-                            <Button.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding IsSaturdaySelected}"
-                                    TargetType="Button"
-                                    Value="true">
-                                    <Setter Property="FontAttributes" Value="Bold" />
-                                </DataTrigger>
-                            </Button.Triggers>
-                        </Button>
-                        <Ellipse
-                            Fill="White"
-                            HeightRequest="5"
-                            IsVisible="{Binding IsSaturdaySelected}"
-                            Stroke="White"
-                            WidthRequest="5" />
-                    </VerticalStackLayout>
-                    <VerticalStackLayout VerticalOptions="Start">
-                        <Button
-                            BackgroundColor="{StaticResource Primary}"
-                            Clicked="WeekdayButtonClicked"
-                            CommandParameter="7"
-                            Text="S"
-                            TextColor="White">
-                            <Button.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding IsSundaySelected}"
-                                    TargetType="Button"
-                                    Value="true">
-                                    <Setter Property="FontAttributes" Value="Bold" />
-                                </DataTrigger>
-                            </Button.Triggers>
-                        </Button>
-                        <Ellipse
-                            Fill="White"
-                            HeightRequest="5"
-                            IsVisible="{Binding IsSundaySelected}"
-                            Stroke="White"
-                            WidthRequest="5" />
-                    </VerticalStackLayout>
-                </HorizontalStackLayout>-->
-
-
             </Grid>
         </Border>
+
+        <ListView
+            Grid.Row="4"
+            ItemsSource="{Binding ChallengeDtos}"
+            RowHeight="150">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="modelDto:ChallengeDto">
+                    <ViewCell>
+                        <StackLayout Padding="10">
+                            <!--  ChallengeDto Properties  -->
+                            <HorizontalStackLayout Spacing="10">
+                                <Label FontAttributes="Bold" Text="{Binding Difficulty}" />
+                                <Label FontAttributes="Bold" Text="{Binding Type}" />
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout Spacing="10">
+                                <Label FontAttributes="Bold" Text="{Binding Progress}" />
+                                <Label FontAttributes="Bold" Text="/" />
+                                <Label FontAttributes="Bold" Text="{Binding Goal}" />
+                                <Label FontAttributes="Bold" Text="Steps" />
+                            </HorizontalStackLayout>
+
+                            <!--  Nested ListView for UserTotalSteps - Vertical Option should prob. not be fill (but couldn't see anything without help)  -->
+                            <CollectionView ItemsSource="{Binding UserTotalSteps}" VerticalOptions="Fill">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="modelDto:UserTotalSteps">
+                                        <StackLayout Orientation="Horizontal">
+                                            <!--  Display User's Email  -->
+                                            <Label Text="{Binding User.Email}" />
+                                            <!--  Display Total Steps  -->
+                                            <Label HorizontalOptions="EndAndExpand" Text="{Binding TotalSteps}" />
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
     </Grid>
 

@@ -62,7 +62,7 @@ namespace BodyBuddy.ViewModels.ExerciseViewModels
         private void FormatExerciseDetailStrings()
         {
             // Make sure the secondary muscles fit in the ellipse to show these
-            if (ExerciseDetails.SecondaryMuscles != null && ExerciseDetails.SecondaryMuscles.Length >= 16)
+            if (ExerciseDetails.SecondaryMuscles != null && ExerciseDetails.SecondaryMuscles.Length > 16)
             {
                 ExerciseDetails.SecondaryMuscles = ExerciseDetails.SecondaryMuscles.Substring(0, ExerciseDetails.SecondaryMuscles.LastIndexOf(',', 16));
             }

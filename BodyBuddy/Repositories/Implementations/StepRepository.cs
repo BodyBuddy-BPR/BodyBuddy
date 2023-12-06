@@ -17,17 +17,13 @@ namespace BodyBuddy.Repositories.Implementations
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<StepModel> GetStepsAsync()
+        public async Task<StepModel> GetStepsForDayAsTimestampAsync(long dayAsTimestamp)
         {
             try
             {
-                //Get current date at midnight in UTC, and convert it to a timestamp
-                DateTime currentDateTime = DateTime.UtcNow.Date;
-                int currentDateTimestamp = (int)(currentDateTime.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
-
                 //Check if entry for today exists.
                 var existingStepCount = await _context.Table<StepModel>()
-                    .Where(x => x.Date == currentDateTimestamp)
+                    .Where(x => x.Date == dayAsTimestamp)
                     .FirstOrDefaultAsync();
 
                 if (existingStepCount != null)
@@ -42,7 +38,7 @@ namespace BodyBuddy.Repositories.Implementations
                 existingStepCount = new StepModel
                 {
                     Id = await GetNextStepId(),
-                    Date = currentDateTimestamp,
+                    Date = dayAsTimestamp,
                     Steps = 0,
                     StepGoal = previousStepCount?.StepGoal ?? 8000
                 };
@@ -54,7 +50,7 @@ namespace BodyBuddy.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in GetStepsAsync: {ex}");
+                Console.WriteLine($"Error in GetStepsForDayAsTimestampAsync: {ex}");
                 return new StepModel();
             }
         }

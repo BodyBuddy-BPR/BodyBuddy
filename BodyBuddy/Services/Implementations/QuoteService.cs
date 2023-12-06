@@ -13,22 +13,19 @@ namespace BodyBuddy.Services.Implementations
 {
     public class QuoteService : IQuoteService
     {
-        private IQuoteRepository _quoteRepository;
-        private DateHelper _dateTimeService;
-        private QuoteMapper _mapper;
+        private readonly IQuoteRepository _quoteRepository;
+        private readonly QuoteMapper _mapper = new();
 
-        public QuoteService(IQuoteRepository quoteRepository, QuoteMapper quoteMapper, DateHelper dateTimeService)
+        public QuoteService(IQuoteRepository quoteRepository)
         {
             _quoteRepository = quoteRepository;
-            _mapper = quoteMapper;
-            _dateTimeService = dateTimeService;
         }
 
         public async Task<QuoteDto> GetDailyQuote()
         {
             QuoteModel quote;
 
-            if (_dateTimeService.IsNewDay())
+            if (DateHelper.IsNewDay())
             {
                 quote = await _quoteRepository.FetchNewQuote();
             }
