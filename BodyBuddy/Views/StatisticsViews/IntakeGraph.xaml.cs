@@ -1,17 +1,17 @@
-using BodyBuddy.ViewModels.Profile;
+using BodyBuddy.ViewModels.IntakeViewModels;
 
 namespace BodyBuddy.Views.StatisticsViews;
 
 public partial class IntakeGraph : ContentPage
 {
-    private readonly ProfileGraphViewModel _viewModel;
+    private readonly IntakeGraphViewModel _viewModel;
 
-    public IntakeGraph(ProfileGraphViewModel profileGraphViewModel)
+    public IntakeGraph(IntakeGraphViewModel intakeGraphViewModel)
     {
         InitializeComponent();
 
-        _viewModel = profileGraphViewModel;
-        BindingContext = profileGraphViewModel;
+        _viewModel = intakeGraphViewModel;
+        BindingContext = intakeGraphViewModel;
     }
 
     protected override async void OnAppearing()

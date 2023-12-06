@@ -1,4 +1,5 @@
-﻿using BodyBuddy.Models;
+﻿using BodyBuddy.Helpers;
+using BodyBuddy.Models;
 using SQLite;
 
 namespace BodyBuddy.Repositories.Implementations
@@ -15,22 +16,17 @@ namespace BodyBuddy.Repositories.Implementations
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IntakeModel> GetCurrentDayIntakeAsync()
+        public async Task<IntakeModel> GetIntakeForDateAsync(long dateTimeUtc)
         {
             try
             {
-                //Get current date at midnight in UTC, and convert it to a timestamp
-                DateTime currentDateTime = DateTime.UtcNow.Date;
-                int currentDateTimestamp = (int)(currentDateTime.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
-
                 //Check if entry for today exists.
                 var existingIntake = await _context.Table<IntakeModel>()
-                    .Where(x => x.Date == currentDateTimestamp)
+                    .Where(x => x.Date == dateTimeUtc)
                     .FirstOrDefaultAsync();
 
                 if (existingIntake != null)
                     return existingIntake;
-
 
                 var previousIntake = await _context.Table<IntakeModel>()
                     .OrderByDescending(x => x.Date)
@@ -40,7 +36,7 @@ namespace BodyBuddy.Repositories.Implementations
                 existingIntake = new IntakeModel
                 {
                     Id = await GetNextIntakeId(),
-                    Date = currentDateTimestamp,
+                    Date = dateTimeUtc,
                     CalorieGoal = previousIntake?.CalorieGoal ?? DefaultCalorieGoal,
                     WaterGoal = previousIntake?.WaterGoal ?? DefaultWaterGoal,
                     CalorieCurrent = 0,
@@ -87,21 +83,21 @@ namespace BodyBuddy.Repositories.Implementations
             await _context.UpdateAsync(intakeDetails);
         }
 
-        public async Task<IntakeModel> GetIntakeForDateAsync(int dateTimeUTC)
-        {
-            try
-            {
-                var Intake = await _context.Table<IntakeModel>()
-                    .Where(x => x.Date == dateTimeUTC)
-                    .FirstOrDefaultAsync();
+        //    public async Task<IntakeModel> GetIntakeForDateAsync(long dateTimeUtc)
+        //    {
+        //        try
+        //        {
+        //            var Intake = await _context.Table<IntakeModel>()
+        //                .Where(x => x.Date == dateTimeUtc)
+        //                .FirstOrDefaultAsync();
 
-                return Intake;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error in GetIntakeForDateAsync: {ex}");
-                return new IntakeModel();
-            }
-        }
+        //            return Intake;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Console.WriteLine($"Error in GetIntakeForDateAsync: {ex}");
+        //            return new IntakeModel();
+        //        }
+        //    }
     }
 }
