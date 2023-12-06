@@ -366,7 +366,10 @@
       </VerticalStackLayout>
   </HorizontalStackLayout>-->
 
-                <ListView Grid.Row="4" ItemsSource="{Binding ChallengeDtos}">
+                <ListView
+                    Grid.Row="4"
+                    ItemsSource="{Binding ChallengeDtos}"
+                    RowHeight="150">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="modelDto:ChallengeDto">
                             <ViewCell>
