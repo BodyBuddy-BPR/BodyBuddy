@@ -41,7 +41,14 @@ namespace BodyBuddy.Repositories.Implementations
                 Type = "pending",
             };
 
-            await _supabaseClient.From<UserRelationsModel>().Insert(relation);
+            try
+            {
+                await _supabaseClient.From<UserRelationsModel>().Insert(relation);
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
 

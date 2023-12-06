@@ -43,8 +43,9 @@ namespace BodyBuddy.Services.Implementations
             if (friend == null) return false;
 
             var currentUserId = _userAuthenticationService.GetCurrentUser().Id;
+            if (currentUserId == friend.Id) return false;
 
-            await _userRepository.AddNewFriend(currentUserId, friend.Id.ToString());
+            await _userRepository.AddNewFriend(currentUserId, friend.Id);
             return true;
         }
 
