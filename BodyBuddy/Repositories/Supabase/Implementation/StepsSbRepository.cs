@@ -39,9 +39,26 @@ namespace BodyBuddy.Repositories.Supabase.Implementation
             {
                 Id = SecureStorage.GetAsync("UserUID").Result,
                 Date = stepDto.Date,
-                Steps = stepDto.Steps
+                Steps = stepDto.Steps,
+                StepGoal = stepDto.StepGoal
             };
             await _supabase.From<StepsSbModel>().Upsert(record);
+        }
+
+        public async Task<List<StepsSbModel>> GetAllStepsDataProfile()
+        {
+            try
+            {
+                var userId = SecureStorage.GetAsync("UserUID").Result;
+
+                var stepModel = await _supabase.From<StepsSbModel>().Where(x => x.Id == userId).Get();
+
+                return stepModel.Models;
+            }
+            catch (Exception ex)
+            {
+                return new List<StepsSbModel>();
+            }
         }
     }
 }

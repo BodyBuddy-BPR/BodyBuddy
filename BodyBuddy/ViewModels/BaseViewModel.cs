@@ -1,7 +1,4 @@
-﻿using BodyBuddy.Views.Profile;
-using BodyBuddy.Views.User;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BodyBuddy.ViewModels
 {

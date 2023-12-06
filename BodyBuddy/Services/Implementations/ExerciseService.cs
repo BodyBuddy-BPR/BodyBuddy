@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using BodyBuddy.Dtos;
 using BodyBuddy.Mappers;
-using BodyBuddy.Models;
 using BodyBuddy.Repositories;
 
 namespace BodyBuddy.Services.Implementations

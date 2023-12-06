@@ -1,10 +1,5 @@
 ﻿using BodyBuddy.Models;
 using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BodyBuddy.Repositories.Implementations
 {
@@ -64,6 +59,22 @@ namespace BodyBuddy.Repositories.Implementations
         public async Task SaveChangesAsync(StepModel stepDetails)
         {
             await _context.UpdateAsync(stepDetails);
+        }
+
+        public async Task ClearSQLiteData()
+        {
+            await _context.DeleteAllAsync<StepModel>();
+        }
+
+        public async Task AddListOfStepData(List<StepModel> stepModels)
+        {
+            foreach (var stepModel in stepModels)
+            {
+                stepModel.Id = await GetNextStepId();
+
+                // Insert the new entry in the database
+                await _context.InsertAsync(stepModel);
+            }
         }
     }
 }

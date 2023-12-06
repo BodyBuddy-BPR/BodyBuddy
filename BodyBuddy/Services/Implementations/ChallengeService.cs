@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BodyBuddy.Authentication;
+﻿using BodyBuddy.Authentication;
 using BodyBuddy.Dtos;
 using BodyBuddy.Helpers;
 using BodyBuddy.Mappers;
 using BodyBuddy.Models.Supabase;
 using BodyBuddy.Repositories.Supabase;
-using BodyBuddy.Repositories.Supabase.Implementation;
 
 namespace BodyBuddy.Services.Implementations
 {

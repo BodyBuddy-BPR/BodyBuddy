@@ -11,7 +11,10 @@ namespace BodyBuddy.Models.Supabase
         [Column("date")]
         public DateTime Date { get; set; }
         [Column("steps")]
-        public int Steps { get; set; }
+        public int Steps { get; set; }       
+
+        [Column("stepGoal")]
+        public int StepGoal { get; set; }
 
         [Reference(typeof(UserModel))]
         public UserModel User { get; set; }

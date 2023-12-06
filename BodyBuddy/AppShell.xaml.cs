@@ -1,5 +1,4 @@
-﻿using BodyBuddy.Views;
-using BodyBuddy.Views.Authentication;
+﻿using BodyBuddy.Views.Authentication;
 using BodyBuddy.Views.ExerciseViews;
 using BodyBuddy.Views.Profile;
 using BodyBuddy.Views.StartupTest;

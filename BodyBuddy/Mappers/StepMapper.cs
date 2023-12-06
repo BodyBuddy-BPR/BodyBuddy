@@ -1,11 +1,7 @@
 ﻿using BodyBuddy.Dtos;
 using BodyBuddy.Helpers;
 using BodyBuddy.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BodyBuddy.Models.Supabase;
 
 namespace BodyBuddy.Mappers
 {
@@ -19,6 +15,16 @@ namespace BodyBuddy.Mappers
                 Steps = stepDto.Steps,
                 StepGoal = stepDto.StepGoal,
                 Date = DateHelper.ConvertToEpochTime(stepDto.Date)
+            };
+        }
+
+        public StepModel MapToDatabaseFromSb(StepsSbModel stepsSbModel)
+        {
+            return new StepModel()
+            {
+                Steps = stepsSbModel.Steps,
+                StepGoal = stepsSbModel.StepGoal,
+                Date = DateHelper.ConvertToEpochTime(stepsSbModel.Date)
             };
         }
 

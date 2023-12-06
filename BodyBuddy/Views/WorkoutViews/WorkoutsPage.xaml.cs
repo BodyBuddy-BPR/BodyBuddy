@@ -1,7 +1,6 @@
 using BodyBuddy.Helpers;
 using BodyBuddy.ViewModels.WorkoutViewModels;
 using Mopups.Interfaces;
-using System.Text.RegularExpressions;
 using BodyBuddy.Controls.Common;
 
 namespace BodyBuddy.Views.WorkoutViews;

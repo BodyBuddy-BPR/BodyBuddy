@@ -1,10 +1,5 @@
 ﻿using BodyBuddy.ViewModels.Calendar;
 using Syncfusion.Maui.Scheduler;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BodyBuddy.Views.Calendar
 {

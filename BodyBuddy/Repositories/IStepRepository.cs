@@ -7,5 +7,7 @@ namespace BodyBuddy.Repositories
     {
         Task<StepModel> GetStepsForDayAsTimestampAsync(long dayAsTimestamp);
         Task SaveChangesAsync(StepModel stepDetails);
+        Task ClearSQLiteData();
+        Task AddListOfStepData(List<StepModel> stepModels);
     }
 }

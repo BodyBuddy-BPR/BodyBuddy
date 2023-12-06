@@ -1,6 +1,4 @@
-﻿using BodyBuddy.Models;
-using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
+﻿using CommunityToolkit.Mvvm.Input;
 using BodyBuddy.Services;
 using BodyBuddy.Views.ExerciseViews;
 using CommunityToolkit.Mvvm.ComponentModel;

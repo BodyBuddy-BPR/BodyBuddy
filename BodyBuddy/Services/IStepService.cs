@@ -1,9 +1,4 @@
 ﻿using BodyBuddy.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BodyBuddy.Services
 {
@@ -30,5 +25,7 @@ namespace BodyBuddy.Services
         /// </summary>
         event StepsChanged IsStepsChanged;
 
+
+        Task ReplaceSQLiteDataWithRemoteData();
     }
 }

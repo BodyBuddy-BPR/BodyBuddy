@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BodyBuddy.Dtos;
+﻿using BodyBuddy.Dtos;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BodyBuddy.ViewModels

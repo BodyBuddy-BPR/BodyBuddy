@@ -2,11 +2,6 @@
 using BodyBuddy.Mappers;
 using BodyBuddy.Models;
 using BodyBuddy.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BodyBuddy.Services.Implementations
 {
