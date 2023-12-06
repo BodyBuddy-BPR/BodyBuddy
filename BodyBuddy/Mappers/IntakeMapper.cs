@@ -1,6 +1,7 @@
 ﻿using BodyBuddy.Dtos;
 using BodyBuddy.Helpers;
 using BodyBuddy.Models;
+using BodyBuddy.Models.Supabase;
 
 namespace BodyBuddy.Mappers
 {
@@ -32,6 +33,31 @@ namespace BodyBuddy.Mappers
                 CalorieCurrent = intakeModel.CalorieCurrent,
                 WaterCurrent = intakeModel.WaterCurrent,
                 Date = DateHelper.ConvertToDateTime(intakeModel.Date)
+            };
+        }
+
+        //SbModels
+        public IntakeSbModel MapToSbModel(IntakeDto intakeDto)
+        {
+            return new IntakeSbModel()
+            {
+                Date = intakeDto.Date,
+                CalorieCurrent = intakeDto.CalorieCurrent,
+                WaterCurrent = intakeDto.WaterCurrent,
+                CalorieGoal = intakeDto.CalorieGoal,
+                WaterGoal = intakeDto.WaterGoal,
+            };
+        }
+
+        public IntakeModel MapToDatabaseFromSb(IntakeSbModel intakeSbModel)
+        {
+            return new IntakeModel()
+            {
+                CalorieGoal = intakeSbModel.CalorieGoal,
+                WaterGoal = intakeSbModel.WaterGoal,
+                CalorieCurrent = intakeSbModel.CalorieCurrent,
+                WaterCurrent = intakeSbModel.WaterCurrent,
+                Date = DateHelper.ConvertToEpochTimeAtMidnightUnspecified(intakeSbModel.Date)
             };
         }
     }

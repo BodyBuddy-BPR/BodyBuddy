@@ -32,7 +32,7 @@ namespace BodyBuddy.Repositories.Implementations
                 // If no previous entry exists, use default values
                 existingStepCount = new StepModel
                 {
-                    Id = await GetNextStepId(),
+                    Id = await GetNextId(),
                     Date = dayAsTimestamp,
                     Steps = 0,
                     StepGoal = previousStepCount?.StepGoal ?? 8000
@@ -50,7 +50,7 @@ namespace BodyBuddy.Repositories.Implementations
             }
         }
 
-        private async Task<int> GetNextStepId()
+        private async Task<int> GetNextId()
         {
             var lastItem = await _context.Table<StepModel>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
             return lastItem?.Id + 1 ?? 1;
@@ -70,7 +70,7 @@ namespace BodyBuddy.Repositories.Implementations
         {
             foreach (var stepModel in stepModels)
             {
-                stepModel.Id = await GetNextStepId();
+                stepModel.Id = await GetNextId();
 
                 // Insert the new entry in the database
                 await _context.InsertAsync(stepModel);
