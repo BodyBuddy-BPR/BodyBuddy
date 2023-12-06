@@ -6,7 +6,7 @@
         public static DateTime Today => DateTime.Today;
         public static DateTime Now => DateTime.Now;
 
-        private static DateTime _epochStart = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        private static readonly DateTime _epochStart = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
 
         public static bool IsNewDay()
@@ -25,12 +25,12 @@
             return _epochStart.AddSeconds(epoch);
         }
 
-        public static long ConvertToEpochTimeAtMidnight(DateTime dateTime)
+        public static long ConvertToEpochTimeAtMidnightUnspecified(DateTime dateTime)
         {
             //Adding 1 hour for it to be at midnight
             return (long)(dateTime.ToUniversalTime() - _epochStart).TotalSeconds+3600;
         }
-        public static long ConvertToEpochTime(DateTime dateTime)
+        public static long ConvertToEpochTimeAtMidnightUtc(DateTime dateTime)
         {
             return (long)(dateTime.ToUniversalTime() - _epochStart).TotalSeconds;
         }

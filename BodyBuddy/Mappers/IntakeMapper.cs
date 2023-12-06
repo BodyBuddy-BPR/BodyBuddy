@@ -15,7 +15,7 @@ namespace BodyBuddy.Mappers
                 WaterGoal = intakeDto.WaterGoal,
                 CalorieCurrent = intakeDto.CalorieCurrent,
                 WaterCurrent = intakeDto.WaterCurrent,
-                Date = DateHelper.ConvertToEpochTime(intakeDto.Date)
+                Date = DateHelper.ConvertToEpochTimeAtMidnightUtc(intakeDto.Date)
             };
         }
 
