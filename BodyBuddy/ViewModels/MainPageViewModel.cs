@@ -64,7 +64,7 @@ namespace BodyBuddy.ViewModels
         private bool isStepInProgress;
 
         public MainPageViewModel(IStepService stepService, IQuoteService quoteService, IUserAuthenticationService userAuthService, IPopupNavigation popupNavigation,
-            IStartupTestService startupTestService, IWorkoutService , IChallengeService challengeService)
+            IStartupTestService startupTestService, IWorkoutService workoutService, IChallengeService challengeService)
         {
             _stepService = stepService;
             _quoteService = quoteService;
