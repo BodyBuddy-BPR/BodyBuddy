@@ -2,6 +2,7 @@
 using BodyBuddy.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using BodyBuddy.Authentication;
+using BodyBuddy.Helpers;
 using BodyBuddy.Views.Authentication;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
@@ -47,7 +48,7 @@ namespace BodyBuddy.ViewModels.Profile
         {
             StartupTestDto = await _startupTestService.GetStartupTestData();
 
-            UserIntakeForDate = await _intakeService.GetIntakeForDateAsync((int)(DateTime.UtcNow.Date.Subtract(new DateTime(1970, 1, 1))).TotalSeconds);
+            UserIntakeForDate = await _intakeService.GetIntakeForDateAsync(DateHelper.GetCurrentDayAtMidnight());
 
             CalculateUsersBMI();
 
@@ -143,8 +144,7 @@ namespace BodyBuddy.ViewModels.Profile
             CurrentSelectedDate = buttonNumber;
             SetSelectedWeekday();
             currentAndSelectedDayDifference = CurrentSelectedDate - currentDayOfWeek;
-            int currentDateTimestamp = (int)(DateTime.UtcNow.Date.Subtract((new DateTime(1970, 1, 1))).TotalSeconds);
-            UserIntakeForDate = await _intakeService.GetIntakeForDateAsync(currentDateTimestamp + (currentAndSelectedDayDifference * secondsInADay));
+            UserIntakeForDate = await _intakeService.GetIntakeForDateAsync(DateHelper.GetCurrentDayAtMidnight() + (currentAndSelectedDayDifference * secondsInADay));
         }
         #endregion
     }

@@ -4,9 +4,8 @@ namespace BodyBuddy.Repositories
 {
     public interface IIntakeRepository
 	{
-		Task<IntakeModel> GetCurrentDayIntakeAsync();
+        Task<IntakeModel> GetIntakeForDateAsync(long dateTimeUtc);
         Task<List<IntakeModel>> GetAllIntakeDataAsync();
-        Task<IntakeModel> GetIntakeForDateAsync(int dateTimeUTC);
 		Task SaveChangesAsync(IntakeModel intakeDetails);
 	}
 }

@@ -29,7 +29,7 @@ namespace UnitTest.ViewModels.IntakeViewModels
             // Arrange
             _target.IsBusy = false;
 
-            _mockService.Setup(service => service.GetIntakeAsync()).ReturnsAsync(_defaultIntake);
+            _mockService.Setup(service => service.GetIntakeTodayAsync()).ReturnsAsync(_defaultIntake);
 
             // Act
             await _target.GetIntakeGoals();
@@ -45,7 +45,7 @@ namespace UnitTest.ViewModels.IntakeViewModels
         public async Task CorrectAmountOfWaterIsAddedWhenAddWaterClickedMethodIsCalledTest(int timesPressed, int waterCurrentResult)
         {
             // Arrange
-            _mockService.Setup(service => service.GetIntakeAsync()).ReturnsAsync(_defaultIntake);
+            _mockService.Setup(service => service.GetIntakeTodayAsync()).ReturnsAsync(_defaultIntake);
 
             // Act
             await _target.GetIntakeGoals();
@@ -65,7 +65,7 @@ namespace UnitTest.ViewModels.IntakeViewModels
         public async Task CorrectAmountOfCaloriesIsAddedWhenAddCaloriesClickedMethodIsCalledTest(int calories)
         {
             // Arrange
-            _mockService.Setup(service => service.GetIntakeAsync()).ReturnsAsync(_defaultIntake);
+            _mockService.Setup(service => service.GetIntakeTodayAsync()).ReturnsAsync(_defaultIntake);
 
             // Act
             await _target.GetIntakeGoals();

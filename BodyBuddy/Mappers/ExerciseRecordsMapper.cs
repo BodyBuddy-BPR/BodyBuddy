@@ -15,7 +15,7 @@ namespace BodyBuddy.Mappers
                 Set = exerciseRecordsDto.Set,
                 Weight = exerciseRecordsDto.Weight,
                 Reps = exerciseRecordsDto.Reps,
-                Date = DateHelper.ConvertToEpochTimeAtMidnight(exerciseRecordsDto.Date)
+                Date = DateHelper.ConvertToEpochTimeAtMidnightUnspecified(exerciseRecordsDto.Date)
             };
         }
 

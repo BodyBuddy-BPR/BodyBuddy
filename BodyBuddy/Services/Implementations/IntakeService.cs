@@ -1,4 +1,5 @@
 ﻿using BodyBuddy.Dtos;
+using BodyBuddy.Helpers;
 using BodyBuddy.Mappers;
 using BodyBuddy.Repositories;
 
@@ -13,12 +14,12 @@ namespace BodyBuddy.Services.Implementations
         {
             _repo = intakeRepository;
         }
-        public async Task<IntakeDto> GetIntakeAsync()
+        public async Task<IntakeDto> GetIntakeTodayAsync()
         {
-            return _mapper.MapToDto(await _repo.GetCurrentDayIntakeAsync());
+            return _mapper.MapToDto(await _repo.GetIntakeForDateAsync(DateHelper.GetCurrentDayAtMidnight()));
         }
 
-		public async Task<IntakeDto> GetIntakeForDateAsync(int dateTimeUTC)
+		public async Task<IntakeDto> GetIntakeForDateAsync(long dateTimeUTC)
 		{
 			return _mapper.MapToDto(await _repo.GetIntakeForDateAsync(dateTimeUTC));
 		}
