@@ -9,8 +9,10 @@ namespace BodyBuddy.Repositories.Supabase
 {
     public interface IWorkoutSbRepository
     {
-        Task<List<WorkoutSbModel>> GetAllForProfile();
+        Task<List<WorkoutSbModel>> GetAllWorkoutsForProfile();
+        Task<List<WorkoutExerciseSbModel>> GetAllWorkoutExercisesForProfile();
         Task AddOrUpdateWorkout(WorkoutSbModel model);
-        Task AddOrUpdateWorkoutExercises(List<WorkoutExerciseSbModel> workoutExerciseSbModels);
+        Task AddOrUpdateWorkoutExercise(WorkoutExerciseSbModel workoutExerciseSbModel);
+        Task RemoveWorkoutExercise(int workoutId, int exerciseId);
     }
 }

@@ -6,6 +6,7 @@ namespace BodyBuddy.Dtos
     {
         public int Id { get; set; }
         public int WorkoutExerciseId { get; set; }
+        public int WorkoutId {get; set; }
 
         [ObservableProperty] private string _name;
 

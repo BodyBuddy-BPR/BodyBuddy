@@ -36,6 +36,7 @@ namespace BodyBuddy.Mappers
         {
             return new WorkoutSbModel()
             {
+                Id = workoutDto.Id,
                 Description = workoutDto.Description,
                 Name = workoutDto.Name,
                 PreMade = workoutDto.PreMade

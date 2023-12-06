@@ -33,11 +33,9 @@ namespace BodyBuddy.Repositories.Implementations
         {
             if (workout.Id != 0)
                 return await _context.UpdateAsync(workout);
-            else
-            {
-                workout.Id = await GetNextWorkoutId(); // Generate a unique Id
-                return await _context.InsertAsync(workout);
-            }
+
+            workout.Id = await GetNextWorkoutId(); // Generate a unique Id
+            return await _context.InsertAsync(workout);
         }
 
         public async Task<bool> DeleteWorkout(WorkoutModel workout)
@@ -66,7 +64,8 @@ namespace BodyBuddy.Repositories.Implementations
         public async Task<int> AddWorkoutPlanAsync(WorkoutModel workout)
         {
             workout.Id = await GetNextWorkoutId(); // Generate a unique Id
-            return await _context.InsertAsync(workout);
+            await _context.InsertAsync(workout);
+            return workout.Id;
         }
 
         public async Task<int> UpdateWorkoutPlanAsync(WorkoutModel workout)

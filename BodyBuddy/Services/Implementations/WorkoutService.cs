@@ -21,15 +21,18 @@ namespace BodyBuddy.Services.Implementations
             _userAuthenticationService = userAuthenticationService;
         }
 
-        public async Task<int> SaveWorkoutData(WorkoutDto workoutDto)
+        public async Task SaveWorkoutData(WorkoutDto workoutDto)
         {
+            if (workoutDto.Id == 0)
+            {
+                var returnedWorkoutId = await _workoutRepository.AddWorkoutPlanAsync(_mapper.MapToDatabase(workoutDto));
+                workoutDto.Id = returnedWorkoutId;
+            }
+            else
+                await _workoutRepository.UpdateWorkoutPlanAsync(_mapper.MapToDatabase(workoutDto));
+
             if (Connectivity.NetworkAccess == NetworkAccess.Internet && _userAuthenticationService.IsUserLoggedIn())
                 await _workoutSbRepository.AddOrUpdateWorkout(_mapper.MapToSbModel(workoutDto));
-
-            if (workoutDto.Id == 0)
-                return await _workoutRepository.AddWorkoutPlanAsync(_mapper.MapToDatabase(workoutDto));
-
-            return await _workoutRepository.UpdateWorkoutPlanAsync(_mapper.MapToDatabase(workoutDto));
         }
 
         public async Task<List<WorkoutDto>> GetWorkoutPlans(bool preMade)

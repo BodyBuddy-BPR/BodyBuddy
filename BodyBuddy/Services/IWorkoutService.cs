@@ -4,7 +4,7 @@ namespace BodyBuddy.Services
 {
     public interface IWorkoutService
     {
-        Task<int> SaveWorkoutData(WorkoutDto workoutDto);
+        Task SaveWorkoutData(WorkoutDto workoutDto);
 
         Task<List<WorkoutDto>> GetWorkoutPlans(bool preMade);
 

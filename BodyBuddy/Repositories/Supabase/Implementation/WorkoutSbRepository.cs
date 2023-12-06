@@ -17,7 +17,23 @@ namespace BodyBuddy.Repositories.Supabase.Implementation
             _supabase = client;
         }
 
-        public async Task<List<WorkoutSbModel>> GetAllForProfile()
+        public async Task<List<WorkoutSbModel>> GetAllWorkoutsForProfile()
+        {
+            try
+            {
+                var userId = SecureStorage.GetAsync("UserUID").Result;
+
+                var stepModel = await _supabase.From<WorkoutSbModel>().Where(x => x.UserId == userId).Get();
+
+                return stepModel.Models;
+            }
+            catch (Exception ex)
+            {
+                return new List<WorkoutSbModel>();
+            }
+        }
+
+        public async Task<List<WorkoutExerciseSbModel>> GetAllWorkoutExercisesForProfile()
         {
             throw new NotImplementedException();
         }
@@ -25,13 +41,39 @@ namespace BodyBuddy.Repositories.Supabase.Implementation
         public async Task AddOrUpdateWorkout(WorkoutSbModel model)
         {
             model.UserId = SecureStorage.GetAsync("UserUID").Result;
+            try
+            {
+                await _supabase.From<WorkoutSbModel>().Upsert(model);
+            }
+            catch (Exception ex)
+            {
 
-            await _supabase.From<WorkoutSbModel>().Upsert(model);
+            }
         }
 
-        public async Task AddOrUpdateWorkoutExercises(List<WorkoutExerciseSbModel> workoutExerciseSbModels)
+        public async Task AddOrUpdateWorkoutExercise(WorkoutExerciseSbModel workoutExerciseSbModel)
         {
-            await _supabase.From<WorkoutExerciseSbModel>().Upsert(workoutExerciseSbModels);
+            try
+            {
+                await _supabase.From<WorkoutExerciseSbModel>().Upsert(workoutExerciseSbModel);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public async Task RemoveWorkoutExercise(int workoutId, int exerciseId)
+        {
+            try
+            {
+                await _supabase.From<WorkoutExerciseSbModel>()
+                    .Where(x => x.WorkoutId == workoutId && x.ExerciseId == exerciseId).Delete();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 }

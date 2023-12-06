@@ -71,6 +71,8 @@ namespace BodyBuddy.Mappers
             return new ExerciseDto()
             {
                 Id = exerciseModel.Id,
+                WorkoutId = exerciseModel.WorkoutId,
+                WorkoutExerciseId = exerciseModel.WorkoutExerciseId,
                 Name = exerciseModel.Name,
                 Force = exerciseModel.Force,
                 Level = exerciseModel.Level,
@@ -81,7 +83,6 @@ namespace BodyBuddy.Mappers
                 Instructions = exerciseModel.Instructions,
                 Category = exerciseModel.Category,
                 Images = exerciseModel.Images,
-                WorkoutExerciseId = exerciseModel.WorkoutExerciseId,
                 Sets = exerciseModel.Sets,
                 Reps = exerciseModel.Reps,
             };
