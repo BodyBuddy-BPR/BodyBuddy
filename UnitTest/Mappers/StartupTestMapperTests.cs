@@ -37,7 +37,7 @@ namespace UnitTest.Mappers
                 Gender = EnumMapper.GetDisplayString(Gender.Female),
                 Weight = 60.88,
                 Height = 166,
-                Birthday = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                Birthday = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Local),
                 ActiveAmount = EnumMapper.GetDisplayString(UserActivity.Active),
                 PassiveCalorieBurn = 2500,
                 Goal = EnumMapper.GetDisplayString(Goal.GainMuscle)
@@ -101,7 +101,7 @@ namespace UnitTest.Mappers
             Assert.That(returnStartupTestDb.Gender, Is.EqualTo(expectedGender));
             Assert.That(returnStartupTestDb.Weight, Is.EqualTo(startupTest.Weight));
             Assert.That(returnStartupTestDb.Height, Is.EqualTo(startupTest.Height));
-            Assert.That(returnStartupTestDb.Birthday, Is.EqualTo(new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc)));
+            Assert.That(returnStartupTestDb.Birthday, Is.EqualTo(new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Local)));
             Assert.That(returnStartupTestDb.ActiveAmount, Is.EqualTo(expectedActivity));
             Assert.That(returnStartupTestDb.PassiveCalorieBurn, Is.EqualTo(startupTest.PassiveCalorieBurn));
             Assert.That(returnStartupTestDb.Goal, Is.EqualTo(expectedGoal));
