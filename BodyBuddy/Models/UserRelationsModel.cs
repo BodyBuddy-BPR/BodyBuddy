@@ -1,7 +1,5 @@
 ﻿using Postgrest.Attributes;
 using Postgrest.Models;
-using System;
-using System.Collections.Generic;
 
 namespace BodyBuddy.Models
 {

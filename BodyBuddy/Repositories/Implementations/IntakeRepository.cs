@@ -1,5 +1,4 @@
-﻿using BodyBuddy.Helpers;
-using BodyBuddy.Models;
+﻿using BodyBuddy.Models;
 using SQLite;
 
 namespace BodyBuddy.Repositories.Implementations

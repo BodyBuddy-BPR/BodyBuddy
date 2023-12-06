@@ -5,9 +5,6 @@ using BodyBuddy.Authentication;
 using BodyBuddy.Views.Authentication;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
-using Syncfusion.Maui.GridCommon.Collections;
-using System.Runtime.CompilerServices;
-using BodyBuddy.Views.Profile;
 
 
 namespace BodyBuddy.ViewModels.Profile

@@ -1,6 +1,5 @@
 ﻿using BodyBuddy.Enums;
 using BodyBuddy.Mappers;
-using BodyBuddy.Models;
 using BodyBuddy.Services;
 using BodyBuddy.ViewModels.StartupTest;
 using State = BodyBuddy.Enums.StartupTestStates;

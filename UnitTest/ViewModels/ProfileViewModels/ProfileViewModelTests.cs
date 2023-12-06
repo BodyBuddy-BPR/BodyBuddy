@@ -1,12 +1,6 @@
 ﻿using BodyBuddy.ViewModels.Profile;
 using BodyBuddy.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Moq;
-using BodyBuddy.Models;
 using BodyBuddy.Mappers;
 using BodyBuddy.Authentication;
 

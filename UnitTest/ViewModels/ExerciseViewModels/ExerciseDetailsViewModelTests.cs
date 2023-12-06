@@ -1,6 +1,4 @@
 ﻿using BodyBuddy.Dtos;
-using BodyBuddy.Models;
-using BodyBuddy.Repositories;
 using BodyBuddy.Services;
 using BodyBuddy.ViewModels.ExerciseViewModels;
 using Moq;

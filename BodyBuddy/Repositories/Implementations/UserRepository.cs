@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BodyBuddy.Models;
-using Postgrest;
+﻿using BodyBuddy.Models;
 using Client = Supabase.Client;
 
 namespace BodyBuddy.Repositories.Implementations

@@ -1,7 +1,4 @@
 using BodyBuddy.ViewModels.WorkoutViewModels;
-using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
-using Mopups.Services;
 
 namespace BodyBuddy.Views.Popups;
 

@@ -1,8 +1,6 @@
 using BodyBuddy.ViewModels;
-using BodyBuddy.ViewModels.IntakeViewModels;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Mvvm.ComponentModel;
 using Mopups.Services;
 
 namespace BodyBuddy.Views.Popups;
