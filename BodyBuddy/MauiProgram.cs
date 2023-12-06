@@ -144,7 +144,7 @@ public static class MauiProgram
         // Startup Test
         builder.Services.AddSingleton<StartupTestViewModel>();
         builder.Services.AddSingleton<ProfileViewModel>();
-        builder.Services.AddSingleton<ProfileGraphViewModel>();
+        builder.Services.AddSingleton<IntakeGraphViewModel>();
 
         // Workout
         builder.Services.AddTransient<WorkoutViewModel>();

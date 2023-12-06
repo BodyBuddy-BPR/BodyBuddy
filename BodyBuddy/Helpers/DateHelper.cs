@@ -6,6 +6,8 @@
         public static DateTime Today => DateTime.Today;
         public static DateTime Now => DateTime.Now;
 
+        private static readonly DateTime _epochStart = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
 
         public static bool IsNewDay()
         {
@@ -20,20 +22,17 @@
 
         public static DateTime ConvertToDateTime(long epoch)
         {
-            DateTime epochStart = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            return epochStart.AddSeconds(epoch);
+            return _epochStart.AddSeconds(epoch);
         }
 
-        public static long ConvertToEpochTimeAtMidnight(DateTime dateTime)
+        public static long ConvertToEpochTimeAtMidnightUnspecified(DateTime dateTime)
         {
-            DateTime epochStart = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             //Adding 1 hour for it to be at midnight
-            return (long)(dateTime.ToUniversalTime() - epochStart).TotalSeconds+3600;
+            return (long)(dateTime.ToUniversalTime() - _epochStart).TotalSeconds+3600;
         }
-        public static long ConvertToEpochTime(DateTime dateTime)
+        public static long ConvertToEpochTimeAtMidnightUtc(DateTime dateTime)
         {
-            DateTime epochStart = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            return (long)(dateTime.ToUniversalTime() - epochStart).TotalSeconds;
+            return (long)(dateTime.ToUniversalTime() - _epochStart).TotalSeconds;
         }
 
         //Get current date at midnight in UTC, and convert it to a timestamp

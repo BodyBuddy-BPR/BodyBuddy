@@ -3,9 +3,9 @@ using BodyBuddy.Dtos;
 using BodyBuddy.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace BodyBuddy.ViewModels.Profile
+namespace BodyBuddy.ViewModels.IntakeViewModels
 {
-    public partial class ProfileGraphViewModel : BaseViewModel
+    public partial class IntakeGraphViewModel : BaseViewModel
     {
         private readonly IIntakeService _intakeService;
 
@@ -15,7 +15,7 @@ namespace BodyBuddy.ViewModels.Profile
         private int _intakeCount, _calorieGoalsCompleted, _waterGoalsCompleted;
         [ObservableProperty] string _calorieGoalsCompletedString, _waterGoalsCompletedString;
 
-        public ProfileGraphViewModel(IIntakeService intakeService)
+        public IntakeGraphViewModel(IIntakeService intakeService)
         {
             _intakeService = intakeService;
             //GenerateIntakeData();

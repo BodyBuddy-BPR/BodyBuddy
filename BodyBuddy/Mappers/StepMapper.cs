@@ -14,7 +14,7 @@ namespace BodyBuddy.Mappers
                 Id = stepDto.Id,
                 Steps = stepDto.Steps,
                 StepGoal = stepDto.StepGoal,
-                Date = DateHelper.ConvertToEpochTime(stepDto.Date)
+                Date = DateHelper.ConvertToEpochTimeAtMidnightUtc(stepDto.Date)
             };
         }
 
@@ -24,7 +24,7 @@ namespace BodyBuddy.Mappers
             {
                 Steps = stepsSbModel.Steps,
                 StepGoal = stepsSbModel.StepGoal,
-                Date = DateHelper.ConvertToEpochTime(stepsSbModel.Date)
+                Date = DateHelper.ConvertToEpochTimeAtMidnightUtc(stepsSbModel.Date)
             };
         }
 

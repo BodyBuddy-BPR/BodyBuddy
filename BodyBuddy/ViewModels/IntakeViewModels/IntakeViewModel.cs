@@ -79,7 +79,7 @@ namespace BodyBuddy.ViewModels.IntakeViewModels
             {
                 IsBusy = true;
 
-                var intake = await _intakeService.GetIntakeAsync();
+                var intake = await _intakeService.GetIntakeTodayAsync();
                 if (intake != null)
                 {
                     IntakeDto = intake;
