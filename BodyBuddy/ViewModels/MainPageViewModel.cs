@@ -24,12 +24,13 @@ namespace BodyBuddy.ViewModels
         private readonly IQuoteService _quoteService;
         private readonly IUserAuthenticationService _userAuthService;
         private readonly IStepService _stepService;
+        private readonly IChallengeService _challengeService;
         private readonly IPopupNavigation _popupNavigation;
 
         [ObservableProperty]
         private StepDto _userSteps;
 
-        [ObservableProperty] private ObservableCollection<UserTotalSteps> _friendsSteps = new();
+        [ObservableProperty] private ObservableCollection<ChallengeDto> _challengeDtos;
 
         [ObservableProperty]
         public int _stepProgress;
@@ -47,12 +48,13 @@ namespace BodyBuddy.ViewModels
         private const double StepThreshold = 1.5;
         private bool isStepInProgress;
 
-        public MainPageViewModel(IStepService stepService, IQuoteService quoteService, IUserAuthenticationService userAuthService, IPopupNavigation popupNavigation)
+        public MainPageViewModel(IStepService stepService, IQuoteService quoteService, IChallengeService challengeService, IUserAuthenticationService userAuthService, IPopupNavigation popupNavigation)
         {
             _stepService = stepService;
             _quoteService = quoteService;
             _userAuthService = userAuthService;
             _popupNavigation = popupNavigation;
+            _challengeService = challengeService;
         }
 
         public async Task Initialize()
@@ -63,13 +65,9 @@ namespace BodyBuddy.ViewModels
             TurnOnAccelerometer();
         }
 
-        public async Task GetFriendsSteps()
+        public async Task GetActiveChallenges()
         {
-            FriendsSteps = new ObservableCollection<UserTotalSteps>(await _stepService.GetStepsForPeriodFriends());
-            FriendsSteps.Add(new UserTotalSteps(){TotalSteps = UserSteps.Steps, User = new UserModel() {Email = "You"}});
-
-            var sortedSteps = FriendsSteps.OrderByDescending(u => u.TotalSteps).ToList();
-            FriendsSteps = new ObservableCollection<UserTotalSteps>(sortedSteps);
+            ChallengeDtos = new ObservableCollection<ChallengeDto>(await _challengeService.GetActiveChallenges());
         }
 
         public void TurnOnAccelerometer()

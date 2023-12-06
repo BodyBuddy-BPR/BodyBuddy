@@ -25,7 +25,7 @@ public partial class MainPage : ContentPage
 
         await _viewModel.AttemptToLogin();
         await _viewModel.Initialize();
-        await _viewModel.GetFriendsSteps();
+        await _viewModel.GetActiveChallenges();
     }
 
     private void TapGestureRecognizer_Tapped(object sender, EventArgs e)

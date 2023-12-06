@@ -17,9 +17,9 @@
 
     <!--  Entire Page  -->
     <Grid
-        Margin="15,15"
-        RowDefinitions="Auto, Auto, Auto, Auto"
-        RowSpacing="15">
+        Margin="15"
+        RowDefinitions="Auto, Auto, Auto, *"
+        RowSpacing="10">
 
         <Label
             Grid.Row="0"
@@ -89,15 +89,30 @@
                 WidthRequest="30" />
         </VerticalStackLayout>
 
-        <ListView Grid.Row="3" ItemsSource="{Binding FriendsSteps}">
+        <ListView
+            Grid.Row="3"
+            ItemsSource="{Binding ChallengeDtos}"
+            RowHeight="150">
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="dtos:UserTotalSteps">
+                <DataTemplate x:DataType="dtos:ChallengeDto">
                     <ViewCell>
-                        <StackLayout Padding="10" Orientation="Horizontal">
-                            <!--  Replace with your actual data fields  -->
-                            <Label FontAttributes="Bold" Text="{Binding User.Email}" />
-                            <Label HorizontalOptions="EndAndExpand" Text="{Binding TotalSteps}" />
-                            <!--  Add more labels or other controls as needed  -->
+                        <StackLayout Padding="10">
+                            <!--  ChallengeDto Properties  -->
+                            <Label FontAttributes="Bold" Text="{Binding Goal}" />
+
+                            <!--  Nested ListView for UserTotalSteps  -->
+                            <CollectionView ItemsSource="{Binding UserTotalSteps}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="dtos:UserTotalSteps">
+                                        <StackLayout Orientation="Horizontal">
+                                            <!--  Display User's Email  -->
+                                            <Label Text="{Binding User.Email}" />
+                                            <!--  Display Total Steps  -->
+                                            <Label HorizontalOptions="EndAndExpand" Text="{Binding TotalSteps}" />
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

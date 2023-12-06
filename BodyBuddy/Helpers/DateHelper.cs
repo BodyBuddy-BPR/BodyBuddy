@@ -31,7 +31,8 @@ namespace BodyBuddy.Helpers
         public static long ConvertToEpochTime(DateTime dateTime)
         {
             DateTime epochStart = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            return (long)(dateTime.ToUniversalTime() - epochStart).TotalSeconds;
+            //Adding 1 hour for it to be at midnight
+            return (long)(dateTime.ToUniversalTime() - epochStart).TotalSeconds+3600;
         }
 
         //Get current date at midnight in UTC, and convert it to a timestamp

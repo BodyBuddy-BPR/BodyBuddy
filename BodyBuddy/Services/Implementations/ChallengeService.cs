@@ -42,6 +42,7 @@ namespace BodyBuddy.Services.Implementations
             {
                 var stepsCountForUser = await _stepService.GetStepsForPeriodFriends();
                 stepsCountForUser.Add(await _stepService.GetStepDataForPeriodAsync(DateHelper.ConvertToEpochTime(activeChallenge.From), DateHelper.GetCurrentDayAtMidnight()));
+                stepsCountForUser = stepsCountForUser.OrderByDescending(u => u.TotalSteps).ToList();
 
                 _challengeDtos.Add(_challengeMapper.MapFromSbToDto(activeChallenge, stepsCountForUser));
             }
