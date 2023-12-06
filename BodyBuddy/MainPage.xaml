@@ -98,10 +98,20 @@
                     <ViewCell>
                         <StackLayout Padding="10">
                             <!--  ChallengeDto Properties  -->
-                            <Label FontAttributes="Bold" Text="{Binding Goal}" />
+                            <HorizontalStackLayout Spacing="10">
+                                <Label FontAttributes="Bold" Text="{Binding Difficulty}" />
+                                <Label FontAttributes="Bold" Text="{Binding Type}" />
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout Spacing="10">
+                                <Label FontAttributes="Bold" Text="{Binding Progress}" />
+                                <Label FontAttributes="Bold" Text="/" />
+                                <Label FontAttributes="Bold" Text="{Binding Goal}" />
+                                <Label FontAttributes="Bold" Text="Steps" />
+                            </HorizontalStackLayout>
 
                             <!--  Nested ListView for UserTotalSteps  -->
-                            <CollectionView ItemsSource="{Binding UserTotalSteps}">
+                            <CollectionView ItemsSource="{Binding UserTotalSteps}" VerticalOptions="Fill">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="dtos:UserTotalSteps">
                                         <StackLayout Orientation="Horizontal">

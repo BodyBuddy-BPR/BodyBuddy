@@ -25,6 +25,7 @@ namespace BodyBuddy.Mappers
             };
 
             challengeDto.UserTotalSteps = steps;
+            challengeDto.Progress = steps.Sum(s => s.TotalSteps);
 
             return challengeDto;
         }
