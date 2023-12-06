@@ -1,7 +1,4 @@
 using BodyBuddy.ViewModels.Profile;
-using BodyBuddy.Views.Authentication;
-using Microsoft.Maui.Controls.Shapes;
-using Mopups.Interfaces;
 
 namespace BodyBuddy.Views.Profile;
 

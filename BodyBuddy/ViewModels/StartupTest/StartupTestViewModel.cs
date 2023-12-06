@@ -1,14 +1,11 @@
 ﻿using BodyBuddy.Dtos;
-using BodyBuddy.Helpers;
 using BodyBuddy.Services;
-using BodyBuddy.Views.Profile;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.ComponentModel;
 using System.Windows.Input;
 using BodyBuddy.Enums;
 using BodyBuddy.Mappers;
-using System.Collections.ObjectModel;
 
 namespace BodyBuddy.ViewModels.StartupTest;
 

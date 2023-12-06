@@ -4,9 +4,7 @@ using BodyBuddy.Repositories;
 using BodyBuddy.Authentication;
 using BodyBuddy.Helpers;
 using BodyBuddy.Models;
-using BodyBuddy.Models.Supabase;
 using BodyBuddy.Repositories.Supabase;
-using static BodyBuddy.Services.Implementations.StepService;
 
 namespace BodyBuddy.Services.Implementations
 {

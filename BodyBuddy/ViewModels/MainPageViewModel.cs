@@ -1,17 +1,9 @@
 ﻿using BodyBuddy.Dtos;
 using BodyBuddy.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BodyBuddy.ViewModels.Authentication;
 using BodyBuddy.Views.Authentication;
 using BodyBuddy.Authentication;
-using BodyBuddy.Models;
-using BodyBuddy.Services.Implementations;
 using CommunityToolkit.Mvvm.Input;
 using Mopups.Interfaces;
 using BodyBuddy.Views.Popups;

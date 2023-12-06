@@ -2,14 +2,7 @@
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Supabase;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Supabase.Gotrue.Constants;
 using BodyBuddy.Authentication;
 using BodyBuddy.Services;
 
