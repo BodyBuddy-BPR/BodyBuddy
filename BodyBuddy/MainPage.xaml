@@ -16,7 +16,6 @@
     <ContentPage.Behaviors>
         <mct:StatusBarBehavior StatusBarColor="{StaticResource StatusBarColor}" />
     </ContentPage.Behaviors>
-
     <!--  Entire Page  -->
     <Grid
         Margin="15,15"
@@ -194,47 +193,76 @@
                 </CollectionView>
             </Grid>
         </Border>
-
-        <ListView
+        <Border
             Grid.Row="4"
-            ItemsSource="{Binding ChallengeDtos}"
-            RowHeight="150">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="modelDto:ChallengeDto">
-                    <ViewCell>
-                        <StackLayout Padding="10">
+            Margin="0"
+            Padding="10"
+            BackgroundColor="{StaticResource Primary}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="25,25,25,25" />
+            </Border.StrokeShape>
+            <CollectionView Grid.Row="4" ItemsSource="{Binding ChallengeDtos}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="modelDto:ChallengeDto">
+                        <StackLayout Padding="5,5">
                             <!--  ChallengeDto Properties  -->
-                            <HorizontalStackLayout Spacing="10">
-                                <Label FontAttributes="Bold" Text="{Binding Difficulty}" />
-                                <Label FontAttributes="Bold" Text="{Binding Type}" />
-                            </HorizontalStackLayout>
+                            <Label
+                                Margin="0,0,0,10"
+                                FontAttributes="Bold"
+                                FontSize="20"
+                                Style="{StaticResource SmallLabel}"
+                                Text="{Binding Type}"
+                                TextColor="White" />
+                            <VerticalStackLayout>
+                                <ProgressBar Progress="{Binding ProgressInPercent}" />
+                                <HorizontalStackLayout
+                                    Margin="0,0,0,10"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="End">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontFamily="Montserrat"
+                                        Text="{Binding Progress}" />
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontFamily="Montserrat"
+                                        Text=" / " />
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontFamily="Montserrat"
+                                        Text="{Binding Goal}" />
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontFamily="Montserrat"
+                                        Text=" Steps" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
 
-                            <HorizontalStackLayout Spacing="10">
-                                <Label FontAttributes="Bold" Text="{Binding Progress}" />
-                                <Label FontAttributes="Bold" Text="/" />
-                                <Label FontAttributes="Bold" Text="{Binding Goal}" />
-                                <Label FontAttributes="Bold" Text="Steps" />
-                            </HorizontalStackLayout>
-
-                            <!--  Nested ListView for UserTotalSteps - Vertical Option should prob. not be fill (but couldn't see anything without help)  -->
                             <CollectionView ItemsSource="{Binding UserTotalSteps}" VerticalOptions="Fill">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="modelDto:UserTotalSteps">
-                                        <StackLayout Orientation="Horizontal">
-                                            <!--  Display User's Email  -->
-                                            <Label Text="{Binding User.Email}" />
-                                            <!--  Display Total Steps  -->
-                                            <Label HorizontalOptions="EndAndExpand" Text="{Binding TotalSteps}" />
-                                        </StackLayout>
+                                        <!--  Display User's Email and total steps  -->
+                                        <Label
+                                            Margin="0,5"
+                                            FontFamily="Montserrat"
+                                            LineBreakMode="WordWrap">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding User.Email}" />
+                                                    <Span Text=" Contributed " />
+                                                    <Span Text="{Binding TotalSteps}" />
+                                                    <Span Text=" steps!" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
                             </CollectionView>
                         </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
+        </Border>
     </Grid>
-
 </ContentPage>

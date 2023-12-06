@@ -39,8 +39,8 @@ namespace BodyBuddy.ViewModels
         [ObservableProperty] private ObservableCollection<ChallengeDto> _challengeDtos;
 
         [ObservableProperty]
-        public int _stepProgress;
-
+        private double _stepProgress; 
+        
         [ObservableProperty]
         private QuoteDto _quote;
 
@@ -78,7 +78,7 @@ namespace BodyBuddy.ViewModels
         public async Task Initialize()
         {
             UserSteps = await _stepService.GetStepDataTodayAsync();
-            StepProgress = UserSteps.Steps == 0 ? 0 : UserSteps.Steps / UserSteps.StepGoal;
+            StepProgress = UserSteps.Steps == 0 ? 0 : (double)UserSteps.Steps / UserSteps.StepGoal;
             await GetDailyQuote();
             await SetWorkoutsToShow();
             await TurnOnAccelerometer();
@@ -166,7 +166,7 @@ namespace BodyBuddy.ViewModels
 
                     UserSteps.Steps++;
                     await _stepService.SaveStepData(UserSteps);
-                    StepProgress = UserSteps.Steps / UserSteps.StepGoal;
+                    StepProgress = (double)UserSteps.Steps / UserSteps.StepGoal;
                 }
             }
         }
@@ -223,7 +223,7 @@ namespace BodyBuddy.ViewModels
             }
 
             UserSteps.StepGoal = NewStepGoal;
-            StepProgress = UserSteps.Steps / UserSteps.StepGoal;
+            StepProgress = (double)UserSteps.Steps / UserSteps.StepGoal;
 
             await _stepService.SaveStepData(UserSteps);
 
