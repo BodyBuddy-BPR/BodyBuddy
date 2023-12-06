@@ -9,6 +9,7 @@ using Mopups.Interfaces;
 using BodyBuddy.Views.Popups;
 using System.Collections.ObjectModel;
 using BodyBuddy.Views.WorkoutViews;
+using BodyBuddy.Models;
 
 namespace BodyBuddy.ViewModels
 {
@@ -31,8 +32,8 @@ namespace BodyBuddy.ViewModels
         [ObservableProperty] private ObservableCollection<ChallengeDto> _challengeDtos;
 
         [ObservableProperty]
-        public int _stepProgress;
-
+        private double _stepProgress; 
+        
         [ObservableProperty]
         private QuoteDto _quote;
 
@@ -70,7 +71,7 @@ namespace BodyBuddy.ViewModels
         public async Task Initialize()
         {
             UserSteps = await _stepService.GetStepDataTodayAsync();
-            StepProgress = UserSteps.Steps == 0 ? 0 : UserSteps.Steps / UserSteps.StepGoal;
+            StepProgress = UserSteps.Steps == 0 ? 0 : (double)UserSteps.Steps / UserSteps.StepGoal;
             await GetDailyQuote();
             await SetWorkoutsToShow();
             await TurnOnAccelerometer();
@@ -79,6 +80,17 @@ namespace BodyBuddy.ViewModels
         public async Task GetActiveChallenges()
         {
             ChallengeDtos = new ObservableCollection<ChallengeDto>(await _challengeService.GetActiveChallenges());
+            foreach(var challengeDto in ChallengeDtos)
+            {
+                challengeDto.Progress += UserSteps.Steps;
+                foreach(var userModel in challengeDto.UserTotalSteps)
+                {
+                    if(userModel.User.Email == "You")
+                    {
+                        userModel.TotalSteps += UserSteps.Steps;
+                    }
+                }
+            }
         }
 
         public async Task SetWorkoutsToShow()
@@ -158,7 +170,7 @@ namespace BodyBuddy.ViewModels
 
                     UserSteps.Steps++;
                     await _stepService.SaveStepData(UserSteps);
-                    StepProgress = UserSteps.Steps / UserSteps.StepGoal;
+                    StepProgress = (double)UserSteps.Steps / UserSteps.StepGoal;
                 }
             }
         }
@@ -215,7 +227,7 @@ namespace BodyBuddy.ViewModels
             }
 
             UserSteps.StepGoal = NewStepGoal;
-            StepProgress = UserSteps.Steps / UserSteps.StepGoal;
+            StepProgress = (double)UserSteps.Steps / UserSteps.StepGoal;
 
             await _stepService.SaveStepData(UserSteps);
 
