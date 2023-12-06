@@ -18,10 +18,11 @@ namespace BodyBuddy.Repositories.Supabase.Implementation
         }
         public async Task<StartupTestSbModel> GetStartupTestSbModel()
         {
+            var userId = SecureStorage.GetAsync("UserUID").Result;
             try
             {
                 var stepModel = await _supabase.From<StartupTestSbModel>()
-                    .Where(x => x.UserId == SecureStorage.GetAsync("UserUID").Result).Get();
+                    .Where(x => x.UserId == userId).Get();
 
                 return stepModel.Model;
             }
