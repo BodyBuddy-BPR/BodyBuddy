@@ -49,9 +49,10 @@
             Style="{StaticResource CardView}">
             <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
                 <Label
-                    Margin="10,0"
+                    FontAttributes="Bold"
                     FontFamily="Montserrat"
-                    FontSize="16"
+                    FontSize="20"
+                    HorizontalTextAlignment="Center"
                     Text="Quote of the day"
                     TextColor="Black" />
                 <Label
@@ -83,7 +84,7 @@
                 Maximum="1"
                 Minimum="0"
                 Progress="{Binding StepProgress}"
-                ProgressFill="{StaticResource Primary}"
+                ProgressFill="{StaticResource Secondary}"
                 StartAngle="140" />
             <VerticalStackLayout
                 Grid.Column="1"
@@ -118,7 +119,7 @@
         <!--  Recommended Workouts  -->
         <Border
             Grid.Row="3"
-            Margin="0"
+            Margin="0,-15,0,0"
             BackgroundColor="{StaticResource Primary}"
             ZIndex="0">
             <Border.StrokeShape>
@@ -130,15 +131,14 @@
                     Margin="20,10"
                     FontAttributes="Bold"
                     FontSize="20"
-                    HorizontalOptions="Start"
+                    HorizontalOptions="Center"
                     Style="{StaticResource SmallLabel}"
                     Text="Recommended workouts"
-                    TextColor="White"
-                    VerticalOptions="Start" />
+                    TextColor="White" />
                 <syncfusion:SfListView
                     Grid.Row="1"
                     Margin="20,0"
-                    HeightRequest="25"
+                    HeightRequest="20"
                     HorizontalOptions="StartAndExpand"
                     ItemSize="120"
                     ItemTapped="ListView_ItemTapped"
@@ -170,11 +170,11 @@
 
                             <Frame
                                 BackgroundColor="{StaticResource Primary}"
-                                HeightRequest="60"
+                                HeightRequest="45"
                                 Style="{StaticResource CardView}">
                                 <effectsView:SfEffectsView Style="{StaticResource CardRippleEffect}">
                                     <Label
-                                        Margin="20"
+                                        Margin="20,0"
                                         FontSize="12"
                                         Style="{StaticResource LargeLabel}"
                                         Text="{Binding Name}"
@@ -197,7 +197,15 @@
             Grid.Row="4"
             Margin="0"
             Padding="10"
-            BackgroundColor="{StaticResource Primary}">
+            BackgroundColor="{StaticResource Secondary}">
+            <Border.Triggers>
+                <DataTrigger
+                    Binding="{Binding ChallengeDtos.Count}"
+                    TargetType="Border"
+                    Value="0">
+                    <Setter Property="IsVisible" Value="False" />
+                </DataTrigger>
+            </Border.Triggers>
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="25,25,25,25" />
             </Border.StrokeShape>
@@ -210,32 +218,25 @@
                                 Margin="0,0,0,10"
                                 FontAttributes="Bold"
                                 FontSize="20"
+                                HorizontalOptions="Center"
                                 Style="{StaticResource SmallLabel}"
                                 Text="{Binding Type}"
                                 TextColor="White" />
                             <VerticalStackLayout>
-                                <ProgressBar Progress="{Binding ProgressInPercent}" />
-                                <HorizontalStackLayout
+                                <ProgressBar Progress="{Binding ProgressInPercent}" ProgressColor="White" />
+                                <Label
                                     Margin="0,0,0,10"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="End">
-                                    <Label
-                                        FontAttributes="Bold"
-                                        FontFamily="Montserrat"
-                                        Text="{Binding Progress}" />
-                                    <Label
-                                        FontAttributes="Bold"
-                                        FontFamily="Montserrat"
-                                        Text=" / " />
-                                    <Label
-                                        FontAttributes="Bold"
-                                        FontFamily="Montserrat"
-                                        Text="{Binding Goal}" />
-                                    <Label
-                                        FontAttributes="Bold"
-                                        FontFamily="Montserrat"
-                                        Text=" Steps" />
-                                </HorizontalStackLayout>
+                                    FontAttributes="Bold"
+                                    FontFamily="Montserrat">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding Progress}" />
+                                            <Span Text=" / " />
+                                            <Span Text="{Binding Goal}" />
+                                            <Span Text=" Steps" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
                             </VerticalStackLayout>
 
                             <CollectionView ItemsSource="{Binding UserTotalSteps}" VerticalOptions="Fill">
@@ -262,7 +263,6 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
         </Border>
     </Grid>
 </ContentPage>

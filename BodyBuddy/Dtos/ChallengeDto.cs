@@ -1,26 +1,35 @@
-﻿using BodyBuddy.Enums;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BodyBuddy.Dtos
 {
-    public class ChallengeDto : ObservableObject
+    public partial class ChallengeDto : ObservableObject
     {
-        public int ActiveChallengeId { get; set; }
-        public string Type { get; set; }
-        public int Goal { get; set; }
-        public int Progress { get; set; }
-        public double ProgressInPercent => (double)Progress / Goal;
-        public string Difficulty { get; set; }
-        public DateTime From {get; set; }
-        public DateTime To { get; set; }
-        public List<UserTotalSteps> UserTotalSteps { get; set; }
+        [ObservableProperty] private int _activeChallengeId;
+        [ObservableProperty] private string _type;
+        [ObservableProperty] private int _goal;
+        [ObservableProperty] private int _progress;
+        [ObservableProperty] private string _difficulty;
+        [ObservableProperty] private DateTime _from;
+        [ObservableProperty] private DateTime _to;
+        [ObservableProperty] private List<UserTotalSteps> _userTotalSteps;
+        private double userProgressInPercent;
+        private double progressInPercent;
+
         public double UserProgressInPercent
         {
-            get
-            {
-                int totalUserSteps = UserTotalSteps.Sum(uts => uts.TotalSteps);
-                return (double)totalUserSteps / Goal;
-            }
+            get => userProgressInPercent;
+            set => SetProperty(ref userProgressInPercent, (double)UserTotalSteps.Sum(uts => uts.TotalSteps) / Goal);
+        }
+
+        public double ProgressInPercent
+        {
+            get => progressInPercent;
+            set => SetProperty(ref progressInPercent, (double)Progress / Goal);
         }
     }
 }

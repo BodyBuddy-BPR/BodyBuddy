@@ -9,6 +9,7 @@ using Mopups.Interfaces;
 using BodyBuddy.Views.Popups;
 using System.Collections.ObjectModel;
 using BodyBuddy.Views.WorkoutViews;
+using BodyBuddy.Models;
 
 namespace BodyBuddy.ViewModels
 {
@@ -79,6 +80,17 @@ namespace BodyBuddy.ViewModels
         public async Task GetActiveChallenges()
         {
             ChallengeDtos = new ObservableCollection<ChallengeDto>(await _challengeService.GetActiveChallenges());
+            foreach(var challengeDto in ChallengeDtos)
+            {
+                challengeDto.Progress += UserSteps.Steps;
+                foreach(var userModel in challengeDto.UserTotalSteps)
+                {
+                    if(userModel.User.Email == "You")
+                    {
+                        userModel.TotalSteps += UserSteps.Steps;
+                    }
+                }
+            }
         }
 
         public async Task SetWorkoutsToShow()
