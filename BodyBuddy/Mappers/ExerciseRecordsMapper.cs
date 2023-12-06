@@ -1,6 +1,7 @@
 ﻿using BodyBuddy.Dtos;
 using BodyBuddy.Helpers;
 using BodyBuddy.Models;
+using BodyBuddy.Models.Supabase;
 
 namespace BodyBuddy.Mappers
 {
@@ -32,6 +33,19 @@ namespace BodyBuddy.Mappers
                 Weight = exerciseRecordsModel.Weight,
                 Reps = exerciseRecordsModel.Reps,
                 Date = DateHelper.ConvertToDateTime(exerciseRecordsModel.Date)
+            };
+        }
+
+        // Supabase
+        public ExerciseRecordSbModel MapToSbModel(ExerciseRecordsDto exerciseRecordsDto)
+        {
+            return new ExerciseRecordSbModel
+            {
+                ExerciseId = exerciseRecordsDto.ExerciseId,
+                Set = exerciseRecordsDto.Set,
+                Weight = exerciseRecordsDto.Weight,
+                Reps = exerciseRecordsDto.Reps,
+                Date = DateHelper.ConvertFromUnspecifiedToUtc(exerciseRecordsDto.Date)
             };
         }
     }

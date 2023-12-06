@@ -8,11 +8,11 @@ using Postgrest.Models;
 
 namespace BodyBuddy.Models.Supabase
 {
-    [Table("WorkoutRecord")]
+    [Table("ExerciseRecord")]
     public class ExerciseRecordSbModel : BaseModel
     {
         [Column("userId")]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         [Column("exerciseId")]
         public int ExerciseId { get; set; }
