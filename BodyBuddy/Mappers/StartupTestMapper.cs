@@ -15,7 +15,7 @@ namespace BodyBuddy.Mappers
 {
     public class StartupTestMapper
     {
-        public StartupTestModel MapToDatabase(StartupTestDto startupTestDto)
+        public StartupTestModel MapToDatabaseFromDto(StartupTestDto startupTestDto)
         {
             return new StartupTestModel()
             {
@@ -29,6 +29,22 @@ namespace BodyBuddy.Mappers
                 PassiveCalorieBurn = startupTestDto.PassiveCalorieBurn,
                 TargetAreas = startupTestDto.TargetAreas,
                 Goal = (int)EnumMapper.GetGoalFromDisplayString(startupTestDto.Goal)
+            };
+        }
+
+        public StartupTestModel MapToDatabaseFromSb(StartupTestSbModel startupTestSbModel)
+        {
+            return new StartupTestModel()
+            {
+                Name = startupTestSbModel.Name,
+                Gender = startupTestSbModel.Gender,
+                Weight = startupTestSbModel.Weight,
+                Height = startupTestSbModel.Height,
+                Birthday = DateHelper.ConvertToEpochTime(startupTestSbModel.Birthday),
+                ActiveAmount = startupTestSbModel.ActiveAmount,
+                PassiveCalorieBurn = startupTestSbModel.PassiveCalorieBurn,
+                TargetAreas = startupTestSbModel.TargetAreas,
+                Goal = startupTestSbModel.Goal
             };
         }
 

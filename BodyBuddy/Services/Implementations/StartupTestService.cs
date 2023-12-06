@@ -36,7 +36,7 @@ namespace BodyBuddy.Services.Implementations
 
         public void SaveStartupTestData(StartupTestDto startupTestDto)
         {
-            _startupTestRepository.SaveStartupTestData(mapper.MapToDatabase(startupTestDto));
+            _startupTestRepository.SaveStartupTestData(mapper.MapToDatabaseFromDto(startupTestDto));
 
             if (Connectivity.NetworkAccess != NetworkAccess.Internet || !_userAuthenticationService.IsUserLoggedIn())
                 return;
@@ -47,12 +47,15 @@ namespace BodyBuddy.Services.Implementations
         #region Clear and add data to SQLite from remote
         public async Task RemoveAllSQLiteData()
         {
-            throw new NotImplementedException();
+            await _startupTestRepository.ClearSQLiteData();
         }
 
         public async Task AddRemoteDataToSQLite()
         {
-            throw new NotImplementedException();
+            var supabaseData = await _startupTestSbRepository.GetStartupTestSbModel();
+
+            if (supabaseData != null)
+                await _startupTestRepository.SaveStartupTestData(mapper.MapToDatabaseFromSb(supabaseData));
         }
         #endregion
 

@@ -11,7 +11,6 @@ namespace BodyBuddy.Repositories.Supabase.Implementation
     public class StartupTestSbRepository : IStartupTestSbRepository
     {
         private readonly Client _supabase;
-        private string _userId = SecureStorage.GetAsync("UserUID").Result;
 
         public StartupTestSbRepository(Client client)
         {
@@ -19,14 +18,23 @@ namespace BodyBuddy.Repositories.Supabase.Implementation
         }
         public async Task<StartupTestSbModel> GetStartupTestSbModel()
         {
-            var stepModel = await _supabase.From<StartupTestSbModel>().Where(x => x.UserId == _userId).Get();
+            try
+            {
+                var stepModel = await _supabase.From<StartupTestSbModel>()
+                    .Where(x => x.UserId == SecureStorage.GetAsync("UserUID").Result).Get();
 
-            return stepModel.Model;
+                return stepModel.Model;
+            }
+            catch (Exception ex)
+            {
+                //If no data is found, it goes down here!
+                return null;
+            }
         }
 
         public async Task AddOrUpdateStartupTest(StartupTestSbModel startupTestSbModel)
         {
-            startupTestSbModel.UserId = _userId;
+            startupTestSbModel.UserId = SecureStorage.GetAsync("UserUID").Result;
             await _supabase.From<StartupTestSbModel>().Upsert(startupTestSbModel);
         }
     }

@@ -29,5 +29,10 @@ namespace BodyBuddy.Repositories.Implementations
             else
                 await _context.UpdateAsync(startupTest);
         }
+
+        public async Task ClearSQLiteData()
+        {
+            await _context.DeleteAllAsync<StartupTestModel>();
+        }
     }
 }

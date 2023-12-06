@@ -67,7 +67,7 @@ namespace UnitTest.Mappers
             startupTestDto.Goal = goal;
 
             // Act
-            var returnStartupTestDb = target.MapToDatabase(startupTestDto);
+            var returnStartupTestDb = target.MapToDatabaseFromDto(startupTestDto);
 
             // Assert
             Assert.That(returnStartupTestDb.Id, Is.EqualTo(startupTestDto.Id));
@@ -135,7 +135,7 @@ namespace UnitTest.Mappers
 
         //    // Act && Assert
         //    Assert.Throws<KeyNotFoundException>(()
-        //        => target.MapToDatabase(startupTestDto));
+        //        => target.MapToDatabaseFromDto(startupTestDto));
         //}
     }
 }
