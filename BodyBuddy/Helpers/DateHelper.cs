@@ -48,6 +48,16 @@
             return (long)(dateTime.ToUniversalTime() - _epochStart).TotalSeconds;
         }
 
+        /// <summary>
+        /// Has to be UTC when adding to Supabase DB
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static DateTime ConvertFromUnspecifiedToUtc(DateTime dateTime)
+        {
+            return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second, DateTimeKind.Utc);
+        }
+
         //Get current date at midnight in UTC, and convert it to a timestamp
         public static long GetCurrentDayAtMidnight()
         {
