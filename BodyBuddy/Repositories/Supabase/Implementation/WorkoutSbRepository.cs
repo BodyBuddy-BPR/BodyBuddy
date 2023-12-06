@@ -22,14 +22,16 @@ namespace BodyBuddy.Repositories.Supabase.Implementation
             throw new NotImplementedException();
         }
 
-        public async Task AddWorkout(WorkoutSbModel model)
+        public async Task AddOrUpdateWorkout(WorkoutSbModel model)
         {
-            throw new NotImplementedException();
+            model.UserId = SecureStorage.GetAsync("UserUID").Result;
+
+            await _supabase.From<WorkoutSbModel>().Upsert(model);
         }
 
-        public async Task AddWorkoutExercises(List<WorkoutExerciseSbModel> workoutExerciseSbModels)
+        public async Task AddOrUpdateWorkoutExercises(List<WorkoutExerciseSbModel> workoutExerciseSbModels)
         {
-            throw new NotImplementedException();
+            await _supabase.From<WorkoutExerciseSbModel>().Upsert(workoutExerciseSbModels);
         }
     }
 }
