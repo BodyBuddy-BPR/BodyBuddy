@@ -1,11 +1,8 @@
-﻿using BodyBuddy.Models;
-using BodyBuddy.Repositories;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using BodyBuddy.Dtos;
 using BodyBuddy.Services;
-using BodyBuddy.Views;
 using BodyBuddy.Views.ExerciseViews;
 using CommunityToolkit.Mvvm.Input;
 

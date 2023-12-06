@@ -1,13 +1,9 @@
-﻿using BodyBuddy.Models;
-using BodyBuddy.Repositories;
-using BodyBuddy.Views.ExerciseViews;
+﻿using BodyBuddy.Views.ExerciseViews;
 using BodyBuddy.Views.WorkoutViews;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Mopups.Services;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Text;
 using BodyBuddy.Dtos;
 using BodyBuddy.Services;
 using BodyBuddy.Helpers;

@@ -1,11 +1,6 @@
 ﻿using BodyBuddy.Dtos;
 using BodyBuddy.Mappers;
 using BodyBuddy.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BodyBuddy.Models;
 using BodyBuddy.Helpers;
 

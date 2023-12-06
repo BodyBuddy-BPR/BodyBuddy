@@ -1,8 +1,5 @@
-﻿using BodyBuddy.Models;
-using BodyBuddy.Repositories;
-using BodyBuddy.ViewModels.WorkoutViewModels;
+﻿using BodyBuddy.ViewModels.WorkoutViewModels;
 using Moq;
-using System.Collections.ObjectModel;
 using BodyBuddy.Dtos;
 using BodyBuddy.Services;
 

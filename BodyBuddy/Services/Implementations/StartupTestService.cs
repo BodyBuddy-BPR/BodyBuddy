@@ -1,12 +1,6 @@
 ﻿using BodyBuddy.Dtos;
 using BodyBuddy.Mappers;
 using BodyBuddy.Repositories;
-using BodyBuddy.Repositories.Implementations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BodyBuddy.Authentication;
 using BodyBuddy.Repositories.Supabase;
 
@@ -34,6 +28,7 @@ namespace BodyBuddy.Services.Implementations
             return mapper.MapToDto(startupTestData);
         }
 
+
         public void SaveStartupTestData(StartupTestDto startupTestDto)
         {
             _startupTestRepository.SaveStartupTestData(mapper.MapToDatabaseFromDto(startupTestDto));
@@ -44,22 +39,17 @@ namespace BodyBuddy.Services.Implementations
             _startupTestSbRepository.AddOrUpdateStartupTest(mapper.MapToSbModel(startupTestDto));
         }
 
-        #region Clear and add data to SQLite from remote
-        public async Task RemoveAllSQLiteData()
+        public async Task ReplaceSQLiteDataWithRemoteData()
         {
-            await _startupTestRepository.ClearSQLiteData();
-        }
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet || !_userAuthenticationService.IsUserLoggedIn())
+                return;
 
-        public async Task AddRemoteDataToSQLite()
-        {
+            await _startupTestRepository.ClearSQLiteData();
+
             var supabaseData = await _startupTestSbRepository.GetStartupTestSbModel();
 
             if (supabaseData != null)
                 await _startupTestRepository.SaveStartupTestData(mapper.MapToDatabaseFromSb(supabaseData));
         }
-        #endregion
-
-
-
     }
 }

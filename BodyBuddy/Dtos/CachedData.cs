@@ -1,6 +1,4 @@
-﻿using BodyBuddy.Models;
-
-namespace BodyBuddy.Dtos
+﻿namespace BodyBuddy.Dtos
 {
     public class CachedData
     {

@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BodyBuddy.Repositories;
-
-namespace BodyBuddy.Services.Implementations
+﻿namespace BodyBuddy.Services.Implementations
 {
     public class LoginDatabaseFlowService : ILoginDatabaseFlowService
     {
         private readonly IStartupTestService _startupTestService;
+        private readonly IStepService _stepService;
 
-        public LoginDatabaseFlowService(IStartupTestService startupTestService)
+        public LoginDatabaseFlowService(IStartupTestService startupTestService, IStepService stepService)
         {
             _startupTestService = startupTestService;
+            _stepService = stepService;
         }
 
         public async Task StartLoginDatabaseFlow()
@@ -23,8 +18,8 @@ namespace BodyBuddy.Services.Implementations
 
         private async Task ReplaceStartupTestData()
         {
-            await _startupTestService.RemoveAllSQLiteData();
-            await _startupTestService.AddRemoteDataToSQLite();
+            await _startupTestService.ReplaceSQLiteDataWithRemoteData();
+            await _stepService.ReplaceSQLiteDataWithRemoteData();
         }
     }
 }

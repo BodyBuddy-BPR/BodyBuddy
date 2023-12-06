@@ -1,6 +1,4 @@
-﻿using BodyBuddy.Models;
-using BodyBuddy.Repositories;
-using BodyBuddy.Views.WorkoutViews;
+﻿using BodyBuddy.Views.WorkoutViews;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
@@ -8,7 +6,6 @@ using System.Diagnostics;
 using BodyBuddy.Dtos;
 using BodyBuddy.Helpers;
 using BodyBuddy.Services;
-using ZXing.QrCode;
 
 namespace BodyBuddy.ViewModels.WorkoutViewModels
 {

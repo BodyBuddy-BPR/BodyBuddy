@@ -2,10 +2,7 @@
 using BodyBuddy.Dtos;
 using BodyBuddy.Services;
 using BodyBuddy.ViewModels;
-using BodyBuddy.Views.Authentication;
-using Microsoft.Maui.Controls;
 using Mopups.Interfaces;
-using Mopups.Pages;
 using Moq;
 
 namespace UnitTest.ViewModels.MainPageViewmodel

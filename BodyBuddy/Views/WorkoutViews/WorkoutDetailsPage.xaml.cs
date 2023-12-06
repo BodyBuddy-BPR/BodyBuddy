@@ -1,5 +1,4 @@
 using BodyBuddy.Dtos;
-using BodyBuddy.Models;
 using BodyBuddy.ViewModels.WorkoutViewModels;
 using BodyBuddy.Views.Popups;
 using Mopups.Interfaces;

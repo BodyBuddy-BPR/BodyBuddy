@@ -1,6 +1,4 @@
-﻿using BodyBuddy.Models;
-using BodyBuddy.Repositories;
-using BodyBuddy.Views.Popups;
+﻿using BodyBuddy.Views.Popups;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;

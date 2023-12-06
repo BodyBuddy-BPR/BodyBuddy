@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BodyBuddy.Models.Supabase;
+﻿using BodyBuddy.Models.Supabase;
 using Supabase;
 
 namespace BodyBuddy.Repositories.Supabase.Implementation

@@ -1,6 +1,4 @@
 using BodyBuddy.ViewModels.Calendar;
-using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
 using Mopups.Services;
 
 namespace BodyBuddy.Views.Popups;
