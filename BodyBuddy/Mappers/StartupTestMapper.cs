@@ -9,6 +9,7 @@ using System.Runtime.InteropServices.JavaScript;
 using System.Text;
 using System.Threading.Tasks;
 using BodyBuddy.Enums;
+using BodyBuddy.Models.Supabase;
 
 namespace BodyBuddy.Mappers
 {
@@ -24,6 +25,22 @@ namespace BodyBuddy.Mappers
                 Weight = startupTestDto.Weight,
                 Height = startupTestDto.Height,
                 Birthday = DateHelper.ConvertToEpochTime(startupTestDto.Birthday),
+                ActiveAmount = (int)EnumMapper.GetUserActivityFromDisplayString(startupTestDto.ActiveAmount),
+                PassiveCalorieBurn = startupTestDto.PassiveCalorieBurn,
+                TargetAreas = startupTestDto.TargetAreas,
+                Goal = (int)EnumMapper.GetGoalFromDisplayString(startupTestDto.Goal)
+            };
+        }
+
+        public StartupTestSbModel MapToSbModel(StartupTestDto startupTestDto)
+        {
+            return new StartupTestSbModel()
+            {
+                Name = startupTestDto.Name,
+                Gender = (int)EnumMapper.GetGenderFromDisplayString(startupTestDto.Gender),
+                Weight = startupTestDto.Weight,
+                Height = startupTestDto.Height,
+                Birthday = startupTestDto.Birthday,
                 ActiveAmount = (int)EnumMapper.GetUserActivityFromDisplayString(startupTestDto.ActiveAmount),
                 PassiveCalorieBurn = startupTestDto.PassiveCalorieBurn,
                 TargetAreas = startupTestDto.TargetAreas,

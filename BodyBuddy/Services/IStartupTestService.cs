@@ -9,5 +9,8 @@ namespace BodyBuddy.Services
 
         //Converts Db --> Dto object
         Task<StartupTestDto> GetStartupTestData();
+
+        Task RemoveAllSQLiteData();
+        Task AddRemoteDataToSQLite();
     }
 }

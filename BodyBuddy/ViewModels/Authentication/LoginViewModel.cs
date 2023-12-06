@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static Supabase.Gotrue.Constants;
 using BodyBuddy.Authentication;
+using BodyBuddy.Services;
 
 namespace BodyBuddy.ViewModels.Authentication
 {
@@ -18,6 +19,7 @@ namespace BodyBuddy.ViewModels.Authentication
     public partial class LoginViewModel : BaseViewModel
     {
         private readonly IUserAuthenticationService _userAuthenticationService;
+        private readonly ILoginDatabaseFlowService _loginDatabaseFlowService;
 
         [ObservableProperty]
         public bool isLogin = true;
@@ -37,9 +39,10 @@ namespace BodyBuddy.ViewModels.Authentication
 
         private readonly string _skipLoginKey = "SkipLogInKey";
 
-        public LoginViewModel(IUserAuthenticationService userAuthenticationService)
+        public LoginViewModel(IUserAuthenticationService userAuthenticationService, ILoginDatabaseFlowService loginDatabaseFlowService)
         {
             _userAuthenticationService = userAuthenticationService;
+            _loginDatabaseFlowService = loginDatabaseFlowService;
         }
 
         public async Task Initialize()
@@ -59,6 +62,9 @@ namespace BodyBuddy.ViewModels.Authentication
 
                 if (success)
                 {
+                    //Starting flow to swap DB to new data
+                    await _loginDatabaseFlowService.StartLoginDatabaseFlow();
+
                     await MakeToast("successfully signed in.");
                     await Shell.Current.Navigation.PopAsync();
                     await Shell.Current.GoToAsync($"//{nameof(MainPage)}", true);

@@ -205,6 +205,7 @@ public static class MauiProgram
         #region SupaBase
         builder.Services.AddSingleton<IStepsSbRepository, StepsSbRepository>();
         builder.Services.AddSingleton<IChallengeSbRepository, ChallengeSbRepository>();
+        builder.Services.AddSingleton<IStartupTestSbRepository, StartupTestSbRepository>();
         #endregion
 
         #region Services
@@ -234,6 +235,7 @@ public static class MauiProgram
 
         // User
         builder.Services.AddSingleton<IUserService, UserService>();
+        builder.Services.AddSingleton<ILoginDatabaseFlowService, LoginDatabaseFlowService>();
 
         builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
         builder.Services.AddSingleton<IPopupNavigation>(MopupService.Instance);
