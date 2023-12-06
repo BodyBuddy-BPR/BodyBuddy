@@ -60,5 +60,21 @@ namespace BodyBuddy.Repositories.Implementations
         {
             await _context.UpdateAsync(stepDetails);
         }
+
+        public async Task ClearSQLiteData()
+        {
+            await _context.DeleteAllAsync<StepModel>();
+        }
+
+        public async Task AddListOfStepData(List<StepModel> stepModels)
+        {
+            foreach (var stepModel in stepModels)
+            {
+                stepModel.Id = await GetNextStepId();
+
+                // Insert the new entry in the database
+                await _context.InsertAsync(stepModel);
+            }
+        }
     }
 }

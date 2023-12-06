@@ -25,5 +25,7 @@ namespace BodyBuddy.Services
         /// </summary>
         event StepsChanged IsStepsChanged;
 
+
+        Task ReplaceSQLiteDataWithRemoteData();
     }
 }

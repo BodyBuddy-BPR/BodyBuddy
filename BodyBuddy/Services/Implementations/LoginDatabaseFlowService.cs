@@ -3,10 +3,12 @@
     public class LoginDatabaseFlowService : ILoginDatabaseFlowService
     {
         private readonly IStartupTestService _startupTestService;
+        private readonly IStepService _stepService;
 
-        public LoginDatabaseFlowService(IStartupTestService startupTestService)
+        public LoginDatabaseFlowService(IStartupTestService startupTestService, IStepService stepService)
         {
             _startupTestService = startupTestService;
+            _stepService = stepService;
         }
 
         public async Task StartLoginDatabaseFlow()
@@ -17,8 +19,7 @@
         private async Task ReplaceStartupTestData()
         {
             await _startupTestService.ReplaceSQLiteDataWithRemoteData();
-            await _startupTestService.RemoveAllSQLiteData();
-            await _startupTestService.AddRemoteDataToSQLite();
+            await _stepService.ReplaceSQLiteDataWithRemoteData();
         }
     }
 }

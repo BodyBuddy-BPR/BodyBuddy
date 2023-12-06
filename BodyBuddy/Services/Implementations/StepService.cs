@@ -10,8 +10,8 @@ namespace BodyBuddy.Services.Implementations
 {
     public class StepService : IStepService
     {
-        private readonly IStepRepository _repo;
-        private readonly IStepsSbRepository _stepsSupa;
+        private readonly IStepRepository _stepRepository;
+        private readonly IStepsSbRepository _stepsSupaRepository;
         private readonly IUserAuthenticationService _userAuthenticationService;
 
         private readonly StepMapper _mapper = new();
@@ -21,15 +21,16 @@ namespace BodyBuddy.Services.Implementations
         public delegate void StepsChanged(int steps);
         public event IStepService.StepsChanged IsStepsChanged;
 
+
         public StepService(IStepRepository stepRepository, IStepsSbRepository stepsSupabase, IUserAuthenticationService userAuthenticationService)
         {
-            _repo = stepRepository;
-            _stepsSupa = stepsSupabase;
+            _stepRepository = stepRepository;
+            _stepsSupaRepository = stepsSupabase;
             _userAuthenticationService = userAuthenticationService;
         }
         public async Task<StepDto> GetStepDataTodayAsync()
         {
-            var stepData = await _repo.GetStepsForDayAsTimestampAsync(DateHelper.GetCurrentDayAtMidnight());
+            var stepData = await _stepRepository.GetStepsForDayAsTimestampAsync(DateHelper.GetCurrentDayAtMidnight());
             return _mapper.MapToDto(stepData);
         }
 
@@ -38,7 +39,7 @@ namespace BodyBuddy.Services.Implementations
             if (Connectivity.NetworkAccess != NetworkAccess.Internet || !_userAuthenticationService.IsUserLoggedIn())
                 return new List<UserTotalSteps>();
 
-            var stepsList = await _stepsSupa.GetStepsForPeriodFriends();
+            var stepsList = await _stepsSupaRepository.GetStepsForPeriodFriends();
 
             _totalSteps = stepsList.GroupBy(step => step.User)
                 .Select(group => new UserTotalSteps
@@ -56,7 +57,7 @@ namespace BodyBuddy.Services.Implementations
             List<StepModel> stepsList = new();
             while (startDate != endDate)
             {
-                stepsList.Add(await _repo.GetStepsForDayAsTimestampAsync(startDate));
+                stepsList.Add(await _stepRepository.GetStepsForDayAsTimestampAsync(startDate));
                 startDate += 86400;
             }
 
@@ -69,14 +70,30 @@ namespace BodyBuddy.Services.Implementations
 
         public async Task SaveStepData(StepDto stepDto)
         {
-            await _repo.SaveChangesAsync(_mapper.MapToDatabase(stepDto));
+            await _stepRepository.SaveChangesAsync(_mapper.MapToDatabase(stepDto));
 
             if (Connectivity.NetworkAccess == NetworkAccess.Internet && _userAuthenticationService.IsUserLoggedIn())
             {
                 if (stepDto.Steps % 25 != 0) return;
-                await _stepsSupa.AddOrUpdateSteps(stepDto);
+                await _stepsSupaRepository.AddOrUpdateSteps(stepDto);
                 IsStepsChanged?.Invoke(stepDto.Steps);
             }
         }
+
+        public async Task ReplaceSQLiteDataWithRemoteData()
+        {
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet || !_userAuthenticationService.IsUserLoggedIn())
+                return;
+
+            await _stepRepository.ClearSQLiteData();
+
+            var supabaseData = await _stepsSupaRepository.GetAllStepsDataProfile();
+
+            var stepModels = supabaseData.Select(step => _mapper.MapToDatabaseFromSb(step)).ToList();
+
+            if (stepModels.Any())
+                await _stepRepository.AddListOfStepData(stepModels);
+        }
+
     }
 }

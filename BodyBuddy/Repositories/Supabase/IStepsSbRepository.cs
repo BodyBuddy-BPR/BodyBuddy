@@ -7,5 +7,6 @@ namespace BodyBuddy.Repositories.Supabase
     {
         Task<List<StepsSbModel>> GetStepsForPeriodFriends();
         Task AddOrUpdateSteps(StepDto stepDto);
+        Task<List<StepsSbModel>> GetAllStepsDataProfile();
     }
 }
