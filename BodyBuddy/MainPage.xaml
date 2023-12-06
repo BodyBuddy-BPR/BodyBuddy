@@ -384,7 +384,7 @@
                                         <Label FontAttributes="Bold" Text="Steps" />
                                     </HorizontalStackLayout>
 
-                                    <!--  Nested ListView for UserTotalSteps  -->
+                                    <!--  Nested ListView for UserTotalSteps - Vertical Option should prob. not be fill (but couldn't see anything without help)  -->
                                     <CollectionView ItemsSource="{Binding UserTotalSteps}" VerticalOptions="Fill">
                                         <CollectionView.ItemTemplate>
                                             <DataTemplate x:DataType="modelDto:UserTotalSteps">
