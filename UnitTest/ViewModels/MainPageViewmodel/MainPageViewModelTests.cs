@@ -19,6 +19,7 @@ namespace UnitTest.ViewModels.MainPageViewmodel
         private Mock<IQuoteService> _mockQuoteService;
         private Mock<IWorkoutService> _mockWorkoutService;
         private Mock<IPopupNavigation> _mockPopupNavigation;
+        private Mock<IChallengeService> _mockChallengeService;
         private StepDto _defaultStep;
 
         [SetUp]
@@ -30,9 +31,10 @@ namespace UnitTest.ViewModels.MainPageViewmodel
             _mockPopupNavigation = new Mock<IPopupNavigation>();
             _mockStartupTestService = new Mock<IStartupTestService>();
             _mockWorkoutService = new Mock<IWorkoutService>();
+            _mockChallengeService = new Mock<IChallengeService>();
             _defaultStep = new StepDto() { Id = 1, Date = new DateTime(2023, 10, 10), Steps = 0, StepGoal = 10000};
 
-            _target = new MainPageViewModel(_mockStepService.Object, _mockQuoteService.Object, _mockUserAuthService.Object, _mockPopupNavigation.Object, _mockStartupTestService.Object, _mockWorkoutService.Object);
+            _target = new MainPageViewModel(_mockStepService.Object, _mockQuoteService.Object, _mockUserAuthService.Object, _mockPopupNavigation.Object, _mockStartupTestService.Object, _mockWorkoutService.Object, _mockChallengeService.Object);
         }
 
         [Test]
@@ -81,7 +83,7 @@ namespace UnitTest.ViewModels.MainPageViewmodel
             var startupTestServiceMock = new Mock<IStartupTestService>();
             startupTestServiceMock.Setup(s => s.GetStartupTestData()).ReturnsAsync(startupTestDto);
 
-            _target = new MainPageViewModel(_mockStepService.Object, _mockQuoteService.Object, _mockUserAuthService.Object, _mockPopupNavigation.Object, startupTestServiceMock.Object, workoutServiceMock.Object);
+            _target = new MainPageViewModel(_mockStepService.Object, _mockQuoteService.Object, _mockUserAuthService.Object, _mockPopupNavigation.Object, startupTestServiceMock.Object, workoutServiceMock.Object, _mockChallengeService.Object);
 
             // Act
             await _target.SetWorkoutsToShow();
