@@ -45,7 +45,7 @@ namespace BodyBuddy.Mappers
                 Set = exerciseRecordsDto.Set,
                 Weight = exerciseRecordsDto.Weight,
                 Reps = exerciseRecordsDto.Reps,
-                Date = DateHelper.ConvertFromUnspecifiedToUtc(exerciseRecordsDto.Date)
+                Date = exerciseRecordsDto.Date
             };
         }
     }

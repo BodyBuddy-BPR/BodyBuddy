@@ -14,6 +14,10 @@ namespace BodyBuddy.Repositories
 
         Task<int> AddWorkoutPlanAsync(WorkoutModel workoutModel);
         Task<int> UpdateWorkoutPlanAsync(WorkoutModel workoutModel);
+
+
+        Task DeleteAllWorkoutsAndWorkoutExercises();
+        Task AddListOfWorkoutData(List<WorkoutModel> workoutModels);
     }
 
 

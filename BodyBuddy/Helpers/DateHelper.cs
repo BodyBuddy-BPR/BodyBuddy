@@ -3,8 +3,8 @@
     public static class DateHelper
     {
         private const string _datePreferencesKey = "LastFetchedDate";
-        public static DateTime Today => DateTime.Today;
-        public static DateTime Now => DateTime.UtcNow.Date;
+        public static DateTime Today => DateTime.UtcNow.Date;
+        public static DateTime Now => DateTime.Now;
 
         private static readonly DateTime _epochStart = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
@@ -61,7 +61,7 @@
         //Get current date at midnight in UTC, and convert it to a timestamp
         public static long GetCurrentDayAtMidnight()
         {
-            return (long)Now.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+            return (long)Today.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
         }
 
         private static DateTime GetLastFetchedDate()

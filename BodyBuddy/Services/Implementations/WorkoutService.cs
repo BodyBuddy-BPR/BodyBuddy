@@ -56,5 +56,19 @@ namespace BodyBuddy.Services.Implementations
         {
             return await _workoutRepository.DoesWorkoutAlreadyExist(name);
         }
+
+        public async Task ReplaceSQLiteDataWithRemoteData()
+        {
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet || !_userAuthenticationService.IsUserLoggedIn()) return;
+
+            await _workoutRepository.DeleteAllWorkoutsAndWorkoutExercises();
+
+            var supabaseData = await _workoutSbRepository.GetAllWorkoutsForProfile();
+
+            var workoutModels = supabaseData.Select(workout => _mapper.MapToDatabaseFromSb(workout)).ToList();
+
+            if (workoutModels.Any())
+                await _workoutRepository.AddListOfWorkoutData(workoutModels);
+        }
     }
 }

@@ -35,7 +35,18 @@ namespace BodyBuddy.Repositories.Supabase.Implementation
 
         public async Task<List<WorkoutExerciseSbModel>> GetAllWorkoutExercisesForProfile()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var userId = SecureStorage.GetAsync("UserUID").Result;
+
+                var stepModel = await _supabase.From<WorkoutExerciseSbModel>().Where(x => x.UserId == userId).Get();
+
+                return stepModel.Models;
+            }
+            catch (Exception ex)
+            {
+                return new List<WorkoutExerciseSbModel>();
+            }
         }
 
         public async Task AddOrUpdateWorkout(WorkoutSbModel model)
@@ -55,6 +66,7 @@ namespace BodyBuddy.Repositories.Supabase.Implementation
         {
             try
             {
+                workoutExerciseSbModel.UserId = SecureStorage.GetAsync("UserUID").Result;
                 await _supabase.From<WorkoutExerciseSbModel>().Upsert(workoutExerciseSbModel);
             }
             catch (Exception ex)

@@ -12,6 +12,8 @@ namespace BodyBuddy.Models.Supabase
 
     public class WorkoutExerciseSbModel : BaseModel
     {
+        [Column("userId")]
+        public string UserId { get; set; }
         [Column("exerciseId")]
         public int ExerciseId { get; set; }
 

@@ -13,5 +13,9 @@ namespace BodyBuddy.Services
         Task<bool> DeleteWorkout(WorkoutDto workoutDto);
 
         Task<bool> DoesWorkoutAlreadyExist(string name);
+
+
+
+        Task ReplaceSQLiteDataWithRemoteData();
     }
 }

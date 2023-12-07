@@ -42,5 +42,16 @@ namespace BodyBuddy.Mappers
                 PreMade = workoutDto.PreMade
             };
         }
+
+        public WorkoutModel MapToDatabaseFromSb(WorkoutSbModel workoutSbModel)
+        {
+            return new WorkoutModel()
+            {
+                Id = workoutSbModel.Id,
+                Description = workoutSbModel.Description,
+                Name = workoutSbModel.Name,
+                PreMade = workoutSbModel.PreMade ? 1 : 0
+            };
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BodyBuddy.Dtos;
 using BodyBuddy.Models;
+using BodyBuddy.Models.Supabase;
 
 namespace BodyBuddy.Mappers
 {
@@ -96,6 +97,17 @@ namespace BodyBuddy.Mappers
                 ExerciseId = exerciseDto.Id,
                 Reps = exerciseDto.Reps,
                 Sets = exerciseDto.Sets
+            };
+        }
+
+        public WorkoutExercisesModel MapToWorkoutExerciseDatabaseFromSbWorkoutExercisesModel(WorkoutExerciseSbModel workoutExerciseSbModel)
+        {
+            return new WorkoutExercisesModel()
+            {
+                ExerciseId = workoutExerciseSbModel.ExerciseId,
+                WorkoutId = workoutExerciseSbModel.WorkoutId,
+                Reps = workoutExerciseSbModel.Reps,
+                Sets = workoutExerciseSbModel.Sets
             };
         }
     }
