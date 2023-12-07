@@ -206,6 +206,9 @@ public static class MauiProgram
         builder.Services.AddSingleton<IStepsSbRepository, StepsSbRepository>();
         builder.Services.AddSingleton<IChallengeSbRepository, ChallengeSbRepository>();
         builder.Services.AddSingleton<IStartupTestSbRepository, StartupTestSbRepository>();
+        builder.Services.AddSingleton<IWorkoutSbRepository, WorkoutSbRepository>();
+        builder.Services.AddSingleton<IIntakeSbRepository, IntakeSbRepository>();
+        builder.Services.AddSingleton<IExerciseRecordSbRepository, ExerciseRecordSbRepository>();
         #endregion
 
         #region Services

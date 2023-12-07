@@ -4,7 +4,7 @@ namespace BodyBuddy.Services
 {
     public interface IWorkoutService
     {
-        Task<int> SaveWorkoutData(WorkoutDto workoutDto);
+        Task SaveWorkoutData(WorkoutDto workoutDto);
 
         Task<List<WorkoutDto>> GetWorkoutPlans(bool preMade);
 
@@ -13,5 +13,8 @@ namespace BodyBuddy.Services
         Task<bool> DeleteWorkout(WorkoutDto workoutDto);
 
         Task<bool> DoesWorkoutAlreadyExist(string name);
+
+        //Supabase
+        Task ReplaceSQLiteDataWithRemoteData();
     }
 }

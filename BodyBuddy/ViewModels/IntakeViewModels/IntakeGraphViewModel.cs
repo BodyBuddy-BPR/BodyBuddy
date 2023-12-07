@@ -24,6 +24,8 @@ namespace BodyBuddy.ViewModels.IntakeViewModels
         public async Task GetAllIntakeData()
         {
             IntakeList = new ObservableCollection<IntakeDto>(await _intakeService.GetAllIntakeDataAsync());
+            _calorieGoalsCompleted = 0;
+            _waterGoalsCompleted = 0;
             GoalsCompleted();
         }
 

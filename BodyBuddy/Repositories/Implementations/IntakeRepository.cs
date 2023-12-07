@@ -35,7 +35,7 @@ namespace BodyBuddy.Repositories.Implementations
                 // If no previous entry exists, use default values
                 existingIntake = new IntakeModel
                 {
-                    Id = await GetNextIntakeId(),
+                    Id = await GetNextId(),
                     Date = dateTimeUtc,
                     CalorieGoal = previousIntake?.CalorieGoal ?? DefaultCalorieGoal,
                     WaterGoal = previousIntake?.WaterGoal ?? DefaultWaterGoal,
@@ -72,7 +72,7 @@ namespace BodyBuddy.Repositories.Implementations
             }
         }
 
-        private async Task<int> GetNextIntakeId()
+        private async Task<int> GetNextId()
         {
             var lastItem = await _context.Table<IntakeModel>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
             return lastItem?.Id + 1 ?? 1;
@@ -81,6 +81,22 @@ namespace BodyBuddy.Repositories.Implementations
         public async Task SaveChangesAsync(IntakeModel intakeDetails)
         {
             await _context.UpdateAsync(intakeDetails);
+        }
+
+        public async Task ClearSQLiteData()
+        {
+            await _context.DeleteAllAsync<IntakeModel>();
+        }
+
+        public async Task AddListOfIntakeData(List<IntakeModel> intakeModels)
+        {
+            foreach (var intakeModel in intakeModels)
+            {
+                intakeModel.Id = await GetNextId();
+
+                // Insert the new entry in the database
+                await _context.InsertAsync(intakeModel);
+            }
         }
     }
 }

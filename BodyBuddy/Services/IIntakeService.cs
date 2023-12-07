@@ -9,5 +9,9 @@ namespace BodyBuddy.Services
         Task<List<IntakeDto>> GetAllIntakeDataAsync();
 
         Task SaveChangesAsync(IntakeDto intakeDetails);
+
+
+
+        Task ReplaceSQLiteDataWithRemoteData();
     }
 }

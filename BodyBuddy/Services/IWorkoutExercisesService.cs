@@ -11,5 +11,7 @@ namespace BodyBuddy.Services
         Task EditExerciseInWorkout(ExerciseDto changedExercise);
 
         Task DeleteExerciseFromWorkout(int workoutId, int exerciseId);
+
+        Task ReplaceSQLiteDataWithRemoteData();
     }
 }

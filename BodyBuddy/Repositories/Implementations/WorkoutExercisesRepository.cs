@@ -52,11 +52,14 @@ namespace BodyBuddy.Repositories.Implementations
 
         public async Task AddExerciseToWorkout(int workoutId, int exerciseId)
         {
-            var lastItem = await _context.Table<WorkoutExercisesModel>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
-            var newId = lastItem?.Id + 1 ?? 1;
-
-            WorkoutExercisesModel workoutExercise = new() { Id = newId, WorkoutId = workoutId, ExerciseId = exerciseId };
+            WorkoutExercisesModel workoutExercise = new() { Id = await GetNextId(), WorkoutId = workoutId, ExerciseId = exerciseId };
             await _context.InsertAsync(workoutExercise);
+        }
+
+        private async Task<int> GetNextId()
+        {
+            var lastItem = await _context.Table<WorkoutExercisesModel>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
+            return lastItem?.Id + 1 ?? 1;
         }
 
         public async Task EditExerciseInWorkout(WorkoutExercisesModel changedWorkoutExercisesModel)
@@ -91,6 +94,15 @@ namespace BodyBuddy.Repositories.Implementations
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in EditExerciseInWorkout: {ex}");
+            }
+        }
+
+        public async Task AddExercisesToWorkouts(List<WorkoutExercisesModel> workoutExerciseModels)
+        {
+            foreach (var model in workoutExerciseModels)
+            {
+                model.Id = await GetNextId();
+                await _context.InsertAsync(model);
             }
         }
     }

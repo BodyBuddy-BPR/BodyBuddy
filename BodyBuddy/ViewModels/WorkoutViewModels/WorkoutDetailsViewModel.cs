@@ -186,6 +186,7 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
                 {
                     existingExercise.Sets = EditSets;
                     existingExercise.Reps = EditReps;
+                    existingExercise.WorkoutId = WorkoutDetails.Id;
 
                     await _workoutExercisesService.EditExerciseInWorkout(existingExercise);
                 }

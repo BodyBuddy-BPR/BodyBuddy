@@ -1,5 +1,6 @@
 ﻿using BodyBuddy.Dtos;
 using BodyBuddy.Models;
+using BodyBuddy.Models.Supabase;
 
 namespace BodyBuddy.Mappers
 {
@@ -71,6 +72,8 @@ namespace BodyBuddy.Mappers
             return new ExerciseDto()
             {
                 Id = exerciseModel.Id,
+                WorkoutId = exerciseModel.WorkoutId,
+                WorkoutExerciseId = exerciseModel.WorkoutExerciseId,
                 Name = exerciseModel.Name,
                 Force = exerciseModel.Force,
                 Level = exerciseModel.Level,
@@ -81,7 +84,6 @@ namespace BodyBuddy.Mappers
                 Instructions = exerciseModel.Instructions,
                 Category = exerciseModel.Category,
                 Images = exerciseModel.Images,
-                WorkoutExerciseId = exerciseModel.WorkoutExerciseId,
                 Sets = exerciseModel.Sets,
                 Reps = exerciseModel.Reps,
             };
@@ -95,6 +97,17 @@ namespace BodyBuddy.Mappers
                 ExerciseId = exerciseDto.Id,
                 Reps = exerciseDto.Reps,
                 Sets = exerciseDto.Sets
+            };
+        }
+
+        public WorkoutExercisesModel MapToWorkoutExerciseDatabaseFromSbWorkoutExercisesModel(WorkoutExerciseSbModel workoutExerciseSbModel)
+        {
+            return new WorkoutExercisesModel()
+            {
+                ExerciseId = workoutExerciseSbModel.ExerciseId,
+                WorkoutId = workoutExerciseSbModel.WorkoutId,
+                Reps = workoutExerciseSbModel.Reps,
+                Sets = workoutExerciseSbModel.Sets
             };
         }
     }

@@ -29,17 +29,6 @@ namespace BodyBuddy.Repositories.Implementations
             }
         }
 
-        public async Task<int> PostWorkoutPlanAsync(WorkoutModel workout)
-        {
-            if (workout.Id != 0)
-                return await _context.UpdateAsync(workout);
-            else
-            {
-                workout.Id = await GetNextWorkoutId(); // Generate a unique Id
-                return await _context.InsertAsync(workout);
-            }
-        }
-
         public async Task<bool> DeleteWorkout(WorkoutModel workout)
         {
             // First deleting all exercises with the workout id from the joint table
@@ -66,7 +55,8 @@ namespace BodyBuddy.Repositories.Implementations
         public async Task<int> AddWorkoutPlanAsync(WorkoutModel workout)
         {
             workout.Id = await GetNextWorkoutId(); // Generate a unique Id
-            return await _context.InsertAsync(workout);
+            await _context.InsertAsync(workout);
+            return workout.Id;
         }
 
         public async Task<int> UpdateWorkoutPlanAsync(WorkoutModel workout)
@@ -74,8 +64,25 @@ namespace BodyBuddy.Repositories.Implementations
             return await _context.UpdateAsync(workout);
         }
 
-        #endregion
+        public async Task DeleteAllWorkoutsAndWorkoutExercises()
+        {
+            var selfMadeWorkouts = await GetWorkoutPlansAsync(0);
+            foreach (var workout in selfMadeWorkouts)
+            {
+                await _context.Table<WorkoutExercisesModel>().DeleteAsync(x => x.WorkoutId == workout.Id);
+            }
+            await _context.Table<WorkoutModel>().DeleteAsync(x => x.PreMade == 0);
+        }
 
+        public async Task AddListOfWorkoutData(List<WorkoutModel> workoutModels)
+        {
+            foreach (var workout in workoutModels)
+            {
+                await _context.InsertAsync(workout);
+            }
+        }
+
+        #endregion
 
         private async Task<int> GetNextWorkoutId()
         {

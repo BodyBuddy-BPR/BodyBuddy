@@ -1,5 +1,6 @@
 ﻿using BodyBuddy.Dtos;
 using BodyBuddy.Models;
+using BodyBuddy.Models.Supabase;
 
 namespace BodyBuddy.Mappers
 {
@@ -27,6 +28,29 @@ namespace BodyBuddy.Mappers
                 Description = workoutModel.Description,
                 Name = workoutModel.Name,
                 PreMade = workoutModel.PreMade != 0
+            };
+        }
+
+        //SbModels
+        public WorkoutSbModel MapToSbModel(WorkoutDto workoutDto)
+        {
+            return new WorkoutSbModel()
+            {
+                Id = workoutDto.Id,
+                Description = workoutDto.Description,
+                Name = workoutDto.Name,
+                PreMade = workoutDto.PreMade
+            };
+        }
+
+        public WorkoutModel MapToDatabaseFromSb(WorkoutSbModel workoutSbModel)
+        {
+            return new WorkoutModel()
+            {
+                Id = workoutSbModel.Id,
+                Description = workoutSbModel.Description,
+                Name = workoutSbModel.Name,
+                PreMade = workoutSbModel.PreMade ? 1 : 0
             };
         }
     }

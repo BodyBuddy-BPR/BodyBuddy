@@ -17,7 +17,7 @@ namespace BodyBuddy.Repositories.Implementations
             if (exerciseRecord.Id != 0)
                 await _context.UpdateAsync(exerciseRecord);
 
-            exerciseRecord.Id = await GetNextExerciseRecordsId(); // Generate a unique Id
+            exerciseRecord.Id = await GetNextId(); // Generate a unique Id
             await _context.InsertAsync(exerciseRecord);
         }
 
@@ -27,7 +27,21 @@ namespace BodyBuddy.Repositories.Implementations
                 .ToListAsync();
         }
 
-        private async Task<int> GetNextExerciseRecordsId()
+        public async Task ClearSQLiteData()
+        {
+            await _context.DeleteAllAsync<ExerciseRecordsModel>();
+        }
+
+        public async Task AddListOfExerciseRecords(List<ExerciseRecordsModel> exerciseRecordsModels)
+        {
+            foreach (var model in exerciseRecordsModels)
+            {
+                model.Id = await GetNextId();
+                await _context.InsertAsync(model);
+            }
+        }
+
+        private async Task<int> GetNextId()
         {
             var lastItem = await _context.Table<ExerciseRecordsModel>().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
             return lastItem?.Id + 1 ?? 1;
