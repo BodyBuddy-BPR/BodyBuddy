@@ -32,8 +32,8 @@ namespace BodyBuddy.ViewModels
         [ObservableProperty] private ObservableCollection<ChallengeDto> _challengeDtos;
 
         [ObservableProperty]
-        private double _stepProgress; 
-        
+        private double _stepProgress;
+
         [ObservableProperty]
         private QuoteDto _quote;
 
@@ -80,14 +80,15 @@ namespace BodyBuddy.ViewModels
         public async Task GetActiveChallenges()
         {
             ChallengeDtos = new ObservableCollection<ChallengeDto>(await _challengeService.GetActiveChallenges());
-            foreach(var challengeDto in ChallengeDtos)
+            foreach (var challengeDto in ChallengeDtos)
             {
                 challengeDto.Progress += UserSteps.Steps;
-                foreach(var userModel in challengeDto.UserTotalSteps)
+                foreach (var userModel in challengeDto.UserTotalSteps)
                 {
-                    if(userModel.User.Email == "You")
+                    if (userModel.User.Email == "You")
                     {
                         userModel.TotalSteps += UserSteps.Steps;
+                        challengeDto.RecalculateProgressInPercent();
                     }
                 }
             }
