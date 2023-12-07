@@ -17,19 +17,11 @@ namespace BodyBuddy.Dtos
         [ObservableProperty] private DateTime _from;
         [ObservableProperty] private DateTime _to;
         [ObservableProperty] private List<UserTotalSteps> _userTotalSteps;
-        private double userProgressInPercent;
-        private double progressInPercent;
+        [ObservableProperty] private double _progressInPercent;
 
-        public double UserProgressInPercent
+        public void RecalculateProgressInPercent()
         {
-            get => userProgressInPercent;
-            set => SetProperty(ref userProgressInPercent, (double)UserTotalSteps.Sum(uts => uts.TotalSteps) / Goal);
-        }
-
-        public double ProgressInPercent
-        {
-            get => progressInPercent;
-            set => SetProperty(ref progressInPercent, (double)Progress / Goal);
+            ProgressInPercent = Goal != 0 && Progress != 0 ? (double)Progress / Goal : 0;
         }
     }
 }
