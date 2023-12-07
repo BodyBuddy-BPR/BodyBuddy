@@ -55,8 +55,8 @@ namespace BodyBuddy.ViewModels.Authentication
 
                 if (success)
                 {
-                    //Starting flow to swap DB to new data
-                    await _loginDatabaseFlowService.StartLoginDatabaseFlow();
+                    //Starting flow to swap DB to new data (Giv en popup her! --> Overwrite existing data, this may result in loss of Supabase information)
+                    await _loginDatabaseFlowService.StartLoginDatabaseFlow(true);
 
                     await MakeToast("successfully signed in.");
                     await Shell.Current.Navigation.PopAsync();

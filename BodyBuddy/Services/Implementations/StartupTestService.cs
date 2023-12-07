@@ -51,5 +51,14 @@ namespace BodyBuddy.Services.Implementations
             if (supabaseData != null)
                 await _startupTestRepository.SaveStartupTestData(mapper.MapToDatabaseFromSb(supabaseData));
         }
+
+        public async Task BackUpExistingDataSupa()
+        {
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet || !_userAuthenticationService.IsUserLoggedIn())
+                return;
+
+            var startupTestData = mapper.MapToDto(await _startupTestRepository.GetStartupTestData());
+            await _startupTestSbRepository.AddOrUpdateStartupTest(mapper.MapToSbModel(startupTestData));
+        }
     }
 }

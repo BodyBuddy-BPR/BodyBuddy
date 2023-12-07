@@ -20,12 +20,20 @@
             _exerciseRecordsService = exerciseRecordsService;
         }
 
-        public async Task StartLoginDatabaseFlow()
+        public async Task StartLoginDatabaseFlow(bool backUpCurrentData)
         {
-            await ReplaceStartupTestData();
+            if (backUpCurrentData)
+                await BackUpLocalDataToRemote();
+
+            await ReplaceLocalDataWithRemote();
         }
 
-        private async Task ReplaceStartupTestData()
+        private async Task BackUpLocalDataToRemote()
+        {
+            await _startupTestService.BackUpExistingDataSupa();
+        }
+
+        private async Task ReplaceLocalDataWithRemote()
         {
             await _startupTestService.ReplaceSQLiteDataWithRemoteData();
             await _stepService.ReplaceSQLiteDataWithRemoteData();

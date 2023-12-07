@@ -3,9 +3,12 @@
     public interface ILoginDatabaseFlowService
     {
         /// <summary>
-        /// Starting flow to replace SQLite DB with Online DB Data
+        /// Login Data Flow
+        /// Backup local db to remote db if param is true
+        /// Gets all remote data and fills local db
         /// </summary>
+        /// <param name="backUpCurrentData">if true, then it backup local db to remote db, and possible overwrite remote data</param>
         /// <returns></returns>
-        Task StartLoginDatabaseFlow();
+        Task StartLoginDatabaseFlow(bool backUpCurrentData);
     }
 }
