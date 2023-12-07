@@ -15,8 +15,17 @@ namespace BodyBuddy.Repositories
         Task<int> AddWorkoutPlanAsync(WorkoutModel workoutModel);
         Task<int> UpdateWorkoutPlanAsync(WorkoutModel workoutModel);
 
+        // Supabase
 
+        /// <summary>
+        /// Used to delete all non-premade workout exercises from SQLite and Workout Records
+        /// </summary>
         Task DeleteAllWorkoutsAndWorkoutExercises();
+
+        /// <summary>
+        /// Adding all workouts from Subabase
+        /// </summary>
+        /// <param name="workoutModels"></param>
         Task AddListOfWorkoutData(List<WorkoutModel> workoutModels);
     }
 

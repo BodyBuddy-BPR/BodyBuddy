@@ -35,7 +35,7 @@
             //Only adding WorkoutExercises
             
             await _workoutExercisesService.ReplaceSQLiteDataWithRemoteData();
-            //await _exerciseRecordsService.ReplaceSQLiteDataWithRemoteData();
+            await _exerciseRecordsService.ReplaceSQLiteDataWithRemoteData();
 
         }
     }

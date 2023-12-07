@@ -14,8 +14,7 @@ namespace BodyBuddy.Services
 
         Task<bool> DoesWorkoutAlreadyExist(string name);
 
-
-
+        //Supabase
         Task ReplaceSQLiteDataWithRemoteData();
     }
 }

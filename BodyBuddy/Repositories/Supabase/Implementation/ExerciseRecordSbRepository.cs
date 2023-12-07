@@ -20,8 +20,30 @@ namespace BodyBuddy.Repositories.Supabase.Implementation
         public async Task AddExerciseRecord(ExerciseRecordSbModel exerciseRecordSbModel)
         {
             exerciseRecordSbModel.UserId = SecureStorage.GetAsync("UserUID").Result;
+            try
+            {
+                await _supabase.From<ExerciseRecordSbModel>().Insert(exerciseRecordSbModel);
+            }
+            catch (Exception ex)
+            {
 
-            await _supabase.From<ExerciseRecordSbModel>().Insert(exerciseRecordSbModel);
+            }
+        }
+
+        public async Task<List<ExerciseRecordSbModel>> GetAllExerciseRecordsForUser()
+        {
+            try
+            {
+                var userId = SecureStorage.GetAsync("UserUID").Result;
+
+                var exerciseRecordsModel = await _supabase.From<ExerciseRecordSbModel>().Where(x => x.UserId == userId).Get();
+
+                return exerciseRecordsModel.Models;
+            }
+            catch (Exception ex)
+            {
+                return new List<ExerciseRecordSbModel>();
+            }
         }
     }
 }

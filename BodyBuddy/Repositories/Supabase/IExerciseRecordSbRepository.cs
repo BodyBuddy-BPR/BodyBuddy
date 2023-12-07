@@ -11,5 +11,6 @@ namespace BodyBuddy.Repositories.Supabase
     {
         Task AddExerciseRecord(ExerciseRecordSbModel exerciseRecordSbModel);
 
+        Task<List<ExerciseRecordSbModel>> GetAllExerciseRecordsForUser();
     }
 }

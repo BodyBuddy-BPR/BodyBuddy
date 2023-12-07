@@ -38,5 +38,21 @@ namespace BodyBuddy.Services.Implementations
             var exerciseRecords = await _exerciseRecordsRepository.GetAllExerciseRecordsForExercise(exerciseId);
             return exerciseRecords.Select(exerciseRecord => _mapper.MapToDto(exerciseRecord)).ToList();
         }
+
+        // Supabase
+        public async Task ReplaceSQLiteDataWithRemoteData()
+        {
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet || !_userAuthenticationService.IsUserLoggedIn())
+                return;
+
+            await _exerciseRecordsRepository.ClearSQLiteData();
+
+            var supabaseData = await _exerciseRecordSbRepository.GetAllExerciseRecordsForUser();
+
+            var exerciseRecordModels = supabaseData.Select(x => _mapper.MapToDatabaseFromSbModel(x)).ToList();
+
+            if (exerciseRecordModels.Any())
+                await _exerciseRecordsRepository.AddListOfExerciseRecords(exerciseRecordModels);
+        }
     }
 }

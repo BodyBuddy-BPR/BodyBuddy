@@ -48,5 +48,17 @@ namespace BodyBuddy.Mappers
                 Date = exerciseRecordsDto.Date
             };
         }
+
+        public ExerciseRecordsModel MapToDatabaseFromSbModel(ExerciseRecordSbModel exerciseRecordSbModel)
+        {
+            return new ExerciseRecordsModel
+            {
+                ExerciseId = exerciseRecordSbModel.ExerciseId,
+                Set = exerciseRecordSbModel.Set,
+                Weight = exerciseRecordSbModel.Weight,
+                Reps = exerciseRecordSbModel.Reps,
+                Date = DateHelper.ConvertToEpochTimeAtMidnightUtc(exerciseRecordSbModel.Date)
+            };
+        }
     }
 }

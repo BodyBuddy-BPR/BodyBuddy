@@ -6,5 +6,8 @@ namespace BodyBuddy.Services
     {
         Task SaveExerciseRecords(ExerciseRecordsDto exerciseRecordsDto);
         Task<List<ExerciseRecordsDto>> GetAllExerciseRecordsForExercise(int exerciseId);
+
+        Task ReplaceSQLiteDataWithRemoteData();
+
     }
 }
