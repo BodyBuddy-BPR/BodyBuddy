@@ -11,8 +11,11 @@ namespace BodyBuddy.Repositories.Supabase
     {
         Task<List<WorkoutSbModel>> GetAllWorkoutsForProfile();
         Task<List<WorkoutExerciseSbModel>> GetAllWorkoutExercisesForProfile();
+
         Task AddOrUpdateWorkout(WorkoutSbModel model);
         Task AddOrUpdateWorkoutExercise(WorkoutExerciseSbModel workoutExerciseSbModel);
+
+        Task RemoveWorkout(WorkoutSbModel model);
         Task RemoveWorkoutExercise(int workoutId, int exerciseId);
     }
 }
