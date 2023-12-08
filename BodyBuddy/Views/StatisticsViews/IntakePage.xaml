@@ -228,5 +228,5 @@
                 Color="{StaticResource Primary}" />
 
         </Grid>
-    </ScrollView>s
+    </ScrollView>
 </ContentPage>
