@@ -94,13 +94,13 @@
                                 MinimumCharacterTypeCount="1"
                                 RegexPattern="" />
                             <toolkit:TextValidationBehavior
-                                toolkit:MultiValidationBehavior.Error="Exceeding maximum length of 20"
+                                toolkit:MultiValidationBehavior.Error="Exceeding maximum length of 30"
                                 Flags="ValidateOnValueChanged"
-                                MaximumLength="10" />
+                                MaximumLength="30" />
                             <toolkit:TextValidationBehavior
                                 toolkit:MultiValidationBehavior.Error="Minimum Length of 1"
                                 Flags="ValidateOnValueChanged"
-                                MaximumLength="11" />
+                                MinimumLength="1" />
                         </toolkit:MultiValidationBehavior>
                     </Entry.Behaviors>
                 </Entry>

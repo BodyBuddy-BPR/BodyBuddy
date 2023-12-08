@@ -9,223 +9,224 @@
     xmlns:viewModel="clr-namespace:BodyBuddy.ViewModels.IntakeViewModels"
     x:DataType="viewModel:IntakeViewModel"
     Shell.NavBarIsVisible="True">
+    <ScrollView>
+        <Grid
+            Margin="20,20"
+            RowDefinitions="Auto, Auto"
+            RowSpacing="20">
 
-    <Grid
-        Margin="20,20"
-        RowDefinitions="Auto, Auto"
-        RowSpacing="20">
+            <!--  Water Section  -->
+            <VerticalStackLayout Grid.Row="0" Spacing="20">
+                <Label Style="{StaticResource TitleLabel}" Text="Water Intake" />
 
-        <!--  Water Section  -->
-        <VerticalStackLayout Grid.Row="0" Spacing="20">
-            <Label Style="{StaticResource TitleLabel}" Text="Water Intake" />
-
-            <!--  Image Row  -->
-            <HorizontalStackLayout HorizontalOptions="Center">
-                <Image
-                    Margin="20,0"
-                    Aspect="AspectFill"
-                    HeightRequest="120"
-                    Source="water_glass.png"
-                    WidthRequest="120" />
-                <Label
-                    Style="{StaticResource LargeLabel}"
-                    Text="250 ml"
-                    TextColor="White"
-                    VerticalOptions="Center" />
-            </HorizontalStackLayout>
-
-            <!--  Input Row  -->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="18.5*" />
-                    <!--  If you want a space between progress bar and button, change this width to 22.5  -->
-                    <ColumnDefinition Width="80*" />
-                    <ColumnDefinition Width="10*" />
-                </Grid.ColumnDefinitions>
-                <progressBar:SfCircularProgressBar
-                    Grid.Column="0"
-                    HorizontalOptions="Center"
-                    Maximum="1"
-                    Minimum="0"
-                    Progress="{Binding WaterProgress}"
-                    ProgressFill="{StaticResource Primary}" />
-                <ImageButton
-                    Grid.Column="0"
-                    Margin="9,0"
-                    BackgroundColor="{StaticResource Primary}"
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:IntakeViewModel}}, Path=AddWaterClickedCommand}"
-                    CornerRadius="22"
-                    HeightRequest="44"
-                    HorizontalOptions="Center"
-                    Source="plus_sign.png"
-                    Style="{StaticResource ImageButtonVisualState}"
-                    VerticalOptions="Center"
-                    WidthRequest="44" />
-                <Grid Grid.Column="1" HorizontalOptions="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="40*" />
-                        <ColumnDefinition Width="10*" />
-                        <ColumnDefinition Width="40*" />
-                    </Grid.ColumnDefinitions>
+                <!--  Image Row  -->
+                <HorizontalStackLayout HorizontalOptions="Center">
+                    <Image
+                        Margin="20,0"
+                        Aspect="AspectFill"
+                        HeightRequest="120"
+                        Source="water_glass.png"
+                        WidthRequest="120" />
                     <Label
+                        Style="{StaticResource LargeLabel}"
+                        Text="250 ml"
+                        TextColor="White"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+
+                <!--  Input Row  -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="18.5*" />
+                        <!--  If you want a space between progress bar and button, change this width to 22.5  -->
+                        <ColumnDefinition Width="80*" />
+                        <ColumnDefinition Width="10*" />
+                    </Grid.ColumnDefinitions>
+                    <progressBar:SfCircularProgressBar
                         Grid.Column="0"
                         HorizontalOptions="Center"
-                        Style="{StaticResource LargeLabel}"
-                        Text="{Binding IntakeDto.WaterCurrent}"
-                        TextColor="White"
-                        VerticalOptions="Center" />
-                    <Label
-                        Grid.Column="1"
+                        Maximum="1"
+                        Minimum="0"
+                        Progress="{Binding WaterProgress}"
+                        ProgressFill="{StaticResource Primary}" />
+                    <ImageButton
+                        Grid.Column="0"
+                        Margin="9,0"
+                        BackgroundColor="{StaticResource Primary}"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:IntakeViewModel}}, Path=AddWaterClickedCommand}"
+                        CornerRadius="22"
+                        HeightRequest="44"
                         HorizontalOptions="Center"
-                        Style="{StaticResource LargeLabel}"
-                        Text=" / "
-                        TextColor="White"
-                        VerticalOptions="Center" />
-                    <Label
-                        Grid.Column="2"
-                        HorizontalOptions="Center"
-                        Style="{StaticResource LargeLabel}"
-                        Text="{Binding IntakeDto.WaterGoal, StringFormat=' {0} ml'}"
-                        TextColor="White"
-                        VerticalOptions="Center" />
-                </Grid>
-
-                <ImageButton
-                    Grid.Column="2"
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:IntakeViewModel}}, Path=ClickToShowPopup_ClickedCommand}"
-                    CommandParameter="Water"
-                    CornerRadius="15"
-                    HeightRequest="30"
-                    HorizontalOptions="End"
-                    Source="pencil_white.png"
-                    Style="{StaticResource ImageButtonVisualState}"
-                    WidthRequest="30" />
-            </Grid>
-        </VerticalStackLayout>
-
-
-        <!--  Calorie Section  -->
-        <VerticalStackLayout Grid.Row="1" Spacing="20">
-            <Label Style="{StaticResource TitleLabel}" Text="Calorie Intake" />
-
-            <!--  Image and Calorie Entry Row  -->
-            <HorizontalStackLayout HorizontalOptions="Center">
-                <Image
-                    Margin="20,0"
-                    Aspect="AspectFill"
-                    HeightRequest="120"
-                    Source="apple.png"
-                    WidthRequest="120" />
-                <Frame
-                    Padding="20,0"
-                    BackgroundColor="{StaticResource Secondary}"
-                    CornerRadius="60"
-                    HasShadow="True"
-                    HeightRequest="50">
-                    <HorizontalStackLayout HorizontalOptions="Center">
-                        <Entry
-                            x:Name="CalorieEntry"
-                            Keyboard="Numeric"
-                            MaxLength="4"
-                            MinimumWidthRequest="50"
-                            Style="{StaticResource MediumLabel}"
-                            Text="{Binding CalorieEntryText}"
+                        Source="plus_sign.png"
+                        Style="{StaticResource ImageButtonVisualState}"
+                        VerticalOptions="Center"
+                        WidthRequest="44" />
+                    <Grid Grid.Column="1" HorizontalOptions="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40*" />
+                            <ColumnDefinition Width="10*" />
+                            <ColumnDefinition Width="40*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            HorizontalOptions="Center"
+                            Style="{StaticResource LargeLabel}"
+                            Text="{Binding IntakeDto.WaterCurrent}"
                             TextColor="White"
                             VerticalOptions="Center" />
                         <Label
+                            Grid.Column="1"
+                            HorizontalOptions="Center"
                             Style="{StaticResource LargeLabel}"
-                            Text=" kcal"
+                            Text=" / "
                             TextColor="White"
                             VerticalOptions="Center" />
-                    </HorizontalStackLayout>
-                </Frame>
-            </HorizontalStackLayout>
-            <!--  Input Row  -->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="18.5*" />
-                    <ColumnDefinition Width="80*" />
-                    <ColumnDefinition Width="10*" />
-                </Grid.ColumnDefinitions>
-                <progressBar:SfCircularProgressBar
-                    Grid.Column="0"
-                    HorizontalOptions="Center"
-                    Maximum="1"
-                    Minimum="0"
-                    Progress="{Binding CalorieProgress}"
-                    ProgressFill="{StaticResource Secondary}" />
-                <ImageButton
-                    Grid.Column="0"
-                    Margin="9,0"
-                    BackgroundColor="{StaticResource Secondary}"
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:IntakeViewModel}}, Path=AddKcalClickedCommand}"
-                    CommandParameter="{Binding CalorieEntryText}"
-                    CornerRadius="22"
-                    HeightRequest="44"
-                    HorizontalOptions="Center"
-                    Source="plus_sign.png"
-                    Style="{StaticResource ImageButtonVisualState}"
-                    VerticalOptions="Center"
-                    WidthRequest="44" />
-                <Grid Grid.Column="1" HorizontalOptions="Center">
+                        <Label
+                            Grid.Column="2"
+                            HorizontalOptions="Center"
+                            Style="{StaticResource LargeLabel}"
+                            Text="{Binding IntakeDto.WaterGoal, StringFormat=' {0} ml'}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                    </Grid>
+
+                    <ImageButton
+                        Grid.Column="2"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:IntakeViewModel}}, Path=ClickToShowPopup_ClickedCommand}"
+                        CommandParameter="Water"
+                        CornerRadius="15"
+                        HeightRequest="30"
+                        HorizontalOptions="End"
+                        Source="pencil_white.png"
+                        Style="{StaticResource ImageButtonVisualState}"
+                        WidthRequest="30" />
+                </Grid>
+            </VerticalStackLayout>
+
+
+            <!--  Calorie Section  -->
+            <VerticalStackLayout Grid.Row="1" Spacing="20">
+                <Label Style="{StaticResource TitleLabel}" Text="Calorie Intake" />
+
+                <!--  Image and Calorie Entry Row  -->
+                <HorizontalStackLayout HorizontalOptions="Center">
+                    <Image
+                        Margin="20,0"
+                        Aspect="AspectFill"
+                        HeightRequest="120"
+                        Source="apple.png"
+                        WidthRequest="120" />
+                    <Frame
+                        Padding="20,0"
+                        BackgroundColor="{StaticResource Secondary}"
+                        CornerRadius="60"
+                        HasShadow="True"
+                        HeightRequest="50">
+                        <HorizontalStackLayout HorizontalOptions="Center">
+                            <Entry
+                                x:Name="CalorieEntry"
+                                Keyboard="Numeric"
+                                MaxLength="4"
+                                MinimumWidthRequest="50"
+                                Style="{StaticResource MediumLabel}"
+                                Text="{Binding CalorieEntryText}"
+                                TextColor="White"
+                                VerticalOptions="Center" />
+                            <Label
+                                Style="{StaticResource LargeLabel}"
+                                Text=" kcal"
+                                TextColor="White"
+                                VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Frame>
+                </HorizontalStackLayout>
+                <!--  Input Row  -->
+                <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="40*" />
+                        <ColumnDefinition Width="18.5*" />
+                        <ColumnDefinition Width="80*" />
                         <ColumnDefinition Width="10*" />
-                        <ColumnDefinition Width="50*" />
                     </Grid.ColumnDefinitions>
-                    <Label
+                    <progressBar:SfCircularProgressBar
                         Grid.Column="0"
                         HorizontalOptions="Center"
-                        Style="{StaticResource LargeLabel}"
-                        Text="{Binding IntakeDto.CalorieCurrent}"
-                        TextColor="White"
-                        VerticalOptions="Center" />
-                    <Label
-                        Grid.Column="1"
+                        Maximum="1"
+                        Minimum="0"
+                        Progress="{Binding CalorieProgress}"
+                        ProgressFill="{StaticResource Secondary}" />
+                    <ImageButton
+                        Grid.Column="0"
+                        Margin="9,0"
+                        BackgroundColor="{StaticResource Secondary}"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:IntakeViewModel}}, Path=AddKcalClickedCommand}"
+                        CommandParameter="{Binding CalorieEntryText}"
+                        CornerRadius="22"
+                        HeightRequest="44"
                         HorizontalOptions="Center"
-                        Style="{StaticResource LargeLabel}"
-                        Text=" / "
-                        TextColor="White"
-                        VerticalOptions="Center" />
-                    <Label
+                        Source="plus_sign.png"
+                        Style="{StaticResource ImageButtonVisualState}"
+                        VerticalOptions="Center"
+                        WidthRequest="44" />
+                    <Grid Grid.Column="1" HorizontalOptions="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40*" />
+                            <ColumnDefinition Width="10*" />
+                            <ColumnDefinition Width="50*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            HorizontalOptions="Center"
+                            Style="{StaticResource LargeLabel}"
+                            Text="{Binding IntakeDto.CalorieCurrent}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Column="1"
+                            HorizontalOptions="Center"
+                            Style="{StaticResource LargeLabel}"
+                            Text=" / "
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Column="2"
+                            HorizontalOptions="Center"
+                            Style="{StaticResource LargeLabel}"
+                            Text="{Binding IntakeDto.CalorieGoal, StringFormat=' {0} kcal'}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                    </Grid>
+
+                    <ImageButton
                         Grid.Column="2"
-                        HorizontalOptions="Center"
-                        Style="{StaticResource LargeLabel}"
-                        Text="{Binding IntakeDto.CalorieGoal, StringFormat=' {0} kcal'}"
-                        TextColor="White"
-                        VerticalOptions="Center" />
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:IntakeViewModel}}, Path=ClickToShowPopup_ClickedCommand}"
+                        CommandParameter="Calorie"
+                        CornerRadius="15"
+                        HeightRequest="30"
+                        HorizontalOptions="End"
+                        Source="pencil_white.png"
+                        Style="{StaticResource ImageButtonVisualState}"
+                        WidthRequest="30" />
                 </Grid>
 
-                <ImageButton
-                    Grid.Column="2"
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:IntakeViewModel}}, Path=ClickToShowPopup_ClickedCommand}"
-                    CommandParameter="Calorie"
-                    CornerRadius="15"
-                    HeightRequest="30"
-                    HorizontalOptions="End"
-                    Source="pencil_white.png"
-                    Style="{StaticResource ImageButtonVisualState}"
-                    WidthRequest="30" />
-            </Grid>
+            </VerticalStackLayout>
 
-        </VerticalStackLayout>
+            <skia:SKConfettiView
+                x:Name="ConfettiView"
+                Grid.RowSpan="2"
+                Grid.ColumnSpan="2"
+                Margin="-20"
+                HorizontalOptions="Fill"
+                IsAnimationEnabled="{Binding IsConfettiAnimationEnabled}" />
 
-        <skia:SKConfettiView
-            x:Name="ConfettiView"
-            Grid.RowSpan="2"
-            Grid.ColumnSpan="2"
-            Margin="-20"
-            HorizontalOptions="Fill"
-            IsAnimationEnabled="{Binding IsConfettiAnimationEnabled}" />
+            <ActivityIndicator
+                Grid.RowSpan="2"
+                Grid.ColumnSpan="2"
+                HorizontalOptions="Fill"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="Center"
+                Color="{StaticResource Primary}" />
 
-        <ActivityIndicator
-            Grid.RowSpan="2"
-            Grid.ColumnSpan="2"
-            HorizontalOptions="Fill"
-            IsRunning="{Binding IsBusy}"
-            IsVisible="{Binding IsBusy}"
-            VerticalOptions="Center"
-            Color="{StaticResource Primary}" />
-
-    </Grid>
+        </Grid>
+    </ScrollView>
 </ContentPage>
