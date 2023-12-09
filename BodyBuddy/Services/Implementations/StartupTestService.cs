@@ -14,6 +14,8 @@ namespace BodyBuddy.Services.Implementations
 
         private readonly StartupTestMapper mapper = new();
 
+        private readonly string _runStartupTest = "StartupTest";
+
 
         public StartupTestService(IStartupTestRepository startupTestRepository, IStartupTestSbRepository startupTestSbRepository, IUserAuthenticationService userAuthenticationService)
         {
@@ -49,7 +51,23 @@ namespace BodyBuddy.Services.Implementations
             var supabaseData = await _startupTestSbRepository.GetStartupTestSbModel();
 
             if (supabaseData != null)
+            {
                 await _startupTestRepository.SaveStartupTestData(mapper.MapToDatabaseFromSb(supabaseData));
+                Preferences.Set(_runStartupTest, false);
+            }
+            else
+            {
+                Preferences.Set(_runStartupTest, true);
+            }
+        }
+
+        public async Task BackUpExistingDataSupa()
+        {
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet || !_userAuthenticationService.IsUserLoggedIn())
+                return;
+
+            var startupTestData = mapper.MapToDto(await _startupTestRepository.GetStartupTestData());
+            await _startupTestSbRepository.AddOrUpdateStartupTest(mapper.MapToSbModel(startupTestData));
         }
     }
 }

@@ -10,6 +10,7 @@ using BodyBuddy.Views.Popups;
 using System.Collections.ObjectModel;
 using BodyBuddy.Views.WorkoutViews;
 using BodyBuddy.Models;
+using BodyBuddy.Views.StartupTest;
 
 namespace BodyBuddy.ViewModels
 {
@@ -70,6 +71,8 @@ namespace BodyBuddy.ViewModels
 
         public async Task Initialize()
         {
+
+
             UserSteps = await _stepService.GetStepDataTodayAsync();
             StepProgress = UserSteps.Steps == 0 ? 0 : (double)UserSteps.Steps / UserSteps.StepGoal;
             await GetDailyQuote();
@@ -180,7 +183,6 @@ namespace BodyBuddy.ViewModels
 
         public async Task AttemptToLogin()
         {
-
             if (_userAuthService.IsUserLoggedIn()) return;
 
             var isLoginSkipped = Preferences.Get(_skipLoginKey, false);
@@ -196,6 +198,8 @@ namespace BodyBuddy.ViewModels
                 });
             }
         }
+
+        
 
         public async Task GetDailyQuote()
         {

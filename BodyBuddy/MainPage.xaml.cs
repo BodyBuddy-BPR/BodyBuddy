@@ -5,13 +5,13 @@ namespace BodyBuddy;
 
 public partial class MainPage : ContentPage
 {
-	private MainPageViewModel _viewModel;
+    private MainPageViewModel _viewModel;
 
-	public MainPage(MainPageViewModel mainPageViewModel)
-	{
+    public MainPage(MainPageViewModel mainPageViewModel)
+    {
         InitializeComponent();
-		_viewModel = mainPageViewModel;
-		BindingContext = mainPageViewModel;
+        _viewModel = mainPageViewModel;
+        BindingContext = mainPageViewModel;
 
         // Adding Common Toolbar items
         CommonToolBarItems.AddCommonToolbarItems(this);
@@ -24,6 +24,7 @@ public partial class MainPage : ContentPage
         await Task.Delay(300); // Add a short delay
 
         await _viewModel.AttemptToLogin();
+
         await _viewModel.Initialize();
         await _viewModel.GetActiveChallenges();
     }

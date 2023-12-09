@@ -73,10 +73,10 @@
 
 
         <!--  StartupTest Temp, until found another place  -->
-        <ShellContent
+        <!--<ShellContent
             Title="Startup"
             ContentTemplate="{DataTemplate startup:StartupTestPage}"
-            Icon="questionmark.png" />
+            Icon="questionmark.png" />-->
 
         <!--<ShellContent
             Title="Graphs"
