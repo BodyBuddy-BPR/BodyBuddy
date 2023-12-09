@@ -49,6 +49,9 @@ namespace BodyBuddy.Services.Implementations
 
         public async Task<bool> DeleteWorkout(WorkoutDto workoutDto)
         {
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet && _userAuthenticationService.IsUserLoggedIn())
+                await _workoutSbRepository.RemoveWorkout(_mapper.MapToSbModel(workoutDto));
+
             return await _workoutRepository.DeleteWorkout(_mapper.MapToDatabase(workoutDto));
         }
 

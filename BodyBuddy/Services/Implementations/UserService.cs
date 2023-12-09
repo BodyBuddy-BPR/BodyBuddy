@@ -28,7 +28,7 @@ namespace BodyBuddy.Services.Implementations
             return relations.Select(model => _mapper.MapUserRelationsToDto(model)).ToList();
         }
 
-        public async Task<List<UserDto>> GetFriendRquests()
+        public async Task<List<UserDto>> GetFriendRequests()
         {
             var userId = SecureStorage.GetAsync(UserUIDKey).Result;
             var relations = await _userRepository.GetFriendRequests(userId);

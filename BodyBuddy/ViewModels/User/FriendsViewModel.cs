@@ -58,7 +58,7 @@ namespace BodyBuddy.ViewModels.User
                 IsBusy = true;
 
                 Friends = new ObservableCollection<UserDto>(await _userService.GetFriends());
-                PendingRequests = new ObservableCollection<UserDto>(await _userService.GetFriendRquests());
+                PendingRequests = new ObservableCollection<UserDto>(await _userService.GetFriendRequests());
 
             }
             catch (Exception ex)

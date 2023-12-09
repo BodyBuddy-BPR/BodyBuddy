@@ -17,13 +17,13 @@ namespace BodyBuddy.Services
         Task<StartupTestDto> GetStartupTestData();
 
         /// <summary>
-        /// Removing local data and replacing with data from Remote Db
+        /// Remove local data and replacing with remote db data if internet and logged in
         /// </summary>
         /// <returns></returns>
         Task ReplaceSQLiteDataWithRemoteData();
 
         /// <summary>
-        /// Saving existing local data into Supabase
+        /// Saving existing local data into remote db
         /// </summary>
         /// <returns></returns>
         Task BackUpExistingDataSupa();

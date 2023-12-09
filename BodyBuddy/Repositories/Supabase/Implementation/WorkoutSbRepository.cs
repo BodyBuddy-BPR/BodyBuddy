@@ -74,6 +74,19 @@ namespace BodyBuddy.Repositories.Supabase.Implementation
 
             }
         }
+        public async Task RemoveWorkout(WorkoutSbModel model)
+        {
+            try
+            {
+                model.UserId = SecureStorage.GetAsync("UserUID").Result;
+                await _supabase.From<WorkoutSbModel>()
+                    .Where(x => x.Id == model.Id && x.UserId == model.UserId).Delete();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
 
         public async Task RemoveWorkoutExercise(int workoutId, int exerciseId)
         {

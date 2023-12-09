@@ -24,6 +24,7 @@ namespace BodyBuddy.Services.Implementations
             _stepService = stepService;
             _userAuthenticationService = authenticationService;
 
+            //Whenever IsStepsChanged is called in StepsService, UpdateStepChallenges.
             _stepService.IsStepsChanged += UpdateStepChallenges;
         }
 
@@ -53,6 +54,10 @@ namespace BodyBuddy.Services.Implementations
             return _challengeDtos;
         }
 
+        /// <summary>
+        /// Updates all StepChallenges on Supabase whenever method is called through delegate
+        /// </summary>
+        /// <param name="steps">from user current day</param>
         private async void UpdateStepChallenges(int steps)
         {
             if (Connectivity.NetworkAccess == NetworkAccess.Internet &&
