@@ -67,6 +67,7 @@ namespace BodyBuddy.Authentication
                 await SecureStorage.SetAsync(UserUIDKey, (string)loginInfo.User.Id);
                 await SecureStorage.SetAsync(UserEmailKey, loginInfo.User.Email);
                 await SecureStorage.SetAsync(UserPasswordKey, password);
+
             }
 
             return success;

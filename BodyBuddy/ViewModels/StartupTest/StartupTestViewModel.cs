@@ -47,6 +47,8 @@ public partial class StartupTestViewModel : BaseViewModel
 
     private readonly IStartupTestService _startupTestService;
 
+    private readonly string _runStartupTest = "StartupTest";
+
     public StartupTestViewModel(IStartupTestService startupTestService)
     {
         _startupTestService = startupTestService;
@@ -83,6 +85,7 @@ public partial class StartupTestViewModel : BaseViewModel
     {
         SetTargetArea();
         _startupTestService.SaveStartupTestData(StartupTestDto);
+        Preferences.Set(_runStartupTest, false);
         await Shell.Current.GoToAsync($"//{nameof(MainPage)}", true);
     }
 

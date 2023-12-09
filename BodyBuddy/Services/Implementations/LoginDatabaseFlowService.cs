@@ -36,6 +36,7 @@
         private async Task ReplaceLocalDataWithRemote()
         {
             await _startupTestService.ReplaceSQLiteDataWithRemoteData();
+
             await _stepService.ReplaceSQLiteDataWithRemoteData();
             await _intakeService.ReplaceSQLiteDataWithRemoteData();
             //Deleting Workout and WorkoutExercises

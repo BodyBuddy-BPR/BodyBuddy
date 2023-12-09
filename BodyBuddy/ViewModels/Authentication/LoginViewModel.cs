@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 using System.Diagnostics;
 using BodyBuddy.Authentication;
 using BodyBuddy.Services;
+using BodyBuddy.Views.StartupTest;
 
 namespace BodyBuddy.ViewModels.Authentication
 {
@@ -13,6 +14,7 @@ namespace BodyBuddy.ViewModels.Authentication
     {
         private readonly IUserAuthenticationService _userAuthenticationService;
         private readonly ILoginDatabaseFlowService _loginDatabaseFlowService;
+        private readonly IStartupTestService _startupTestService;
 
         [ObservableProperty]
         public bool isLogin = true;
@@ -31,18 +33,18 @@ namespace BodyBuddy.ViewModels.Authentication
         public bool skipVisible = false;
 
         private readonly string _skipLoginKey = "SkipLogInKey";
+        private readonly string _runStartupTest = "StartupTest";
 
-        public LoginViewModel(IUserAuthenticationService userAuthenticationService, ILoginDatabaseFlowService loginDatabaseFlowService)
+        public LoginViewModel(IUserAuthenticationService userAuthenticationService, ILoginDatabaseFlowService loginDatabaseFlowService, IStartupTestService startupTestService)
         {
             _userAuthenticationService = userAuthenticationService;
             _loginDatabaseFlowService = loginDatabaseFlowService;
+            _startupTestService = startupTestService;
         }
 
         public async Task Initialize()
         {
             // Does nothing currently
-            
-
         }
 
         #region Sign In
@@ -52,15 +54,22 @@ namespace BodyBuddy.ViewModels.Authentication
             try
             {
                 var success = await _userAuthenticationService.SignUserIn(LoginEmail, LoginPassword);
+                var answer = false;
 
                 if (success)
                 {
+                    var startupTest = await _startupTestService.GetStartupTestData();
+                    if (startupTest.Id != 0)
+                    {
+                        answer = await Shell.Current.DisplayAlert("Startup test data", "Use current startup test data", "Yes", "No");
+                    }
+
                     //Starting flow to swap DB to new data (Giv en popup her! --> Overwrite existing data, this may result in loss of Supabase information)
-                    await _loginDatabaseFlowService.StartLoginDatabaseFlow(true);
+                    await _loginDatabaseFlowService.StartLoginDatabaseFlow(answer);
 
                     await MakeToast("successfully signed in.");
-                    await Shell.Current.Navigation.PopAsync();
-                    await Shell.Current.GoToAsync($"//{nameof(MainPage)}", true);
+
+                    await Navigate();
                 }
             }
             catch (Exception ex)
@@ -74,7 +83,7 @@ namespace BodyBuddy.ViewModels.Authentication
         public async Task SkipLogin()
         {
             Preferences.Set(_skipLoginKey, true);
-            await Shell.Current.GoToAsync($"//{nameof(MainPage)}", true);
+            await Navigate();
         }
 
         //[RelayCommand] // Currently this does not work
@@ -107,8 +116,7 @@ namespace BodyBuddy.ViewModels.Authentication
                 {
                     await MakeToast("Congratulations! You have successfully signed up");
 
-                    await Shell.Current.Navigation.PopAsync();
-                    await Shell.Current.GoToAsync($"//{nameof(MainPage)}", true);
+                    await Navigate();
                 }
             }
             catch (Exception ex)
@@ -119,6 +127,21 @@ namespace BodyBuddy.ViewModels.Authentication
         }
 
         #endregion
+
+        public async Task Navigate()
+        {
+            var runTest = Preferences.Get(_runStartupTest, true);
+            if (runTest)
+            {
+                await Shell.Current.GoToAsync($"{nameof(StartupTestPage)}", true);
+            }
+            else
+            {
+                await Shell.Current.Navigation.PopAsync();
+                await Shell.Current.GoToAsync($"//{nameof(MainPage)}", true);
+            }
+        }
+
 
         private async Task MakeToast(string displayText)
         {
