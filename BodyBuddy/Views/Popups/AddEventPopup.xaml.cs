@@ -17,9 +17,8 @@ public partial class AddEventPopup
     {
         if (/*!EventNameValid.IsValid || */string.IsNullOrEmpty(NameEntry.Text))
         {
-            //EventNameError.Text = EventNameValid.Errors.FirstOrDefault().ToString();
             EventNameError.IsVisible = true;
-            EventNameError.Text = "Enter a name between 1 and 20 characters";
+            EventNameError.Text = "Enter a name between 1 and 30 characters";
             // Start the timer to hide the error label after 3 seconds
             StartErrorLabelTimer(EventNameError);
         }

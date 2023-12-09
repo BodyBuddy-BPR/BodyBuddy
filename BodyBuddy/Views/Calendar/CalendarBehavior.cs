@@ -42,7 +42,6 @@ namespace BodyBuddy.Views.Calendar
             if (e.NewValue != null && !viewModel.IsBusy && !viewModel.IsUpdatingData)
             {
                 viewModel.IsUpdatingData = true;
-                await Task.Delay(50); // You may still keep the delay if needed
                 this.UpdateMonthAgendaViewDetails(e.NewValue.Value);
                 viewModel.IsUpdatingData = false;
             }
@@ -59,8 +58,6 @@ namespace BodyBuddy.Views.Calendar
             {
                 this.UpdateMonthAgendaViewDetails(e.Date.Value);
             }
-
-
         }
 
         public void UpdateMonthAgendaViewDetails(DateTime? tappedDate)

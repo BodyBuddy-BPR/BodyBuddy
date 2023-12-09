@@ -40,27 +40,6 @@
         <!--  Exercises to show  -->
         <CollectionView Grid.Row="1" ItemsSource="{Binding Exercises}">
 
-            <!--  View to show when there are no exercises in a workout  -->
-            <!--<CollectionView.EmptyView>
-                <ContentView>
-                    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-                        <Label
-                            Margin="10,25,10,10"
-                            FontAttributes="Bold"
-                            FontSize="18"
-                            HorizontalOptions="Fill"
-                            HorizontalTextAlignment="Center"
-                            Text="No exercises have been added yet" />
-                        <Label
-                            FontAttributes="Italic"
-                            FontSize="16"
-                            HorizontalOptions="Fill"
-                            HorizontalTextAlignment="Center"
-                            Text="Try adding some" />
-                    </StackLayout>
-                </ContentView>
-            </CollectionView.EmptyView>-->
-
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
             </CollectionView.ItemsLayout>
@@ -68,7 +47,6 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:ExerciseModel">
                     <SwipeView>
-
                         <Frame HeightRequest="120" Style="{StaticResource CardView}">
                             <effectsView:SfEffectsView Style="{StaticResource CardRippleEffect}">
                                 <Grid ColumnDefinitions="100,*">
@@ -146,37 +124,40 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <HorizontalStackLayout
+        <Grid
+            HorizontalOptions="Center"
             Grid.Row="2"
-            HorizontalOptions="CenterAndExpand"
-            Spacing="10">
-            <!--  Buttom Row - Add Exercises Btn  -->
+            ColumnDefinitions="Auto, Auto"
+            ColumnSpacing="10">
+
             <Button
+                Grid.Column="0"
                 Command="{Binding AddExercisesCommand}"
                 HeightRequest="40"
                 IsEnabled="{Binding SmallButtonModifyIsEnabled}"
                 IsVisible="{Binding SmallButtonModifyIsEnabled}"
                 Style="{StaticResource BaseButton}"
-                Text="Add Exercises"
-                WidthRequest="180" />
+                Text="Add Exercises" />
 
             <Button
+                Grid.Column="1"
                 Command="{Binding StartWorkoutCommand}"
                 HeightRequest="40"
                 IsEnabled="{Binding SmallButtonsIsEnabled}"
                 IsVisible="{Binding SmallButtonsIsEnabled}"
                 Style="{StaticResource BaseButton}"
-                Text="Start Workout"
-                WidthRequest="180" />
+                Text="Start Workout" />
 
             <Button
+                VerticalOptions="CenterAndExpand"
+                Grid.ColumnSpan="2"
                 Command="{Binding AddExercisesCommand}"
                 HorizontalOptions="CenterAndExpand"
                 IsEnabled="{Binding LargeButtonModifyIsEnabled}"
                 IsVisible="{Binding LargeButtonModifyIsEnabled}"
                 Style="{StaticResource AddButton}"
                 Text="Add Exercises" />
-        </HorizontalStackLayout>
+        </Grid>
 
         <ActivityIndicator
             Grid.RowSpan="2"
