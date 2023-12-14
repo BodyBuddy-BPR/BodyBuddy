@@ -103,14 +103,13 @@ namespace BodyBuddy.ViewModels.WorkoutViewModels
 
         public async Task<bool> ValidWorkout(string name)
         {
-            var exists = await _workoutService.DoesWorkoutAlreadyExist(name);
-
             if (string.IsNullOrWhiteSpace(name))
             {
                 ErrorMessage = "Workout name cannot be empty.";
                 return false;
             }
-            else if (exists)
+
+            if (await _workoutService.DoesWorkoutAlreadyExist(name))
             {
                 ErrorMessage = $"A workoutplan with the name \"{name}\" already exists.";
                 return false;

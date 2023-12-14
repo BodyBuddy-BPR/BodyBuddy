@@ -61,7 +61,7 @@ namespace BodyBuddy.Services.Implementations
             }
         }
 
-        public async Task BackUpExistingDataSupa()
+        public async Task BackUpExistingDataToSupabase()
         {
             if (Connectivity.NetworkAccess != NetworkAccess.Internet || !_userAuthenticationService.IsUserLoggedIn())
                 return;
