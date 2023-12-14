@@ -23,7 +23,7 @@ namespace BodyBuddy.Repositories.Supabase.Implementation
             }
             catch (Exception ex)
             {
-                //If no data is found, it goes down here!
+                //If no data is found, or Supabase call fails
                 return null;
             }
         }

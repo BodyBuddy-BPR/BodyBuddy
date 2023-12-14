@@ -30,22 +30,19 @@
 
         private async Task BackUpLocalDataToRemote()
         {
-            await _startupTestService.BackUpExistingDataSupa();
+            await _startupTestService.BackUpExistingDataToSupabase();
         }
 
         private async Task ReplaceLocalDataWithRemote()
         {
             await _startupTestService.ReplaceSQLiteDataWithRemoteData();
-
             await _stepService.ReplaceSQLiteDataWithRemoteData();
             await _intakeService.ReplaceSQLiteDataWithRemoteData();
             //Deleting Workout and WorkoutExercises
             await _workoutService.ReplaceSQLiteDataWithRemoteData();
             //Only adding WorkoutExercises
-            
             await _workoutExercisesService.ReplaceSQLiteDataWithRemoteData();
             await _exerciseRecordsService.ReplaceSQLiteDataWithRemoteData();
-
         }
     }
 }

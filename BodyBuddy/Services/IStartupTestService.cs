@@ -26,6 +26,6 @@ namespace BodyBuddy.Services
         /// Saving existing local data into remote db
         /// </summary>
         /// <returns></returns>
-        Task BackUpExistingDataSupa();
+        Task BackUpExistingDataToSupabase();
     }
 }
